@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 470" width="800" height="470" role="img" aria-label="C:\dev\workspace 아래 11개 과목 폴더가 번호순으로 나열되어 있고, 01-db가 지금 만들 폴더로 강조되어 있다">
+  <rect x="0" y="0" width="800" height="470" fill="#121B23"/>
+
+  <text x="24" y="34" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:20px;font-weight:700;fill:#FFFFFF">C:\dev\workspace\</text>
+
+  <path d="M 44 46 L 44 429" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+
+  <path d="M 44 69 L 70 69" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <rect x="70" y="52" width="700" height="34" rx="6" fill="#1F5065" stroke="#5CC6DE" stroke-width="1.5"/>
+  <text x="86" y="75" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#FFFFFF">01-db\</text>
+  <text x="300" y="75" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;fill:#9DCFE0">10/15~10/27</text>
+  <text x="596" y="75" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;font-weight:700;fill:#5CC6DE">← 지금 만듭니다</text>
+
+  <path d="M 44 105 L 70 105" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="86" y="111" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#C6D3DD">02-git\</text>
+  <text x="300" y="111" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;fill:#9DB0BE">10/28</text>
+
+  <path d="M 44 141 L 70 141" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="86" y="147" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#C6D3DD">03-html-css\</text>
+  <text x="300" y="147" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;fill:#9DB0BE">10/29~11/05</text>
+
+  <path d="M 44 177 L 70 177" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="86" y="183" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#C6D3DD">04-crawling\</text>
+  <text x="300" y="183" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;fill:#9DB0BE">11/06~11/11</text>
+
+  <path d="M 44 213 L 70 213" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="86" y="219" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#C6D3DD">05-mini-project\</text>
+  <text x="300" y="219" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;fill:#9DB0BE">11/12~11/16</text>
+
+  <path d="M 44 249 L 70 249" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="86" y="255" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#C6D3DD">06-js\</text>
+  <text x="300" y="255" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;fill:#9DB0BE">11/17~11/27</text>
+
+  <path d="M 44 285 L 70 285" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="86" y="291" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#C6D3DD">07-react\</text>
+  <text x="300" y="291" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;fill:#9DB0BE">11/30~12/21</text>
+
+  <path d="M 44 321 L 70 321" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="86" y="327" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#C6D3DD">08-node\</text>
+  <text x="300" y="327" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;fill:#9DB0BE">12/23~01/12</text>
+
+  <path d="M 44 357 L 70 357" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="86" y="363" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#C6D3DD">09-git-team\</text>
+  <text x="300" y="363" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;fill:#9DB0BE">01/08</text>
+
+  <path d="M 44 393 L 70 393" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="86" y="399" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#C6D3DD">10-figma\</text>
+  <text x="300" y="399" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;fill:#9DB0BE">01/11~01/13</text>
+
+  <path d="M 44 429 L 70 429" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="86" y="435" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#C6D3DD">11-final-project\</text>
+  <text x="300" y="435" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;fill:#9DB0BE">01/14~02/05</text>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400" role="img" aria-label="01-db 폴더 아래 data(강사가 나눠준 파일, 고치지 않음)와 day01·day02·day03(내가 푼 것), notes.md가 나뉘어 있다">
+  <rect x="0" y="0" width="760" height="400" fill="#121B23"/>
+
+  <text x="24" y="34" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:20px;font-weight:700;fill:#FFFFFF">01-db\</text>
+
+  <path d="M 44 46 L 44 353" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+
+  <path d="M 44 69 L 70 69" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <rect x="70" y="52" width="630" height="34" rx="6" fill="#4A211E" stroke="#EC8B81" stroke-width="1.5"/>
+  <text x="86" y="75" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#FFFFFF">data\</text>
+  <text x="230" y="75" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;font-weight:700;fill:#EC8B81">강사가 나눠준 파일 — 고치지 않습니다</text>
+
+  <path d="M 82 88 L 82 139" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <path d="M 82 105 L 108 105" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="120" y="111" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:14px;fill:#C6D3DD">articles.sql</text>
+  <path d="M 82 139 L 108 139" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="120" y="145" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:14px;fill:#C6D3DD">reporters.sql</text>
+  <text x="290" y="145" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;fill:#9DB0BE">(4일차에 추가)</text>
+
+  <path d="M 44 175 L 70 175" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <rect x="70" y="158" width="630" height="34" rx="6" fill="#1F5065" stroke="#5CC6DE" stroke-width="1.5"/>
+  <text x="86" y="181" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#FFFFFF">day01\</text>
+  <text x="230" y="181" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;font-weight:700;fill:#5CC6DE">내가 푼 것</text>
+
+  <path d="M 82 194 L 82 245" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <path d="M 82 211 L 108 211" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="120" y="217" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:14px;fill:#C6D3DD">practice-1.sql</text>
+  <path d="M 82 245 L 108 245" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="120" y="251" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:14px;fill:#C6D3DD">practice-2.sql</text>
+
+  <path d="M 44 281 L 70 281" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="86" y="287" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#C6D3DD">day02\</text>
+
+  <path d="M 44 317 L 70 317" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="86" y="323" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#C6D3DD">day03\</text>
+
+  <path d="M 44 353 L 70 353" fill="none" stroke="#6D869A" stroke-width="1.5"/>
+  <text x="86" y="359" style="font-family:Consolas,'D2Coding','Courier New',monospace;font-size:16px;fill:#C6D3DD">notes.md</text>
+  <text x="230" y="359" style="font-family:'Malgun Gothic','Segoe UI',sans-serif;font-size:13px;fill:#9DB0BE">수업 중 메모 (선택)</text>
+</svg>

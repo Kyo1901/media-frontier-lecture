@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MySQL 설치 가이드 (Windows) — 미디어 프론티어</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--paper:#121B23;--panel:#1A2630;--line:#2B3B47;--text:#DDE7ED;--muted:#9DB0BE;--accent:#5CC6DE;--warn:#F2C879;
+--sans:"Pretendard Variable",Pretendard,-apple-system,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+--mono:"D2Coding","Cascadia Code",Consolas,"JetBrains Mono",Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--sans);line-height:1.7;font-size:17px}
+main{max-width:920px;margin:0 auto;padding:40px 16px 80px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:34px;margin:6px 0 4px;font-weight:700}h2{font-size:22px;margin:40px 0 14px;font-weight:700;border-bottom:2px solid var(--accent);padding-bottom:6px}
+h3{font-size:19px;margin:28px 0 10px}
+.kicker{color:var(--muted);margin:0;font-size:15px}.sub{color:var(--muted);margin:0}
+.cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;height:100%}
+.card:hover{border-color:var(--accent);text-decoration:none}
+.card .t{display:block;color:var(--text);font-weight:600}.card .s{display:block;color:var(--muted);font-size:14px}
+.days{list-style:none;padding:0;margin:0}
+.days li{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:10px}
+.days .when{display:block;color:var(--muted);font-size:14px}
+.days .deck{font-weight:600;font-size:18px}.days .s{display:block;color:var(--muted);font-size:15px}
+.days .labs{display:block;margin-top:6px;font-size:14px;word-break:break-all}
+.note{color:var(--muted);font-size:15px}.next strong{color:var(--warn)}
+footer{margin-top:48px;color:var(--muted);font-size:14px}
+kbd{font-family:var(--mono);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+code{font-family:var(--mono);background:#0C1318;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:.92em}
+pre{background:#0C1318;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto}pre code{border:0;padding:0;background:none}
+blockquote{margin:16px 0;padding:8px 16px;border-left:4px solid var(--accent);background:var(--panel);border-radius:0 8px 8px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}th{background:var(--panel)}
+img{max-width:100%;height:auto;border-radius:6px}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+.back{margin:0 0 8px}
+</style>
+</head>
+<body><main>
+<p class="back"><a href="../index.html">← 처음으로</a></p>
+<article class="guide"><h1 id="mysql-설치-가이드-windows">MySQL 설치 가이드 (Windows)</h1>
+<p><strong>1일차 2차시에 함께 진행합니다.</strong> 미리 해오셔도 좋습니다.</p>
+<p>소요 시간: 설치 10분 (+ 직접 내려받으면 5~10분 더)</p>
+<ul>
+<li><strong>버전</strong> — MySQL <strong>8.0</strong>. <code>MySQL Installer</code>는 8.0이 마지막 시리즈라 고를 것이 없습니다</li>
+<li><strong>설치되는 것</strong> — MySQL Server + <strong>Workbench</strong>(쿼리 창). 설치 프로그램 하나로 함께 깔립니다</li>
+</ul>
+<hr>
+<h2 id="1-설치-파일-받기">1. 설치 파일 받기</h2>
+<blockquote>
+<p>🔴 <strong>강사가 설치 파일을 나눠줬다면 이 절은 건너뛰고 <a href="#2-%EC%84%A4%EC%B9%98">2. 설치</a>로 가세요.</strong>
+60명이 동시에 내려받으면 강의실 네트워크가 막힙니다.</p>
+</blockquote>
+<p>직접 받아야 할 때만 아래를 따릅니다.</p>
+<h3 id="1-1-다운로드-페이지-열기">1-1. 다운로드 페이지 열기</h3>
+<p><a href="https://dev.mysql.com/downloads/installer/">https://dev.mysql.com/downloads/installer/</a></p>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/01_%EC%84%A4%EC%B9%98%ED%99%94%EB%A9%B4.png" alt="MySQL Installer 다운로드 페이지 — 버전 8.0.46 하나만 있고 다운로드 버튼이 두 개다. 위는 2.1MB web installer, 아래는 565.9MB 전체 설치본"></p>
+<p><strong>아래쪽 565.9M</strong>(<code>mysql-installer-community-8.0.46.0.msi</code>)을 받으세요.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="right">크기</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>위 (<code>…-web-community-…</code>)</td>
+<td align="right">2.1M</td>
+<td>설치 중에 인터넷으로 부품을 받습니다 — <strong>여럿이 동시에 하면 느리고 잘 끊깁니다</strong></td>
+</tr>
+<tr>
+<td><strong>아래</strong> (<code>…-community-…</code>)</td>
+<td align="right"><strong>565.9M</strong></td>
+<td>전부 포함된 오프라인 설치본 ✅</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong><code>(x86, 32-bit)</code> 표기는 무시하세요.</strong> 설치 프로그램만 32비트이고, 설치되는 MySQL 서버는 64비트입니다.
+<strong>버전은 8.0.46 하나뿐입니다.</strong> MySQL Installer는 8.0이 마지막 시리즈라 고를 것이 없습니다.</p>
+</blockquote>
+<h3 id="1-2-로그인-화면--가입하지-마세요">1-2. 로그인 화면 — 가입하지 마세요</h3>
+<p>다운로드를 누르면 Oracle 로그인 화면이 뜹니다.</p>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/02_%EB%A1%9C%EA%B7%B8%EC%9D%B8_%EB%B0%8F_%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85_%EC%95%88%EB%82%B4.png" alt="Oracle 계정 로그인·가입 안내 화면. 맨 아래에 작은 파란 글씨로 No thanks, just start my download 링크가 있다"></p>
+<p><strong>맨 아래 작은 파란 글씨 <code>No thanks, just start my download.</code></strong> 를 누르면 바로 받아집니다.</p>
+<blockquote>
+<p>🔴 <strong><code>Login</code> · <code>Sign Up</code>을 누르지 마세요.</strong> 계정은 다운로드에 <strong>필요 없습니다.</strong>
+가입하면 이메일 인증까지 하느라 10분씩 걸립니다.</p>
+</blockquote>
+<h3 id="1-3-혹시-이-화면이-나왔다면">1-3. 혹시 이 화면이 나왔다면</h3>
+<p>검색으로 들어가면 부품 목록 페이지가 나올 수 있습니다.</p>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/00_%EC%84%A4%EC%B9%98%ED%95%AD%EB%AA%A9%EC%84%A0%ED%83%9D.png" alt="MySQL Community Downloads 부품 목록. MySQL Community Server, MySQL Workbench, Connector 등이 따로 나열되어 있고 왼쪽 아래에 MySQL Installer for Windows 링크가 있다"></p>
+<p><strong>왼쪽 아래 <code>MySQL Installer for Windows</code>만</strong> 누르세요 (→ 1-1로 이어집니다).</p>
+<blockquote>
+<p><strong><code>MySQL Workbench</code>를 따로 받지 마세요.</strong> 통합 설치본에 이미 들어 있습니다.
+<code>Connector/Node.js</code>도 안 씁니다 — 12월 Node 과목에서는 <code>npm install mysql2</code>로 받습니다.</p>
+</blockquote>
+<hr>
+<h2 id="2-설치">2. 설치</h2>
+<p>받은 파일을 실행합니다. 화면이 순서대로 이어집니다 — <strong>아래 순서 그대로</strong> 따라오세요.</p>
+<h3 id="2-1-choosing-a-setup-type---full을-고르세요">2-1. <code>Choosing a Setup Type</code> — 🔴 <code>Full</code>을 고르세요</h3>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/03_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="MySQL Installer의 Choosing a Setup Type 화면. Server only · Client only · Full · Custom 네 가지 중 Full이 선택되어 있고, 오른쪽 설명에 MySQL Server, MySQL Shell, MySQL Router, MySQL Workbench, documentation, samples 가 포함된다고 적혀 있다"></p>
+<p><strong><code>Full</code></strong> 을 고르고 <code>Next</code>. 오른쪽 설명에 <strong><code>MySQL Workbench</code></strong> 가 있는지 눈으로 확인하세요.</p>
+<table>
+<thead>
+<tr>
+<th>선택지</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Server only</code></td>
+<td>❌ <strong>처음엔 이게 선택돼 있습니다.</strong> 그냥 <code>Next</code>를 누르면 <strong>Workbench가 안 깔려 쿼리 창을 못 엽니다</strong></td>
+</tr>
+<tr>
+<td><code>Client only</code></td>
+<td>❌ 서버가 없습니다</td>
+</tr>
+<tr>
+<td><strong><code>Full</code></strong></td>
+<td>✅ Server + Workbench가 함께</td>
+</tr>
+<tr>
+<td><code>Custom</code></td>
+<td>△ 직접 고르는 방식. 트리에서 <code>→</code>로 옮겨야 해서 실수하기 쉽습니다</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><code>Full</code>은 Router·Shell·문서까지 함께 깔려 용량이 큽니다. 그래도 <strong>Workbench 누락</strong>보다 낫습니다.</p>
+</blockquote>
+<h3 id="2-2-check-requirements">2-2. <code>Check Requirements</code></h3>
+<p>빨간 항목이 있으면 <code>Execute</code>, 없으면 그냥 <code>Next</code>.</p>
+<blockquote>
+<p>오프라인 설치본에는 <code>Download</code> 단계가 <strong>아예 나오지 않습니다.</strong> 바로 <code>Installation</code>으로 넘어갑니다.</p>
+</blockquote>
+<h3 id="2-3-installation--execute">2-3. <code>Installation</code> — <code>Execute</code></h3>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/04_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="Installation 화면. MySQL Server 8.0.46, MySQL Workbench 8.0.47, MySQL Shell, MySQL Router, Documentation, Samples and Examples 여섯 제품이 Ready to Install 상태로 나열되어 있다"></p>
+<p><code>Execute</code>를 누르면 설치가 시작됩니다. <strong>몇 분 걸립니다.</strong></p>
+<p>목록에 <strong><code>MySQL Workbench</code></strong> 가 있는지 다시 한 번 확인하세요. 없으면 <code>&lt; Back</code>으로 돌아가 <code>Full</code>을 고르십시오.</p>
+<blockquote>
+<p>다 끝나면 <code>Execute</code>가 <strong><code>Next</code>로 바뀝니다.</strong> 그때 누르세요.</p>
+</blockquote>
+<h3 id="2-4-product-configuration--next">2-4. <code>Product Configuration</code> — <code>Next</code></h3>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/05_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="Product Configuration 화면. MySQL Server 8.0.46, MySQL Router 8.0.46, Samples and Examples 8.0.46 세 제품이 Ready to configure 상태로 나열되어 있다"></p>
+<p>여기부터는 <strong>설정</strong>입니다. 지금까지가 파일 복사였다면, 이제 포트·비밀번호를 정합니다.</p>
+<p>세 제품이 차례로 나오는데 <strong>우리가 신경 쓸 것은 <code>MySQL Server</code> 하나</strong>입니다.
+<code>MySQL Router</code>와 <code>Samples and Examples</code>는 쓰지 않으므로 나오는 대로 <code>Next</code>/<code>Finish</code>로 넘기십시오.</p>
+<h3 id="2-5-type-and-networking--기본값">2-5. <code>Type and Networking</code> — 기본값</h3>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/06_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="Type and Networking 화면. Config Type이 Development Computer, TCP/IP 체크됨, Port 3306, X Protocol Port 33060으로 설정되어 있다"></p>
+<p><strong>전부 그대로 두고 <code>Next</code>.</strong></p>
+<ul>
+<li><code>Config Type</code> — <strong><code>Development Computer</code></strong> (메모리를 적게 씁니다)</li>
+<li><code>Port</code> — <strong>3306</strong> ← 교안이 쓰는 포트입니다</li>
+<li><code>Show Advanced and Logging Options</code> — <strong>체크하지 마세요</strong> (설정 화면이 늘어납니다)</li>
+</ul>
+<h3 id="2-6-authentication-method--기본값">2-6. <code>Authentication Method</code> — 기본값</h3>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/07_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="Authentication Method 화면. Use Strong Password Encryption for Authentication (RECOMMENDED)이 선택되어 있고, 아래에 Use Legacy Authentication Method 선택지가 있다"></p>
+<p>위쪽 <strong><code>Use Strong Password Encryption</code> (RECOMMENDED)</strong> 그대로 <code>Next</code>.</p>
+<blockquote>
+<p>노란 경고는 &quot;옛 커넥터는 이 방식을 지원 못 할 수 있다&quot;는 안내입니다.
+12월 Node 과목에서 쓸 <strong><code>mysql2</code>는 이 방식을 지원</strong>하므로 그대로 두면 됩니다.</p>
+</blockquote>
+<h3 id="2-7-accounts-and-roles---비밀번호">2-7. <code>Accounts and Roles</code> — 🔴 비밀번호</h3>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/08_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="Accounts and Roles 화면. MySQL Root Password와 Repeat Password 입력란에 값이 들어 있고 Password strength가 Weak로 표시되어 있다. 아래 MySQL User Accounts 목록은 비어 있다"></p>
+<p><strong><code>root</code> 계정의 비밀번호</strong>를 정합니다.</p>
+<ul>
+<li>수업에서는 기억하기 쉬운 것으로 — <strong>예: <code>root</code></strong></li>
+<li><strong><code>Password strength: Weak</code></strong> 라고 빨갛게 떠도 <strong>괜찮습니다.</strong> 경고일 뿐 막지 않습니다</li>
+<li>🔴 <strong>반드시 메모하세요.</strong> 완전히 잊으면 재설치가 빠릅니다 (아래 참고)</li>
+<li><code>Add User</code>는 <strong>하지 않습니다.</strong> <code>root</code> 하나로 진행합니다</li>
+</ul>
+<blockquote>
+<p>실무에서는 절대 이렇게 하지 않습니다. 교육용 로컬 DB라서 이렇게 하는 것입니다.</p>
+</blockquote>
+<p><strong>비밀번호를 나중에 바꾸려면</strong> — 재설치할 필요 없습니다. 지금 것을 <strong>기억하고 있다면</strong> 셋 중 하나로 바꿉니다.</p>
+<pre><code class="language-sql">ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;새비밀번호&#39;;
+</code></pre>
+<ul>
+<li>Workbench에서 <code>Server</code> → <code>Users and Privileges</code> → <code>root</code> 선택 → 비밀번호 변경 → <code>Apply</code></li>
+<li>시작 메뉴 → <code>MySQL Installer</code> → <code>MySQL Server</code> 옆 <strong><code>Reconfigure</code></strong> → 이 화면까지 다시 진행</li>
+</ul>
+<h3 id="2-8-windows-service--기본값">2-8. <code>Windows Service</code> — 기본값</h3>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/09_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="Windows Service 화면. Configure MySQL Server as a Windows Service 체크됨, Windows Service Name은 MySQL80, Start the MySQL Server at System Startup 체크됨, Standard System Account 선택됨"></p>
+<p><strong>전부 그대로 두고 <code>Next</code>.</strong></p>
+<ul>
+<li><code>Windows Service Name</code> — <strong><code>MySQL80</code></strong> ← 문제 해결에서 이 이름을 씁니다</li>
+<li><strong><code>Start the MySQL Server at System Startup</code></strong> — ✅ <strong>체크된 채로 두세요</strong></li>
+<li><code>Standard System Account</code> — 그대로</li>
+</ul>
+<blockquote>
+<p>자동 시작을 꺼두면 <strong>컴퓨터를 켤 때마다 직접 서비스를 시작</strong>해야 하고,
+잊으면 Workbench가 접속되지 않습니다. 수업 중에는 켜 두는 편이 안전합니다.</p>
+</blockquote>
+<details>
+<summary><b>나중에 자동 실행을 끄고 싶다면</b> (수업이 끝난 뒤 등)</summary>
+
+<p>MySQL은 서비스로 등록돼 <strong>부팅할 때마다 백그라운드에서 돕니다.</strong> 평소에 안 쓰면 꺼둘 수 있습니다.</p>
+<ol>
+<li><code>Win + R</code> → <strong><code>services.msc</code></strong> → <code>확인</code></li>
+<li>목록에서 <strong><code>MySQL80</code></strong> 찾기</li>
+<li>마우스 오른쪽 → <strong><code>속성</code></strong></li>
+<li><strong><code>시작 유형</code></strong> 을 <strong><code>자동</code></strong> → <strong><code>수동</code></strong> 으로 변경 → <code>확인</code></li>
+</ol>
+<p>이제 부팅해도 자동으로 켜지지 않습니다.</p>
+<p><strong>다시 쓸 때는 직접 시작해야 합니다</strong> — 같은 화면에서 <code>MySQL80</code> 오른쪽 클릭 → <strong><code>시작</code></strong>.</p>
+<blockquote>
+<p>🔴 <strong>끄기 전에 알아둘 것</strong> — 서비스가 멈춰 있으면 Workbench에서
+<code>Can&#39;t connect to MySQL server</code> 오류가 납니다. <strong>고장이 아니라 꺼져 있는 것</strong>입니다.
+수업 기간에는 그냥 켜 두시길 권합니다.</p>
+</blockquote>
+</details>
+
+<h3 id="2-9-server-file-permissions--기본값">2-9. <code>Server File Permissions</code> — 기본값</h3>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/10_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="Server File Permissions 화면. 데이터 폴더 경로가 C:\ProgramData\MySQL\MySQL Server 8.0\Data 로 표시되고, Yes, grant full access to the user running the Windows Service 항목이 선택되어 있다"></p>
+<p><strong>첫 번째 항목이 이미 선택돼 있습니다.</strong> 그대로 <code>Next</code>.</p>
+<blockquote>
+<p>데이터 폴더의 접근 권한을 MySQL 서비스 계정과 관리자에게만 주겠다는 뜻입니다.
+아래 두 선택지는 권한을 직접 관리하겠다는 것이라 교육용으로는 필요 없습니다.</p>
+</blockquote>
+<h3 id="2-10-apply-configuration--execute">2-10. <code>Apply Configuration</code> — <code>Execute</code></h3>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/11_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="Apply Configuration 화면. Writing configuration file, Updating Windows Firewall rules, Adjusting Windows service, Initializing database, Updating permissions, Starting the server, Applying security settings, Updating the Start menu link 여덟 단계가 나열되어 있다"></p>
+<p><code>Execute</code>를 누르면 여덟 단계가 <strong>위에서부터 차례로 초록 체크</strong>로 바뀝니다.</p>
+<blockquote>
+<p><strong><code>Initializing database (may take a long time)</code> 에서 가장 오래 멈춥니다.</strong> 정상입니다 — 기다리세요.</p>
+</blockquote>
+<p><strong>이렇게 되면 성공입니다.</strong></p>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/12_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="Apply Configuration 완료 화면. 여덟 단계 모두 초록 체크 표시가 되어 있고, 아래에 The configuration for MySQL Server 8.0.46 was successful. Click Finish to continue 메시지가 있다"></p>
+<p>여덟 단계가 <strong>전부 초록 체크</strong>이고 아래에 <strong><code>was successful</code></strong> 이라고 나오면 <code>Finish</code>.</p>
+<blockquote>
+<p>빨간 ✗ 가 뜨면 <code>Log</code> 탭에서 원인을 볼 수 있습니다.
+흔한 원인은 <strong>포트 3306 충돌</strong>(이전에 설치한 MySQL·MariaDB)입니다 — 아래 「문제 해결」 참조.</p>
+</blockquote>
+<h3 id="2-11-mysql-router-configuration--그냥-finish">2-11. <code>MySQL Router Configuration</code> — 그냥 <code>Finish</code></h3>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/13_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="MySQL Router Configuration 화면. 맨 위 Bootstrap MySQL Router for use with InnoDB Cluster 체크박스가 해제되어 있고, 그 아래 Hostname·Port·Management User·Password 입력란과 포트 번호들이 모두 회색으로 비활성화되어 있다"></p>
+<p><strong>아무것도 건드리지 말고 <code>Finish</code>.</strong></p>
+<ul>
+<li>맨 위 <strong><code>Bootstrap MySQL Router…</code> 체크를 하지 마세요.</strong> 해제된 것이 정상입니다</li>
+<li>그래서 아래 입력란이 전부 회색입니다 — <strong>채울 것이 없습니다</strong></li>
+</ul>
+<blockquote>
+<p>입력란이 많아 뭔가 적어야 할 것처럼 보이지만 아닙니다.
+Router는 <strong>서버 여러 대에 트래픽을 나눠주는 도구</strong>입니다. <code>Full</code>로 설치해서 딸려왔을 뿐,
+우리는 Workbench로 내 컴퓨터의 서버에 직접 붙습니다.</p>
+</blockquote>
+<h3 id="2-12-connect-to-server--비밀번호-확인">2-12. <code>Connect To Server</code> — 비밀번호 확인</h3>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/14_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="Samples and Examples의 Connect To Server 화면. MySQL Server 8.0.46이 Port 3306, Status Running 으로 표시되어 체크되어 있고, User name은 root, Password 칸은 비어 있으며 Check 버튼과 회색으로 비활성화된 Next 버튼이 있다"></p>
+<ol>
+<li><strong><code>Password:</code> 칸에 아까 정한 비밀번호(<code>root</code>)</strong> 입력</li>
+<li><strong><code>Check</code></strong> 클릭 → 초록 체크가 뜹니다</li>
+<li>그러면 <strong><code>Next &gt;</code>가 활성화</strong>됩니다</li>
+</ol>
+<blockquote>
+<p>🔴 <strong><code>Next</code>가 회색이라고 막힌 게 아닙니다.</strong> <code>Check</code>를 눌러 비밀번호가 맞는지 확인해야 열립니다.</p>
+</blockquote>
+<p><strong>이렇게 되면 맞습니다.</strong></p>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/15_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="Connect To Server 화면에서 Status 열이 초록 배경의 Connection succeeded 로 바뀌고, Check 버튼 옆에 초록 체크 표시가 나타났으며 Next 버튼이 활성화되어 있다"></p>
+<ul>
+<li><code>Status</code>가 초록색 <strong><code>Connection succeeded.</code></strong></li>
+<li><code>Check</code> 옆에 <strong>초록 체크</strong> ✅</li>
+<li><strong><code>Next &gt;</code>가 활성화</strong> → 누릅니다</li>
+</ul>
+<blockquote>
+<p>🔴 <strong>비밀번호가 틀리면</strong> 여기서 빨간 오류가 납니다. 이 화면은 <strong>비밀번호를 처음으로 실제 검증</strong>하는
+자리이기도 합니다 — 여기서 통과하면 Workbench 접속도 같은 비밀번호로 됩니다.</p>
+</blockquote>
+<h3 id="2-13-apply-configuration--execute">2-13. <code>Apply Configuration</code> — <code>Execute</code></h3>
+<p><code>Execute</code>를 누르면 두 단계가 지나갑니다.</p>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/16_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="Samples and Examples의 Apply Configuration 완료 화면. Checking if there are any features installed that need configuration 과 Running Scripts 두 단계가 초록 체크되어 있고, The configuration for Samples and Examples 8.0.46 was successful 메시지가 있다"></p>
+<p><strong><code>was successful</code></strong> 이 나오면 <code>Finish</code>.</p>
+<h3 id="2-14-installation-complete--끝">2-14. <code>Installation Complete</code> — 끝</h3>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/17_%EC%84%A4%EC%B9%98%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8.png" alt="Installation Complete 화면. The installation procedure has been completed 메시지와 함께 Start MySQL Workbench after setup 은 체크되어 있고 Start MySQL Shell after setup 은 체크가 해제되어 있다"></p>
+<p><strong>위 그림처럼</strong> <code>Start MySQL Shell after setup</code> 체크를 <strong>해제</strong>하고 <code>Finish</code>.</p>
+<table>
+<thead>
+<tr>
+<th>체크박스</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>✅ <code>Start MySQL Workbench after setup</code></td>
+<td><strong>켜 둡니다</strong> — 바로 접속을 확인합니다</td>
+</tr>
+<tr>
+<td>⬜ <code>Start MySQL Shell after setup</code></td>
+<td><strong>끕니다</strong> — 우리는 Shell을 쓰지 않습니다</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Shell을 켜두면 검은 명령줄 창이 같이 떠서 처음 보는 사람은 당황합니다.
+우리는 <strong>Workbench 하나로</strong> 진행합니다.</p>
+</blockquote>
+<p><strong>설치가 전부 끝났습니다.</strong> Workbench가 자동으로 열립니다 → 바로 §3으로.</p>
+<hr>
+<h2 id="3-확인">3. 확인</h2>
+<p>설치가 끝나면 <strong>MySQL Workbench</strong>가 자동으로 열립니다.
+(안 열렸으면 시작 메뉴에서 <code>MySQL Workbench</code> 실행)</p>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/18_%EC%9B%8C%ED%81%AC%EB%B2%A4%EC%B9%98_%EB%A9%94%EC%9D%B8.png" alt="MySQL Workbench 시작 화면. 왼쪽 아래 MySQL Connections 영역에 Local instance MySQL80, root, localhost:3306 타일이 있고 빨간 테두리로 강조되어 있다"></p>
+<p><strong>1)</strong> 왼쪽 아래 <code>MySQL Connections</code>의 <strong><code>Local instance MySQL80</code></strong> 타일 → 클릭
+(아래에 <code>root</code> · <code>localhost:3306</code> 이라고 적혀 있습니다)</p>
+<p><strong>2)</strong> 비밀번호를 묻는 창이 뜹니다.</p>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/19_%EC%9B%8C%ED%81%AC%EB%B2%A4%EC%B9%98_%EB%A1%9C%EA%B7%B8%EC%9D%B8.png" alt="Connect to MySQL Server 대화상자. Service는 Mysql@localhost:3306, User는 root 로 표시되고 Password 입력란에 값이 들어 있으며 Save password in vault 체크박스가 체크되어 있다"></p>
+<ul>
+<li><code>Password:</code> — 설치 때 정한 <strong><code>root</code></strong></li>
+<li><strong><code>Save password in vault</code> 체크</strong> → 다음부터 안 묻습니다</li>
+<li><code>OK</code></li>
+</ul>
+<p><strong>3)</strong> 이 화면이 나오면 <strong>접속 성공</strong>입니다.</p>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/20_%EC%9B%8C%ED%81%AC%EB%B2%A4%EC%B9%98_%EC%A0%91%EC%86%8D%EC%99%84%EB%A3%8C.png" alt="MySQL Workbench 접속 후 화면. 위쪽에 Local instance MySQL80 탭이 열려 있고, 가운데에 Query 1 이라는 빈 쿼리 편집 창이 있으며, 왼쪽 Navigator 패널 아래에 Administration 과 Schemas 탭이 있다"></p>
+<ul>
+<li>위쪽에 <strong><code>Local instance MySQL80</code></strong> 탭</li>
+<li>가운데 <strong><code>Query 1</code></strong> — 여기에 SQL을 씁니다</li>
+<li>왼쪽 아래 <strong><code>Schemas</code></strong> 탭을 누르면 데이터베이스 목록이 나옵니다
+(처음엔 <code>Administration</code> 탭이 열려 있습니다)</li>
+</ul>
+<blockquote>
+<p>여기까지 되면 <strong>설치는 끝입니다.</strong> 나머지(§4~§6)는 수업에서 함께 합니다.</p>
+</blockquote>
+<blockquote>
+<p>🔴 <strong>타일이 안 보이거나 접속이 안 되면</strong> 서버가 안 켜진 것입니다. 아래 「문제 해결」을 보세요.</p>
+</blockquote>
+<hr>
+<h2 id="4-실습-데이터베이스-만들기">4. 실습 데이터베이스 만들기</h2>
+<p><code>Query 1</code> 창에 아래 두 줄을 입력하고, 한 줄씩 <strong>Ctrl + Enter</strong>로 실행합니다.</p>
+<pre><code class="language-sql">CREATE DATABASE newsdb CHARACTER SET utf8mb4;
+USE newsdb;
+</code></pre>
+<ul>
+<li><code>CHARACTER SET utf8mb4</code> — <strong>한글이 깨지지 않게</strong> 합니다</li>
+<li><code>USE</code> — &quot;앞으로 이 데이터베이스에서 작업한다&quot;</li>
+</ul>
+<p><strong>이렇게 되면 성공입니다.</strong></p>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/21_%EC%9B%8C%ED%81%AC%EB%B2%A4%EC%B9%98_DB%EC%83%9D%EC%84%B1.png" alt="MySQL Workbench에서 create database newsdb character set utf8mb4 와 use newsdb 두 문장을 실행한 화면. 왼쪽 SCHEMAS 목록에 newsdb 가 sakila·sys·world 와 함께 보이고, 아래 Output 패널에 두 문장이 초록 체크와 함께 1 row(s) affected, 0 row(s) affected 로 기록되어 있다"></p>
+<p>확인할 곳이 <strong>두 군데</strong>입니다.</p>
+<table>
+<thead>
+<tr>
+<th>어디</th>
+<th>무엇이 보여야 하나</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>아래 <code>Output</code></strong></td>
+<td>두 줄 모두 <strong>초록 체크</strong> ✅ (<code>1 row(s) affected</code> · <code>0 row(s) affected</code>)</td>
+</tr>
+<tr>
+<td><strong>왼쪽 <code>SCHEMAS</code></strong></td>
+<td><strong><code>newsdb</code></strong> 가 목록에 있음</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><code>0 row(s) affected</code>는 오류가 아닙니다. <code>USE</code>는 &quot;이제 여기서 작업한다&quot;고 선언만 하므로
+바뀐 행이 없는 것이 정상입니다.</p>
+</blockquote>
+<blockquote>
+<p>🔴 <strong>왼쪽에 <code>newsdb</code>가 안 보이면</strong> 왼쪽 아래 <strong><code>Schemas</code></strong> 탭을 누르고
+<code>SCHEMAS</code> 옆 <strong>새로고침(회전 화살표)</strong> 을 클릭하세요. 만들어졌는데 화면만 안 바뀐 것입니다.</p>
+</blockquote>
+<blockquote>
+<p><code>sakila</code> · <code>sys</code> · <code>world</code>는 설치 때 함께 들어온 예제입니다. 우리는 쓰지 않습니다.</p>
+</blockquote>
+<h2 id="5-쿼리-실행하는-법">5. 쿼리 실행하는 법</h2>
+<p><code>Query 1</code> 창에 입력하고 실행해 봅니다.</p>
+<pre><code class="language-sql">SELECT 1;
+</code></pre>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/24_%EC%9B%8C%ED%81%AC%EB%B2%A4%EC%B9%98_%EC%BF%BC%EB%A6%AC%EC%8B%A4%ED%96%89.png" alt="MySQL Workbench에서 select 1 을 실행한 화면. Result Grid 에 1 이 표시되고 Output 에 1 row(s) returned 로 기록되어 있다"></p>
+<p><code>Result Grid</code>에 <strong><code>1</code></strong> 이 나오면 준비 완료입니다.</p>
+<p><strong>실행하는 두 가지 방법</strong></p>
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th>무엇이 실행되나</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Ctrl + Enter</strong></td>
+<td><strong>커서가 놓인 문장 하나</strong> — 수업에서 주로 씁니다</td>
+</tr>
+<tr>
+<td><strong>번개(⚡) 아이콘</strong></td>
+<td><strong>편집창 전체</strong> — 파일을 통째로 실행할 때</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔴 여러 문장을 써 놓고 <code>Ctrl + Enter</code>를 누르면 <strong>커서가 있는 문장만</strong> 실행됩니다.
+&quot;왜 하나만 되지?&quot; 싶을 때가 이 경우입니다.</p>
+</blockquote>
+<hr>
+<h2 id="6-실습-데이터-넣기">6. 실습 데이터 넣기</h2>
+<p><strong>1)</strong> 상단 메뉴 <code>File</code> → <code>Open SQL Script...</code> → 배포된 <strong><code>articles.sql</code></strong> 선택</p>
+<p><strong>2)</strong> 새 탭에 파일 내용이 열립니다.</p>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/23_%EC%9B%8C%ED%81%AC%EB%B2%A4%EC%B9%98_DB%EB%A1%9C%EB%93%9C.png" alt="MySQL Workbench에 articles.sql 이 새 탭으로 열린 화면. CREATE TABLE articles 문과 한글 기사 제목이 담긴 INSERT INTO 문이 보이고, 아래 Output 에는 DROP TABLE IF EXISTS articles 줄에 노란 경고 표시와 함께 1051 Unknown table 메시지가 있다"></p>
+<p><strong>3)</strong> <strong>번개(⚡) 아이콘</strong>을 눌러 <strong>전체 실행</strong>합니다.</p>
+<blockquote>
+<p>🔴 <strong>여기서는 <code>Ctrl + Enter</code>가 아니라 번개(⚡)입니다.</strong> 문장이 수백 개라 하나씩 실행할 수 없습니다.</p>
+</blockquote>
+<blockquote>
+<p>⚠️ <strong>노란 경고 <code>1051 Unknown table &#39;newsdb.articles&#39;</code> 는 정상입니다.</strong>
+파일 맨 앞의 <code>DROP TABLE IF EXISTS articles</code> 가 &quot;있으면 지워라&quot;인데,
+<strong>처음 실행할 때는 지울 것이 없어서</strong> 뜨는 알림입니다. 그냥 넘어가면 됩니다.</p>
+</blockquote>
+<p><strong>4)</strong> 잘 들어갔는지 확인합니다.</p>
+<pre><code class="language-sql">SELECT COUNT(*) FROM articles;
+</code></pre>
+<p><img src="images/01_MySQL-%EC%84%A4%EC%B9%98/22_%EC%9B%8C%ED%81%AC%EB%B2%A4%EC%B9%98_%EC%A1%B0%ED%9A%8C.png" alt="MySQL Workbench에서 SELECT COUNT(*) FROM articles 를 실행한 화면. Result Grid 에 500 이 표시되고, Output 에 INSERT INTO articles 가 500 row(s) affected Records: 500 Duplicates: 0 Warnings: 0 으로 기록되어 있다"></p>
+<p><strong><code>500</code></strong> 이 나오면 성공입니다.</p>
+<p>확인할 곳이 <strong>두 군데</strong>입니다.</p>
+<table>
+<thead>
+<tr>
+<th>어디</th>
+<th>무엇이 보여야 하나</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><code>Result Grid</code></strong></td>
+<td><strong>500</strong></td>
+</tr>
+<tr>
+<td><strong>아래 <code>Output</code></strong></td>
+<td><code>INSERT INTO articles …</code> 줄이 <strong><code>500 row(s) affected</code></strong> · <strong><code>Warnings: 0</code></strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong><code>Warnings: 0</code></strong> 이 중요합니다. 여기에 경고가 있으면 <strong>한글이 깨져 들어갔을 수</strong> 있습니다.
+그때는 아래 「문제 해결」의 한글 항목을 보세요.</p>
+</blockquote>
+<blockquote>
+<p>왼쪽 <code>SCHEMAS</code> → <code>newsdb</code> → <code>Tables</code> 를 펼치면 <code>articles</code> 가 보입니다.</p>
+</blockquote>
+<blockquote>
+<p>4일차부터는 <code>reporters.sql</code>도 같은 방법으로 실행합니다 — 🔴 <strong><code>articles.sql</code> 다음에</strong> 실행하세요.</p>
+</blockquote>
+<hr>
+<h2 id="문제-해결">문제 해결</h2>
+<table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인 · 해결</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>설치 중 오류가 뜬다</td>
+<td>백신을 잠시 중지하고 재시도</td>
+</tr>
+<tr>
+<td><strong>시작 메뉴에 Workbench가 아예 없다</strong></td>
+<td>첫 화면에서 <code>Server only</code>로 깔렸습니다. <strong>설치 파일을 다시 실행</strong> → <code>Full</code> 선택 → <code>Next</code>. 서버는 그대로 두고 Workbench만 추가됩니다 (재설치 아님)</td>
+</tr>
+<tr>
+<td>Workbench가 안 열린다</td>
+<td>시작 메뉴에서 다시 실행. 그래도 안 되면 재부팅</td>
+</tr>
+<tr>
+<td><strong>비밀번호가 틀리다고 한다</strong></td>
+<td>설치 때 정한 것과 <strong>대소문자까지</strong> 확인. 모르면 재설치가 빠릅니다</td>
+</tr>
+<tr>
+<td><strong>포트 3306이 사용 중</strong></td>
+<td>이전에 설치한 MySQL·MariaDB가 있습니다. 제어판에서 제거 후 재설치</td>
+</tr>
+<tr>
+<td><strong>한글이 <code>???</code>로 들어간다</strong></td>
+<td>접속 charset 문제. 쿼리 창에서 <code>SET NAMES utf8mb4;</code> 먼저 실행하고 <code>articles.sql</code>을 다시 넣으세요 (<code>DROP TABLE</code> 부터 다시)</td>
+</tr>
+<tr>
+<td><code>Local instance MySQL80</code> 타일이 없다</td>
+<td>서비스 미실행. 작업 관리자 → 서비스 → <code>MySQL80</code> → 시작</td>
+</tr>
+<tr>
+<td><strong><code>Can&#39;t connect to MySQL server</code></strong></td>
+<td>서비스가 꺼져 있습니다. <code>Win + R</code> → <code>services.msc</code> → <code>MySQL80</code> 오른쪽 클릭 → <strong><code>시작</code></strong>. 자동 실행을 껐다면 매번 이렇게 켜야 합니다 (§2-8 참조)</td>
+</tr>
+<tr>
+<td><code>articles.sql</code> 실행이 느리다</td>
+<td>정상입니다. 500건 삽입에 몇 초 걸립니다</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>혼자 오래 붙들지 마세요.</strong> 5분 넘게 막히면 손 드시면 됩니다.
+설치가 끝내 안 되면 옆 사람 화면으로 함께 진행하고, 쉬는 시간에 해결합니다.</p>
+</blockquote>
+<hr>
+<h2 id="참고--우리가-쓰지-않는-것">참고 — 우리가 쓰지 않는 것</h2>
+<p>설치를 검색하면 나오는 것들인데, 이 과정에서는 <strong>쓰지 않습니다.</strong></p>
+<ul>
+<li><strong>Docker</strong> — 가상화 설정이 필요해 교육장 PC에서 문제가 생기기 쉽습니다</li>
+<li><strong>WSL / 리눅스</strong> — 이 과정은 Windows에서 그대로 진행합니다</li>
+<li><strong>명령줄(<code>mysql</code>)</strong> — Workbench로 충분합니다. 관심 있으면 나중에</li>
+</ul>
+<p>설치 프로그램 하나면 끝납니다.</p>
+</article>
+</main></body>
+</html>

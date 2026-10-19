@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VS Code 설치 가이드 (Windows) — 미디어 프론티어</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--paper:#121B23;--panel:#1A2630;--line:#2B3B47;--text:#DDE7ED;--muted:#9DB0BE;--accent:#5CC6DE;--warn:#F2C879;
+--sans:"Pretendard Variable",Pretendard,-apple-system,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+--mono:"D2Coding","Cascadia Code",Consolas,"JetBrains Mono",Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--sans);line-height:1.7;font-size:17px}
+main{max-width:920px;margin:0 auto;padding:40px 16px 80px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:34px;margin:6px 0 4px;font-weight:700}h2{font-size:22px;margin:40px 0 14px;font-weight:700;border-bottom:2px solid var(--accent);padding-bottom:6px}
+h3{font-size:19px;margin:28px 0 10px}
+.kicker{color:var(--muted);margin:0;font-size:15px}.sub{color:var(--muted);margin:0}
+.cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;height:100%}
+.card:hover{border-color:var(--accent);text-decoration:none}
+.card .t{display:block;color:var(--text);font-weight:600}.card .s{display:block;color:var(--muted);font-size:14px}
+.days{list-style:none;padding:0;margin:0}
+.days li{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:10px}
+.days .when{display:block;color:var(--muted);font-size:14px}
+.days .deck{font-weight:600;font-size:18px}.days .s{display:block;color:var(--muted);font-size:15px}
+.days .labs{display:block;margin-top:6px;font-size:14px;word-break:break-all}
+.note{color:var(--muted);font-size:15px}.next strong{color:var(--warn)}
+footer{margin-top:48px;color:var(--muted);font-size:14px}
+kbd{font-family:var(--mono);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+code{font-family:var(--mono);background:#0C1318;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:.92em}
+pre{background:#0C1318;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto}pre code{border:0;padding:0;background:none}
+blockquote{margin:16px 0;padding:8px 16px;border-left:4px solid var(--accent);background:var(--panel);border-radius:0 8px 8px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}th{background:var(--panel)}
+img{max-width:100%;height:auto;border-radius:6px}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+.back{margin:0 0 8px}
+</style>
+</head>
+<body><main>
+<p class="back"><a href="../index.html">← 처음으로</a></p>
+<article class="guide"><h1 id="vs-code-설치-가이드-windows">VS Code 설치 가이드 (Windows)</h1>
+<p><strong>HTML/CSS 1일차(11/02) 전에 미리 해두세요.</strong> 수업 중에 설치하면 1차시가 통째로 날아갑니다.</p>
+<blockquote>
+<p>파일 이름의 <code>02_</code> 는 <strong>가이드 순서</strong>입니다. 작업 폴더의 <code>03-html-css</code> 와는 상관없습니다.</p>
+</blockquote>
+<p>소요 시간: 설치 5분 (+ 내려받기 2~3분)</p>
+<ul>
+<li><strong>무엇인가</strong> — 코드를 쓰는 프로그램(편집기)입니다. 메모장의 개발자용이라고 보면 됩니다</li>
+<li><strong>왜 필요한가</strong> — 오타를 색으로 잡아주고, 닫는 태그를 자동으로 넣어주고,
+파일 이름이 <code>.txt</code> 로 잘못 저장되는 사고를 막아줍니다</li>
+<li>🔴 <strong>12월 React·Node 수업까지 계속 씁니다.</strong> 지금 한 번 깔면 끝입니다</li>
+</ul>
+<hr>
+<h2 id="1-설치-파일-받기">1. 설치 파일 받기</h2>
+<blockquote>
+<p>🔴 <strong>강사가 설치 파일을 나눠줬다면 이 절은 건너뛰고 <a href="#2-%EC%84%A4%EC%B9%98">2. 설치</a>로 가세요.</strong></p>
+</blockquote>
+<p><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
+<p>파란 <strong><code>Download for Windows</code></strong> 버튼을 누릅니다.
+<code>VSCodeUserSetup-x64-&lt;버전&gt;.exe</code> 파일이 받아집니다. (약 100MB)</p>
+<blockquote>
+<p>계정 가입도, 로그인도 필요 없습니다. 무료입니다.</p>
+</blockquote>
+<hr>
+<h2 id="2-설치">2. 설치</h2>
+<p>받은 파일을 더블클릭합니다. 고를 것이 거의 없지만 <strong>두 화면</strong>만 봐야 합니다.</p>
+<p><strong>① 사용권 계약</strong> — 「동의합니다」를 고르기 전에는 「다음」이 눌리지 않습니다.</p>
+<p><strong>② 추가 작업 선택</strong> — 아래 두 개를 체크하세요.</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>어떻게</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><code>Code(으)로 열기</code> 작업을 Windows 탐색기 파일 상황에 맞는 메뉴에 추가</strong></td>
+<td>✅ <strong>체크</strong></td>
+</tr>
+<tr>
+<td><strong><code>Code(으)로 열기</code> 작업을 Windows 탐색기 디렉터리 상황에 맞는 메뉴에 추가</strong></td>
+<td>✅ <strong>체크</strong></td>
+</tr>
+<tr>
+<td>지원되는 파일 형식에 대한 편집기로 Code 등록</td>
+<td>✅ 체크 (기본값)</td>
+</tr>
+<tr>
+<td><code>PATH</code>에 추가</td>
+<td>✅ 체크 (기본값)</td>
+</tr>
+<tr>
+<td>바탕 화면에 바로 가기 만들기</td>
+<td>취향껏</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔴 <strong>위의 두 개를 꼭 체크하세요.</strong> 폴더에 오른쪽 클릭해서 바로 열 수 있게 됩니다.
+안 했어도 괜찮습니다 — VS Code 안에서 <code>파일 → 폴더 열기</code> 로 하면 됩니다.</p>
+</blockquote>
+<p>설치가 끝나면 <strong>「VS Code 실행」</strong> 에 체크하고 마침을 누릅니다.</p>
+<hr>
+<h2 id="3-한국어로-바꾸기-선택">3. 한국어로 바꾸기 (선택)</h2>
+<p>처음 실행하면 영어입니다. Windows 표시 언어가 한국어면 <strong>오른쪽 아래에 한국어 팩 안내</strong>가
+뜨기도 합니다 — 뜨면 설치·다시 시작 버튼을 누르면 됩니다.</p>
+<p><strong>안 뜨는 경우가 더 많습니다.</strong> 그때는 직접 깝니다:</p>
+<ol>
+<li>왼쪽 세로 막대에서 <strong>네모 네 개 아이콘</strong>(확장) 클릭 — 또는 <code>Ctrl+Shift+X</code></li>
+<li>검색창에 <strong><code>Korean</code></strong> 입력</li>
+<li><strong><code>Korean Language Pack for Visual Studio Code</code></strong> 의 <code>Install</code> 클릭</li>
+<li>오른쪽 아래 <code>Restart</code> 클릭</li>
+</ol>
+<blockquote>
+<p>영어 그대로 쓰셔도 전혀 문제없습니다. 수업에서는 <strong>양쪽 이름을 다 말합니다.</strong></p>
+</blockquote>
+<hr>
+<h2 id="4-작업-폴더-열기">4. 작업 폴더 열기</h2>
+<p><strong>이것까지 해두면 1일차 준비 끝입니다.</strong></p>
+<ol>
+<li><code>파일</code> → <code>폴더 열기</code> (<code>File</code> → <code>Open Folder</code>)</li>
+<li><strong><code>C:\dev\workspace\03-html-css</code></strong> 를 선택<ul>
+<li>폴더가 없으면 그 자리에서 <strong>새 폴더</strong>로 만드세요</li>
+<li><code>C:\dev\workspace</code> 를 아직 안 만들었다면 <a href="00_%EC%9B%8C%ED%81%AC%EC%8A%A4%ED%8E%98%EC%9D%B4%EC%8A%A4.html"><code>00_워크스페이스.md</code></a> 를 먼저 보세요</li>
+</ul>
+</li>
+<li>「이 폴더에 있는 파일 작성자를 신뢰합니까?」가 뜨면 <strong><code>예, 작성자를 신뢰합니다</code></strong></li>
+<li>왼쪽 탐색기에서 <strong>새 폴더</strong> 아이콘 → <strong><code>day01</code></strong></li>
+</ol>
+<blockquote>
+<p>🔴 <strong><code>03-html-css</code> 입니다.</strong> 02 가 아닙니다 — 워크스페이스 가이드의 번호를 그대로 씁니다.
+🔴 수업 첫날 파일을 여기에 만듭니다. <strong><code>day01</code> 까지 미리 만들어 두세요.</strong></p>
+</blockquote>
+<hr>
+<h2 id="5-잘-됐는지-확인--1분">5. 잘 됐는지 확인 — 1분</h2>
+<ol>
+<li><code>day01</code> 안에 <strong>새 파일</strong> 아이콘 클릭 → 이름을 <strong><code>test.html</code></strong> 로</li>
+<li>아래 한 줄을 그대로 칩니다</li>
+</ol>
+<pre><code class="language-html">&lt;h1&gt;Hello&lt;/h1&gt;
+</code></pre>
+<ol start="3">
+<li><code>Ctrl+S</code> 로 저장</li>
+<li>🔴 <strong>오른쪽 아래를 보세요.</strong> <code>UTF-8</code> 과 <code>HTML</code> 이라고 떠 있어야 합니다</li>
+<li>탐색기(<code>Win+E</code>)에서 그 파일을 찾아 <strong>더블클릭</strong></li>
+</ol>
+<p><strong>브라우저가 열리고 크고 굵은 「Hello」가 뜨면 성공입니다.</strong></p>
+<blockquote>
+<p>🔴 한글이 아니라 영문인 이유가 있습니다. 한글이 안 깨지게 하는 한 줄을
+<strong>수업 첫날 배웁니다</strong> — 지금은 확인만 하는 것이라 영문으로 둡니다.</p>
+</blockquote>
+<p>확인했으면 <code>test.html</code> 은 지워도 됩니다.</p>
+<hr>
+<h2 id="자주-나는-문제">자주 나는 문제</h2>
+<table>
+<thead>
+<tr>
+<th>증상</th>
+<th>해결</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>파일을 더블클릭했는데 <strong>글자만</strong> 나온다</td>
+<td>파일 이름이 <code>test.html.txt</code> 입니다. VS Code 에서 만들면 안 그렇습니다. 탐색기에서 <code>보기</code> → <code>파일 확장명</code> 을 켜서 확인하세요</td>
+</tr>
+<tr>
+<td>브라우저가 아니라 다른 프로그램이 열린다</td>
+<td>파일에 오른쪽 클릭 → <code>연결 프로그램</code> → 브라우저 선택</td>
+</tr>
+<tr>
+<td>한글이 <code>ë°˜ë„ì²´</code> 처럼 깨진다</td>
+<td>오른쪽 아래가 <code>UTF-8</code> 인지 보세요. 아니면 그 글자를 클릭 → <code>인코딩하여 다시 열기</code> → <code>UTF-8</code></td>
+</tr>
+<tr>
+<td>오른쪽 아래에 <code>CRLF</code> 라고 떠 있다</td>
+<td>그대로 두세요. Windows 기본값이고 HTML 에는 아무 영향이 없습니다</td>
+</tr>
+<tr>
+<td>저장했는데 브라우저가 그대로다</td>
+<td>브라우저에서 <strong><code>F5</code></strong> 를 누르세요</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="-아직-하지-마세요">🔴 아직 하지 마세요</h2>
+<ul>
+<li><strong>확장(Extension) 이것저것 설치</strong> — 수업에서 필요할 때 하나씩 같이 깝니다</li>
+<li><strong>테마·글꼴 바꾸기</strong> — 나중에 얼마든지 할 수 있습니다</li>
+<li><strong>AI 자동완성 켜기</strong> — 🔴 지금은 <strong>직접 쳐야 손에 남습니다.</strong>
+자동완성이 태그를 대신 써주면 오늘 배울 것을 못 배웁니다</li>
+</ul>
+<blockquote>
+<p>6일 동안 쓸 기능은 <strong>파일 만들기 · 저장 · <code>Shift+Alt+F</code>(자동 정렬)</strong> 셋뿐입니다.</p>
+</blockquote>
+</article>
+</main></body>
+</html>

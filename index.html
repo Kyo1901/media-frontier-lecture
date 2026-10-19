@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>강의 자료 — 미디어 프론티어</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--paper:#121B23;--panel:#1A2630;--line:#2B3B47;--text:#DDE7ED;--muted:#9DB0BE;--accent:#5CC6DE;--warn:#F2C879;
+--sans:"Pretendard Variable",Pretendard,-apple-system,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+--mono:"D2Coding","Cascadia Code",Consolas,"JetBrains Mono",Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--sans);line-height:1.7;font-size:17px}
+main{max-width:920px;margin:0 auto;padding:40px 16px 80px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:34px;margin:6px 0 4px;font-weight:700}h2{font-size:22px;margin:40px 0 14px;font-weight:700;border-bottom:2px solid var(--accent);padding-bottom:6px}
+h3{font-size:19px;margin:28px 0 10px}
+.kicker{color:var(--muted);margin:0;font-size:15px}.sub{color:var(--muted);margin:0}
+.cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;height:100%}
+.card:hover{border-color:var(--accent);text-decoration:none}
+.card .t{display:block;color:var(--text);font-weight:600}.card .s{display:block;color:var(--muted);font-size:14px}
+.days{list-style:none;padding:0;margin:0}
+.days li{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:10px}
+.days .when{display:block;color:var(--muted);font-size:14px}
+.days .deck{font-weight:600;font-size:18px}.days .s{display:block;color:var(--muted);font-size:15px}
+.days .labs{display:block;margin-top:6px;font-size:14px;word-break:break-all}
+.note{color:var(--muted);font-size:15px}.next strong{color:var(--warn)}
+footer{margin-top:48px;color:var(--muted);font-size:14px}
+kbd{font-family:var(--mono);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+code{font-family:var(--mono);background:#0C1318;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:.92em}
+pre{background:#0C1318;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto}pre code{border:0;padding:0;background:none}
+blockquote{margin:16px 0;padding:8px 16px;border-left:4px solid var(--accent);background:var(--panel);border-radius:0 8px 8px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}th{background:var(--panel)}
+img{max-width:100%;height:auto;border-radius:6px}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+.back{margin:0 0 8px}
+</style>
+</head>
+<body><main>
+
+<header>
+  <p class="kicker">[미디어 프론티어] 데이터 분석을 통한 고객경험 설계과정</p>
+  <h1>강의 자료</h1>
+  <p class="sub">2026-10-19 ~ 2027-02-05 · 74일 · 284시간 · 수업한 날까지 순서대로 열립니다</p>
+</header>
+
+<section>
+  <h2>시작하기</h2>
+  <ul class="cards">
+    <li><a class="card" href="slides/00-ot/ot.html"><span class="t">74일 뒤, 내 손으로 만든 서비스 하나</span><span class="s">오리엔테이션 — 강사 소개 · 전체 커리큘럼</span></a></li>
+    <li><a class="card" href="guides/00_%EC%9B%8C%ED%81%AC%EC%8A%A4%ED%8E%98%EC%9D%B4%EC%8A%A4.html"><span class="t">작업 폴더 만들기 — 74일을 담을 곳</span><span class="s">설치·환경 가이드</span></a></li>
+    <li><a class="card" href="guides/01_MySQL-%EC%84%A4%EC%B9%98.html"><span class="t">MySQL 설치 가이드 (Windows)</span><span class="s">설치·환경 가이드</span></a></li>
+    <li><a class="card" href="guides/02_VSCode-%EC%84%A4%EC%B9%98.html"><span class="t">VS Code 설치 가이드 (Windows)</span><span class="s">설치·환경 가이드</span></a></li>
+  </ul>
+  <p class="note">실습 데이터 — <a href="data/articles.sql" download>articles.sql</a> · <a href="data/reporters.sql" download>reporters.sql</a> (4일차부터)</p>
+</section>
+
+<section>
+  <h2>DB (MySQL)</h2>
+  <ol class="days">
+    <li><span class="when">1일차 · 10/19 (월)</span><a class="deck" href="slides/01-db/day01.html">데이터베이스</a><span class="s">왜 DB인가 · 설치 · 첫 SELECT</span><span class="labs"><a href="labs/01-db/01-db-day01.zip" download>실습 파일 받기 (zip)</a> · <a href="labs/01-db/day01/practice-1.sql" download>practice-1.sql</a></span></li>
+  </ol>
+</section>
+
+<p class="note next">다음 공개 — <strong>10/20 (화)</strong> DB (MySQL)</p>
+
+<footer>슬라이드는 <kbd>→</kbd> <kbd>←</kbd> 로 넘기고, <kbd>F</kbd> 로 전체 화면입니다.</footer>
+
+</main></body>
+</html>
