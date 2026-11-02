@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTML 태그 정리 — 미디어 프론티어</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--paper:#121B23;--panel:#1A2630;--line:#2B3B47;--text:#DDE7ED;--muted:#9DB0BE;--accent:#5CC6DE;--warn:#F2C879;
+--sans:"Pretendard Variable",Pretendard,-apple-system,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+--mono:"D2Coding","Cascadia Code",Consolas,"JetBrains Mono",Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--sans);line-height:1.7;font-size:17px}
+main{max-width:920px;margin:0 auto;padding:40px 16px 80px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:34px;margin:6px 0 4px;font-weight:700}h2{font-size:22px;margin:40px 0 14px;font-weight:700;border-bottom:2px solid var(--accent);padding-bottom:6px}
+h3{font-size:19px;margin:28px 0 10px}
+.kicker{color:var(--muted);margin:0;font-size:15px}.sub{color:var(--muted);margin:0}
+.cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;height:100%}
+.card:hover{border-color:var(--accent);text-decoration:none}
+.card .t{display:block;color:var(--text);font-weight:600}.card .s{display:block;color:var(--muted);font-size:14px}
+.days{list-style:none;padding:0;margin:0}
+.days li{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:10px}
+.days .when{display:block;color:var(--muted);font-size:14px}
+.days .deck{font-weight:600;font-size:18px}.days .s{display:block;color:var(--muted);font-size:15px}
+.days .labs{display:block;margin-top:6px;font-size:14px;word-break:break-all}
+.note{color:var(--muted);font-size:15px}.next strong{color:var(--warn)}
+footer{margin-top:48px;color:var(--muted);font-size:14px}
+kbd{font-family:var(--mono);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+code{font-family:var(--mono);background:#0C1318;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:.92em}
+pre{background:#0C1318;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto}pre code{border:0;padding:0;background:none}
+blockquote{margin:16px 0;padding:8px 16px;border-left:4px solid var(--accent);background:var(--panel);border-radius:0 8px 8px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}th{background:var(--panel)}
+img{max-width:100%;height:auto;border-radius:6px}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+.back{margin:0 0 8px}
+</style>
+</head>
+<body><main>
+<p class="back"><a href="../index.html">← 처음으로</a></p>
+<article class="guide"><h1 id="html-태그-정리">HTML 태그 정리</h1>
+<blockquote>
+<p><strong>★ 표시 = 우리 수업에서 직접 다루는 것</strong>입니다. 뒤의 숫자는 HTML/CSS 몇 일차인지입니다.
+★ 이 없는 것은 <strong>필요할 때 찾아보는 용도</strong>입니다 — 지금 몰라도 됩니다.
+수업 슬라이드와 이 문서가 다르게 말하는 것 같으면 <strong>슬라이드가 우선</strong>입니다. 물어봐 주십시오.</p>
+</blockquote>
+<h2 id="목차">목차</h2>
+<ol>
+<li><a href="#%EB%AC%B8%EC%84%9C-%EA%B5%AC%EC%A1%B0">문서 구조</a></li>
+<li><a href="#%ED%85%8D%EC%8A%A4%ED%8A%B8-%EC%84%9C%EC%8B%9D">텍스트 서식</a></li>
+<li><a href="#%EB%AA%A9%EB%A1%9D">목록</a></li>
+<li><a href="#%EB%A7%81%ED%81%AC%EC%99%80-%EC%9D%B4%EB%AF%B8%EC%A7%80">링크와 이미지</a></li>
+<li><a href="#%ED%85%8C%EC%9D%B4%EB%B8%94">테이블</a></li>
+<li><a href="#%ED%8F%BC">폼</a></li>
+<li><a href="#%EC%8B%9C%EB%A7%A8%ED%8B%B1-%EC%9A%94%EC%86%8C">시맨틱 요소</a></li>
+<li><a href="#%EB%A9%80%ED%8B%B0%EB%AF%B8%EB%94%94%EC%96%B4">멀티미디어</a></li>
+</ol>
+<hr>
+<h2 id="문서-구조">문서 구조</h2>
+<h3 id="doctype-html--1일차"><code>&lt;!DOCTYPE html&gt;</code> ★ 1일차</h3>
+<p>「이 문서는 HTML 이다」라는 선언 — 맨 위에 한 줄 (지금 표준은 번호 없는 HTML Living Standard)</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+</code></pre>
+<h3 id="html--1일차"><code>&lt;html&gt;</code> ★ 1일차</h3>
+<p>HTML 문서의 루트(최상위) 요소</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>lang</code> (언어 지정)</li>
+</ul>
+<pre><code class="language-html">&lt;html lang=&quot;ko&quot;&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="head--1일차"><code>&lt;head&gt;</code> ★ 1일차</h3>
+<p>문서의 메타데이터를 포함하는 영역</p>
+<pre><code class="language-html">&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;페이지 제목&lt;/title&gt;
+&lt;/head&gt;
+</code></pre>
+<h3 id="meta--1일차"><code>&lt;meta&gt;</code> ★ 1일차</h3>
+<p>문서의 메타데이터를 정의</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>charset</code>, <code>name</code>, <code>content</code></li>
+<li>🔴 <code>viewport</code> 는 속성이 아니라 <code>name=&quot;viewport&quot;</code> 의 <strong>값</strong>입니다 — 휴대폰에서 화면 폭을 기기에 맞추라는 뜻</li>
+</ul>
+<pre><code class="language-html">&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;description&quot; content=&quot;페이지 설명&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+</code></pre>
+<h3 id="title--1일차"><code>&lt;title&gt;</code> ★ 1일차</h3>
+<p>브라우저 탭에 표시되는 문서의 제목</p>
+<pre><code class="language-html">&lt;title&gt;웹 페이지 제목&lt;/title&gt;
+</code></pre>
+<h3 id="link--3일차"><code>&lt;link&gt;</code> ★ 3일차</h3>
+<p>외부 리소스(주로 CSS)를 연결</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>rel</code>, <code>href</code>, <code>type</code></li>
+</ul>
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;
+&lt;link rel=&quot;icon&quot; href=&quot;favicon.ico&quot;&gt;
+</code></pre>
+<h3 id="style--3일차"><code>&lt;style&gt;</code> ★ 3일차</h3>
+<p>내부 CSS 스타일을 정의</p>
+<pre><code class="language-html">&lt;style&gt;
+  body { background-color: #f0f0f0; }
+&lt;/style&gt;
+</code></pre>
+<h3 id="script--js-1일차"><code>&lt;script&gt;</code> ★ JS 1일차</h3>
+<p>JavaScript 코드를 포함하거나 외부 스크립트를 연결</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>src</code>, <code>type</code>, <code>defer</code>, <code>async</code></li>
+</ul>
+<pre><code class="language-html">&lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  console.log(&#39;Hello World&#39;);
+&lt;/script&gt;
+</code></pre>
+<h3 id="body--1일차"><code>&lt;body&gt;</code> ★ 1일차</h3>
+<p>문서의 본문 내용을 포함</p>
+<pre><code class="language-html">&lt;body&gt;
+  
+&lt;/body&gt;
+</code></pre>
+<hr>
+<h2 id="텍스트-서식">텍스트 서식</h2>
+<h3 id="h1--h6--12일차"><code>&lt;h1&gt;</code> ~ <code>&lt;h6&gt;</code> ★ 1·2일차</h3>
+<p>제목(Heading) 태그 (h1이 가장 중요, h6이 가장 덜 중요)</p>
+<pre><code class="language-html">&lt;h1&gt;가장 중요한 제목&lt;/h1&gt;
+&lt;h2&gt;두 번째 제목&lt;/h2&gt;
+&lt;h3&gt;세 번째 제목&lt;/h3&gt;
+</code></pre>
+<h3 id="p--1일차"><code>&lt;p&gt;</code> ★ 1일차</h3>
+<p>단락(Paragraph)을 정의</p>
+<pre><code class="language-html">&lt;p&gt;이것은 하나의 단락입니다.&lt;/p&gt;
+</code></pre>
+<h3 id="br--2일차"><code>&lt;br&gt;</code> ★ 2일차</h3>
+<p>줄 바꿈 (빈 태그)</p>
+<pre><code class="language-html">첫 번째 줄&lt;br&gt;
+두 번째 줄
+</code></pre>
+<h3 id="hr--2일차"><code>&lt;hr&gt;</code> ★ 2일차</h3>
+<p>수평선을 삽입 (주제의 구분)</p>
+<pre><code class="language-html">&lt;p&gt;첫 번째 섹션&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;두 번째 섹션&lt;/p&gt;
+</code></pre>
+<h3 id="strong--2일차"><code>&lt;strong&gt;</code> ★ 2일차</h3>
+<p>중요한 텍스트 (굵게 표시)</p>
+<pre><code class="language-html">&lt;strong&gt;중요한 내용&lt;/strong&gt;
+</code></pre>
+<h3 id="b--2일차"><code>&lt;b&gt;</code> ★ 2일차</h3>
+<p>단순히 굵은 텍스트 (시각적 효과만)</p>
+<pre><code class="language-html">&lt;b&gt;굵은 글씨&lt;/b&gt;
+</code></pre>
+<h3 id="em--2일차"><code>&lt;em&gt;</code> ★ 2일차</h3>
+<p>강조된 텍스트 (기울임)</p>
+<pre><code class="language-html">&lt;em&gt;강조된 내용&lt;/em&gt;
+</code></pre>
+<h3 id="i--2일차"><code>&lt;i&gt;</code> ★ 2일차</h3>
+<p>단순히 기울임 텍스트 (시각적 효과만)</p>
+<pre><code class="language-html">&lt;i&gt;기울임 글씨&lt;/i&gt;
+</code></pre>
+<h3 id="mark"><code>&lt;mark&gt;</code></h3>
+<p>하이라이트된 텍스트</p>
+<pre><code class="language-html">&lt;mark&gt;강조 표시&lt;/mark&gt;
+</code></pre>
+<h3 id="small"><code>&lt;small&gt;</code></h3>
+<p>작은 텍스트</p>
+<pre><code class="language-html">&lt;small&gt;작은 글씨&lt;/small&gt;
+</code></pre>
+<h3 id="del"><code>&lt;del&gt;</code></h3>
+<p>삭제된 텍스트 (취소선)</p>
+<pre><code class="language-html">&lt;del&gt;삭제된 내용&lt;/del&gt;
+</code></pre>
+<h3 id="ins"><code>&lt;ins&gt;</code></h3>
+<p>삽입된 텍스트 (밑줄)</p>
+<pre><code class="language-html">&lt;ins&gt;추가된 내용&lt;/ins&gt;
+</code></pre>
+<h3 id="sub"><code>&lt;sub&gt;</code></h3>
+<p>아래 첨자</p>
+<pre><code class="language-html">H&lt;sub&gt;2&lt;/sub&gt;O
+</code></pre>
+<h3 id="sup"><code>&lt;sup&gt;</code></h3>
+<p>위 첨자</p>
+<pre><code class="language-html">X&lt;sup&gt;2&lt;/sup&gt;
+</code></pre>
+<h3 id="code"><code>&lt;code&gt;</code></h3>
+<p>코드 조각을 표시</p>
+<pre><code class="language-html">&lt;code&gt;console.log(&#39;Hello&#39;);&lt;/code&gt;
+</code></pre>
+<h3 id="pre"><code>&lt;pre&gt;</code></h3>
+<p>미리 서식이 지정된 텍스트 (공백과 줄바꿈 유지)</p>
+<pre><code class="language-html">&lt;pre&gt;
+  function hello() {
+    console.log(&#39;Hello&#39;);
+  }
+&lt;/pre&gt;
+</code></pre>
+<h3 id="blockquote"><code>&lt;blockquote&gt;</code></h3>
+<p>인용 블록</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>cite</code> (출처 URL)</li>
+</ul>
+<pre><code class="language-html">&lt;blockquote cite=&quot;https://example.com&quot;&gt;
+  인용된 내용입니다.
+&lt;/blockquote&gt;
+</code></pre>
+<h3 id="span--6일차"><code>&lt;span&gt;</code> ★ 6일차</h3>
+<p>인라인 컨테이너 (스타일링 목적)</p>
+<pre><code class="language-html">&lt;p&gt;이것은 &lt;span class=&quot;highlight&quot;&gt;강조할 부분&lt;/span&gt; 입니다.&lt;/p&gt;
+</code></pre>
+<h3 id="div--1일차"><code>&lt;div&gt;</code> ★ 1일차</h3>
+<p>블록 레벨 컨테이너 (그룹화 및 레이아웃)</p>
+<pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
+  &lt;p&gt;컨텐츠&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<hr>
+<h2 id="목록">목록</h2>
+<h3 id="ul--2일차"><code>&lt;ul&gt;</code> ★ 2일차</h3>
+<p>순서 없는 목록 (Unordered List)</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li&gt;첫 번째 항목&lt;/li&gt;
+  &lt;li&gt;두 번째 항목&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<h3 id="ol--2일차"><code>&lt;ol&gt;</code> ★ 2일차</h3>
+<p>순서 있는 목록 (Ordered List)</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>type</code>, <code>start</code>, <code>reversed</code></li>
+</ul>
+<pre><code class="language-html">&lt;ol&gt;
+  &lt;li&gt;첫 번째&lt;/li&gt;
+  &lt;li&gt;두 번째&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+<h3 id="li--2일차"><code>&lt;li&gt;</code> ★ 2일차</h3>
+<p>목록 항목 (List Item)</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li&gt;항목&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<h3 id="dl--2일차"><code>&lt;dl&gt;</code> ★ 2일차</h3>
+<p>설명 목록 (Description List)</p>
+<pre><code class="language-html">&lt;dl&gt;
+  &lt;dt&gt;HTML&lt;/dt&gt;
+  &lt;dd&gt;HyperText Markup Language&lt;/dd&gt;
+  &lt;dt&gt;CSS&lt;/dt&gt;
+  &lt;dd&gt;Cascading Style Sheets&lt;/dd&gt;
+&lt;/dl&gt;
+</code></pre>
+<h3 id="dt--2일차"><code>&lt;dt&gt;</code> ★ 2일차</h3>
+<p>설명 목록의 용어 (Description Term)</p>
+<h3 id="dd--2일차"><code>&lt;dd&gt;</code> ★ 2일차</h3>
+<p>설명 목록의 정의 (Description Definition)</p>
+<hr>
+<h2 id="링크와-이미지">링크와 이미지</h2>
+<h3 id="a--2일차"><code>&lt;a&gt;</code> ★ 2일차</h3>
+<p>하이퍼링크를 생성</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>href</code>, <code>target</code>, <code>download</code>, <code>rel</code></li>
+</ul>
+<pre><code class="language-html">&lt;a href=&quot;https://example.com&quot;&gt;링크 텍스트&lt;/a&gt;
+&lt;a href=&quot;page.html&quot; target=&quot;_blank&quot;&gt;새 탭에서 열기&lt;/a&gt;
+&lt;a href=&quot;mailto:email@example.com&quot;&gt;이메일 보내기&lt;/a&gt;
+&lt;a href=&quot;tel:010-1234-5678&quot;&gt;전화 걸기&lt;/a&gt;
+</code></pre>
+<h3 id="img--2일차"><code>&lt;img&gt;</code> ★ 2일차</h3>
+<p>이미지를 삽입 (빈 태그)</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>src</code>, <code>alt</code>, <code>width</code>, <code>height</code></li>
+</ul>
+<pre><code class="language-html">&lt;img src=&quot;image.jpg&quot; alt=&quot;이미지 설명&quot; width=&quot;300&quot;&gt;
+&lt;img src=&quot;divider.png&quot; alt=&quot;&quot;&gt;  
+</code></pre>
+<h3 id="figure"><code>&lt;figure&gt;</code></h3>
+<p>독립적인 콘텐츠를 그룹화 (이미지, 다이어그램 등)</p>
+<pre><code class="language-html">&lt;figure&gt;
+  &lt;img src=&quot;photo.jpg&quot; alt=&quot;사진&quot;&gt;
+  &lt;figcaption&gt;사진 설명&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+<h3 id="figcaption"><code>&lt;figcaption&gt;</code></h3>
+<p>figure 요소의 캡션</p>
+<hr>
+<h2 id="테이블">테이블</h2>
+<h3 id="table--2일차"><code>&lt;table&gt;</code> ★ 2일차</h3>
+<p>테이블을 정의</p>
+<pre><code class="language-html">&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;이름&lt;/th&gt;
+      &lt;th&gt;나이&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;홍길동&lt;/td&gt;
+      &lt;td&gt;30&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</code></pre>
+<h3 id="thead--2일차"><code>&lt;thead&gt;</code> ★ 2일차</h3>
+<p>테이블의 헤더 그룹</p>
+<h3 id="tbody--2일차"><code>&lt;tbody&gt;</code> ★ 2일차</h3>
+<p>테이블의 본문 그룹</p>
+<h3 id="tfoot"><code>&lt;tfoot&gt;</code></h3>
+<p>테이블의 푸터 그룹</p>
+<h3 id="tr--2일차"><code>&lt;tr&gt;</code> ★ 2일차</h3>
+<p>테이블의 행 (Table Row)</p>
+<h3 id="th--2일차"><code>&lt;th&gt;</code> ★ 2일차</h3>
+<p>테이블의 헤더 셀</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>colspan</code>, <code>rowspan</code>, <code>scope</code></li>
+</ul>
+<pre><code class="language-html">&lt;th colspan=&quot;2&quot;&gt;병합된 헤더&lt;/th&gt;
+</code></pre>
+<h3 id="td--2일차"><code>&lt;td&gt;</code> ★ 2일차</h3>
+<p>테이블의 데이터 셀</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>colspan</code>, <code>rowspan</code></li>
+</ul>
+<pre><code class="language-html">&lt;td rowspan=&quot;2&quot;&gt;세로로 병합&lt;/td&gt;
+</code></pre>
+<hr>
+<h2 id="폼">폼</h2>
+<h3 id="form--2일차"><code>&lt;form&gt;</code> ★ 2일차</h3>
+<p>사용자 입력을 받는 폼을 정의</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>action</code>, <code>method</code>, <code>enctype</code></li>
+</ul>
+<pre><code class="language-html">&lt;form action=&quot;/submit&quot; method=&quot;POST&quot;&gt;
+  
+&lt;/form&gt;
+</code></pre>
+<h3 id="input--2일차"><code>&lt;input&gt;</code> ★ 2일차</h3>
+<p>다양한 입력 필드 (빈 태그)</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>type</code>, <code>name</code>, <code>value</code>, <code>placeholder</code>, <code>required</code></li>
+<li><strong>type 종류</strong>: text, password, email, number, tel, url, date, checkbox, radio, file, submit, button 등</li>
+</ul>
+<pre><code class="language-html">&lt;input type=&quot;text&quot; name=&quot;username&quot; placeholder=&quot;이름 입력&quot;&gt;
+&lt;input type=&quot;email&quot; name=&quot;email&quot; required&gt;
+&lt;input type=&quot;checkbox&quot; name=&quot;agree&quot; value=&quot;yes&quot;&gt;
+&lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;male&quot;&gt;
+</code></pre>
+<h3 id="textarea"><code>&lt;textarea&gt;</code></h3>
+<p>여러 줄의 텍스트 입력</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>rows</code>, <code>cols</code>, <code>placeholder</code></li>
+</ul>
+<pre><code class="language-html">&lt;textarea rows=&quot;4&quot; cols=&quot;50&quot; placeholder=&quot;내용을 입력하세요&quot;&gt;&lt;/textarea&gt;
+</code></pre>
+<h3 id="button--2일차"><code>&lt;button&gt;</code> ★ 2일차</h3>
+<p>클릭 가능한 버튼</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>type</code> (submit, reset, button)</li>
+</ul>
+<pre><code class="language-html">&lt;button type=&quot;submit&quot;&gt;제출&lt;/button&gt;
+&lt;button type=&quot;button&quot;&gt;클릭&lt;/button&gt;
+</code></pre>
+<h3 id="select--2일차"><code>&lt;select&gt;</code> ★ 2일차</h3>
+<p>드롭다운 목록</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>name</code>, <code>multiple</code></li>
+</ul>
+<pre><code class="language-html">&lt;select name=&quot;city&quot;&gt;
+  &lt;option value=&quot;&quot;&gt;선택하세요&lt;/option&gt;
+  &lt;option value=&quot;seoul&quot;&gt;서울&lt;/option&gt;
+  &lt;option value=&quot;busan&quot;&gt;부산&lt;/option&gt;
+&lt;/select&gt;
+</code></pre>
+<h3 id="option--2일차"><code>&lt;option&gt;</code> ★ 2일차</h3>
+<p>select의 옵션 항목</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>value</code>, <code>selected</code></li>
+</ul>
+<h3 id="label--2일차"><code>&lt;label&gt;</code> ★ 2일차</h3>
+<p>입력 요소의 레이블</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>for</code> (연결할 input의 id)</li>
+</ul>
+<pre><code class="language-html">&lt;label for=&quot;username&quot;&gt;이름:&lt;/label&gt;
+&lt;input type=&quot;text&quot; id=&quot;username&quot; name=&quot;username&quot;&gt;
+</code></pre>
+<h3 id="fieldset"><code>&lt;fieldset&gt;</code></h3>
+<p>관련된 폼 요소들을 그룹화</p>
+<pre><code class="language-html">&lt;fieldset&gt;
+  &lt;legend&gt;개인정보&lt;/legend&gt;
+  &lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;
+&lt;/fieldset&gt;
+</code></pre>
+<h3 id="legend"><code>&lt;legend&gt;</code></h3>
+<p>fieldset의 제목</p>
+<hr>
+<h2 id="시맨틱-요소">시맨틱 요소</h2>
+<h3 id="header--1일차"><code>&lt;header&gt;</code> ★ 1일차</h3>
+<p>문서나 섹션의 헤더 영역</p>
+<pre><code class="language-html">&lt;header&gt;
+  &lt;h1&gt;사이트 제목&lt;/h1&gt;
+  &lt;nav&gt;...&lt;/nav&gt;
+&lt;/header&gt;
+</code></pre>
+<h3 id="nav--1일차"><code>&lt;nav&gt;</code> ★ 1일차</h3>
+<p>네비게이션 링크 영역</p>
+<pre><code class="language-html">&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;/&quot;&gt;홈&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;/about&quot;&gt;소개&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</code></pre>
+<h3 id="main--1일차"><code>&lt;main&gt;</code> ★ 1일차</h3>
+<p>문서의 주요 콘텐츠 (페이지당 하나만 사용)</p>
+<pre><code class="language-html">&lt;main&gt;
+  &lt;article&gt;...&lt;/article&gt;
+&lt;/main&gt;
+</code></pre>
+<h3 id="section--1일차"><code>&lt;section&gt;</code> ★ 1일차</h3>
+<p>문서의 섹션 (주제별 그룹)</p>
+<pre><code class="language-html">&lt;section&gt;
+  &lt;h2&gt;섹션 제목&lt;/h2&gt;
+  &lt;p&gt;내용...&lt;/p&gt;
+&lt;/section&gt;
+</code></pre>
+<h3 id="article--1일차"><code>&lt;article&gt;</code> ★ 1일차</h3>
+<p>독립적인 콘텐츠 (블로그 글, 뉴스 기사 등)</p>
+<pre><code class="language-html">&lt;article&gt;
+  &lt;h2&gt;기사 제목&lt;/h2&gt;
+  &lt;p&gt;기사 내용...&lt;/p&gt;
+&lt;/article&gt;
+</code></pre>
+<h3 id="aside--5일차"><code>&lt;aside&gt;</code> ★ 5일차</h3>
+<p>사이드바나 부가 정보</p>
+<pre><code class="language-html">&lt;aside&gt;
+  &lt;h3&gt;관련 링크&lt;/h3&gt;
+  &lt;ul&gt;...&lt;/ul&gt;
+&lt;/aside&gt;
+</code></pre>
+<h3 id="time--1일차-과제"><code>&lt;time&gt;</code> ★ 1일차 과제</h3>
+<p>날짜·시각 — 사람이 읽는 글자와 기계가 읽는 값을 함께 적는다</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>datetime</code></li>
+</ul>
+<pre><code class="language-html">&lt;time datetime=&quot;2026-09-07T10:35&quot;&gt;2026-09-07 10:35&lt;/time&gt;
+</code></pre>
+<h3 id="footer--1일차"><code>&lt;footer&gt;</code> ★ 1일차</h3>
+<p>문서나 섹션의 푸터 영역</p>
+<pre><code class="language-html">&lt;footer&gt;
+  &lt;p&gt;&amp;copy; 2026 회사명. All rights reserved.&lt;/p&gt;
+&lt;/footer&gt;
+</code></pre>
+<hr>
+<h2 id="멀티미디어">멀티미디어</h2>
+<h3 id="video"><code>&lt;video&gt;</code></h3>
+<p>비디오를 삽입</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>src</code>, <code>controls</code>, <code>autoplay</code>, <code>loop</code>, <code>muted</code>, <code>width</code>, <code>height</code></li>
+</ul>
+<pre><code class="language-html">&lt;video src=&quot;video.mp4&quot; controls width=&quot;640&quot;&gt;
+  브라우저가 비디오를 지원하지 않습니다.
+&lt;/video&gt;
+
+
+&lt;video controls&gt;
+  &lt;source src=&quot;video.mp4&quot; type=&quot;video/mp4&quot;&gt;
+  &lt;source src=&quot;video.webm&quot; type=&quot;video/webm&quot;&gt;
+&lt;/video&gt;
+</code></pre>
+<h3 id="audio"><code>&lt;audio&gt;</code></h3>
+<p>오디오를 삽입</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>src</code>, <code>controls</code>, <code>autoplay</code>, <code>loop</code></li>
+</ul>
+<pre><code class="language-html">&lt;audio src=&quot;audio.mp3&quot; controls&gt;
+  브라우저가 오디오를 지원하지 않습니다.
+&lt;/audio&gt;
+</code></pre>
+<h3 id="source"><code>&lt;source&gt;</code></h3>
+<p>video나 audio의 미디어 소스를 지정</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>src</code>, <code>type</code></li>
+</ul>
+<h3 id="iframe"><code>&lt;iframe&gt;</code></h3>
+<p>다른 HTML 페이지를 삽입</p>
+<ul>
+<li><strong>주요 속성</strong>: <code>src</code>, <code>width</code>, <code>height</code>, <code>title</code>(무엇을 담았는지 — 스크린 리더가 읽는다)</li>
+</ul>
+<pre><code class="language-html">&lt;iframe src=&quot;https://www.youtube.com/embed/VIDEO_ID&quot; width=&quot;560&quot; height=&quot;315&quot; title=&quot;영상 제목&quot;&gt;&lt;/iframe&gt;
+</code></pre>
+<hr>
+<h2 id="부록-자주-사용하는-특수-문자-html-entity">부록: 자주 사용하는 특수 문자 (HTML Entity)</h2>
+<table>
+<thead>
+<tr>
+<th>표시</th>
+<th>HTML Entity</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt;</td>
+<td><code>&amp;lt;</code></td>
+<td>Less than</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td><code>&amp;gt;</code></td>
+<td>Greater than</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td><code>&amp;amp;</code></td>
+<td>Ampersand</td>
+</tr>
+<tr>
+<td>&quot;</td>
+<td><code>&amp;quot;</code></td>
+<td>Quotation mark</td>
+</tr>
+<tr>
+<td>&#39;</td>
+<td><code>&amp;apos;</code></td>
+<td>Apostrophe</td>
+</tr>
+<tr>
+<td>공백</td>
+<td><code>&amp;nbsp;</code></td>
+<td>Non-breaking space</td>
+</tr>
+<tr>
+<td>©</td>
+<td><code>&amp;copy;</code></td>
+<td>Copyright</td>
+</tr>
+<tr>
+<td>®</td>
+<td><code>&amp;reg;</code></td>
+<td>Registered</td>
+</tr>
+<tr>
+<td>™</td>
+<td><code>&amp;trade;</code></td>
+<td>Trademark</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="추가-참고사항">추가 참고사항</h2>
+<h3 id="블록-레벨-요소-vs-인라인-요소--4일차">블록 레벨 요소 vs 인라인 요소 ★ 4일차</h3>
+<p><strong>블록 레벨 요소</strong></p>
+<ul>
+<li>새로운 줄에서 시작하고 전체 너비를 차지</li>
+<li>예: <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;header&gt;</code> 등</li>
+</ul>
+<p><strong>인라인 요소</strong></p>
+<ul>
+<li>줄 바꿈 없이 내용만큼의 공간만 차지</li>
+<li>예: <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;input&gt;</code> 등</li>
+</ul>
+<h3 id="좋은-html-작성-습관">좋은 HTML 작성 습관</h3>
+<ol>
+<li><strong>시맨틱 태그 사용</strong>: 의미에 맞는 태그를 사용 (<code>&lt;div&gt;</code> 대신 <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code> 등)</li>
+<li><strong>들여쓰기와 가독성</strong>: 코드를 읽기 쉽게 정리</li>
+<li><strong>alt 속성</strong>: 모든 이미지에 alt 속성 추가 (접근성)</li>
+<li><strong>닫는 태그</strong>: 모든 태그를 올바르게 닫기</li>
+<li><strong>소문자 사용</strong>: 태그와 속성은 소문자로 작성</li>
+<li><strong>속성 값 따옴표</strong>: 속성 값은 큰따옴표로 감싸기</li>
+</ol>
+</article>
+</main></body>
+</html>
