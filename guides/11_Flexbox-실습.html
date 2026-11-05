@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- 참고 · 공개 2026-11-05 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox 속성 실습</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+    <style>
+        /* 색은 강의 사이트(publish.js)와 도해 팔레트(배경 #121B23 기준 대비 실측값)를 따른다 */
+        :root {
+            color-scheme: dark;
+            --paper: #121B23;
+            --panel: #1A2630;
+            --deep: #0C1318;
+            --line: #2B3B47;
+            --text: #DDE7ED;
+            --muted: #9DB0BE;
+            --accent: #5CC6DE;
+            --warn: #F2C879;
+            --sans: "Pretendard Variable", Pretendard, -apple-system, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+            --mono: "D2Coding", "Cascadia Code", Consolas, "JetBrains Mono", Menlo, monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--sans);
+            background: var(--paper);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px 16px;
+            min-height: 100vh;
+        }
+
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .back { max-width: 1400px; margin: 0 auto 12px; }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text);
+            margin-bottom: 10px;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 28px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-left: 5px solid var(--accent);
+            border-radius: 12px;
+        }
+
+        .section-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '📦';
+            margin-right: 10px;
+        }
+
+        .description {
+            color: var(--text);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--paper);
+            border-radius: 8px;
+            border-left: 3px solid var(--warn);
+        }
+
+        .controls {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        .control-group select,
+        .control-group input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            background: var(--deep);
+            color: var(--text);
+            border: 2px solid var(--line);
+            border-radius: 8px;
+            font-family: var(--sans);
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .control-group select:focus,
+        .control-group input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .flex-container {
+            display: flex;
+            background: var(--deep);
+            border: 3px dashed var(--accent);
+            padding: 20px;
+            border-radius: 10px;
+            min-height: 300px;
+            transition: all 0.3s ease;
+        }
+
+        .flex-item {
+            color: #FFFFFF;
+            padding: 25px;
+            border: 2px solid;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.2em;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .flex-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* 도해 팔레트 — 채움과 테두리를 짝으로 쓴다 */
+        .item-1 { background: #1F5065; border-color: #5CC6DE; }
+        .item-2 { background: #4A3A18; border-color: #F2C879; }
+        .item-3 { background: #4A211E; border-color: #EC8B81; }
+        .item-4 { background: #344A59; border-color: #6D869A; }
+        .item-5 { background: #22442C; border-color: #8FD19E; }
+
+        .code-display {
+            background: var(--deep);
+            color: var(--text);
+            border: 1px solid var(--line);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-family: var(--mono);
+            font-size: 0.95em;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .code-display .property {
+            color: var(--accent);
+        }
+
+        .code-display .value {
+            color: var(--warn);
+        }
+
+        .code-display .comment {
+            color: var(--muted);
+        }
+
+        .info-box {
+            background: var(--panel);
+            border-left: 4px solid var(--accent);
+            color: var(--muted);
+            padding: 12px 15px;
+            margin: 12px 0;
+            border-radius: 5px;
+        }
+
+        .info-box strong {
+            color: var(--accent);
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .grid-layout h3 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .btn-reset {
+            background: var(--accent);
+            color: var(--paper);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: var(--sans);
+            font-size: 1em;
+            font-weight: 700;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .btn-reset:hover {
+            background: var(--text);
+            transform: translateY(-2px);
+        }
+
+        .btn-reset:focus-visible {
+            outline: 3px solid var(--text);
+            outline-offset: 2px;
+        }
+
+        .individual-item-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .highlight {
+            background: #4A3A18;
+            color: var(--warn);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: var(--mono);
+            font-weight: 600;
+        }
+
+        /* 실전 예제의 상자들 */
+        .demo-bar  { background: var(--deep); border: 1px solid var(--line); color: var(--text); padding: 15px; border-radius: 8px; }
+        .demo-card { background: #1F5065; border: 2px solid #5CC6DE; color: #FFFFFF; padding: 20px; border-radius: 8px; text-align: center; }
+        .demo-box  { background: #344A59; border: 2px solid #6D869A; color: #FFFFFF; padding: 15px; border-radius: 8px; }
+        .demo-dot  { background: #4A3A18; border: 2px solid #F2C879; color: #FFFFFF; padding: 20px; border-radius: 8px; font-weight: 700; }
+
+        .summary { border-left-color: var(--warn); }
+        .summary h2 { color: var(--warn); margin-bottom: 12px; }
+        .summary-body { background: var(--paper); padding: 20px; border-radius: 10px; line-height: 2; }
+        .summary-body code { font-family: var(--mono); color: var(--accent); }
+    </style>
+</head>
+<body>
+    <p class="back"><a href="../index.html">← 처음으로</a></p>
+
+    <div class="container">
+        <h1>🎯 Flexbox 속성 실습</h1>
+        <p class="subtitle">속성을 바꾸면서 Flexbox가 어떻게 움직이는지 바로 확인해 보세요</p>
+
+        <!-- 1. Flex Container 속성 -->
+        <div class="section">
+            <h2 class="section-title">Flex Container 속성</h2>
+            <div class="description">
+                <strong>Flex Container</strong>는 <span class="highlight">display: flex</span>를 적용한 부모 요소입니다.
+                Container에 적용하는 속성들은 자식 요소들의 배치 방향, 정렬, 줄바꿈 등을 제어합니다.
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="flexDirection">flex-direction (주축 방향 설정)</label>
+                    <select id="flexDirection">
+                        <option value="row">row - 가로 방향 (기본값)</option>
+                        <option value="row-reverse">row-reverse - 가로 역방향</option>
+                        <option value="column">column - 세로 방향</option>
+                        <option value="column-reverse">column-reverse - 세로 역방향</option>
+                    </select>
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> flex-direction은 아이템들이 배치되는 주축(main axis)의 방향을 결정합니다.
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="justifyContent">justify-content (주축 정렬)</label>
+                    <select id="justifyContent">
+                        <option value="flex-start">flex-start - 시작점 정렬 (기본값)</option>
+                        <option value="flex-end">flex-end - 끝점 정렬</option>
+                        <option value="center">center - 가운데 정렬</option>
+                        <option value="space-between">space-between - 양끝 배치, 균등 간격</option>
+                        <option value="space-around">space-around - 아이템 주위 균등 간격</option>
+                        <option value="space-evenly">space-evenly - 완전 균등 간격</option>
+                    </select>
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> 주축(flex-direction 방향)을 따라 아이템들을 어떻게 배치할지 결정합니다.
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="alignItems">align-items (교차축 정렬)</label>
+                    <select id="alignItems">
+                        <option value="stretch">stretch - 늘려서 채우기 (기본값)</option>
+                        <option value="flex-start">flex-start - 시작점 정렬</option>
+                        <option value="flex-end">flex-end - 끝점 정렬</option>
+                        <option value="center">center - 가운데 정렬</option>
+                        <option value="baseline">baseline - 텍스트 베이스라인 정렬</option>
+                    </select>
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> 교차축(주축의 수직 방향)을 따라 아이템들을 어떻게 정렬할지 결정합니다.
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="flexWrap">flex-wrap (줄바꿈 설정)</label>
+                    <select id="flexWrap">
+                        <option value="nowrap">nowrap - 줄바꿈 안함 (기본값)</option>
+                        <option value="wrap">wrap - 줄바꿈 허용</option>
+                        <option value="wrap-reverse">wrap-reverse - 역방향 줄바꿈</option>
+                    </select>
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> 컨테이너 크기를 넘어갈 때 아이템을 다음 줄로 넘길지 결정합니다.
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="alignContent">align-content (여러 줄일 때 교차축 정렬)</label>
+                    <select id="alignContent">
+                        <option value="stretch">stretch - 늘려서 채우기 (기본값)</option>
+                        <option value="flex-start">flex-start - 시작점 정렬</option>
+                        <option value="flex-end">flex-end - 끝점 정렬</option>
+                        <option value="center">center - 가운데 정렬</option>
+                        <option value="space-between">space-between - 양끝 배치, 균등 간격</option>
+                        <option value="space-around">space-around - 줄 주위 균등 간격</option>
+                    </select>
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> flex-wrap: wrap으로 여러 줄이 생겼을 때 줄들 사이의 간격을 조절합니다.
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="gap">gap (아이템 간격, px)</label>
+                    <input type="number" id="gap" value="5" min="0" max="50">
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> 아이템들 사이의 간격을 한 번에 설정합니다. (margin 대신 사용 권장)
+                    </div>
+                </div>
+
+                <button class="btn-reset" onclick="resetContainer()">초기화</button>
+            </div>
+
+            <div id="flexContainer1" class="flex-container">
+                <div class="flex-item item-1">Item 1</div>
+                <div class="flex-item item-2">Item 2</div>
+                <div class="flex-item item-3">Item 3</div>
+                <div class="flex-item item-4">Item 4</div>
+                <div class="flex-item item-5">Item 5</div>
+            </div>
+
+            <div class="code-display" id="containerCode"></div>
+        </div>
+
+        <!-- 2. Flex Item 속성 -->
+        <div class="section">
+            <h2 class="section-title">Flex Item 속성</h2>
+            <div class="description">
+                <strong>Flex Item</strong>은 Flex Container의 자식 요소들입니다.
+                각 아이템에 개별적으로 적용하는 속성들로 크기, 순서, 정렬을 제어할 수 있습니다.
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="targetItem">제어할 아이템 선택</label>
+                    <select id="targetItem">
+                        <option value="1">Item 1 (파란색)</option>
+                        <option value="2">Item 2 (노란색)</option>
+                        <option value="3">Item 3 (빨간색)</option>
+                    </select>
+                </div>
+
+                <div class="individual-item-controls">
+                    <div class="control-group">
+                        <label for="flexGrow">flex-grow (확장 비율)</label>
+                        <input type="number" id="flexGrow" value="0" min="0" max="5">
+                        <div class="info-box">
+                            <strong>💡</strong> 남은 공간을 얼마나 차지할지 비율
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="flexShrink">flex-shrink (축소 비율)</label>
+                        <input type="number" id="flexShrink" value="1" min="0" max="5">
+                        <div class="info-box">
+                            <strong>💡</strong> 공간이 부족할 때 얼마나 줄어들지
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="flexBasis">flex-basis (기본 크기, px)</label>
+                        <input type="number" id="flexBasis" value="100" min="0" max="400" step="10">
+                        <div class="info-box">
+                            <strong>💡</strong> 아이템의 기본 크기 설정
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="order">order (순서)</label>
+                        <input type="number" id="order" value="0" min="-3" max="3">
+                        <div class="info-box">
+                            <strong>💡</strong> 아이템의 표시 순서 (작을수록 앞)
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="alignSelf">align-self (개별 정렬)</label>
+                        <select id="alignSelf">
+                            <option value="auto">auto - 부모 설정 따름</option>
+                            <option value="flex-start">flex-start</option>
+                            <option value="flex-end">flex-end</option>
+                            <option value="center">center</option>
+                            <option value="stretch">stretch</option>
+                        </select>
+                        <div class="info-box">
+                            <strong>💡</strong> 이 아이템만 다르게 정렬
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-reset" onclick="resetItems()">아이템 초기화</button>
+            </div>
+
+            <div id="flexContainer2" class="flex-container">
+                <div class="flex-item item-1" id="item1">Item 1</div>
+                <div class="flex-item item-2" id="item2">Item 2</div>
+                <div class="flex-item item-3" id="item3">Item 3</div>
+            </div>
+
+            <div class="code-display" id="itemCode"></div>
+        </div>
+
+        <!-- 3. 실전 레이아웃 예제 -->
+        <div class="section">
+            <h2 class="section-title">실전 레이아웃 예제</h2>
+            <div class="description">
+                실제 웹사이트에서 자주 사용하는 Flexbox 레이아웃 패턴들을 확인해 보세요.
+            </div>
+
+            <div class="grid-layout">
+                <!-- 예제 1: 헤더 레이아웃 -->
+                <div>
+                    <h3>📱 헤더 레이아웃</h3>
+                    <div class="demo-bar" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="font-weight: 700; font-size: 1.3em; color: var(--accent);">로고</div>
+                        <div style="display: flex; gap: 20px;">
+                            <span>메뉴1</span>
+                            <span>메뉴2</span>
+                            <span>메뉴3</span>
+                        </div>
+                    </div>
+                    <div class="code-display" style="font-size: 0.85em; margin-top: 10px;">display: flex;
+justify-content: space-between;
+align-items: center;</div>
+                </div>
+
+                <!-- 예제 2: 카드 레이아웃 -->
+                <div>
+                    <h3>🎴 카드 그리드</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <div class="demo-card" style="flex: 1 1 calc(33.333% - 10px); min-width: 80px;">카드1</div>
+                        <div class="demo-card" style="flex: 1 1 calc(33.333% - 10px); min-width: 80px;">카드2</div>
+                        <div class="demo-card" style="flex: 1 1 calc(33.333% - 10px); min-width: 80px;">카드3</div>
+                    </div>
+                    <div class="code-display" style="font-size: 0.85em; margin-top: 10px;">display: flex;
+flex-wrap: wrap;
+flex: 1 1 calc(33.333% - 10px);</div>
+                </div>
+
+                <!-- 예제 3: 센터링 -->
+                <div>
+                    <h3>🎯 완벽한 중앙 정렬</h3>
+                    <div class="demo-bar" style="display: flex; justify-content: center; align-items: center; height: 150px;">
+                        <div class="demo-dot">가운데!</div>
+                    </div>
+                    <div class="code-display" style="font-size: 0.85em; margin-top: 10px;">display: flex;
+justify-content: center;
+align-items: center;</div>
+                </div>
+
+                <!-- 예제 4: 사이드바 레이아웃 -->
+                <div>
+                    <h3>📐 사이드바 레이아웃</h3>
+                    <div style="display: flex; gap: 10px; height: 150px;">
+                        <div class="demo-box" style="flex: 0 0 80px;">사이드바</div>
+                        <div class="demo-bar" style="flex: 1;">메인 콘텐츠 영역</div>
+                    </div>
+                    <div class="code-display" style="font-size: 0.85em; margin-top: 10px;">사이드바: flex: 0 0 80px;
+메인: flex: 1;</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 핵심 요약 -->
+        <div class="section summary">
+            <h2>📚 Flexbox 핵심 요약</h2>
+            <div class="summary-body">
+                <p><strong>✅ Container 속성 (부모에 적용):</strong></p>
+                <p>• <code>display: flex</code> - Flexbox 시작!</p>
+                <p>• <code>flex-direction</code> - 배치 방향 (row/column)</p>
+                <p>• <code>justify-content</code> - 주축 정렬</p>
+                <p>• <code>align-items</code> - 교차축 정렬</p>
+                <p>• <code>flex-wrap</code> - 줄바꿈 여부</p>
+                <p>• <code>gap</code> - 간격 설정</p>
+
+                <p style="margin-top: 20px;"><strong>✅ Item 속성 (자식에 적용):</strong></p>
+                <p>• <code>flex-grow</code> - 확장 비율 (기본 0)</p>
+                <p>• <code>flex-shrink</code> - 축소 비율 (기본 1)</p>
+                <p>• <code>flex-basis</code> - 기본 크기</p>
+                <p>• <code>order</code> - 순서 변경</p>
+                <p>• <code>align-self</code> - 개별 정렬</p>
+
+                <p style="margin-top: 20px;"><strong>💡 자주 쓰는 조합:</strong></p>
+                <p>• 중앙 정렬: <code>justify-content: center</code> + <code>align-items: center</code></p>
+                <p>• 양끝 배치: <code>justify-content: space-between</code></p>
+                <p>• 반응형 그리드: <code>flex-wrap: wrap</code> + <code>flex: 1 1 calc(33.333% - gap)</code></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 코드 표시: 속성 이름과 값을 색으로 구분한다
+        const 줄 = (prop, val) => `  <span class="property">${prop}</span>: <span class="value">${val}</span>;`;
+
+        // Container 속성 업데이트
+        const container1 = document.getElementById('flexContainer1');
+        const containerCode = document.getElementById('containerCode');
+
+        function updateContainer() {
+            const direction = document.getElementById('flexDirection').value;
+            const justify = document.getElementById('justifyContent').value;
+            const alignItems = document.getElementById('alignItems').value;
+            const wrap = document.getElementById('flexWrap').value;
+            const alignContent = document.getElementById('alignContent').value;
+            const gap = document.getElementById('gap').value;
+
+            container1.style.flexDirection = direction;
+            container1.style.justifyContent = justify;
+            container1.style.alignItems = alignItems;
+            container1.style.flexWrap = wrap;
+            container1.style.alignContent = alignContent;
+            container1.style.gap = gap + 'px';
+
+            containerCode.innerHTML = [
+                '.flex-container {',
+                줄('display', 'flex'),
+                줄('flex-direction', direction),
+                줄('justify-content', justify),
+                줄('align-items', alignItems),
+                줄('flex-wrap', wrap),
+                줄('align-content', alignContent),
+                줄('gap', gap + 'px'),
+                '}'
+            ].join('\n');
+        }
+
+        // Item 속성 업데이트
+        const itemCode = document.getElementById('itemCode');
+
+        function updateItem() {
+            const targetNum = document.getElementById('targetItem').value;
+            const item = document.getElementById('item' + targetNum);
+            const grow = document.getElementById('flexGrow').value;
+            const shrink = document.getElementById('flexShrink').value;
+            const basis = document.getElementById('flexBasis').value;
+            const order = document.getElementById('order').value;
+            const alignSelf = document.getElementById('alignSelf').value;
+
+            item.style.flexGrow = grow;
+            item.style.flexShrink = shrink;
+            item.style.flexBasis = basis + 'px';
+            item.style.order = order;
+            item.style.alignSelf = alignSelf;
+
+            itemCode.innerHTML = [
+                `#item${targetNum} {`,
+                줄('flex-grow', grow),
+                줄('flex-shrink', shrink),
+                줄('flex-basis', basis + 'px'),
+                줄('order', order),
+                줄('align-self', alignSelf),
+                '}',
+                '',
+                '<span class="comment">/* 단축 속성: flex: grow shrink basis; */</span>',
+                `<span class="property">flex</span>: <span class="value">${grow} ${shrink} ${basis}px</span>;`
+            ].join('\n');
+        }
+
+        // 아이템 선택 시 현재 값 표시
+        document.getElementById('targetItem').addEventListener('change', function() {
+            const item = document.getElementById('item' + this.value);
+
+            document.getElementById('flexGrow').value = item.style.flexGrow || 0;
+            document.getElementById('flexShrink').value = item.style.flexShrink || 1;
+            document.getElementById('flexBasis').value = parseInt(item.style.flexBasis) || 100;
+            document.getElementById('order').value = item.style.order || 0;
+            document.getElementById('alignSelf').value = item.style.alignSelf || 'auto';
+
+            updateItem();
+        });
+
+        // 초기화 함수
+        function resetContainer() {
+            document.getElementById('flexDirection').value = 'row';
+            document.getElementById('justifyContent').value = 'flex-start';
+            document.getElementById('alignItems').value = 'stretch';
+            document.getElementById('flexWrap').value = 'nowrap';
+            document.getElementById('alignContent').value = 'stretch';
+            document.getElementById('gap').value = 5;
+            updateContainer();
+        }
+
+        function resetItems() {
+            ['item1', 'item2', 'item3'].forEach(id => {
+                const item = document.getElementById(id);
+                item.style.flexGrow = '0';
+                item.style.flexShrink = '1';
+                item.style.flexBasis = '100px';
+                item.style.order = '0';
+                item.style.alignSelf = 'auto';
+            });
+
+            document.getElementById('flexGrow').value = 0;
+            document.getElementById('flexShrink').value = 1;
+            document.getElementById('flexBasis').value = 100;
+            document.getElementById('order').value = 0;
+            document.getElementById('alignSelf').value = 'auto';
+            updateItem();
+        }
+
+        // 이벤트 리스너
+        document.getElementById('flexDirection').addEventListener('change', updateContainer);
+        document.getElementById('justifyContent').addEventListener('change', updateContainer);
+        document.getElementById('alignItems').addEventListener('change', updateContainer);
+        document.getElementById('flexWrap').addEventListener('change', updateContainer);
+        document.getElementById('alignContent').addEventListener('change', updateContainer);
+        document.getElementById('gap').addEventListener('input', updateContainer);
+
+        document.getElementById('flexGrow').addEventListener('input', updateItem);
+        document.getElementById('flexShrink').addEventListener('input', updateItem);
+        document.getElementById('flexBasis').addEventListener('input', updateItem);
+        document.getElementById('order').addEventListener('input', updateItem);
+        document.getElementById('alignSelf').addEventListener('change', updateItem);
+
+        // 처음 열 때: 세 아이템 모두 기본값으로 맞춘 뒤 코드 표시
+        resetContainer();
+        resetItems();
+    </script>
+</body>
+</html>
