@@ -1,0 +1,93 @@
+/* ============================================================
+   실습 ⑤ — 창을 줄여도 안 깨지게 (Grid · 반응형)
+
+   🔴 어제(4일차) style.css 를 이어서 씁니다. 아래는 어제까지의 답 요약입니다.
+   🔴 list.html 은 한 글자도 안 고칩니다.
+      (오늘은 .page 로 한 겹 감싸고 aside 가 하나 늘었습니다 — 이미 들어 있습니다)
+   🔴 창을 줄였다 늘렸다 하며 확인하십시오. F12 → Ctrl+Shift+M 이 편합니다.
+   ============================================================ */
+
+/* ── 어제까지 (그대로 두세요) ───────────────────────────── */
+/* 🔴 어제 정답과 세 곳이 다릅니다.
+     · .content·.search 의 max-width 를 뺐습니다 — 오늘은 판이 폭을 정합니다
+     · .card 의 width 와 margin-bottom 을 뺐습니다 — [1] 의 auto-fill 이 정합니다
+   자기 어제 파일을 이어 쓰려면 그 세 줄을 지우십시오.
+   🔴 특히 .card { width: calc(50% - 8px) } 가 남아 있으면 [1] 이 안 보입니다. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, "Malgun Gothic", sans-serif;
+  line-height: 1.6;
+  background: #f5f5f5;
+  color: #333;
+}
+
+ul { list-style: none; }
+a  { color: inherit; text-decoration: none; }
+
+.site-header { background: #1f5065; color: #fff; padding: 16px; font-size: 20px; font-weight: 700; }
+.site-nav    { background: #2a4553; color: #fff; padding: 12px 16px; }
+.site-nav ul { display: flex; gap: 16px; }
+.search      { display: flex; align-items: center; gap: 8px; padding: 16px; }
+.content     { padding: 16px; }
+.card        { background: #fff; padding: 16px; border: 1px solid #ddd; }
+.card a      { font-size: 18px; font-weight: 600; }
+.card dl     { display: flex; gap: 6px; flex-wrap: wrap; font-size: 14px; color: #777; }
+.side        { background: #fff; padding: 16px; border: 1px solid #ddd; }
+h1           { font-size: 28px; margin-bottom: 16px; }
+
+
+/* ── 오늘 ─────────────────────────────────────────────── */
+
+/* [1] 카드 목록을 Grid 로 바꾸세요. 열 수는 **정하지 마세요.**
+       · .content > ul 에 display 와 gap
+       · grid-template-columns 에 repeat(auto-fill, minmax(...))
+       · 🔴 .card 의 width 는 필요 없습니다. 판이 정해 줍니다
+       창을 줄였다 늘렸다 하며 열이 몇 개까지 바뀝니까?  ___ ~ ___ 열 */
+
+
+
+
+/* [2] 페이지 판을 짜세요.
+       .page 안에 여섯이 들어 있습니다:
+         .site-header  .site-nav  .search  .content  .side  footer
+       🔴 넓은 화면에서는 이렇게:
+
+           header
+           nav
+           search
+           content   side      ← 본문 옆에 사이드
+           footer
+
+       · .page 에 display: grid 와 grid-template-columns (본문 1fr, 사이드 260px)
+       · grid-template-areas 로 위 그림을 글자로 옮기세요
+       · 각 요소에 grid-area 를 붙이세요 */
+
+
+
+
+/* [3] 700px 이하에서는 한 줄로 쌓이게 하세요.
+       · @media (max-width: 700px) { ... }
+       · grid-template-columns 를 1fr 로
+       · grid-template-areas 를 한 칸씩 다시 그리세요
+       🔴 사이드가 본문 아래로 갑니다. 이 파일은 HTML 에서도 aside 가 뒤라
+          순서가 그대로지만, page.html 에서는 aside 가 **앞**인데도 본문이 위로 왔습니다
+          (슬라이드 22번) — 그것이 CSS 로 순서를 바꾼 것입니다
+       바뀌는 순간의 폭을 F12 기기 모드로 확인하세요.  ___ px */
+
+
+
+
+/* ★ [4] 메뉴도 좁을 때 줄바꿈되게 하세요.
+       · .site-nav ul 에 flex-wrap
+       · 🔴 Flex 와 Grid 를 한 화면에서 같이 쓰는 것입니다 */
+
+
+
+
+/* ★★ 더 해볼 사람에게
+       ① minmax 의 최소값을 200px · 400px 로 바꿔보고 열 수가 어떻게 되는지 보세요.
+          (과제 2번입니다)
+       ② 사이드를 **왼쪽**으로 옮겨보세요. grid-template-areas 글자만 바꾸면 됩니다.
+       ③ 모바일 우선으로 바꿔보세요 — 기본을 1열로 쓰고
+          @media (min-width: 700px) 에서 두 칸으로. 결과가 같습니까? */
