@@ -21,7 +21,7 @@ BASE = 'http://localhost:8000/'
 #    · Content-Type 헤더  r.headers['Content-Type']
 #    · 본문 길이          len(r.content)
 #
-#  출력 형식:  [1] 200 text/html 8549
+#  출력 형식:  [1] 200 text/html 8605
 #  🔴 형식을 지켜 주세요. 뒤에서 서로 답을 맞춰 볼 때 씁니다.
 
 r = requests.get(BASE)
