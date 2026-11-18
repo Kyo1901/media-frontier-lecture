@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>우리 팀 주제 — 팀 이름</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 🔴 이 파일은 «팀 폴더»의 web/ 안에 둡니다. 차트는 web/images/ 에 있어야 보입니다. -->
+
+  <header class="site-header">
+    <div class="wrap">
+      <p class="team">미디어 프론티어 10기 · 미니프로젝트 · 팀 이름</p>
+      <h1>주제를 한 줄로</h1>
+      <p class="lead">무엇을 몇 건 가지고 무엇을 나눠 봤는지 한 문장</p>
+    </div>
+    <!-- 메뉴 링크 href="#이름" 은 아래 section 의 id="이름" 으로 이동합니다. 절을 늘리면 둘 다 늘리십시오 -->
+    <nav class="wrap">
+      <ul class="menu">
+        <li><a href="#intro">소개</a></li>
+        <li><a href="#results">분석 결과</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap">
+
+    <!-- 01. 소개 — 주제 · 목표 · 데이터셋 · 팀원 -->
+    <section id="intro">
+      <h2>01. 소개</h2>
+      <div class="intro-grid">
+        <article class="box">
+          <h3>주제</h3>
+          <p>여기에</p>
+        </article>
+        <article class="box">
+          <h3>분석 질문</h3>
+          <ol>
+            <li>질문 1</li>
+            <li>질문 2</li>
+            <li>질문 3</li>
+          </ol>
+        </article>
+        <article class="box">
+          <h3>데이터셋</h3>
+          <p>파일 이름 · 행 수 · 쓴 열</p>
+        </article>
+        <article class="box">
+          <h3>팀원</h3>
+          <ul>
+            <li>이름 — 맡은 일</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- 02. 분석 결과 — 차트 한 장 = figure 한 개. 아래 figure 를 차트 수만큼 복사 -->
+    <section id="results">
+      <h2>02. 분석 결과</h2>
+      <div class="chart-grid">
+
+        <figure class="chart">
+          <img src="images/chart-here.png" alt="이 차트가 보여주는 것을 한 문장으로">
+          <figcaption>
+            <h3>차트 1 · 제목</h3>
+            <p>숫자 하나 + 그 뜻 하나. 두 문장을 넘기지 않습니다.</p>
+          </figcaption>
+        </figure>
+
+      </div>
+
+      <!-- 주요 수치는 표로. 숫자 칸에는 class="num" — 오른쪽 정렬로 자릿수가 맞습니다 -->
+      <h3>주요 수치</h3>
+      <table>
+        <thead>
+          <tr><th>무리</th><th class="num">건수</th><th class="num">값</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>예) 무리 이름</td><td class="num">0</td><td class="num">0.00</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+</body>
+</html>

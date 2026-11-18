@@ -1,0 +1,1624 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQL 연습 문제지 — 미디어 프론티어</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--paper:#121B23;--panel:#1A2630;--line:#2B3B47;--text:#DDE7ED;--muted:#9DB0BE;--accent:#5CC6DE;--warn:#F2C879;
+--sans:"Pretendard Variable",Pretendard,-apple-system,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+--mono:"D2Coding","Cascadia Code",Consolas,"JetBrains Mono",Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--sans);line-height:1.7;font-size:17px}
+main{max-width:920px;margin:0 auto;padding:40px 16px 80px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:34px;margin:6px 0 4px;font-weight:700}h2{font-size:22px;margin:40px 0 14px;font-weight:700;border-bottom:2px solid var(--accent);padding-bottom:6px}
+h3{font-size:19px;margin:28px 0 10px}
+.kicker{color:var(--muted);margin:0;font-size:15px}.sub{color:var(--muted);margin:0}
+.cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;height:100%}
+.card:hover{border-color:var(--accent);text-decoration:none}
+.card .t{display:block;color:var(--text);font-weight:600}.card .s{display:block;color:var(--muted);font-size:14px}
+.days{list-style:none;padding:0;margin:0}
+.days li{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:10px}
+.days .when{display:block;color:var(--muted);font-size:14px}
+.days .deck{font-weight:600;font-size:18px}.days .s{display:block;color:var(--muted);font-size:15px}
+.days .labs{display:block;margin-top:6px;font-size:14px;word-break:break-all}
+.note{color:var(--muted);font-size:15px}.next strong{color:var(--warn)}
+footer{margin-top:48px;color:var(--muted);font-size:14px}
+kbd{font-family:var(--mono);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+code{font-family:var(--mono);background:#0C1318;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:.92em}
+pre{background:#0C1318;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto}pre code{border:0;padding:0;background:none}
+blockquote{margin:16px 0;padding:8px 16px;border-left:4px solid var(--accent);background:var(--panel);border-radius:0 8px 8px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}th{background:var(--panel)}
+img{max-width:100%;height:auto;border-radius:6px}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+.back{margin:0 0 8px}
+</style>
+</head>
+<body><main>
+<p class="back"><a href="../../index.html">← 처음으로</a> · <a href="sql.html">풀러 가기</a></p>
+<article class="guide"><h1 id="sql-연습-문제지">SQL 연습 문제지</h1>
+<blockquote>
+<p>총 <strong>110문제</strong> — 초급 40 · 중급 50 · 고급 20<br>난이도와 개념이 점진적으로 올라가도록 번호 순서대로 구성되어 있습니다. 정답과 해설은 <code>sql-답안지.md</code>에 있습니다.</p>
+</blockquote>
+<h2 id="목차">목차</h2>
+<ul>
+<li><strong>초급</strong> (1~40번, 40문제): SELECT 기본, 조건·정렬, 집계 함수, GROUP BY, 기본 DML</li>
+<li><strong>중급</strong> (41~90번, 50문제): JOIN, 서브쿼리, CASE·함수, 집합 연산, DDL·고급 DML, 분석 쿼리</li>
+<li><strong>고급</strong> (91~110번, 20문제): 윈도 함수, CTE, 재귀 CTE, 종합 분석 쿼리</li>
+</ul>
+<h2 id="0-실습용-샘플-데이터베이스">0. 실습용 샘플 데이터베이스</h2>
+<p>모든 문제는 아래 6개 테이블로 구성된 하나의 샘플 DB를 사용합니다. <strong>SQLite 문법</strong> 기준이며, 풀이 페이지에서 바로 실행·채점할 수 있습니다.</p>
+<pre><code class="language-text">departments 1 ──&lt; employees &gt;── 1 employees (manager_id: 자기 참조, 상사)
+customers   1 ──&lt; orders    1 ──&lt; order_items &gt;── 1 products
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>테이블</th>
+<th>설명</th>
+<th>컬럼</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>departments</code></td>
+<td>부서</td>
+<td>dept_id, dept_name, location</td>
+</tr>
+<tr>
+<td><code>employees</code></td>
+<td>직원</td>
+<td>emp_id, emp_name, dept_id, job_title, salary, hire_date, manager_id</td>
+</tr>
+<tr>
+<td><code>customers</code></td>
+<td>고객</td>
+<td>customer_id, name, city, grade, joined_date, email</td>
+</tr>
+<tr>
+<td><code>products</code></td>
+<td>상품</td>
+<td>product_id, product_name, category, price, stock</td>
+</tr>
+<tr>
+<td><code>orders</code></td>
+<td>주문</td>
+<td>order_id, customer_id, order_date, status</td>
+</tr>
+<tr>
+<td><code>order_items</code></td>
+<td>주문상세</td>
+<td>item_id, order_id, product_id, quantity, unit_price</td>
+</tr>
+</tbody></table>
+<p><strong>참고 사항</strong></p>
+<ul>
+<li>날짜는 <code>YYYY-MM-DD</code> 형식의 TEXT, 금액은 원 단위 정수입니다.</li>
+<li><code>orders.status</code> 값: <code>PAID</code>(결제), <code>SHIPPED</code>(배송 중), <code>DELIVERED</code>(배송 완료), <code>CANCELLED</code>(취소)</li>
+<li><code>customers.grade</code> 값: <code>BRONZE</code> &lt; <code>SILVER</code> &lt; <code>GOLD</code> &lt; <code>VIP</code></li>
+<li><code>employees.manager_id</code>는 직속 상사의 <code>emp_id</code>이며, 최상위자(대표)는 NULL입니다.</li>
+<li>직원 중 <code>dept_id</code>가 NULL인 사람, 직원이 없는 부서, 주문 이력이 없는 고객·상품이 일부러 포함되어 있습니다(OUTER JOIN, NULL 처리 연습용).</li>
+<li>&#39;DML/DDL 문제&#39;(INSERT/UPDATE/DELETE/CREATE 등)는 문제마다 <strong>초기 상태의 DB</strong>에서 시작하며, 실행 후의 결과 상태로 채점합니다.</li>
+</ul>
+<h3 id="샘플-데이터">샘플 데이터</h3>
+<p><strong>departments</strong> (부서)</p>
+<table>
+<thead>
+<tr>
+<th>dept_id</th>
+<th>dept_name</th>
+<th>location</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>개발팀</td>
+<td>서울</td>
+</tr>
+<tr>
+<td>2</td>
+<td>영업팀</td>
+<td>부산</td>
+</tr>
+<tr>
+<td>3</td>
+<td>인사팀</td>
+<td>서울</td>
+</tr>
+<tr>
+<td>4</td>
+<td>마케팅팀</td>
+<td>대전</td>
+</tr>
+<tr>
+<td>5</td>
+<td>기획팀</td>
+<td>서울</td>
+</tr>
+<tr>
+<td>6</td>
+<td>법무팀</td>
+<td>부산</td>
+</tr>
+</tbody></table>
+<p><strong>employees</strong> (직원)</p>
+<table>
+<thead>
+<tr>
+<th>emp_id</th>
+<th>emp_name</th>
+<th>dept_id</th>
+<th>job_title</th>
+<th>salary</th>
+<th>hire_date</th>
+<th>manager_id</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>김대표</td>
+<td>NULL</td>
+<td>대표이사</td>
+<td>12000000</td>
+<td>2015-03-01</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>2</td>
+<td>이개발</td>
+<td>1</td>
+<td>개발팀장</td>
+<td>8500000</td>
+<td>2016-05-02</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>박서버</td>
+<td>1</td>
+<td>선임개발자</td>
+<td>6500000</td>
+<td>2018-07-15</td>
+<td>2</td>
+</tr>
+<tr>
+<td>4</td>
+<td>최프론</td>
+<td>1</td>
+<td>개발자</td>
+<td>5200000</td>
+<td>2020-02-10</td>
+<td>2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>정백엔</td>
+<td>1</td>
+<td>개발자</td>
+<td>5000000</td>
+<td>2021-09-01</td>
+<td>2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>한신입</td>
+<td>1</td>
+<td>사원</td>
+<td>3800000</td>
+<td>2023-03-02</td>
+<td>3</td>
+</tr>
+<tr>
+<td>7</td>
+<td>오영업</td>
+<td>2</td>
+<td>영업팀장</td>
+<td>7800000</td>
+<td>2016-11-20</td>
+<td>1</td>
+</tr>
+<tr>
+<td>8</td>
+<td>서영업</td>
+<td>2</td>
+<td>대리</td>
+<td>4800000</td>
+<td>2019-04-01</td>
+<td>7</td>
+</tr>
+<tr>
+<td>9</td>
+<td>강영업</td>
+<td>2</td>
+<td>사원</td>
+<td>3600000</td>
+<td>2022-06-13</td>
+<td>7</td>
+</tr>
+<tr>
+<td>10</td>
+<td>윤영업</td>
+<td>2</td>
+<td>대리</td>
+<td>4700000</td>
+<td>2020-08-24</td>
+<td>7</td>
+</tr>
+<tr>
+<td>11</td>
+<td>임인사</td>
+<td>3</td>
+<td>인사팀장</td>
+<td>7200000</td>
+<td>2017-01-09</td>
+<td>1</td>
+</tr>
+<tr>
+<td>12</td>
+<td>조인사</td>
+<td>3</td>
+<td>사원</td>
+<td>3500000</td>
+<td>2022-01-17</td>
+<td>11</td>
+</tr>
+<tr>
+<td>13</td>
+<td>장마케</td>
+<td>4</td>
+<td>마케팅팀장</td>
+<td>7500000</td>
+<td>2017-09-04</td>
+<td>1</td>
+</tr>
+<tr>
+<td>14</td>
+<td>문마케</td>
+<td>4</td>
+<td>대리</td>
+<td>4900000</td>
+<td>2019-12-02</td>
+<td>13</td>
+</tr>
+<tr>
+<td>15</td>
+<td>배마케</td>
+<td>4</td>
+<td>사원</td>
+<td>3700000</td>
+<td>2023-07-10</td>
+<td>13</td>
+</tr>
+<tr>
+<td>16</td>
+<td>신기획</td>
+<td>5</td>
+<td>기획팀장</td>
+<td>7600000</td>
+<td>2016-08-16</td>
+<td>1</td>
+</tr>
+<tr>
+<td>17</td>
+<td>권기획</td>
+<td>5</td>
+<td>과장</td>
+<td>5800000</td>
+<td>2018-02-26</td>
+<td>16</td>
+</tr>
+<tr>
+<td>18</td>
+<td>황기획</td>
+<td>5</td>
+<td>사원</td>
+<td>3900000</td>
+<td>2024-01-08</td>
+<td>17</td>
+</tr>
+<tr>
+<td>19</td>
+<td>송연구</td>
+<td>NULL</td>
+<td>연구원</td>
+<td>5500000</td>
+<td>2021-05-31</td>
+<td>2</td>
+</tr>
+<tr>
+<td>20</td>
+<td>홍개발</td>
+<td>1</td>
+<td>개발자</td>
+<td>5200000</td>
+<td>2020-11-02</td>
+<td>2</td>
+</tr>
+</tbody></table>
+<p><strong>customers</strong> (고객)</p>
+<table>
+<thead>
+<tr>
+<th>customer_id</th>
+<th>name</th>
+<th>city</th>
+<th>grade</th>
+<th>joined_date</th>
+<th>email</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>김민수</td>
+<td>서울</td>
+<td>GOLD</td>
+<td>2022-01-15</td>
+<td><a href="mailto:minsu@example.com">minsu@example.com</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>이서연</td>
+<td>부산</td>
+<td>SILVER</td>
+<td>2022-03-22</td>
+<td><a href="mailto:seoyeon@example.com">seoyeon@example.com</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>박지훈</td>
+<td>서울</td>
+<td>BRONZE</td>
+<td>2022-07-08</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>4</td>
+<td>최유나</td>
+<td>대구</td>
+<td>VIP</td>
+<td>2021-11-30</td>
+<td><a href="mailto:yuna@example.com">yuna@example.com</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td>정우진</td>
+<td>인천</td>
+<td>BRONZE</td>
+<td>2023-02-14</td>
+<td><a href="mailto:woojin@example.com">woojin@example.com</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td>한소희</td>
+<td>서울</td>
+<td>SILVER</td>
+<td>2023-04-05</td>
+<td><a href="mailto:sohee@example.com">sohee@example.com</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td>오태양</td>
+<td>광주</td>
+<td>BRONZE</td>
+<td>2023-06-19</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>8</td>
+<td>서지민</td>
+<td>부산</td>
+<td>GOLD</td>
+<td>2023-08-01</td>
+<td><a href="mailto:jimin@example.com">jimin@example.com</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td>강하늘</td>
+<td>대전</td>
+<td>SILVER</td>
+<td>2023-09-12</td>
+<td><a href="mailto:haneul@example.com">haneul@example.com</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td>윤서아</td>
+<td>서울</td>
+<td>VIP</td>
+<td>2021-05-20</td>
+<td><a href="mailto:seoa@example.com">seoa@example.com</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td>임도현</td>
+<td>대구</td>
+<td>BRONZE</td>
+<td>2024-01-03</td>
+<td><a href="mailto:dohyun@example.com">dohyun@example.com</a></td>
+</tr>
+<tr>
+<td>12</td>
+<td>조은지</td>
+<td>인천</td>
+<td>SILVER</td>
+<td>2024-02-27</td>
+<td><a href="mailto:eunji@example.com">eunji@example.com</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td>장민재</td>
+<td>서울</td>
+<td>BRONZE</td>
+<td>2024-05-16</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>14</td>
+<td>배수빈</td>
+<td>부산</td>
+<td>GOLD</td>
+<td>2024-08-09</td>
+<td><a href="mailto:subin@example.com">subin@example.com</a></td>
+</tr>
+<tr>
+<td>15</td>
+<td>신예린</td>
+<td>서울</td>
+<td>BRONZE</td>
+<td>2024-10-21</td>
+<td><a href="mailto:yerin@example.com">yerin@example.com</a></td>
+</tr>
+</tbody></table>
+<p><strong>products</strong> (상품)</p>
+<table>
+<thead>
+<tr>
+<th>product_id</th>
+<th>product_name</th>
+<th>category</th>
+<th>price</th>
+<th>stock</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>무선 마우스</td>
+<td>전자기기</td>
+<td>25000</td>
+<td>120</td>
+</tr>
+<tr>
+<td>2</td>
+<td>기계식 키보드</td>
+<td>전자기기</td>
+<td>89000</td>
+<td>45</td>
+</tr>
+<tr>
+<td>3</td>
+<td>27인치 모니터</td>
+<td>전자기기</td>
+<td>289000</td>
+<td>20</td>
+</tr>
+<tr>
+<td>4</td>
+<td>USB 허브</td>
+<td>전자기기</td>
+<td>19000</td>
+<td>200</td>
+</tr>
+<tr>
+<td>5</td>
+<td>노트북 거치대</td>
+<td>액세서리</td>
+<td>35000</td>
+<td>80</td>
+</tr>
+<tr>
+<td>6</td>
+<td>모니터 암</td>
+<td>액세서리</td>
+<td>59000</td>
+<td>0</td>
+</tr>
+<tr>
+<td>7</td>
+<td>마우스 패드</td>
+<td>액세서리</td>
+<td>9000</td>
+<td>300</td>
+</tr>
+<tr>
+<td>8</td>
+<td>웹캠</td>
+<td>전자기기</td>
+<td>49000</td>
+<td>35</td>
+</tr>
+<tr>
+<td>9</td>
+<td>SQL 입문서</td>
+<td>도서</td>
+<td>28000</td>
+<td>60</td>
+</tr>
+<tr>
+<td>10</td>
+<td>파이썬 완벽 가이드</td>
+<td>도서</td>
+<td>32000</td>
+<td>75</td>
+</tr>
+<tr>
+<td>11</td>
+<td>자바 프로그래밍</td>
+<td>도서</td>
+<td>35000</td>
+<td>50</td>
+</tr>
+<tr>
+<td>12</td>
+<td>알고리즘 문제집</td>
+<td>도서</td>
+<td>30000</td>
+<td>0</td>
+</tr>
+<tr>
+<td>13</td>
+<td>사무용 의자</td>
+<td>가구</td>
+<td>189000</td>
+<td>15</td>
+</tr>
+<tr>
+<td>14</td>
+<td>높이조절 책상</td>
+<td>가구</td>
+<td>259000</td>
+<td>8</td>
+</tr>
+<tr>
+<td>15</td>
+<td>LED 스탠드</td>
+<td>가구</td>
+<td>39000</td>
+<td>40</td>
+</tr>
+</tbody></table>
+<p><strong>orders</strong> (주문)</p>
+<table>
+<thead>
+<tr>
+<th>order_id</th>
+<th>customer_id</th>
+<th>order_date</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>2024-01-10</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>2024-01-25</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>2024-02-14</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>2024-02-20</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>5</td>
+<td>3</td>
+<td>2024-03-03</td>
+<td>CANCELLED</td>
+</tr>
+<tr>
+<td>6</td>
+<td>5</td>
+<td>2024-03-18</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>7</td>
+<td>8</td>
+<td>2024-03-29</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>8</td>
+<td>10</td>
+<td>2024-04-05</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>9</td>
+<td>6</td>
+<td>2024-04-17</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>10</td>
+<td>4</td>
+<td>2024-05-02</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>11</td>
+<td>2</td>
+<td>2024-05-21</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>12</td>
+<td>9</td>
+<td>2024-06-09</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>13</td>
+<td>1</td>
+<td>2024-06-28</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>14</td>
+<td>10</td>
+<td>2024-07-07</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>15</td>
+<td>12</td>
+<td>2024-07-19</td>
+<td>CANCELLED</td>
+</tr>
+<tr>
+<td>16</td>
+<td>14</td>
+<td>2024-08-01</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>17</td>
+<td>8</td>
+<td>2024-08-15</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>18</td>
+<td>11</td>
+<td>2024-09-02</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>19</td>
+<td>4</td>
+<td>2024-09-20</td>
+<td>DELIVERED</td>
+</tr>
+<tr>
+<td>20</td>
+<td>6</td>
+<td>2024-10-04</td>
+<td>SHIPPED</td>
+</tr>
+<tr>
+<td>21</td>
+<td>10</td>
+<td>2024-10-18</td>
+<td>SHIPPED</td>
+</tr>
+<tr>
+<td>22</td>
+<td>1</td>
+<td>2024-11-05</td>
+<td>SHIPPED</td>
+</tr>
+<tr>
+<td>23</td>
+<td>2</td>
+<td>2024-11-22</td>
+<td>PAID</td>
+</tr>
+<tr>
+<td>24</td>
+<td>14</td>
+<td>2024-12-01</td>
+<td>PAID</td>
+</tr>
+<tr>
+<td>25</td>
+<td>9</td>
+<td>2024-12-10</td>
+<td>PAID</td>
+</tr>
+<tr>
+<td>26</td>
+<td>5</td>
+<td>2024-12-15</td>
+<td>PAID</td>
+</tr>
+<tr>
+<td>27</td>
+<td>12</td>
+<td>2024-12-20</td>
+<td>PAID</td>
+</tr>
+<tr>
+<td>28</td>
+<td>8</td>
+<td>2024-12-24</td>
+<td>PAID</td>
+</tr>
+<tr>
+<td>29</td>
+<td>4</td>
+<td>2024-12-28</td>
+<td>PAID</td>
+</tr>
+<tr>
+<td>30</td>
+<td>10</td>
+<td>2024-12-30</td>
+<td>PAID</td>
+</tr>
+</tbody></table>
+<p><strong>order_items</strong> (주문상세)</p>
+<table>
+<thead>
+<tr>
+<th>item_id</th>
+<th>order_id</th>
+<th>product_id</th>
+<th>quantity</th>
+<th>unit_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>25000</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>7</td>
+<td>1</td>
+<td>9000</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>9</td>
+<td>1</td>
+<td>28000</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2</td>
+<td>10</td>
+<td>1</td>
+<td>32000</td>
+</tr>
+<tr>
+<td>5</td>
+<td>3</td>
+<td>3</td>
+<td>1</td>
+<td>289000</td>
+</tr>
+<tr>
+<td>6</td>
+<td>4</td>
+<td>13</td>
+<td>1</td>
+<td>189000</td>
+</tr>
+<tr>
+<td>7</td>
+<td>4</td>
+<td>15</td>
+<td>1</td>
+<td>39000</td>
+</tr>
+<tr>
+<td>8</td>
+<td>5</td>
+<td>2</td>
+<td>1</td>
+<td>89000</td>
+</tr>
+<tr>
+<td>9</td>
+<td>6</td>
+<td>4</td>
+<td>3</td>
+<td>19000</td>
+</tr>
+<tr>
+<td>10</td>
+<td>6</td>
+<td>7</td>
+<td>2</td>
+<td>9000</td>
+</tr>
+<tr>
+<td>11</td>
+<td>7</td>
+<td>11</td>
+<td>2</td>
+<td>35000</td>
+</tr>
+<tr>
+<td>12</td>
+<td>8</td>
+<td>2</td>
+<td>1</td>
+<td>89000</td>
+</tr>
+<tr>
+<td>13</td>
+<td>8</td>
+<td>1</td>
+<td>1</td>
+<td>25000</td>
+</tr>
+<tr>
+<td>14</td>
+<td>8</td>
+<td>7</td>
+<td>2</td>
+<td>9000</td>
+</tr>
+<tr>
+<td>15</td>
+<td>9</td>
+<td>5</td>
+<td>1</td>
+<td>35000</td>
+</tr>
+<tr>
+<td>16</td>
+<td>9</td>
+<td>8</td>
+<td>1</td>
+<td>49000</td>
+</tr>
+<tr>
+<td>17</td>
+<td>10</td>
+<td>3</td>
+<td>2</td>
+<td>289000</td>
+</tr>
+<tr>
+<td>18</td>
+<td>11</td>
+<td>10</td>
+<td>1</td>
+<td>32000</td>
+</tr>
+<tr>
+<td>19</td>
+<td>11</td>
+<td>11</td>
+<td>1</td>
+<td>35000</td>
+</tr>
+<tr>
+<td>20</td>
+<td>11</td>
+<td>9</td>
+<td>1</td>
+<td>28000</td>
+</tr>
+<tr>
+<td>21</td>
+<td>12</td>
+<td>15</td>
+<td>2</td>
+<td>39000</td>
+</tr>
+<tr>
+<td>22</td>
+<td>13</td>
+<td>1</td>
+<td>1</td>
+<td>25000</td>
+</tr>
+<tr>
+<td>23</td>
+<td>13</td>
+<td>4</td>
+<td>2</td>
+<td>19000</td>
+</tr>
+<tr>
+<td>24</td>
+<td>14</td>
+<td>13</td>
+<td>2</td>
+<td>189000</td>
+</tr>
+<tr>
+<td>25</td>
+<td>15</td>
+<td>8</td>
+<td>1</td>
+<td>49000</td>
+</tr>
+<tr>
+<td>26</td>
+<td>16</td>
+<td>2</td>
+<td>2</td>
+<td>89000</td>
+</tr>
+<tr>
+<td>27</td>
+<td>16</td>
+<td>5</td>
+<td>1</td>
+<td>35000</td>
+</tr>
+<tr>
+<td>28</td>
+<td>17</td>
+<td>9</td>
+<td>2</td>
+<td>28000</td>
+</tr>
+<tr>
+<td>29</td>
+<td>17</td>
+<td>10</td>
+<td>1</td>
+<td>32000</td>
+</tr>
+<tr>
+<td>30</td>
+<td>18</td>
+<td>1</td>
+<td>3</td>
+<td>25000</td>
+</tr>
+<tr>
+<td>31</td>
+<td>19</td>
+<td>3</td>
+<td>1</td>
+<td>289000</td>
+</tr>
+<tr>
+<td>32</td>
+<td>19</td>
+<td>2</td>
+<td>1</td>
+<td>89000</td>
+</tr>
+<tr>
+<td>33</td>
+<td>20</td>
+<td>6</td>
+<td>1</td>
+<td>59000</td>
+</tr>
+<tr>
+<td>34</td>
+<td>20</td>
+<td>5</td>
+<td>2</td>
+<td>35000</td>
+</tr>
+<tr>
+<td>35</td>
+<td>21</td>
+<td>10</td>
+<td>2</td>
+<td>32000</td>
+</tr>
+<tr>
+<td>36</td>
+<td>21</td>
+<td>11</td>
+<td>1</td>
+<td>35000</td>
+</tr>
+<tr>
+<td>37</td>
+<td>22</td>
+<td>13</td>
+<td>1</td>
+<td>189000</td>
+</tr>
+<tr>
+<td>38</td>
+<td>22</td>
+<td>15</td>
+<td>1</td>
+<td>39000</td>
+</tr>
+<tr>
+<td>39</td>
+<td>22</td>
+<td>4</td>
+<td>1</td>
+<td>19000</td>
+</tr>
+<tr>
+<td>40</td>
+<td>23</td>
+<td>8</td>
+<td>1</td>
+<td>49000</td>
+</tr>
+<tr>
+<td>41</td>
+<td>23</td>
+<td>7</td>
+<td>3</td>
+<td>9000</td>
+</tr>
+<tr>
+<td>42</td>
+<td>24</td>
+<td>9</td>
+<td>1</td>
+<td>28000</td>
+</tr>
+<tr>
+<td>43</td>
+<td>25</td>
+<td>15</td>
+<td>1</td>
+<td>39000</td>
+</tr>
+<tr>
+<td>44</td>
+<td>25</td>
+<td>5</td>
+<td>1</td>
+<td>35000</td>
+</tr>
+<tr>
+<td>45</td>
+<td>26</td>
+<td>1</td>
+<td>1</td>
+<td>25000</td>
+</tr>
+<tr>
+<td>46</td>
+<td>26</td>
+<td>4</td>
+<td>1</td>
+<td>19000</td>
+</tr>
+<tr>
+<td>47</td>
+<td>27</td>
+<td>2</td>
+<td>1</td>
+<td>89000</td>
+</tr>
+<tr>
+<td>48</td>
+<td>28</td>
+<td>3</td>
+<td>1</td>
+<td>289000</td>
+</tr>
+<tr>
+<td>49</td>
+<td>28</td>
+<td>10</td>
+<td>1</td>
+<td>32000</td>
+</tr>
+<tr>
+<td>50</td>
+<td>29</td>
+<td>13</td>
+<td>1</td>
+<td>189000</td>
+</tr>
+<tr>
+<td>51</td>
+<td>29</td>
+<td>1</td>
+<td>2</td>
+<td>25000</td>
+</tr>
+<tr>
+<td>52</td>
+<td>30</td>
+<td>11</td>
+<td>1</td>
+<td>35000</td>
+</tr>
+<tr>
+<td>53</td>
+<td>30</td>
+<td>9</td>
+<td>1</td>
+<td>28000</td>
+</tr>
+<tr>
+<td>54</td>
+<td>30</td>
+<td>10</td>
+<td>1</td>
+<td>32000</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="초급-40문제">초급 (40문제)</h2>
+<h3 id="문제-1-select-기본">문제 1. SELECT 기본</h3>
+<p><code>departments</code> 테이블의 모든 컬럼, 모든 행을 조회하시오.</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-2-컬럼-선택">문제 2. 컬럼 선택</h3>
+<p><code>employees</code> 테이블에서 이름, 직책, 급여만 조회하시오.<br>(컬럼 순서: emp_name, job_title, salary)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-3-별칭as">문제 3. 별칭(AS)</h3>
+<p><code>customers</code> 테이블에서 name은 <code>고객명</code>, city는 <code>도시</code>라는 별칭으로 조회하시오.</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-4-distinct">문제 4. DISTINCT</h3>
+<p><code>products</code> 테이블에서 중복 없이 카테고리 목록을 조회하시오.<br>(컬럼: category)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-5-where-비교">문제 5. WHERE 비교</h3>
+<p>급여가 5,000,000 이상인 직원의 이름과 급여를 조회하시오.<br>(컬럼: emp_name, salary)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-6-where-동등-비교">문제 6. WHERE 동등 비교</h3>
+<p>부서번호(dept_id)가 1인 직원의 이름과 직책을 조회하시오.<br>(컬럼: emp_name, job_title)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-7-and">문제 7. AND</h3>
+<p>서울에 사는 고객 중 등급이 <code>BRONZE</code>인 고객의 이름을 조회하시오.<br>(컬럼: name)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-8-or">문제 8. OR</h3>
+<p>부산 또는 대구에 사는 고객의 이름과 도시를 조회하시오.<br>(컬럼: name, city)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-9-in">문제 9. IN</h3>
+<p>등급이 <code>GOLD</code> 또는 <code>VIP</code>인 고객의 이름과 등급을 <code>IN</code>을 사용해 조회하시오.<br>(컬럼: name, grade)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-10-between">문제 10. BETWEEN</h3>
+<p>가격이 30,000원 이상 60,000원 이하인 상품의 이름과 가격을 조회하시오.<br>(컬럼: product_name, price)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-11-부정-비교">문제 11. 부정 비교</h3>
+<p>카테고리가 <code>도서</code>가 아닌 상품의 이름과 카테고리를 조회하시오.<br>(컬럼: product_name, category)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-12-like-시작-문자열">문제 12. LIKE (시작 문자열)</h3>
+<p>이메일이 <code>s</code>로 시작하는 고객의 이름과 이메일을 조회하시오.<br>(컬럼: name, email)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-13-like-끝-문자열">문제 13. LIKE (끝 문자열)</h3>
+<p>직책(job_title)이 <code>팀장</code>으로 끝나는 직원의 이름과 직책을 조회하시오.<br>(컬럼: emp_name, job_title)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-14-is-null">문제 14. IS NULL</h3>
+<p>부서가 배정되지 않은(dept_id가 NULL인) 직원의 이름을 조회하시오.<br>(컬럼: emp_name)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-15-is-not-null">문제 15. IS NOT NULL</h3>
+<p>이메일이 등록된(NULL이 아닌) 고객의 이름과 이메일을 조회하시오.<br>(컬럼: name, email)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-16-order-by-오름차순">문제 16. ORDER BY (오름차순)</h3>
+<p>상품을 가격이 낮은 순으로 조회하시오. 가격이 같으면 product_id 오름차순으로 정렬합니다.<br>(컬럼: product_name, price)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-17-order-by-내림차순">문제 17. ORDER BY (내림차순)</h3>
+<p>직원을 급여가 높은 순으로 조회하시오. 급여가 같으면 emp_id 오름차순입니다.<br>(컬럼: emp_name, salary)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-18-다중-정렬">문제 18. 다중 정렬</h3>
+<p>직원을 부서번호(dept_id) 오름차순, 같은 부서 안에서는 급여 내림차순, 급여도 같으면 emp_id 오름차순으로 조회하시오.<br>(컬럼: emp_name, dept_id, salary)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-19-limit">문제 19. LIMIT</h3>
+<p>급여가 가장 높은 직원 3명의 이름과 급여를 조회하시오.<br>(컬럼: emp_name, salary)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-20-limit-offset">문제 20. LIMIT OFFSET</h3>
+<p>가격이 높은 순으로 정렬했을 때 4위~6위 상품의 이름과 가격을 조회하시오.<br>(컬럼: product_name, price)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-21-산술-연산">문제 21. 산술 연산</h3>
+<p>직원의 이름과 연봉(월급 × 12)을 조회하시오. 연봉 컬럼의 별칭은 <code>annual_salary</code>입니다.<br>(컬럼: emp_name, annual_salary)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-22-계산-컬럼">문제 22. 계산 컬럼</h3>
+<p>상품별 재고 금액(price × stock)을 구하시오. 별칭은 <code>stock_value</code>입니다.<br>(컬럼: product_name, stock_value)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-23-문자열-연결">문제 23. 문자열 연결</h3>
+<p>직원 이름과 직책을 <code>이름(직책)</code> 형태로 합쳐 <code>title</code> 컬럼으로 조회하시오. 예: <code>이개발(개발팀장)</code><br>(컬럼: title)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-24-날짜-비교">문제 24. 날짜 비교</h3>
+<p>2022년 1월 1일 이후에 입사한 직원의 이름과 입사일을 조회하시오.<br>(컬럼: emp_name, hire_date)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-25-count">문제 25. COUNT(*)</h3>
+<p>전체 직원 수를 구하시오. 별칭은 <code>cnt</code>입니다.<br>(컬럼: cnt)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-26-count컬럼">문제 26. COUNT(컬럼)</h3>
+<p>이메일이 등록된 고객 수를 구하시오. 별칭은 <code>cnt</code>입니다.<br>(컬럼: cnt)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-27-sum">문제 27. SUM</h3>
+<p>전체 상품의 재고 수량 합계를 구하시오. 별칭은 <code>total_stock</code>입니다.<br>(컬럼: total_stock)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-28-avg">문제 28. AVG</h3>
+<p>직원 평균 급여를 정수로 반올림하여 구하시오. 별칭은 <code>avg_salary</code>입니다.<br>(컬럼: avg_salary)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-29-min--max">문제 29. MIN / MAX</h3>
+<p>가장 싼 상품 가격과 가장 비싼 상품 가격을 한 번에 구하시오. 별칭은 <code>min_price</code>, <code>max_price</code>입니다.<br>(컬럼: min_price, max_price)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-30-where--집계">문제 30. WHERE + 집계</h3>
+<p>개발팀(dept_id = 1) 직원의 평균 급여를 정수로 반올림하여 구하시오. 별칭은 <code>avg_salary</code>입니다.<br>(컬럼: avg_salary)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-31-countdistinct">문제 31. COUNT(DISTINCT)</h3>
+<p>고객들이 거주하는 도시의 개수(중복 제외)를 구하시오. 별칭은 <code>city_cnt</code>입니다.<br>(컬럼: city_cnt)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-32-group-by">문제 32. GROUP BY</h3>
+<p>부서(dept_id)별 직원 수를 구하시오. 직원 수의 별칭은 <code>cnt</code>입니다. 부서가 없는(NULL) 직원도 하나의 그룹으로 포함됩니다.<br>(컬럼: dept_id, cnt)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-33-group-by-다중-집계">문제 33. GROUP BY 다중 집계</h3>
+<p>상품 카테고리별 상품 수와 평균 가격(정수 반올림)을 구하시오. 별칭은 <code>cnt</code>, <code>avg_price</code>입니다.<br>(컬럼: category, cnt, avg_price)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-34-group-by-등급">문제 34. GROUP BY 등급</h3>
+<p>고객 등급(grade)별 고객 수를 구하시오. 별칭은 <code>cnt</code>입니다.<br>(컬럼: grade, cnt)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-35-having">문제 35. HAVING</h3>
+<p>직원이 3명 이상인 부서의 부서번호와 직원 수를 구하시오(부서 NULL 제외). 별칭은 <code>cnt</code>입니다.<br>(컬럼: dept_id, cnt)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-36-insert-전체-컬럼">문제 36. INSERT (전체 컬럼)</h3>
+<p><code>departments</code> 테이블에 부서번호 7, 부서명 <code>디자인팀</code>, 위치 <code>서울</code>인 행을 추가하시오.</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-37-insert-컬럼-지정">문제 37. INSERT (컬럼 지정)</h3>
+<p><code>customers</code> 테이블에 컬럼 목록을 명시하여 새 고객을 추가하시오. (customer_id=16, name=<code>노하윤</code>, city=<code>제주</code>, grade=<code>BRONZE</code>, joined_date=<code>2024-11-01</code>) email은 입력하지 않습니다.</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-38-update">문제 38. UPDATE</h3>
+<p>상품번호 6번(<code>모니터 암</code>)의 재고(stock)를 30으로 수정하시오.</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-39-update-여러-행">문제 39. UPDATE (여러 행)</h3>
+<p>카테고리가 <code>도서</code>인 모든 상품의 가격을 1,000원씩 인상하시오.</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-40-delete">문제 40. DELETE</h3>
+<p>고객번호 15번 고객을 <code>customers</code> 테이블에서 삭제하시오.</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h2 id="중급-50문제">중급 (50문제)</h2>
+<h3 id="문제-41-inner-join">문제 41. INNER JOIN</h3>
+<p>직원의 이름과 소속 부서명을 조회하시오. 부서가 없는 직원은 제외하고, emp_id 순으로 정렬합니다.<br>(컬럼: emp_name, dept_name)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-42-left-join">문제 42. LEFT JOIN</h3>
+<p>모든 직원의 이름과 부서명을 조회하시오. 부서가 없는 직원은 부서명이 NULL로 나와야 합니다. emp_id 순으로 정렬합니다.<br>(컬럼: emp_name, dept_name)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-43-left-join--is-null-안티-조인">문제 43. LEFT JOIN + IS NULL (안티 조인)</h3>
+<p>소속 직원이 한 명도 없는 부서의 이름을 조회하시오.<br>(컬럼: dept_name)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-44-join-주문고객">문제 44. JOIN (주문+고객)</h3>
+<p>모든 주문의 주문번호, 고객 이름, 주문일, 상태를 order_id 순으로 조회하시오.<br>(컬럼: order_id, name, order_date, status)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-45-3개-테이블-join">문제 45. 3개 테이블 JOIN</h3>
+<p>11번 주문에 포함된 상품명과 수량을 item_id 순으로 조회하시오.<br>(컬럼: product_name, quantity)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-46-4개-테이블-join">문제 46. 4개 테이블 JOIN</h3>
+<p>고객 <code>김민수</code>가 구매한 모든 상품의 주문일, 상품명, 수량을 주문일, item_id 순으로 조회하시오.<br>(컬럼: order_date, product_name, quantity)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-47-join--계산--group-by">문제 47. JOIN + 계산 + GROUP BY</h3>
+<p>주문별 합계 금액(quantity × unit_price)을 order_id 순으로 구하시오. 별칭은 <code>total</code>입니다.<br>(컬럼: order_id, total)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-48-고객별-구매-금액">문제 48. 고객별 구매 금액</h3>
+<p>취소(CANCELLED)되지 않은 주문만을 대상으로 고객별 총 구매금액을 구하시오. 총액 큰 순, 같으면 이름 오름차순으로 정렬합니다. 별칭은 <code>total</code>입니다.<br>(컬럼: name, total)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-49-상품별-판매-수량">문제 49. 상품별 판매 수량</h3>
+<p>한 번이라도 팔린 상품에 대해 상품별 총 판매 수량을 구하시오. 수량 많은 순, 같으면 product_id 순으로 정렬합니다. 별칭은 <code>qty</code>입니다.<br>(컬럼: product_name, qty)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-50-주문-없는-고객">문제 50. 주문 없는 고객</h3>
+<p>한 번도 주문하지 않은 고객의 이름을 조회하시오.<br>(컬럼: name)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-51-팔린-적-없는-상품">문제 51. 팔린 적 없는 상품</h3>
+<p>한 번도 주문되지 않은 상품의 이름을 조회하시오.<br>(컬럼: product_name)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-52-self-join">문제 52. SELF JOIN</h3>
+<p>직원의 이름과 직속 상사의 이름을 emp_id 순으로 조회하시오. 상사가 없으면 NULL입니다. 상사 이름의 별칭은 <code>manager_name</code>입니다.<br>(컬럼: emp_name, manager_name)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-53-self-join-쌍-찾기">문제 53. SELF JOIN (쌍 찾기)</h3>
+<p>급여가 같은 서로 다른 두 직원의 이름 쌍을 조회하시오. 같은 쌍이 두 번 나오지 않도록 하세요.<br>(컬럼: name1, name2)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-54-cross-join">문제 54. CROSS JOIN</h3>
+<p>상품 카테고리 종류와 주문 상태 종류의 모든 조합이 몇 개인지 구하시오. 별칭은 <code>combos</code>입니다.<br>(컬럼: combos)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-55-스칼라-서브쿼리">문제 55. 스칼라 서브쿼리</h3>
+<p>전체 평균 급여보다 급여가 높은 직원의 이름과 급여를 조회하시오.<br>(컬럼: emp_name, salary)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-56-in-서브쿼리">문제 56. IN 서브쿼리</h3>
+<p>주문 이력이 있는 고객의 이름을 <code>IN</code> 서브쿼리로 조회하시오.<br>(컬럼: name)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-57-not-in-서브쿼리">문제 57. NOT IN 서브쿼리</h3>
+<p>주문 이력이 없는 고객의 이름을 <code>NOT IN</code> 서브쿼리로 조회하시오.<br>(컬럼: name)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-58-exists">문제 58. EXISTS</h3>
+<p>취소(CANCELLED) 주문이 있는 고객의 이름을 <code>EXISTS</code>로 조회하시오.<br>(컬럼: name)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-59-상관-서브쿼리">문제 59. 상관 서브쿼리</h3>
+<p>자기 부서의 평균 급여보다 급여가 높은 직원의 이름, 부서번호, 급여를 조회하시오(부서 NULL 직원 제외).<br>(컬럼: emp_name, dept_id, salary)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-60-max-서브쿼리">문제 60. MAX 서브쿼리</h3>
+<p>가장 비싼 상품의 이름과 가격을 조회하시오. <code>ORDER BY</code>/<code>LIMIT</code>이 아닌 서브쿼리로 풀이합니다.<br>(컬럼: product_name, price)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-61-case-식">문제 61. CASE 식</h3>
+<p>급여가 7,000,000 이상이면 <code>상</code>, 4,500,000 이상이면 <code>중</code>, 그 외 <code>하</code>로 구분한 <code>salary_level</code> 컬럼을 만들어 emp_id 순으로 조회하시오.<br>(컬럼: emp_name, salary, salary_level)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-62-조건부-집계">문제 62. 조건부 집계</h3>
+<p>주문 상태별 건수를 한 행에 가로로 보이도록 구하시오. 별칭은 <code>paid</code>, <code>shipped</code>, <code>delivered</code>, <code>cancelled</code>입니다.<br>(컬럼: paid, shipped, delivered, cancelled)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-63-coalesce-null-대체">문제 63. COALESCE (NULL 대체)</h3>
+<p>고객의 이름과 이메일을 customer_id 순으로 조회하되, 이메일이 NULL이면 <code>미등록</code>으로 표시하시오. 이메일 컬럼의 별칭은 <code>email</code>입니다.<br>(컬럼: name, email)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-64-left-join--coalesce">문제 64. LEFT JOIN + COALESCE</h3>
+<p>모든 직원의 이름과 부서명을 emp_id 순으로 조회하되, 부서가 없으면 <code>미배정</code>으로 표시하시오. 부서명 컬럼의 별칭은 <code>dept_name</code>입니다.<br>(컬럼: emp_name, dept_name)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-65-날짜-함수-월별-집계">문제 65. 날짜 함수 (월별 집계)</h3>
+<p>월별(<code>YYYY-MM</code>) 주문 건수를 월 오름차순으로 구하시오. 별칭은 <code>ym</code>, <code>cnt</code>입니다.<br>(컬럼: ym, cnt)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-66-연도별-집계">문제 66. 연도별 집계</h3>
+<p>입사 연도별 직원 수를 연도 오름차순으로 구하시오. 별칭은 <code>hire_year</code>, <code>cnt</code>입니다.<br>(컬럼: hire_year, cnt)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-67-근속-연수">문제 67. 근속 연수</h3>
+<p>기준일 <code>2024-12-31</code>을 기준으로 직원의 근속 연수(기준 연도 − 입사 연도)를 구해 emp_id 순으로 조회하시오. 별칭은 <code>years</code>입니다.<br>(컬럼: emp_name, years)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-68-문자열-함수-substrinstr">문제 68. 문자열 함수 (SUBSTR/INSTR)</h3>
+<p>이메일이 있는 고객의 이메일 아이디(<code>@</code> 앞부분)를 customer_id 순으로 조회하시오. 별칭은 <code>email_id</code>입니다.<br>(컬럼: name, email_id)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-69-length">문제 69. LENGTH</h3>
+<p>상품명이 6글자 이상인 상품의 이름과 글자 수를 product_id 순으로 조회하시오. 글자 수 별칭은 <code>len</code>입니다.<br>(컬럼: product_name, len)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-70-부서별-급여-통계">문제 70. 부서별 급여 통계</h3>
+<p>부서별(부서 NULL 제외) 평균(정수 반올림)·최고·최저 급여를 dept_id 순으로 구하시오. 별칭은 <code>avg_sal</code>, <code>max_sal</code>, <code>min_sal</code>입니다.<br>(컬럼: dept_id, avg_sal, max_sal, min_sal)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-71-having-합계-조건">문제 71. HAVING (합계 조건)</h3>
+<p>카테고리별 재고 합계가 200 이상인 카테고리와 재고 합계를 구하시오. 별칭은 <code>total_stock</code>입니다.<br>(컬럼: category, total_stock)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-72-join--having">문제 72. JOIN + HAVING</h3>
+<p>주문(취소 포함)을 3건 이상 한 고객의 이름과 주문 건수를 건수 내림차순, 이름 오름차순으로 조회하시오. 별칭은 <code>order_cnt</code>입니다.<br>(컬럼: name, order_cnt)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-73-union-all">문제 73. UNION ALL</h3>
+<p><code>VIP</code> 등급 고객의 이름과 직책이 <code>팀장</code>으로 끝나는 직원의 이름을 하나의 목록으로 합치시오. 구분용 컬럼 <code>type</code>에는 각각 <code>고객</code>, <code>직원</code>을 표시합니다.<br>(컬럼: name, type)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-74-union">문제 74. UNION</h3>
+<p>고객이 사는 도시와 부서 위치를 합쳐 중복 없는 도시 목록을 구하시오.<br>(컬럼: city)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-75-intersect">문제 75. INTERSECT</h3>
+<p>고객이 사는 도시 중 부서 위치에도 존재하는 도시를 구하시오.<br>(컬럼: city)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-76-except">문제 76. EXCEPT</h3>
+<p>고객이 사는 도시 중 부서 위치에는 없는 도시를 구하시오.<br>(컬럼: city)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-77-update--서브쿼리">문제 77. UPDATE + 서브쿼리</h3>
+<p>부서명이 <code>개발팀</code>인 부서 소속 직원 모두의 급여를 300,000원씩 인상하시오. 부서번호를 직접 쓰지 않고 서브쿼리로 찾습니다.</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-78-delete--서브쿼리">문제 78. DELETE + 서브쿼리</h3>
+<p>한 번도 주문되지 않은 상품(order_items에 없는 상품)을 <code>products</code> 테이블에서 삭제하시오.</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-79-update--case">문제 79. UPDATE + CASE</h3>
+<p>상품 재고가 100개 이상이면 가격을 10% 할인(<code>price * 9 / 10</code>)하고, 나머지는 가격을 그대로 두도록 한 번의 UPDATE로 처리하시오.</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-80-create-table-as-select">문제 80. CREATE TABLE AS SELECT</h3>
+<p>VIP 등급 고객의 customer_id, name을 복사하여 <code>vip_customers</code> 테이블을 새로 만드시오.</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-81-create-table-제약조건">문제 81. CREATE TABLE (제약조건)</h3>
+<p>다음 구조의 <code>notices</code> 테이블을 생성하시오.  </p>
+<ul>
+<li>notice_id: INTEGER, 기본키  </li>
+<li>title: TEXT, NOT NULL  </li>
+<li>content: TEXT  </li>
+<li>created_at: TEXT</li>
+</ul>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-82-alter-table">문제 82. ALTER TABLE</h3>
+<p><code>employees</code> 테이블에 TEXT 타입의 <code>phone</code> 컬럼을 추가하시오.</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-83-create-view">문제 83. CREATE VIEW</h3>
+<p>직원 이름과 부서명을 보여 주는 뷰 <code>v_emp_dept</code>를 만드시오(부서가 있는 직원만, 컬럼: emp_name, dept_name).</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-84-create-index">문제 84. CREATE INDEX</h3>
+<p><code>orders</code> 테이블의 <code>customer_id</code> 컬럼에 <code>idx_orders_customer</code>라는 이름의 인덱스를 생성하시오.</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-85-가장-큰-주문">문제 85. 가장 큰 주문</h3>
+<p>주문 합계 금액이 가장 큰 주문의 주문번호와 합계를 구하시오. 합계 별칭은 <code>total</code>입니다.<br>(컬럼: order_id, total)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-86-등급별-매출">문제 86. 등급별 매출</h3>
+<p>취소 주문을 제외하고 고객 등급별 총 구매금액을 내림차순으로 구하시오. 별칭은 <code>total</code>입니다.<br>(컬럼: grade, total)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-87-도시별-매출">문제 87. 도시별 매출</h3>
+<p>취소 주문을 제외하고 고객 거주 도시별 총 구매금액을 내림차순으로 구하시오. 별칭은 <code>total</code>입니다.<br>(컬럼: city, total)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-88-카테고리별-매출">문제 88. 카테고리별 매출</h3>
+<p>취소 주문을 제외하고 상품 카테고리별 총 매출을 내림차순으로 구하시오. 별칭은 <code>revenue</code>입니다.<br>(컬럼: category, revenue)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-89-월별-매출">문제 89. 월별 매출</h3>
+<p>취소 주문을 제외하고 월별(<code>YYYY-MM</code>) 매출 합계를 월 오름차순으로 구하시오. 별칭은 <code>ym</code>, <code>revenue</code>입니다.<br>(컬럼: ym, revenue)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-90-left-join--집계-0-포함">문제 90. LEFT JOIN + 집계 (0 포함)</h3>
+<p>모든 부서(직원이 없는 부서 포함)의 부서명, 직원 수, 급여 합계를 dept_id 순으로 구하시오. 직원이 없는 부서는 직원 수 0, 급여 합계 0으로 표시합니다. 별칭은 <code>emp_cnt</code>, <code>total_salary</code>입니다.<br>(컬럼: dept_name, emp_cnt, total_salary)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h2 id="고급-20문제">고급 (20문제)</h2>
+<h3 id="문제-91-rownumber">문제 91. ROW_NUMBER</h3>
+<p>부서별(부서 NULL 제외)로 급여가 높은 순서대로 순번을 매기시오. 급여가 같으면 emp_id가 작은 직원이 먼저입니다. dept_id, 순번 순으로 정렬합니다. 순번 별칭은 <code>rn</code>입니다.<br>(컬럼: dept_id, emp_name, salary, rn)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-92-rank--denserank">문제 92. RANK / DENSE_RANK</h3>
+<p>전체 직원의 급여 순위를 <code>RANK</code>(동점이면 같은 순위, 다음 순위는 건너뜀)로 구하시오. 순위, emp_id 순으로 정렬합니다. 별칭은 <code>rnk</code>입니다.<br>(컬럼: emp_name, salary, rnk)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-93-부서별-최고-급여자">문제 93. 부서별 최고 급여자</h3>
+<p>각 부서(부서 NULL 제외)에서 급여가 가장 높은 직원의 이름과 급여를 dept_id 순으로 구하시오.<br>(컬럼: dept_id, emp_name, salary)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-94-lag-전월-대비">문제 94. LAG (전월 대비)</h3>
+<p>취소 주문을 제외한 월별 매출과 전월 매출, 전월 대비 증감액을 구하시오. 첫 달의 전월 값과 증감액은 NULL입니다. 월 오름차순으로 정렬하고, 별칭은 <code>revenue</code>, <code>prev_revenue</code>, <code>diff</code>입니다.<br>(컬럼: ym, revenue, prev_revenue, diff)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-95-누적-합계">문제 95. 누적 합계</h3>
+<p>월별 매출(취소 제외)과 해당 월까지의 누적 매출을 구하시오. 월 오름차순, 별칭은 <code>revenue</code>, <code>running_total</code>입니다.<br>(컬럼: ym, revenue, running_total)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-96-이동-평균-윈도-프레임">문제 96. 이동 평균 (윈도 프레임)</h3>
+<p>월별 매출(취소 제외)과 현재 월을 포함한 최근 3개월 이동 평균(정수 반올림)을 구하시오. 3개월이 안 되는 초반에는 있는 데이터만으로 평균을 냅니다. 월 오름차순, 별칭은 <code>revenue</code>, <code>moving_avg</code>입니다.<br>(컬럼: ym, revenue, moving_avg)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-97-ntile-분위수">문제 97. NTILE (분위수)</h3>
+<p>상품을 가격 오름차순(같으면 product_id 순)으로 정렬해 4개 구간으로 나눈 구간 번호를 구하시오. product_id 순서가 아닌 가격 순서로 정렬합니다. 별칭은 <code>quartile</code>입니다.<br>(컬럼: product_name, price, quartile)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-98-재귀-cte-숫자-생성">문제 98. 재귀 CTE (숫자 생성)</h3>
+<p>재귀 CTE를 사용하여 1부터 10까지의 숫자를 생성하시오.<br>(컬럼: n)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-99-재귀-cte-조직도-레벨">문제 99. 재귀 CTE (조직도 레벨)</h3>
+<p>최상위자(manager_id가 NULL)를 레벨 1로 하여 모든 직원의 조직 레벨을 구하시오. 레벨, emp_id 순으로 정렬합니다. 별칭은 <code>level</code>입니다.<br>(컬럼: emp_id, emp_name, level)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-100-재귀-cte-경로-문자열">문제 100. 재귀 CTE (경로 문자열)</h3>
+<p>모든 직원의 조직 경로를 <code>김대표 &gt; 이개발 &gt; 박서버</code> 형태의 문자열로 구하시오. emp_id 순으로 정렬합니다. 별칭은 <code>path</code>입니다.<br>(컬럼: emp_id, path)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-101-고객별-최근-주문">문제 101. 고객별 최근 주문</h3>
+<p>주문 이력이 있는 각 고객의 가장 최근 주문(취소 포함)의 주문번호와 주문일을 customer_id 순으로 구하시오. 같은 날 주문은 없습니다.<br>(컬럼: name, order_id, order_date)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-102-전체-대비-비율">문제 102. 전체 대비 비율</h3>
+<p>취소 주문을 제외한 고객별 총 구매금액과 전체 구매금액 대비 비율(%, 소수 첫째 자리 반올림)을 구하시오. 금액 큰 순, 같으면 name 순으로 정렬합니다. 별칭은 <code>total</code>, <code>pct</code>입니다.<br>(컬럼: name, total, pct)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-103-카테고리별-최고가-상품">문제 103. 카테고리별 최고가 상품</h3>
+<p>카테고리별로 가격이 가장 비싼 상품의 이름과 가격을 카테고리 이름 순으로 구하시오.<br>(컬럼: category, product_name, price)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-104-직전-주문과의-간격">문제 104. 직전 주문과의 간격</h3>
+<p>취소 주문을 제외하고, 고객별로 직전 주문과의 간격(일)을 구하시오. 직전 주문이 없는 첫 주문은 제외하며, customer_id, 주문일 순으로 정렬합니다. 별칭은 <code>days_since_prev</code>입니다.<br>(컬럼: customer_id, order_id, order_date, days_since_prev)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-105-피벗-등급--상태">문제 105. 피벗 (등급 × 상태)</h3>
+<p>고객 등급별로 주문 상태(<code>PAID</code>, <code>SHIPPED</code>, <code>DELIVERED</code>, <code>CANCELLED</code>)별 주문 건수를 가로로 펼쳐 보이시오. 등급 오름차순, 별칭은 <code>paid</code>, <code>shipped</code>, <code>delivered</code>, <code>cancelled</code>입니다. 주문이 없는 등급은 나오지 않아도 됩니다.<br>(컬럼: grade, paid, shipped, delivered, cancelled)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-106-함께-구매된-상품-쌍">문제 106. 함께 구매된 상품 쌍</h3>
+<p>같은 주문에 함께 담긴 서로 다른 두 상품의 쌍 중, 2개 이상의 주문에서 함께 등장한 쌍과 그 주문 수를 구하시오. 같은 쌍이 (A,B), (B,A)로 중복되지 않게 하고, 주문 수 내림차순, product1 오름차순, product2 오름차순으로 정렬합니다. 별칭은 <code>product1</code>, <code>product2</code>, <code>order_cnt</code>입니다.<br>(컬럼: product1, product2, order_cnt)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-107-관계-나눗셈-not-exists">문제 107. 관계 나눗셈 (NOT EXISTS)</h3>
+<p>모든 상품 카테고리(전자기기, 액세서리, 도서, 가구)의 상품을 각각 한 번 이상 구매한 고객의 이름을 구하시오(취소 주문 제외).<br>(컬럼: name)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-108-중앙값">문제 108. 중앙값</h3>
+<p>전체 직원 급여의 중앙값을 구하시오(짝수 개이면 가운데 두 값의 평균). 별칭은 <code>median_salary</code>입니다.<br>(컬럼: median_salary)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-109-카테고리별-매출-상위-2개-상품">문제 109. 카테고리별 매출 상위 2개 상품</h3>
+<p>취소 주문을 제외하고, 카테고리별로 매출액이 높은 상위 2개 상품을 구하시오. 동점은 없다고 가정하고 <code>ROW_NUMBER</code>를 사용합니다. category, 순위 순으로 정렬하며 별칭은 <code>revenue</code>, <code>rn</code>입니다.<br>(컬럼: category, product_name, revenue, rn)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+<h3 id="문제-110-누적-구매액이-처음-50만-원을-넘은-주문">문제 110. 누적 구매액이 처음 50만 원을 넘은 주문</h3>
+<p>취소 주문을 제외하고, 고객별로 주문일 순으로 구매 금액을 누적했을 때 누적액이 처음으로 500,000원 이상이 되는 주문의 고객번호, 주문번호, 주문일, 누적액을 customer_id 순으로 구하시오. 같은 날 주문은 없습니다. 누적액이 500,000원에 도달하지 못한 고객은 제외합니다. 별칭은 <code>running_total</code>입니다.<br>(컬럼: customer_id, order_id, order_date, running_total)</p>
+<pre><code class="language-sql">-- 여기에 작성
+</code></pre>
+</article>
+</main></body>
+</html>
