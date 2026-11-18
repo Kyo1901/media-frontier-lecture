@@ -11,7 +11,7 @@
 
 ## 0. 실습용 샘플 데이터베이스
 
-모든 문제는 아래 6개 테이블로 구성된 하나의 샘플 DB를 사용합니다. **SQLite 문법** 기준이며, 풀이 페이지에서 바로 실행·채점할 수 있습니다.
+모든 문제는 아래 6개 테이블로 구성된 하나의 샘플 DB를 사용합니다. **MySQL 8.0 문법** 기준입니다. 풀이 페이지(SQL 연습장)에서 바로 실행·채점할 수 있고, Workbench 에서 같은 DB 를 만들어(맨 아래 SQL) 풀어도 같은 답이 나옵니다.
 
 ```text
 departments 1 ──< employees >── 1 employees (manager_id: 자기 참조, 상사)
@@ -28,7 +28,7 @@ customers   1 ──< orders    1 ──< order_items >── 1 products
 | `order_items` | 주문상세 | item_id, order_id, product_id, quantity, unit_price |
 
 **참고 사항**
-- 날짜는 `YYYY-MM-DD` 형식의 TEXT, 금액은 원 단위 정수입니다.
+- 날짜는 `DATE`(`YYYY-MM-DD`), 금액은 원 단위 정수(`INT`)입니다.
 - `orders.status` 값: `PAID`(결제), `SHIPPED`(배송 중), `DELIVERED`(배송 완료), `CANCELLED`(취소)
 - `customers.grade` 값: `BRONZE` < `SILVER` < `GOLD` < `VIP`
 - `employees.manager_id`는 직속 상사의 `emp_id`이며, 최상위자(대표)는 NULL입니다.
@@ -206,6 +206,175 @@ customers   1 ──< orders    1 ──< order_items >── 1 products
 | 52 | 30 | 11 | 1 | 35000 |
 | 53 | 30 | 9 | 1 | 28000 |
 | 54 | 30 | 10 | 1 | 32000 |
+
+### Workbench 에서 직접 만들어 풀려면
+
+아래 SQL 을 통째로 실행하면 같은 DB(`practice`)가 생깁니다. 🔴 수업용 `newsdb` 와는 다른 DB 입니다 — DML/DDL 문제를 풀다 망가지면 이 SQL 을 다시 실행하세요.
+
+```sql
+DROP DATABASE IF EXISTS practice;
+CREATE DATABASE practice;
+USE practice;
+```
+
+```sql
+CREATE TABLE departments (
+  dept_id   INT PRIMARY KEY,
+  dept_name VARCHAR(20) NOT NULL,
+  location  VARCHAR(10) NOT NULL
+);
+CREATE TABLE employees (
+  emp_id     INT PRIMARY KEY,
+  emp_name   VARCHAR(20) NOT NULL,
+  dept_id    INT,
+  job_title  VARCHAR(20) NOT NULL,
+  salary     INT NOT NULL,
+  hire_date  DATE NOT NULL,
+  manager_id INT,
+  FOREIGN KEY (dept_id) REFERENCES departments(dept_id),
+  FOREIGN KEY (manager_id) REFERENCES employees(emp_id)
+);
+CREATE TABLE customers (
+  customer_id INT PRIMARY KEY,
+  name        VARCHAR(20) NOT NULL,
+  city        VARCHAR(10) NOT NULL,
+  grade       VARCHAR(10) NOT NULL,
+  joined_date DATE NOT NULL,
+  email       VARCHAR(50)
+);
+CREATE TABLE products (
+  product_id   INT PRIMARY KEY,
+  product_name VARCHAR(50) NOT NULL,
+  category     VARCHAR(20) NOT NULL,
+  price        INT NOT NULL,
+  stock        INT NOT NULL
+);
+CREATE TABLE orders (
+  order_id    INT PRIMARY KEY,
+  customer_id INT NOT NULL,
+  order_date  DATE NOT NULL,
+  status      VARCHAR(10) NOT NULL,
+  FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+CREATE TABLE order_items (
+  item_id    INT PRIMARY KEY,
+  order_id   INT NOT NULL,
+  product_id INT NOT NULL,
+  quantity   INT NOT NULL,
+  unit_price INT NOT NULL,
+  FOREIGN KEY (order_id) REFERENCES orders(order_id),
+  FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+INSERT INTO departments VALUES
+(1,'개발팀','서울'),(2,'영업팀','부산'),(3,'인사팀','서울'),
+(4,'마케팅팀','대전'),(5,'기획팀','서울'),(6,'법무팀','부산');
+
+INSERT INTO employees VALUES
+(1,'김대표',NULL,'대표이사',12000000,'2015-03-01',NULL),
+(2,'이개발',1,'개발팀장',8500000,'2016-05-02',1),
+(3,'박서버',1,'선임개발자',6500000,'2018-07-15',2),
+(4,'최프론',1,'개발자',5200000,'2020-02-10',2),
+(5,'정백엔',1,'개발자',5000000,'2021-09-01',2),
+(6,'한신입',1,'사원',3800000,'2023-03-02',3),
+(7,'오영업',2,'영업팀장',7800000,'2016-11-20',1),
+(8,'서영업',2,'대리',4800000,'2019-04-01',7),
+(9,'강영업',2,'사원',3600000,'2022-06-13',7),
+(10,'윤영업',2,'대리',4700000,'2020-08-24',7),
+(11,'임인사',3,'인사팀장',7200000,'2017-01-09',1),
+(12,'조인사',3,'사원',3500000,'2022-01-17',11),
+(13,'장마케',4,'마케팅팀장',7500000,'2017-09-04',1),
+(14,'문마케',4,'대리',4900000,'2019-12-02',13),
+(15,'배마케',4,'사원',3700000,'2023-07-10',13),
+(16,'신기획',5,'기획팀장',7600000,'2016-08-16',1),
+(17,'권기획',5,'과장',5800000,'2018-02-26',16),
+(18,'황기획',5,'사원',3900000,'2024-01-08',17),
+(19,'송연구',NULL,'연구원',5500000,'2021-05-31',2),
+(20,'홍개발',1,'개발자',5200000,'2020-11-02',2);
+
+INSERT INTO customers VALUES
+(1,'김민수','서울','GOLD','2022-01-15','minsu@example.com'),
+(2,'이서연','부산','SILVER','2022-03-22','seoyeon@example.com'),
+(3,'박지훈','서울','BRONZE','2022-07-08',NULL),
+(4,'최유나','대구','VIP','2021-11-30','yuna@example.com'),
+(5,'정우진','인천','BRONZE','2023-02-14','woojin@example.com'),
+(6,'한소희','서울','SILVER','2023-04-05','sohee@example.com'),
+(7,'오태양','광주','BRONZE','2023-06-19',NULL),
+(8,'서지민','부산','GOLD','2023-08-01','jimin@example.com'),
+(9,'강하늘','대전','SILVER','2023-09-12','haneul@example.com'),
+(10,'윤서아','서울','VIP','2021-05-20','seoa@example.com'),
+(11,'임도현','대구','BRONZE','2024-01-03','dohyun@example.com'),
+(12,'조은지','인천','SILVER','2024-02-27','eunji@example.com'),
+(13,'장민재','서울','BRONZE','2024-05-16',NULL),
+(14,'배수빈','부산','GOLD','2024-08-09','subin@example.com'),
+(15,'신예린','서울','BRONZE','2024-10-21','yerin@example.com');
+
+INSERT INTO products VALUES
+(1,'무선 마우스','전자기기',25000,120),
+(2,'기계식 키보드','전자기기',89000,45),
+(3,'27인치 모니터','전자기기',289000,20),
+(4,'USB 허브','전자기기',19000,200),
+(5,'노트북 거치대','액세서리',35000,80),
+(6,'모니터 암','액세서리',59000,0),
+(7,'마우스 패드','액세서리',9000,300),
+(8,'웹캠','전자기기',49000,35),
+(9,'SQL 입문서','도서',28000,60),
+(10,'파이썬 완벽 가이드','도서',32000,75),
+(11,'자바 프로그래밍','도서',35000,50),
+(12,'알고리즘 문제집','도서',30000,0),
+(13,'사무용 의자','가구',189000,15),
+(14,'높이조절 책상','가구',259000,8),
+(15,'LED 스탠드','가구',39000,40);
+
+INSERT INTO orders VALUES
+(1,1,'2024-01-10','DELIVERED'),(2,2,'2024-01-25','DELIVERED'),
+(3,1,'2024-02-14','DELIVERED'),(4,4,'2024-02-20','DELIVERED'),
+(5,3,'2024-03-03','CANCELLED'),(6,5,'2024-03-18','DELIVERED'),
+(7,8,'2024-03-29','DELIVERED'),(8,10,'2024-04-05','DELIVERED'),
+(9,6,'2024-04-17','DELIVERED'),(10,4,'2024-05-02','DELIVERED'),
+(11,2,'2024-05-21','DELIVERED'),(12,9,'2024-06-09','DELIVERED'),
+(13,1,'2024-06-28','DELIVERED'),(14,10,'2024-07-07','DELIVERED'),
+(15,12,'2024-07-19','CANCELLED'),(16,14,'2024-08-01','DELIVERED'),
+(17,8,'2024-08-15','DELIVERED'),(18,11,'2024-09-02','DELIVERED'),
+(19,4,'2024-09-20','DELIVERED'),(20,6,'2024-10-04','SHIPPED'),
+(21,10,'2024-10-18','SHIPPED'),(22,1,'2024-11-05','SHIPPED'),
+(23,2,'2024-11-22','PAID'),(24,14,'2024-12-01','PAID'),
+(25,9,'2024-12-10','PAID'),(26,5,'2024-12-15','PAID'),
+(27,12,'2024-12-20','PAID'),(28,8,'2024-12-24','PAID'),
+(29,4,'2024-12-28','PAID'),(30,10,'2024-12-30','PAID');
+
+INSERT INTO order_items VALUES
+(1,1,1,2,25000),(2,1,7,1,9000),
+(3,2,9,1,28000),(4,2,10,1,32000),
+(5,3,3,1,289000),
+(6,4,13,1,189000),(7,4,15,1,39000),
+(8,5,2,1,89000),
+(9,6,4,3,19000),(10,6,7,2,9000),
+(11,7,11,2,35000),
+(12,8,2,1,89000),(13,8,1,1,25000),(14,8,7,2,9000),
+(15,9,5,1,35000),(16,9,8,1,49000),
+(17,10,3,2,289000),
+(18,11,10,1,32000),(19,11,11,1,35000),(20,11,9,1,28000),
+(21,12,15,2,39000),
+(22,13,1,1,25000),(23,13,4,2,19000),
+(24,14,13,2,189000),
+(25,15,8,1,49000),
+(26,16,2,2,89000),(27,16,5,1,35000),
+(28,17,9,2,28000),(29,17,10,1,32000),
+(30,18,1,3,25000),
+(31,19,3,1,289000),(32,19,2,1,89000),
+(33,20,6,1,59000),(34,20,5,2,35000),
+(35,21,10,2,32000),(36,21,11,1,35000),
+(37,22,13,1,189000),(38,22,15,1,39000),(39,22,4,1,19000),
+(40,23,8,1,49000),(41,23,7,3,9000),
+(42,24,9,1,28000),
+(43,25,15,1,39000),(44,25,5,1,35000),
+(45,26,1,1,25000),(46,26,4,1,19000),
+(47,27,2,1,89000),
+(48,28,3,1,289000),(49,28,10,1,32000),
+(50,29,13,1,189000),(51,29,1,2,25000),
+(52,30,11,1,35000),(53,30,9,1,28000),(54,30,10,1,32000);
+```
 
 ---
 
@@ -1005,10 +1174,10 @@ VIP 등급 고객의 customer_id, name을 복사하여 `vip_customers` 테이블
 ### 문제 81. CREATE TABLE (제약조건)
 
 다음 구조의 `notices` 테이블을 생성하시오.  
-- notice_id: INTEGER, 기본키  
-- title: TEXT, NOT NULL  
+- notice_id: INT, 기본키  
+- title: VARCHAR(100), NOT NULL  
 - content: TEXT  
-- created_at: TEXT
+- created_at: DATETIME
 
 ```sql
 -- 여기에 작성
@@ -1017,7 +1186,7 @@ VIP 등급 고객의 customer_id, name을 복사하여 `vip_customers` 테이블
 
 ### 문제 82. ALTER TABLE
 
-`employees` 테이블에 TEXT 타입의 `phone` 컬럼을 추가하시오.
+`employees` 테이블에 VARCHAR(20) 타입의 `phone` 컬럼을 추가하시오.
 
 ```sql
 -- 여기에 작성

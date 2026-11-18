@@ -42,7 +42,9 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 <p class="back"><a href="../../index.html">← 처음으로</a> · <a href="sql.html">풀러 가기</a></p>
 <article class="guide"><h1 id="sql-연습-답안지-해설-포함">SQL 연습 답안지 (해설 포함)</h1>
 <blockquote>
-<p>총 <strong>110문제</strong>의 정답 쿼리, 해설, 실행 결과입니다. 문제를 먼저 풀어 본 뒤 확인하세요.<br>같은 결과를 내는 다른 쿼리도 정답입니다. 채점은 <strong>결과 값</strong> 기준이며(컬럼명은 무관), 정렬을 요구한 문제만 행 순서까지 비교합니다.</p>
+<p>총 <strong>110문제</strong>의 정답 쿼리, 해설, 실행 결과입니다. 문제를 먼저 풀어 본 뒤 확인하세요.</p>
+<p>같은 결과를 내는 다른 쿼리도 정답입니다. 채점은 <strong>결과 값</strong> 기준이며(컬럼명은 무관), 정렬을 요구한 문제만 행 순서까지 비교합니다.</p>
+<p>정답은 <strong>MySQL 8.0</strong> 문법이고, 실행 결과는 실제 MySQL(8.0.46)에서 뽑은 값입니다. Workbench 에서 돌려도 같습니다.</p>
 </blockquote>
 <h2 id="빠른-찾기">빠른 찾기</h2>
 <ul>
@@ -764,7 +766,7 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 ORDER BY dept_id ASC, salary DESC, emp_id ASC;
 </code></pre>
 <p><strong>해설</strong></p>
-<p>정렬 기준마다 ASC/DESC를 따로 지정할 수 있습니다. SQLite에서 NULL은 오름차순일 때 가장 먼저 나옵니다(DB마다 다름).</p>
+<p>정렬 기준마다 ASC/DESC를 따로 지정할 수 있습니다. MySQL에서 NULL은 오름차순일 때 가장 먼저, 내림차순일 때 가장 나중에 나옵니다(DB마다 다름).</p>
 <p><strong>실행 결과</strong> (총 20행 중 8행 표시)</p>
 <table>
 <thead>
@@ -822,7 +824,7 @@ ORDER BY dept_id ASC, salary DESC, emp_id ASC;
 <pre><code class="language-sql">SELECT emp_name, salary FROM employees ORDER BY salary DESC LIMIT 3;
 </code></pre>
 <p><strong>해설</strong></p>
-<p><code>LIMIT n</code>은 결과 행 수를 n개로 제한합니다. &#39;Top-N&#39; 조회는 <strong>정렬 후 LIMIT</strong> 조합으로 구현합니다. (MySQL/SQLite의 LIMIT, SQL Server는 TOP, Oracle은 FETCH FIRST)</p>
+<p><code>LIMIT n</code>은 결과 행 수를 n개로 제한합니다. &#39;Top-N&#39; 조회는 <strong>정렬 후 LIMIT</strong> 조합으로 구현합니다. (MySQL의 LIMIT, SQL Server는 TOP, Oracle은 FETCH FIRST). MySQL은 <code>LIMIT 3, 3</code>(건너뛸 수, 가져올 수)으로도 씁니다.</p>
 <p><strong>실행 결과</strong> (3행)</p>
 <table>
 <thead>
@@ -975,10 +977,11 @@ ORDER BY dept_id ASC, salary DESC, emp_id ASC;
 <h3 id="문제-23-문자열-연결">문제 23. 문자열 연결</h3>
 <p><strong>문제</strong><br>직원 이름과 직책을 <code>이름(직책)</code> 형태로 합쳐 <code>title</code> 컬럼으로 조회하시오. 예: <code>이개발(개발팀장)</code><br>(컬럼: title)</p>
 <p><strong>정답</strong></p>
-<pre><code class="language-sql">SELECT emp_name || &#39;(&#39; || job_title || &#39;)&#39; AS title FROM employees;
+<pre><code class="language-sql">SELECT CONCAT(emp_name, &#39;(&#39;, job_title, &#39;)&#39;) AS title FROM employees;
 </code></pre>
 <p><strong>해설</strong></p>
-<p>SQLite·표준 SQL에서 문자열 연결은 <code>||</code> 연산자입니다. MySQL은 <code>CONCAT()</code>을 사용합니다.</p>
+<p>MySQL에서 문자열을 이을 때는 <code>CONCAT(a, b, ...)</code>을 씁니다. 인자 중 하나라도 NULL이면 결과 전체가 NULL입니다(NULL을 건너뛰려면 <code>CONCAT_WS</code>).</p>
+<p>🔴 <code>||</code>는 MySQL에서 문자열 잇기가 아니라 <strong>OR</strong>입니다. <code>emp_name || &#39;(&#39;</code>는 오류 없이 0이 나옵니다(SQLite·PostgreSQL·Oracle에서는 문자열 잇기).</p>
 <p><strong>실행 결과</strong> (총 20행 중 8행 표시)</p>
 <table>
 <thead>
@@ -1121,7 +1124,7 @@ ORDER BY dept_id ASC, salary DESC, emp_id ASC;
 </tr>
 </thead>
 <tbody><tr>
-<td>5835000.0</td>
+<td>5835000</td>
 </tr>
 </tbody></table>
 <hr>
@@ -1161,7 +1164,7 @@ ORDER BY dept_id ASC, salary DESC, emp_id ASC;
 </tr>
 </thead>
 <tbody><tr>
-<td>5700000.0</td>
+<td>5700000</td>
 </tr>
 </tbody></table>
 <hr>
@@ -1244,24 +1247,24 @@ GROUP BY category;
 </tr>
 </thead>
 <tbody><tr>
-<td>가구</td>
-<td>3</td>
-<td>162333.0</td>
-</tr>
-<tr>
-<td>도서</td>
-<td>4</td>
-<td>31250.0</td>
+<td>전자기기</td>
+<td>5</td>
+<td>94200</td>
 </tr>
 <tr>
 <td>액세서리</td>
 <td>3</td>
-<td>34333.0</td>
+<td>34333</td>
 </tr>
 <tr>
-<td>전자기기</td>
-<td>5</td>
-<td>94200.0</td>
+<td>도서</td>
+<td>4</td>
+<td>31250</td>
+</tr>
+<tr>
+<td>가구</td>
+<td>3</td>
+<td>162333</td>
 </tr>
 </tbody></table>
 <hr>
@@ -1281,16 +1284,16 @@ GROUP BY category;
 </tr>
 </thead>
 <tbody><tr>
-<td>BRONZE</td>
-<td>6</td>
-</tr>
-<tr>
 <td>GOLD</td>
 <td>3</td>
 </tr>
 <tr>
 <td>SILVER</td>
 <td>4</td>
+</tr>
+<tr>
+<td>BRONZE</td>
+<td>6</td>
 </tr>
 <tr>
 <td>VIP</td>
@@ -2064,11 +2067,12 @@ JOIN employees b
 <p><strong>문제</strong><br>상품 카테고리 종류와 주문 상태 종류의 모든 조합이 몇 개인지 구하시오. 별칭은 <code>combos</code>입니다.<br>(컬럼: combos)</p>
 <p><strong>정답</strong></p>
 <pre><code class="language-sql">SELECT COUNT(*) AS combos
-FROM (SELECT DISTINCT category FROM products)
-CROSS JOIN (SELECT DISTINCT status FROM orders);
+FROM (SELECT DISTINCT category FROM products) AS c
+CROSS JOIN (SELECT DISTINCT status FROM orders) AS s;
 </code></pre>
 <p><strong>해설</strong></p>
 <p><code>CROSS JOIN</code>은 두 집합의 모든 조합(카르테시안 곱)을 만듭니다. 카테고리 4종 × 상태 4종 = 16입니다. FROM 절에 서브쿼리(인라인 뷰)를 쓸 수 있다는 점도 확인하세요.</p>
+<p>🔴 MySQL은 FROM 절의 서브쿼리(파생 테이블)에 <strong>별칭이 꼭 있어야</strong> 합니다. <code>AS c</code>를 빼면 <code>Every derived table must have its own alias</code> 오류가 납니다.</p>
 <p><strong>실행 결과</strong> (1행)</p>
 <table>
 <thead>
@@ -2407,7 +2411,7 @@ FROM customers
 ORDER BY customer_id;
 </code></pre>
 <p><strong>해설</strong></p>
-<p><code>COALESCE(a, b, ...)</code>는 왼쪽부터 처음으로 NULL이 아닌 값을 반환합니다. (SQLite의 <code>IFNULL(a, b)</code>, MySQL의 <code>IFNULL</code>, Oracle의 <code>NVL</code>과 유사)</p>
+<p><code>COALESCE(a, b, ...)</code>는 왼쪽부터 처음으로 NULL이 아닌 값을 반환합니다. (MySQL의 <code>IFNULL(a, b)</code>, Oracle의 <code>NVL</code>과 비슷하지만 <code>COALESCE</code>는 인자를 여러 개 받습니다)</p>
 <p><strong>실행 결과</strong> (총 15행 중 8행 표시)</p>
 <table>
 <thead>
@@ -2505,13 +2509,13 @@ ORDER BY e.emp_id;
 <h3 id="문제-65-날짜-함수-월별-집계">문제 65. 날짜 함수 (월별 집계)</h3>
 <p><strong>문제</strong><br>월별(<code>YYYY-MM</code>) 주문 건수를 월 오름차순으로 구하시오. 별칭은 <code>ym</code>, <code>cnt</code>입니다.<br>(컬럼: ym, cnt)</p>
 <p><strong>정답</strong></p>
-<pre><code class="language-sql">SELECT strftime(&#39;%Y-%m&#39;, order_date) AS ym, COUNT(*) AS cnt
+<pre><code class="language-sql">SELECT DATE_FORMAT(order_date, &#39;%Y-%m&#39;) AS ym, COUNT(*) AS cnt
 FROM orders
 GROUP BY ym
 ORDER BY ym;
 </code></pre>
 <p><strong>해설</strong></p>
-<p>SQLite의 <code>strftime(형식, 날짜)</code>로 날짜의 일부를 추출합니다. (MySQL: <code>DATE_FORMAT</code>, PostgreSQL: <code>TO_CHAR</code>) <code>GROUP BY</code>에 SELECT의 별칭을 쓸 수 있는지는 DB마다 다릅니다.</p>
+<p><code>DATE_FORMAT(날짜, 형식)</code>으로 날짜를 원하는 모양의 문자열로 바꿉니다. <code>%Y</code> 4자리 연도 · <code>%m</code> 2자리 월 · <code>%d</code> 2자리 일입니다. MySQL은 <code>GROUP BY</code>에 SELECT의 별칭(<code>ym</code>)을 쓸 수 있습니다(DB마다 다름).</p>
 <p><strong>실행 결과</strong> (총 12행 중 8행 표시)</p>
 <table>
 <thead>
@@ -2557,13 +2561,13 @@ ORDER BY ym;
 <h3 id="문제-66-연도별-집계">문제 66. 연도별 집계</h3>
 <p><strong>문제</strong><br>입사 연도별 직원 수를 연도 오름차순으로 구하시오. 별칭은 <code>hire_year</code>, <code>cnt</code>입니다.<br>(컬럼: hire_year, cnt)</p>
 <p><strong>정답</strong></p>
-<pre><code class="language-sql">SELECT strftime(&#39;%Y&#39;, hire_date) AS hire_year, COUNT(*) AS cnt
+<pre><code class="language-sql">SELECT YEAR(hire_date) AS hire_year, COUNT(*) AS cnt
 FROM employees
 GROUP BY hire_year
 ORDER BY hire_year;
 </code></pre>
 <p><strong>해설</strong></p>
-<p><code>strftime(&#39;%Y&#39;, ...)</code>은 연도를 문자열로 반환합니다. 날짜 컬럼을 가공해서 그룹화하는 전형적인 패턴입니다.</p>
+<p><code>YEAR(날짜)</code>는 연도를 <strong>숫자</strong>로 돌려줍니다. <code>DATE_FORMAT(hire_date, &#39;%Y&#39;)</code>로 써도 같은 연도가 나옵니다(이쪽은 문자열). 날짜 컬럼을 가공해서 그룹화하는 전형적인 패턴입니다.</p>
 <p><strong>실행 결과</strong> (총 10행 중 8행 표시)</p>
 <table>
 <thead>
@@ -2610,12 +2614,12 @@ ORDER BY hire_year;
 <p><strong>문제</strong><br>기준일 <code>2024-12-31</code>을 기준으로 직원의 근속 연수(기준 연도 − 입사 연도)를 구해 emp_id 순으로 조회하시오. 별칭은 <code>years</code>입니다.<br>(컬럼: emp_name, years)</p>
 <p><strong>정답</strong></p>
 <pre><code class="language-sql">SELECT emp_name,
-  CAST(strftime(&#39;%Y&#39;, &#39;2024-12-31&#39;) AS INTEGER) - CAST(strftime(&#39;%Y&#39;, hire_date) AS INTEGER) AS years
+  YEAR(&#39;2024-12-31&#39;) - YEAR(hire_date) AS years
 FROM employees
 ORDER BY emp_id;
 </code></pre>
 <p><strong>해설</strong></p>
-<p><code>strftime</code>의 결과는 문자열이므로 <code>CAST(... AS INTEGER)</code>로 숫자 변환 후 계산합니다. 실제 만 근속 연수를 구하려면 월·일까지 비교하거나 <code>julianday</code> 차이를 이용합니다.</p>
+<p><code>YEAR()</code>가 숫자를 돌려주므로 바로 뺄 수 있습니다. 월·일까지 따진 <strong>만</strong> 근속 연수는 <code>TIMESTAMPDIFF(YEAR, hire_date, &#39;2024-12-31&#39;)</code>로 구합니다 — 생일이 안 지난 사람은 1 작게 나와 이 문제의 답과 다릅니다.</p>
 <p><strong>실행 결과</strong> (총 20행 중 8행 표시)</p>
 <table>
 <thead>
@@ -2713,13 +2717,13 @@ ORDER BY customer_id;
 <h3 id="문제-69-length">문제 69. LENGTH</h3>
 <p><strong>문제</strong><br>상품명이 6글자 이상인 상품의 이름과 글자 수를 product_id 순으로 조회하시오. 글자 수 별칭은 <code>len</code>입니다.<br>(컬럼: product_name, len)</p>
 <p><strong>정답</strong></p>
-<pre><code class="language-sql">SELECT product_name, LENGTH(product_name) AS len
+<pre><code class="language-sql">SELECT product_name, CHAR_LENGTH(product_name) AS len
 FROM products
-WHERE LENGTH(product_name) &gt;= 6
+WHERE CHAR_LENGTH(product_name) &gt;= 6
 ORDER BY product_id;
 </code></pre>
 <p><strong>해설</strong></p>
-<p>SQLite의 <code>LENGTH</code>는 문자열 길이를 글자 수 기준으로 반환합니다. MySQL에서는 <code>CHAR_LENGTH</code>(글자 수)와 <code>LENGTH</code>(바이트 수)가 다르므로 주의하세요.</p>
+<p>🔴 MySQL의 <code>LENGTH</code>는 <strong>바이트 수</strong>입니다. 한글은 한 글자가 3바이트(utf8mb4)라 <code>LENGTH(&#39;마우스&#39;)</code>는 9입니다. 글자 수는 <code>CHAR_LENGTH</code>로 셉니다.</p>
 <p><strong>실행 결과</strong> (총 13행 중 8행 표시)</p>
 <table>
 <thead>
@@ -2785,31 +2789,31 @@ ORDER BY dept_id;
 </thead>
 <tbody><tr>
 <td>1</td>
-<td>5700000.0</td>
+<td>5700000</td>
 <td>8500000</td>
 <td>3800000</td>
 </tr>
 <tr>
 <td>2</td>
-<td>5225000.0</td>
+<td>5225000</td>
 <td>7800000</td>
 <td>3600000</td>
 </tr>
 <tr>
 <td>3</td>
-<td>5350000.0</td>
+<td>5350000</td>
 <td>7200000</td>
 <td>3500000</td>
 </tr>
 <tr>
 <td>4</td>
-<td>5366667.0</td>
+<td>5366667</td>
 <td>7500000</td>
 <td>3700000</td>
 </tr>
 <tr>
 <td>5</td>
-<td>5766667.0</td>
+<td>5766667</td>
 <td>7600000</td>
 <td>3900000</td>
 </tr>
@@ -2834,12 +2838,12 @@ HAVING SUM(stock) &gt;= 200;
 </tr>
 </thead>
 <tbody><tr>
-<td>액세서리</td>
-<td>380</td>
-</tr>
-<tr>
 <td>전자기기</td>
 <td>420</td>
+</tr>
+<tr>
+<td>액세서리</td>
+<td>380</td>
 </tr>
 </tbody></table>
 <hr>
@@ -2949,22 +2953,22 @@ SELECT location FROM departments;
 </tr>
 </thead>
 <tbody><tr>
-<td>광주</td>
-</tr>
-<tr>
-<td>대구</td>
-</tr>
-<tr>
-<td>대전</td>
+<td>서울</td>
 </tr>
 <tr>
 <td>부산</td>
 </tr>
 <tr>
-<td>서울</td>
+<td>대구</td>
 </tr>
 <tr>
 <td>인천</td>
+</tr>
+<tr>
+<td>광주</td>
+</tr>
+<tr>
+<td>대전</td>
 </tr>
 </tbody></table>
 <hr>
@@ -2985,13 +2989,13 @@ SELECT location FROM departments;
 </tr>
 </thead>
 <tbody><tr>
-<td>대전</td>
+<td>서울</td>
 </tr>
 <tr>
 <td>부산</td>
 </tr>
 <tr>
-<td>서울</td>
+<td>대전</td>
 </tr>
 </tbody></table>
 <hr>
@@ -3012,13 +3016,13 @@ SELECT location FROM departments;
 </tr>
 </thead>
 <tbody><tr>
-<td>광주</td>
-</tr>
-<tr>
 <td>대구</td>
 </tr>
 <tr>
 <td>인천</td>
+</tr>
+<tr>
+<td>광주</td>
 </tr>
 </tbody></table>
 <hr>
@@ -3206,109 +3210,104 @@ SELECT customer_id, name FROM customers WHERE grade = &#39;VIP&#39;;
 <h3 id="문제-81-create-table-제약조건">문제 81. CREATE TABLE (제약조건)</h3>
 <p><strong>문제</strong><br>다음 구조의 <code>notices</code> 테이블을 생성하시오.  </p>
 <ul>
-<li>notice_id: INTEGER, 기본키  </li>
-<li>title: TEXT, NOT NULL  </li>
+<li>notice_id: INT, 기본키  </li>
+<li>title: VARCHAR(100), NOT NULL  </li>
 <li>content: TEXT  </li>
-<li>created_at: TEXT</li>
+<li>created_at: DATETIME</li>
 </ul>
 <p><strong>정답</strong></p>
 <pre><code class="language-sql">CREATE TABLE notices (
-  notice_id  INTEGER PRIMARY KEY,
-  title      TEXT NOT NULL,
+  notice_id  INT PRIMARY KEY,
+  title      VARCHAR(100) NOT NULL,
   content    TEXT,
-  created_at TEXT
+  created_at DATETIME
 );
 </code></pre>
 <p><strong>해설</strong></p>
 <p><code>PRIMARY KEY</code>는 행을 유일하게 식별하며(NOT NULL + UNIQUE), <code>NOT NULL</code>은 빈 값을 막습니다. 그 밖에 <code>UNIQUE</code>, <code>DEFAULT</code>, <code>CHECK</code>, <code>FOREIGN KEY</code> 제약조건이 있습니다.</p>
+<p>이 연습장은 컬럼 이름 · NOT NULL · 기본키만 채점합니다(타입은 보지 않음). Workbench에서는 <code>DESC notices;</code>로 구조를 볼 수 있습니다.</p>
 <p><strong>실행 후 확인 쿼리 결과</strong> (4행)</p>
 <p>확인 쿼리:</p>
-<pre><code class="language-sql">SELECT name, type, &quot;notnull&quot; AS not_null, pk FROM pragma_table_info(&#39;notices&#39;) ORDER BY cid;
+<pre><code class="language-sql">SELECT COLUMN_NAME AS name,
+       IF(IS_NULLABLE = &#39;NO&#39;, 1, 0) AS not_null,
+       IF(COLUMN_KEY = &#39;PRI&#39;, 1, 0) AS pk
+FROM information_schema.COLUMNS
+WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = &#39;notices&#39;
+ORDER BY ORDINAL_POSITION;
 </code></pre>
 <table>
 <thead>
 <tr>
 <th>name</th>
-<th>type</th>
 <th>not_null</th>
 <th>pk</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>notice_id</td>
-<td>INTEGER</td>
-<td>0</td>
+<td>1</td>
 <td>1</td>
 </tr>
 <tr>
 <td>title</td>
-<td>TEXT</td>
 <td>1</td>
 <td>0</td>
 </tr>
 <tr>
 <td>content</td>
-<td>TEXT</td>
 <td>0</td>
 <td>0</td>
 </tr>
 <tr>
 <td>created_at</td>
-<td>TEXT</td>
 <td>0</td>
 <td>0</td>
 </tr>
 </tbody></table>
 <hr>
 <h3 id="문제-82-alter-table">문제 82. ALTER TABLE</h3>
-<p><strong>문제</strong><br><code>employees</code> 테이블에 TEXT 타입의 <code>phone</code> 컬럼을 추가하시오.</p>
+<p><strong>문제</strong><br><code>employees</code> 테이블에 VARCHAR(20) 타입의 <code>phone</code> 컬럼을 추가하시오.</p>
 <p><strong>정답</strong></p>
-<pre><code class="language-sql">ALTER TABLE employees ADD COLUMN phone TEXT;
+<pre><code class="language-sql">ALTER TABLE employees ADD COLUMN phone VARCHAR(20);
 </code></pre>
 <p><strong>해설</strong></p>
-<p><code>ALTER TABLE ... ADD COLUMN</code>으로 기존 테이블에 컬럼을 추가합니다. 기존 행의 새 컬럼 값은 NULL(또는 DEFAULT)입니다.</p>
+<p><code>ALTER TABLE ... ADD COLUMN</code>으로 기존 테이블에 컬럼을 추가합니다. 기존 행의 새 컬럼 값은 NULL(또는 DEFAULT)입니다. Workbench에서는 <code>DESC employees;</code>로 확인합니다.</p>
 <p><strong>실행 후 확인 쿼리 결과</strong> (8행)</p>
 <p>확인 쿼리:</p>
-<pre><code class="language-sql">SELECT name, type FROM pragma_table_info(&#39;employees&#39;) ORDER BY cid;
+<pre><code class="language-sql">SELECT COLUMN_NAME AS name
+FROM information_schema.COLUMNS
+WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = &#39;employees&#39;
+ORDER BY ORDINAL_POSITION;
 </code></pre>
 <table>
 <thead>
 <tr>
 <th>name</th>
-<th>type</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>emp_id</td>
-<td>INTEGER</td>
 </tr>
 <tr>
 <td>emp_name</td>
-<td>TEXT</td>
 </tr>
 <tr>
 <td>dept_id</td>
-<td>INTEGER</td>
 </tr>
 <tr>
 <td>job_title</td>
-<td>TEXT</td>
 </tr>
 <tr>
 <td>salary</td>
-<td>INTEGER</td>
 </tr>
 <tr>
 <td>hire_date</td>
-<td>TEXT</td>
 </tr>
 <tr>
 <td>manager_id</td>
-<td>INTEGER</td>
 </tr>
 <tr>
 <td>phone</td>
-<td>TEXT</td>
 </tr>
 </tbody></table>
 <hr>
@@ -3373,10 +3372,12 @@ JOIN departments d ON e.dept_id = d.dept_id;
 <pre><code class="language-sql">CREATE INDEX idx_orders_customer ON orders(customer_id);
 </code></pre>
 <p><strong>해설</strong></p>
-<p>인덱스는 WHERE/JOIN에 자주 쓰이는 컬럼의 검색 속도를 높이지만, 쓰기(INSERT/UPDATE/DELETE) 비용과 저장 공간이 늘어납니다. 외래키 컬럼에는 보통 인덱스를 만듭니다.</p>
+<p>인덱스는 WHERE/JOIN에 자주 쓰이는 컬럼의 검색 속도를 높이지만, 쓰기(INSERT/UPDATE/DELETE) 비용과 저장 공간이 늘어납니다. 외래키 컬럼에는 보통 인덱스를 만듭니다. Workbench에서는 <code>SHOW INDEX FROM orders;</code>로 확인합니다.</p>
 <p><strong>실행 후 확인 쿼리 결과</strong> (1행)</p>
 <p>확인 쿼리:</p>
-<pre><code class="language-sql">SELECT name, tbl_name FROM sqlite_master WHERE type = &#39;index&#39; AND name = &#39;idx_orders_customer&#39;;
+<pre><code class="language-sql">SELECT DISTINCT INDEX_NAME AS name, TABLE_NAME AS tbl_name
+FROM information_schema.STATISTICS
+WHERE TABLE_SCHEMA = DATABASE() AND INDEX_NAME = &#39;idx_orders_customer&#39;;
 </code></pre>
 <table>
 <thead>
@@ -3540,7 +3541,7 @@ ORDER BY revenue DESC;
 <h3 id="문제-89-월별-매출">문제 89. 월별 매출</h3>
 <p><strong>문제</strong><br>취소 주문을 제외하고 월별(<code>YYYY-MM</code>) 매출 합계를 월 오름차순으로 구하시오. 별칭은 <code>ym</code>, <code>revenue</code>입니다.<br>(컬럼: ym, revenue)</p>
 <p><strong>정답</strong></p>
-<pre><code class="language-sql">SELECT strftime(&#39;%Y-%m&#39;, o.order_date) AS ym,
+<pre><code class="language-sql">SELECT DATE_FORMAT(o.order_date, &#39;%Y-%m&#39;) AS ym,
        SUM(oi.quantity * oi.unit_price) AS revenue
 FROM orders o
 JOIN order_items oi ON o.order_id = oi.order_id
@@ -3835,7 +3836,7 @@ ORDER BY dept_id;
 <p><strong>문제</strong><br>취소 주문을 제외한 월별 매출과 전월 매출, 전월 대비 증감액을 구하시오. 첫 달의 전월 값과 증감액은 NULL입니다. 월 오름차순으로 정렬하고, 별칭은 <code>revenue</code>, <code>prev_revenue</code>, <code>diff</code>입니다.<br>(컬럼: ym, revenue, prev_revenue, diff)</p>
 <p><strong>정답</strong></p>
 <pre><code class="language-sql">WITH monthly AS (
-  SELECT strftime(&#39;%Y-%m&#39;, o.order_date) AS ym,
+  SELECT DATE_FORMAT(o.order_date, &#39;%Y-%m&#39;) AS ym,
          SUM(oi.quantity * oi.unit_price) AS revenue
   FROM orders o
   JOIN order_items oi ON o.order_id = oi.order_id
@@ -3914,7 +3915,7 @@ ORDER BY ym;
 <p><strong>문제</strong><br>월별 매출(취소 제외)과 해당 월까지의 누적 매출을 구하시오. 월 오름차순, 별칭은 <code>revenue</code>, <code>running_total</code>입니다.<br>(컬럼: ym, revenue, running_total)</p>
 <p><strong>정답</strong></p>
 <pre><code class="language-sql">WITH monthly AS (
-  SELECT strftime(&#39;%Y-%m&#39;, o.order_date) AS ym,
+  SELECT DATE_FORMAT(o.order_date, &#39;%Y-%m&#39;) AS ym,
          SUM(oi.quantity * oi.unit_price) AS revenue
   FROM orders o
   JOIN order_items oi ON o.order_id = oi.order_id
@@ -3983,7 +3984,7 @@ ORDER BY ym;
 <p><strong>문제</strong><br>월별 매출(취소 제외)과 현재 월을 포함한 최근 3개월 이동 평균(정수 반올림)을 구하시오. 3개월이 안 되는 초반에는 있는 데이터만으로 평균을 냅니다. 월 오름차순, 별칭은 <code>revenue</code>, <code>moving_avg</code>입니다.<br>(컬럼: ym, revenue, moving_avg)</p>
 <p><strong>정답</strong></p>
 <pre><code class="language-sql">WITH monthly AS (
-  SELECT strftime(&#39;%Y-%m&#39;, o.order_date) AS ym,
+  SELECT DATE_FORMAT(o.order_date, &#39;%Y-%m&#39;) AS ym,
          SUM(oi.quantity * oi.unit_price) AS revenue
   FROM orders o
   JOIN order_items oi ON o.order_id = oi.order_id
@@ -4011,42 +4012,42 @@ ORDER BY ym;
 <tbody><tr>
 <td>2024-01</td>
 <td>119000</td>
-<td>119000.0</td>
+<td>119000</td>
 </tr>
 <tr>
 <td>2024-02</td>
 <td>517000</td>
-<td>318000.0</td>
+<td>318000</td>
 </tr>
 <tr>
 <td>2024-03</td>
 <td>145000</td>
-<td>260333.0</td>
+<td>260333</td>
 </tr>
 <tr>
 <td>2024-04</td>
 <td>216000</td>
-<td>292667.0</td>
+<td>292667</td>
 </tr>
 <tr>
 <td>2024-05</td>
 <td>673000</td>
-<td>344667.0</td>
+<td>344667</td>
 </tr>
 <tr>
 <td>2024-06</td>
 <td>141000</td>
-<td>343333.0</td>
+<td>343333</td>
 </tr>
 <tr>
 <td>2024-07</td>
 <td>378000</td>
-<td>397333.0</td>
+<td>397333</td>
 </tr>
 <tr>
 <td>2024-08</td>
 <td>301000</td>
-<td>273333.0</td>
+<td>273333</td>
 </tr>
 </tbody></table>
 <hr>
@@ -4229,11 +4230,11 @@ ORDER BY level, emp_id;
 <p><strong>문제</strong><br>모든 직원의 조직 경로를 <code>김대표 &gt; 이개발 &gt; 박서버</code> 형태의 문자열로 구하시오. emp_id 순으로 정렬합니다. 별칭은 <code>path</code>입니다.<br>(컬럼: emp_id, path)</p>
 <p><strong>정답</strong></p>
 <pre><code class="language-sql">WITH RECURSIVE org AS (
-  SELECT emp_id, emp_name AS path
+  SELECT emp_id, CAST(emp_name AS CHAR(200)) AS path
   FROM employees
   WHERE manager_id IS NULL
   UNION ALL
-  SELECT e.emp_id, o.path || &#39; &gt; &#39; || e.emp_name
+  SELECT e.emp_id, CONCAT(o.path, &#39; &gt; &#39;, e.emp_name)
   FROM employees e
   JOIN org o ON e.manager_id = o.emp_id
 )
@@ -4242,7 +4243,8 @@ FROM org
 ORDER BY emp_id;
 </code></pre>
 <p><strong>해설</strong></p>
-<p>재귀 단계마다 상사의 경로(<code>o.path</code>)에 <code>&#39; &gt; &#39; || 자기이름</code>을 이어 붙여 루트부터의 경로를 누적합니다. 카테고리·댓글·조직도 같은 트리 구조에서 자주 쓰입니다.</p>
+<p>재귀 단계마다 상사의 경로(<code>o.path</code>)에 <code>CONCAT(o.path, &#39; &gt; &#39;, e.emp_name)</code>으로 자기 이름을 이어 붙여 루트부터의 경로를 누적합니다. 카테고리·댓글·조직도 같은 트리 구조에서 자주 쓰입니다.</p>
+<p>🔴 MySQL은 재귀 CTE의 컬럼 크기를 <strong>첫 번째 SELECT</strong>로 정합니다. <code>emp_name AS path</code> 그대로 두면 경로가 길어질 때 <code>Data too long for column &#39;path&#39;</code> 오류가 나므로 <code>CAST(emp_name AS CHAR(200))</code>으로 넉넉하게 잡아 둡니다.</p>
 <p><strong>실행 결과</strong> (총 20행 중 8행 표시)</p>
 <table>
 <thead>
@@ -4431,12 +4433,13 @@ FROM (
   SELECT category, product_name, price,
          RANK() OVER (PARTITION BY category ORDER BY price DESC) AS rnk
   FROM products
-)
+) AS ranked
 WHERE rnk = 1
 ORDER BY category;
 </code></pre>
 <p><strong>해설</strong></p>
 <p>동점 최고가를 모두 포함하려면 <code>ROW_NUMBER</code>보다 <code>RANK</code>가 적합합니다. 상관 서브쿼리 <code>WHERE price = (SELECT MAX(price) FROM products WHERE category = p.category)</code>로도 풀 수 있으니 두 방식을 비교해 보세요.</p>
+<p>🔴 MySQL은 FROM 절 서브쿼리에 별칭(<code>AS ranked</code>)이 꼭 있어야 합니다.</p>
 <p><strong>실행 결과</strong> (4행)</p>
 <table>
 <thead>
@@ -4473,9 +4476,9 @@ ORDER BY category;
 <p><strong>정답</strong></p>
 <pre><code class="language-sql">WITH t AS (
   SELECT customer_id, order_id, order_date,
-         CAST(julianday(order_date) - julianday(
+         DATEDIFF(order_date,
            LAG(order_date) OVER (PARTITION BY customer_id ORDER BY order_date)
-         ) AS INTEGER) AS days_since_prev
+         ) AS days_since_prev
   FROM orders
   WHERE status &lt;&gt; &#39;CANCELLED&#39;
 )
@@ -4485,7 +4488,7 @@ WHERE days_since_prev IS NOT NULL
 ORDER BY customer_id, order_date;
 </code></pre>
 <p><strong>해설</strong></p>
-<p><code>LAG</code>에 <code>PARTITION BY customer_id</code>를 주면 고객별로 직전 주문일을 가져옵니다. <code>julianday</code>는 날짜를 일 단위 숫자로 바꿔 차이를 계산하게 해 줍니다. 첫 주문은 LAG가 NULL이라 필터링으로 제외합니다.</p>
+<p><code>LAG</code>에 <code>PARTITION BY customer_id</code>를 주면 고객별로 직전 주문일을 가져옵니다. <code>DATEDIFF(나중 날짜, 앞 날짜)</code>는 두 날짜 사이의 일수를 돌려줍니다. 첫 주문은 LAG가 NULL이라(그래서 DATEDIFF도 NULL) 필터링으로 제외합니다.</p>
 <p><strong>실행 결과</strong> (총 17행 중 8행 표시)</p>
 <table>
 <thead>
@@ -4701,10 +4704,11 @@ WHERE NOT EXISTS (
 )
 SELECT AVG(salary) AS median_salary
 FROM t
-WHERE rn IN ((cnt + 1) / 2, (cnt + 2) / 2);
+WHERE rn BETWEEN cnt / 2.0 AND cnt / 2.0 + 1;
 </code></pre>
 <p><strong>해설</strong></p>
-<p>순번(rn)과 전체 건수(cnt)를 구한 뒤, 홀수 개이면 가운데 1행, 짝수 개이면 가운데 2행을 골라 평균을 냅니다. <code>(cnt+1)/2</code>와 <code>(cnt+2)/2</code>가 정수 나눗셈으로 홀수일 땐 같은 값, 짝수일 땐 연속한 두 값이 됩니다. 대부분의 DB가 MEDIAN 함수를 기본 제공하지 않아 자주 출제되는 문제입니다.</p>
+<p>순번(rn)과 전체 건수(cnt)를 구한 뒤 가운데 행을 골라 평균을 냅니다. <code>rn BETWEEN cnt/2.0 AND cnt/2.0 + 1</code>은 짝수(20명)이면 10·11번째 두 행, 홀수(21명)이면 11번째 한 행을 고릅니다.</p>
+<p>🔴 <code>(cnt + 1) / 2</code>처럼 쓰면 MySQL의 <code>/</code>는 <strong>소수 나눗셈</strong>이라 10.5가 되어 순번과 맞지 않습니다(SQLite는 정수 나눗셈이라 됩니다). 정수 몫이 필요하면 <code>(cnt + 1) DIV 2</code>를 씁니다. 대부분의 DB가 MEDIAN 함수를 기본 제공하지 않아 자주 출제되는 문제입니다.</p>
 <p><strong>실행 결과</strong> (1행)</p>
 <table>
 <thead>
@@ -4713,7 +4717,7 @@ WHERE rn IN ((cnt + 1) / 2, (cnt + 2) / 2);
 </tr>
 </thead>
 <tbody><tr>
-<td>5200000.0</td>
+<td>5200000.0000</td>
 </tr>
 </tbody></table>
 <hr>

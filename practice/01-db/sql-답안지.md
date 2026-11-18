@@ -1,7 +1,10 @@
 # SQL 연습 답안지 (해설 포함)
 
-> 총 **110문제**의 정답 쿼리, 해설, 실행 결과입니다. 문제를 먼저 풀어 본 뒤 확인하세요.  
+> 총 **110문제**의 정답 쿼리, 해설, 실행 결과입니다. 문제를 먼저 풀어 본 뒤 확인하세요.
+>
 > 같은 결과를 내는 다른 쿼리도 정답입니다. 채점은 **결과 값** 기준이며(컬럼명은 무관), 정렬을 요구한 문제만 행 순서까지 비교합니다.
+>
+> 정답은 **MySQL 8.0** 문법이고, 실행 결과는 실제 MySQL(8.0.46)에서 뽑은 값입니다. Workbench 에서 돌려도 같습니다.
 
 ## 빠른 찾기
 
@@ -520,7 +523,7 @@ ORDER BY dept_id ASC, salary DESC, emp_id ASC;
 
 **해설**
 
-정렬 기준마다 ASC/DESC를 따로 지정할 수 있습니다. SQLite에서 NULL은 오름차순일 때 가장 먼저 나옵니다(DB마다 다름).
+정렬 기준마다 ASC/DESC를 따로 지정할 수 있습니다. MySQL에서 NULL은 오름차순일 때 가장 먼저, 내림차순일 때 가장 나중에 나옵니다(DB마다 다름).
 
 **실행 결과** (총 20행 중 8행 표시)
 
@@ -551,7 +554,7 @@ SELECT emp_name, salary FROM employees ORDER BY salary DESC LIMIT 3;
 
 **해설**
 
-`LIMIT n`은 결과 행 수를 n개로 제한합니다. 'Top-N' 조회는 **정렬 후 LIMIT** 조합으로 구현합니다. (MySQL/SQLite의 LIMIT, SQL Server는 TOP, Oracle은 FETCH FIRST)
+`LIMIT n`은 결과 행 수를 n개로 제한합니다. 'Top-N' 조회는 **정렬 후 LIMIT** 조합으로 구현합니다. (MySQL의 LIMIT, SQL Server는 TOP, Oracle은 FETCH FIRST). MySQL은 `LIMIT 3, 3`(건너뛸 수, 가져올 수)으로도 씁니다.
 
 **실행 결과** (3행)
 
@@ -660,12 +663,14 @@ SELECT product_name, price * stock AS stock_value FROM products;
 **정답**
 
 ```sql
-SELECT emp_name || '(' || job_title || ')' AS title FROM employees;
+SELECT CONCAT(emp_name, '(', job_title, ')') AS title FROM employees;
 ```
 
 **해설**
 
-SQLite·표준 SQL에서 문자열 연결은 `||` 연산자입니다. MySQL은 `CONCAT()`을 사용합니다.
+MySQL에서 문자열을 이을 때는 `CONCAT(a, b, ...)`을 씁니다. 인자 중 하나라도 NULL이면 결과 전체가 NULL입니다(NULL을 건너뛰려면 `CONCAT_WS`).
+
+🔴 `||`는 MySQL에서 문자열 잇기가 아니라 **OR**입니다. `emp_name || '('`는 오류 없이 0이 나옵니다(SQLite·PostgreSQL·Oracle에서는 문자열 잇기).
 
 **실행 결과** (총 20행 중 8행 표시)
 
@@ -802,7 +807,7 @@ SELECT ROUND(AVG(salary)) AS avg_salary FROM employees;
 
 | avg_salary |
 |---|
-| 5835000.0 |
+| 5835000 |
 
 ---
 
@@ -850,7 +855,7 @@ WHERE는 집계 **이전**에 행을 걸러냅니다. 따라서 개발팀 직원
 
 | avg_salary |
 |---|
-| 5700000.0 |
+| 5700000 |
 
 ---
 
@@ -929,10 +934,10 @@ GROUP BY category;
 
 | category | cnt | avg_price |
 |---|---|---|
-| 가구 | 3 | 162333.0 |
-| 도서 | 4 | 31250.0 |
-| 액세서리 | 3 | 34333.0 |
-| 전자기기 | 5 | 94200.0 |
+| 전자기기 | 5 | 94200 |
+| 액세서리 | 3 | 34333 |
+| 도서 | 4 | 31250 |
+| 가구 | 3 | 162333 |
 
 ---
 
@@ -956,9 +961,9 @@ SELECT grade, COUNT(*) AS cnt FROM customers GROUP BY grade;
 
 | grade | cnt |
 |---|---|
-| BRONZE | 6 |
 | GOLD | 3 |
 | SILVER | 4 |
+| BRONZE | 6 |
 | VIP | 2 |
 
 ---
@@ -1572,13 +1577,15 @@ JOIN employees b
 
 ```sql
 SELECT COUNT(*) AS combos
-FROM (SELECT DISTINCT category FROM products)
-CROSS JOIN (SELECT DISTINCT status FROM orders);
+FROM (SELECT DISTINCT category FROM products) AS c
+CROSS JOIN (SELECT DISTINCT status FROM orders) AS s;
 ```
 
 **해설**
 
 `CROSS JOIN`은 두 집합의 모든 조합(카르테시안 곱)을 만듭니다. 카테고리 4종 × 상태 4종 = 16입니다. FROM 절에 서브쿼리(인라인 뷰)를 쓸 수 있다는 점도 확인하세요.
+
+🔴 MySQL은 FROM 절의 서브쿼리(파생 테이블)에 **별칭이 꼭 있어야** 합니다. `AS c`를 빼면 `Every derived table must have its own alias` 오류가 납니다.
 
 **실행 결과** (1행)
 
@@ -1854,7 +1861,7 @@ ORDER BY customer_id;
 
 **해설**
 
-`COALESCE(a, b, ...)`는 왼쪽부터 처음으로 NULL이 아닌 값을 반환합니다. (SQLite의 `IFNULL(a, b)`, MySQL의 `IFNULL`, Oracle의 `NVL`과 유사)
+`COALESCE(a, b, ...)`는 왼쪽부터 처음으로 NULL이 아닌 값을 반환합니다. (MySQL의 `IFNULL(a, b)`, Oracle의 `NVL`과 비슷하지만 `COALESCE`는 인자를 여러 개 받습니다)
 
 **실행 결과** (총 15행 중 8행 표시)
 
@@ -1914,7 +1921,7 @@ OUTER JOIN 결과의 NULL을 사용자 친화적인 값으로 바꿔 보여 주�
 **정답**
 
 ```sql
-SELECT strftime('%Y-%m', order_date) AS ym, COUNT(*) AS cnt
+SELECT DATE_FORMAT(order_date, '%Y-%m') AS ym, COUNT(*) AS cnt
 FROM orders
 GROUP BY ym
 ORDER BY ym;
@@ -1922,7 +1929,7 @@ ORDER BY ym;
 
 **해설**
 
-SQLite의 `strftime(형식, 날짜)`로 날짜의 일부를 추출합니다. (MySQL: `DATE_FORMAT`, PostgreSQL: `TO_CHAR`) `GROUP BY`에 SELECT의 별칭을 쓸 수 있는지는 DB마다 다릅니다.
+`DATE_FORMAT(날짜, 형식)`으로 날짜를 원하는 모양의 문자열로 바꿉니다. `%Y` 4자리 연도 · `%m` 2자리 월 · `%d` 2자리 일입니다. MySQL은 `GROUP BY`에 SELECT의 별칭(`ym`)을 쓸 수 있습니다(DB마다 다름).
 
 **실행 결과** (총 12행 중 8행 표시)
 
@@ -1948,7 +1955,7 @@ SQLite의 `strftime(형식, 날짜)`로 날짜의 일부를 추출합니다. (My
 **정답**
 
 ```sql
-SELECT strftime('%Y', hire_date) AS hire_year, COUNT(*) AS cnt
+SELECT YEAR(hire_date) AS hire_year, COUNT(*) AS cnt
 FROM employees
 GROUP BY hire_year
 ORDER BY hire_year;
@@ -1956,7 +1963,7 @@ ORDER BY hire_year;
 
 **해설**
 
-`strftime('%Y', ...)`은 연도를 문자열로 반환합니다. 날짜 컬럼을 가공해서 그룹화하는 전형적인 패턴입니다.
+`YEAR(날짜)`는 연도를 **숫자**로 돌려줍니다. `DATE_FORMAT(hire_date, '%Y')`로 써도 같은 연도가 나옵니다(이쪽은 문자열). 날짜 컬럼을 가공해서 그룹화하는 전형적인 패턴입니다.
 
 **실행 결과** (총 10행 중 8행 표시)
 
@@ -1983,14 +1990,14 @@ ORDER BY hire_year;
 
 ```sql
 SELECT emp_name,
-  CAST(strftime('%Y', '2024-12-31') AS INTEGER) - CAST(strftime('%Y', hire_date) AS INTEGER) AS years
+  YEAR('2024-12-31') - YEAR(hire_date) AS years
 FROM employees
 ORDER BY emp_id;
 ```
 
 **해설**
 
-`strftime`의 결과는 문자열이므로 `CAST(... AS INTEGER)`로 숫자 변환 후 계산합니다. 실제 만 근속 연수를 구하려면 월·일까지 비교하거나 `julianday` 차이를 이용합니다.
+`YEAR()`가 숫자를 돌려주므로 바로 뺄 수 있습니다. 월·일까지 따진 **만** 근속 연수는 `TIMESTAMPDIFF(YEAR, hire_date, '2024-12-31')`로 구합니다 — 생일이 안 지난 사람은 1 작게 나와 이 문제의 답과 다릅니다.
 
 **실행 결과** (총 20행 중 8행 표시)
 
@@ -2050,15 +2057,15 @@ ORDER BY customer_id;
 **정답**
 
 ```sql
-SELECT product_name, LENGTH(product_name) AS len
+SELECT product_name, CHAR_LENGTH(product_name) AS len
 FROM products
-WHERE LENGTH(product_name) >= 6
+WHERE CHAR_LENGTH(product_name) >= 6
 ORDER BY product_id;
 ```
 
 **해설**
 
-SQLite의 `LENGTH`는 문자열 길이를 글자 수 기준으로 반환합니다. MySQL에서는 `CHAR_LENGTH`(글자 수)와 `LENGTH`(바이트 수)가 다르므로 주의하세요.
+🔴 MySQL의 `LENGTH`는 **바이트 수**입니다. 한글은 한 글자가 3바이트(utf8mb4)라 `LENGTH('마우스')`는 9입니다. 글자 수는 `CHAR_LENGTH`로 셉니다.
 
 **실행 결과** (총 13행 중 8행 표시)
 
@@ -2099,11 +2106,11 @@ ORDER BY dept_id;
 
 | dept_id | avg_sal | max_sal | min_sal |
 |---|---|---|---|
-| 1 | 5700000.0 | 8500000 | 3800000 |
-| 2 | 5225000.0 | 7800000 | 3600000 |
-| 3 | 5350000.0 | 7200000 | 3500000 |
-| 4 | 5366667.0 | 7500000 | 3700000 |
-| 5 | 5766667.0 | 7600000 | 3900000 |
+| 1 | 5700000 | 8500000 | 3800000 |
+| 2 | 5225000 | 7800000 | 3600000 |
+| 3 | 5350000 | 7200000 | 3500000 |
+| 4 | 5366667 | 7500000 | 3700000 |
+| 5 | 5766667 | 7600000 | 3900000 |
 
 ---
 
@@ -2130,8 +2137,8 @@ HAVING SUM(stock) >= 200;
 
 | category | total_stock |
 |---|---|
-| 액세서리 | 380 |
 | 전자기기 | 420 |
+| 액세서리 | 380 |
 
 ---
 
@@ -2222,12 +2229,12 @@ SELECT location FROM departments;
 
 | city |
 |---|
-| 광주 |
-| 대구 |
-| 대전 |
-| 부산 |
 | 서울 |
+| 부산 |
+| 대구 |
 | 인천 |
+| 광주 |
+| 대전 |
 
 ---
 
@@ -2253,9 +2260,9 @@ SELECT location FROM departments;
 
 | city |
 |---|
-| 대전 |
-| 부산 |
 | 서울 |
+| 부산 |
+| 대전 |
 
 ---
 
@@ -2281,9 +2288,9 @@ SELECT location FROM departments;
 
 | city |
 |---|
-| 광주 |
 | 대구 |
 | 인천 |
+| 광주 |
 
 ---
 
@@ -2428,19 +2435,19 @@ SELECT * FROM vip_customers ORDER BY customer_id;
 
 **문제**  
 다음 구조의 `notices` 테이블을 생성하시오.  
-- notice_id: INTEGER, 기본키  
-- title: TEXT, NOT NULL  
+- notice_id: INT, 기본키  
+- title: VARCHAR(100), NOT NULL  
 - content: TEXT  
-- created_at: TEXT
+- created_at: DATETIME
 
 **정답**
 
 ```sql
 CREATE TABLE notices (
-  notice_id  INTEGER PRIMARY KEY,
-  title      TEXT NOT NULL,
+  notice_id  INT PRIMARY KEY,
+  title      VARCHAR(100) NOT NULL,
   content    TEXT,
-  created_at TEXT
+  created_at DATETIME
 );
 ```
 
@@ -2448,54 +2455,64 @@ CREATE TABLE notices (
 
 `PRIMARY KEY`는 행을 유일하게 식별하며(NOT NULL + UNIQUE), `NOT NULL`은 빈 값을 막습니다. 그 밖에 `UNIQUE`, `DEFAULT`, `CHECK`, `FOREIGN KEY` 제약조건이 있습니다.
 
+이 연습장은 컬럼 이름 · NOT NULL · 기본키만 채점합니다(타입은 보지 않음). Workbench에서는 `DESC notices;`로 구조를 볼 수 있습니다.
+
 **실행 후 확인 쿼리 결과** (4행)
 
 확인 쿼리:
 ```sql
-SELECT name, type, "notnull" AS not_null, pk FROM pragma_table_info('notices') ORDER BY cid;
+SELECT COLUMN_NAME AS name,
+       IF(IS_NULLABLE = 'NO', 1, 0) AS not_null,
+       IF(COLUMN_KEY = 'PRI', 1, 0) AS pk
+FROM information_schema.COLUMNS
+WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'notices'
+ORDER BY ORDINAL_POSITION;
 ```
 
-| name | type | not_null | pk |
-|---|---|---|---|
-| notice_id | INTEGER | 0 | 1 |
-| title | TEXT | 1 | 0 |
-| content | TEXT | 0 | 0 |
-| created_at | TEXT | 0 | 0 |
+| name | not_null | pk |
+|---|---|---|
+| notice_id | 1 | 1 |
+| title | 1 | 0 |
+| content | 0 | 0 |
+| created_at | 0 | 0 |
 
 ---
 
 ### 문제 82. ALTER TABLE
 
 **문제**  
-`employees` 테이블에 TEXT 타입의 `phone` 컬럼을 추가하시오.
+`employees` 테이블에 VARCHAR(20) 타입의 `phone` 컬럼을 추가하시오.
 
 **정답**
 
 ```sql
-ALTER TABLE employees ADD COLUMN phone TEXT;
+ALTER TABLE employees ADD COLUMN phone VARCHAR(20);
 ```
 
 **해설**
 
-`ALTER TABLE ... ADD COLUMN`으로 기존 테이블에 컬럼을 추가합니다. 기존 행의 새 컬럼 값은 NULL(또는 DEFAULT)입니다.
+`ALTER TABLE ... ADD COLUMN`으로 기존 테이블에 컬럼을 추가합니다. 기존 행의 새 컬럼 값은 NULL(또는 DEFAULT)입니다. Workbench에서는 `DESC employees;`로 확인합니다.
 
 **실행 후 확인 쿼리 결과** (8행)
 
 확인 쿼리:
 ```sql
-SELECT name, type FROM pragma_table_info('employees') ORDER BY cid;
+SELECT COLUMN_NAME AS name
+FROM information_schema.COLUMNS
+WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'employees'
+ORDER BY ORDINAL_POSITION;
 ```
 
-| name | type |
-|---|---|
-| emp_id | INTEGER |
-| emp_name | TEXT |
-| dept_id | INTEGER |
-| job_title | TEXT |
-| salary | INTEGER |
-| hire_date | TEXT |
-| manager_id | INTEGER |
-| phone | TEXT |
+| name |
+|---|
+| emp_id |
+| emp_name |
+| dept_id |
+| job_title |
+| salary |
+| hire_date |
+| manager_id |
+| phone |
 
 ---
 
@@ -2550,13 +2567,15 @@ CREATE INDEX idx_orders_customer ON orders(customer_id);
 
 **해설**
 
-인덱스는 WHERE/JOIN에 자주 쓰이는 컬럼의 검색 속도를 높이지만, 쓰기(INSERT/UPDATE/DELETE) 비용과 저장 공간이 늘어납니다. 외래키 컬럼에는 보통 인덱스를 만듭니다.
+인덱스는 WHERE/JOIN에 자주 쓰이는 컬럼의 검색 속도를 높이지만, 쓰기(INSERT/UPDATE/DELETE) 비용과 저장 공간이 늘어납니다. 외래키 컬럼에는 보통 인덱스를 만듭니다. Workbench에서는 `SHOW INDEX FROM orders;`로 확인합니다.
 
 **실행 후 확인 쿼리 결과** (1행)
 
 확인 쿼리:
 ```sql
-SELECT name, tbl_name FROM sqlite_master WHERE type = 'index' AND name = 'idx_orders_customer';
+SELECT DISTINCT INDEX_NAME AS name, TABLE_NAME AS tbl_name
+FROM information_schema.STATISTICS
+WHERE TABLE_SCHEMA = DATABASE() AND INDEX_NAME = 'idx_orders_customer';
 ```
 
 | name | tbl_name |
@@ -2702,7 +2721,7 @@ ORDER BY revenue DESC;
 **정답**
 
 ```sql
-SELECT strftime('%Y-%m', o.order_date) AS ym,
+SELECT DATE_FORMAT(o.order_date, '%Y-%m') AS ym,
        SUM(oi.quantity * oi.unit_price) AS revenue
 FROM orders o
 JOIN order_items oi ON o.order_id = oi.order_id
@@ -2883,7 +2902,7 @@ ORDER BY dept_id;
 
 ```sql
 WITH monthly AS (
-  SELECT strftime('%Y-%m', o.order_date) AS ym,
+  SELECT DATE_FORMAT(o.order_date, '%Y-%m') AS ym,
          SUM(oi.quantity * oi.unit_price) AS revenue
   FROM orders o
   JOIN order_items oi ON o.order_id = oi.order_id
@@ -2926,7 +2945,7 @@ ORDER BY ym;
 
 ```sql
 WITH monthly AS (
-  SELECT strftime('%Y-%m', o.order_date) AS ym,
+  SELECT DATE_FORMAT(o.order_date, '%Y-%m') AS ym,
          SUM(oi.quantity * oi.unit_price) AS revenue
   FROM orders o
   JOIN order_items oi ON o.order_id = oi.order_id
@@ -2968,7 +2987,7 @@ ORDER BY ym;
 
 ```sql
 WITH monthly AS (
-  SELECT strftime('%Y-%m', o.order_date) AS ym,
+  SELECT DATE_FORMAT(o.order_date, '%Y-%m') AS ym,
          SUM(oi.quantity * oi.unit_price) AS revenue
   FROM orders o
   JOIN order_items oi ON o.order_id = oi.order_id
@@ -2991,14 +3010,14 @@ ORDER BY ym;
 
 | ym | revenue | moving_avg |
 |---|---|---|
-| 2024-01 | 119000 | 119000.0 |
-| 2024-02 | 517000 | 318000.0 |
-| 2024-03 | 145000 | 260333.0 |
-| 2024-04 | 216000 | 292667.0 |
-| 2024-05 | 673000 | 344667.0 |
-| 2024-06 | 141000 | 343333.0 |
-| 2024-07 | 378000 | 397333.0 |
-| 2024-08 | 301000 | 273333.0 |
+| 2024-01 | 119000 | 119000 |
+| 2024-02 | 517000 | 318000 |
+| 2024-03 | 145000 | 260333 |
+| 2024-04 | 216000 | 292667 |
+| 2024-05 | 673000 | 344667 |
+| 2024-06 | 141000 | 343333 |
+| 2024-07 | 378000 | 397333 |
+| 2024-08 | 301000 | 273333 |
 
 ---
 
@@ -3124,11 +3143,11 @@ ORDER BY level, emp_id;
 
 ```sql
 WITH RECURSIVE org AS (
-  SELECT emp_id, emp_name AS path
+  SELECT emp_id, CAST(emp_name AS CHAR(200)) AS path
   FROM employees
   WHERE manager_id IS NULL
   UNION ALL
-  SELECT e.emp_id, o.path || ' > ' || e.emp_name
+  SELECT e.emp_id, CONCAT(o.path, ' > ', e.emp_name)
   FROM employees e
   JOIN org o ON e.manager_id = o.emp_id
 )
@@ -3139,7 +3158,9 @@ ORDER BY emp_id;
 
 **해설**
 
-재귀 단계마다 상사의 경로(`o.path`)에 `' > ' || 자기이름`을 이어 붙여 루트부터의 경로를 누적합니다. 카테고리·댓글·조직도 같은 트리 구조에서 자주 쓰입니다.
+재귀 단계마다 상사의 경로(`o.path`)에 `CONCAT(o.path, ' > ', e.emp_name)`으로 자기 이름을 이어 붙여 루트부터의 경로를 누적합니다. 카테고리·댓글·조직도 같은 트리 구조에서 자주 쓰입니다.
+
+🔴 MySQL은 재귀 CTE의 컬럼 크기를 **첫 번째 SELECT**로 정합니다. `emp_name AS path` 그대로 두면 경로가 길어질 때 `Data too long for column 'path'` 오류가 나므로 `CAST(emp_name AS CHAR(200))`으로 넉넉하게 잡아 둡니다.
 
 **실행 결과** (총 20행 중 8행 표시)
 
@@ -3254,7 +3275,7 @@ FROM (
   SELECT category, product_name, price,
          RANK() OVER (PARTITION BY category ORDER BY price DESC) AS rnk
   FROM products
-)
+) AS ranked
 WHERE rnk = 1
 ORDER BY category;
 ```
@@ -3262,6 +3283,8 @@ ORDER BY category;
 **해설**
 
 동점 최고가를 모두 포함하려면 `ROW_NUMBER`보다 `RANK`가 적합합니다. 상관 서브쿼리 `WHERE price = (SELECT MAX(price) FROM products WHERE category = p.category)`로도 풀 수 있으니 두 방식을 비교해 보세요.
+
+🔴 MySQL은 FROM 절 서브쿼리에 별칭(`AS ranked`)이 꼭 있어야 합니다.
 
 **실행 결과** (4행)
 
@@ -3285,9 +3308,9 @@ ORDER BY category;
 ```sql
 WITH t AS (
   SELECT customer_id, order_id, order_date,
-         CAST(julianday(order_date) - julianday(
+         DATEDIFF(order_date,
            LAG(order_date) OVER (PARTITION BY customer_id ORDER BY order_date)
-         ) AS INTEGER) AS days_since_prev
+         ) AS days_since_prev
   FROM orders
   WHERE status <> 'CANCELLED'
 )
@@ -3299,7 +3322,7 @@ ORDER BY customer_id, order_date;
 
 **해설**
 
-`LAG`에 `PARTITION BY customer_id`를 주면 고객별로 직전 주문일을 가져옵니다. `julianday`는 날짜를 일 단위 숫자로 바꿔 차이를 계산하게 해 줍니다. 첫 주문은 LAG가 NULL이라 필터링으로 제외합니다.
+`LAG`에 `PARTITION BY customer_id`를 주면 고객별로 직전 주문일을 가져옵니다. `DATEDIFF(나중 날짜, 앞 날짜)`는 두 날짜 사이의 일수를 돌려줍니다. 첫 주문은 LAG가 NULL이라(그래서 DATEDIFF도 NULL) 필터링으로 제외합니다.
 
 **실행 결과** (총 17행 중 8행 표시)
 
@@ -3442,18 +3465,20 @@ WITH t AS (
 )
 SELECT AVG(salary) AS median_salary
 FROM t
-WHERE rn IN ((cnt + 1) / 2, (cnt + 2) / 2);
+WHERE rn BETWEEN cnt / 2.0 AND cnt / 2.0 + 1;
 ```
 
 **해설**
 
-순번(rn)과 전체 건수(cnt)를 구한 뒤, 홀수 개이면 가운데 1행, 짝수 개이면 가운데 2행을 골라 평균을 냅니다. `(cnt+1)/2`와 `(cnt+2)/2`가 정수 나눗셈으로 홀수일 땐 같은 값, 짝수일 땐 연속한 두 값이 됩니다. 대부분의 DB가 MEDIAN 함수를 기본 제공하지 않아 자주 출제되는 문제입니다.
+순번(rn)과 전체 건수(cnt)를 구한 뒤 가운데 행을 골라 평균을 냅니다. `rn BETWEEN cnt/2.0 AND cnt/2.0 + 1`은 짝수(20명)이면 10·11번째 두 행, 홀수(21명)이면 11번째 한 행을 고릅니다.
+
+🔴 `(cnt + 1) / 2`처럼 쓰면 MySQL의 `/`는 **소수 나눗셈**이라 10.5가 되어 순번과 맞지 않습니다(SQLite는 정수 나눗셈이라 됩니다). 정수 몫이 필요하면 `(cnt + 1) DIV 2`를 씁니다. 대부분의 DB가 MEDIAN 함수를 기본 제공하지 않아 자주 출제되는 문제입니다.
 
 **실행 결과** (1행)
 
 | median_salary |
 |---|
-| 5200000.0 |
+| 5200000.0000 |
 
 ---
 
