@@ -1,0 +1,2422 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript 정리 — 미디어 프론티어</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--paper:#121B23;--panel:#1A2630;--line:#2B3B47;--text:#DDE7ED;--muted:#9DB0BE;--accent:#5CC6DE;--warn:#F2C879;
+--sans:"Pretendard Variable",Pretendard,-apple-system,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+--mono:"D2Coding","Cascadia Code",Consolas,"JetBrains Mono",Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--sans);line-height:1.7;font-size:17px}
+main{max-width:920px;margin:0 auto;padding:40px 16px 80px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:34px;margin:6px 0 4px;font-weight:700}h2{font-size:22px;margin:40px 0 14px;font-weight:700;border-bottom:2px solid var(--accent);padding-bottom:6px}
+h3{font-size:19px;margin:28px 0 10px}
+.kicker{color:var(--muted);margin:0;font-size:15px}.sub{color:var(--muted);margin:0}
+.cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;height:100%}
+.card:hover{border-color:var(--accent);text-decoration:none}
+.card .t{display:block;color:var(--text);font-weight:600}.card .s{display:block;color:var(--muted);font-size:14px}
+.days{list-style:none;padding:0;margin:0}
+.days li{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:10px}
+.days .when{display:block;color:var(--muted);font-size:14px}
+.days .deck{font-weight:600;font-size:18px}.days .s{display:block;color:var(--muted);font-size:15px}
+.days .labs{display:block;margin-top:6px;font-size:14px;word-break:break-all}
+.note{color:var(--muted);font-size:15px}.next strong{color:var(--warn)}
+footer{margin-top:48px;color:var(--muted);font-size:14px}
+kbd{font-family:var(--mono);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+code{font-family:var(--mono);background:#0C1318;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:.92em}
+pre{background:#0C1318;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto}pre code{border:0;padding:0;background:none}
+blockquote{margin:16px 0;padding:8px 16px;border-left:4px solid var(--accent);background:var(--panel);border-radius:0 8px 8px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}th{background:var(--panel)}
+img{max-width:100%;height:auto;border-radius:6px}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+.back{margin:0 0 8px}
+</style>
+</head>
+<body><main>
+<p class="back"><a href="../index.html">← 처음으로</a></p>
+<article class="guide"><h1 id="javascript-정리">JavaScript 정리</h1>
+<blockquote>
+<p><strong>★ 표시 = 우리 수업에서 직접 다루는 것</strong>입니다. 뒤의 숫자는 JavaScript 과목 몇 일차인지입니다.
+★ 이 없는 것은 <strong>필요할 때 찾아보는 용도</strong>입니다 — 지금 몰라도 됩니다.
+수업 슬라이드와 이 문서가 다르게 말하는 것 같으면 <strong>슬라이드가 우선</strong>입니다. 물어봐 주십시오.</p>
+</blockquote>
+<h2 id="목차">목차</h2>
+<ol>
+<li><a href="#javascript-%EA%B8%B0%EB%B3%B8">JavaScript 기본</a></li>
+<li><a href="#%EB%B3%80%EC%88%98%EC%99%80-%EC%83%81%EC%88%98">변수와 상수</a></li>
+<li><a href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%80%EC%9E%85">데이터 타입</a></li>
+<li><a href="#%EC%97%B0%EC%82%B0%EC%9E%90">연산자</a></li>
+<li><a href="#%EC%A1%B0%EA%B1%B4%EB%AC%B8">조건문</a></li>
+<li><a href="#%EB%B0%98%EB%B3%B5%EB%AC%B8">반복문</a></li>
+<li><a href="#%ED%95%A8%EC%88%98">함수</a></li>
+<li><a href="#%EB%B0%B0%EC%97%B4">배열</a></li>
+<li><a href="#%EA%B0%9D%EC%B2%B4">객체</a></li>
+<li><a href="#dom-%EC%A1%B0%EC%9E%91">DOM 조작</a></li>
+<li><a href="#%EC%9D%B4%EB%B2%A4%ED%8A%B8">이벤트</a></li>
+<li><a href="#%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%A9%94%EC%84%9C%EB%93%9C">문자열 메서드</a></li>
+<li><a href="#%EB%B0%B0%EC%97%B4-%EB%A9%94%EC%84%9C%EB%93%9C">배열 메서드</a></li>
+<li><a href="#%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%B2%98%EB%A6%AC">비동기 처리</a></li>
+<li><a href="#es6-%EB%AC%B8%EB%B2%95">ES6+ 문법</a></li>
+<li><a href="#%EB%AA%A8%EB%B2%94-%EC%82%AC%EB%A1%80">모범 사례</a></li>
+</ol>
+<hr>
+<h2 id="javascript-기본">JavaScript 기본</h2>
+<h3 id="javascript란">JavaScript란?</h3>
+<p><strong>JavaScript</strong>: 웹 페이지에 동적인 기능을 추가하는 프로그래밍 언어</p>
+<h3 id="javascript-사용-방법--js-1일차">JavaScript 사용 방법 ★ JS 1일차</h3>
+<h4 id="1-인라인-javascript">1. 인라인 JavaScript</h4>
+<pre><code class="language-html">&lt;button onclick=&quot;alert(&#39;클릭!&#39;)&quot;&gt;버튼&lt;/button&gt;
+</code></pre>
+<h4 id="2-내부-스크립트">2. 내부 스크립트</h4>
+<pre><code class="language-html">&lt;script&gt;
+  console.log(&#39;Hello World&#39;);
+&lt;/script&gt;
+</code></pre>
+<h4 id="3-외부-스크립트-권장">3. 외부 스크립트 (권장)</h4>
+<pre><code class="language-html">&lt;script src=&quot;script.js&quot; defer&gt;&lt;/script&gt;
+</code></pre>
+<pre><code class="language-javascript">// script.js
+console.log(&#39;Hello World&#39;);
+</code></pre>
+<h3 id="주석--js-1일차">주석 ★ JS 1일차</h3>
+<pre><code class="language-javascript">// 한 줄 주석
+
+/*
+  여러 줄
+  주석
+*/
+</code></pre>
+<h3 id="출력-방법--js-1일차--consolelog">출력 방법 ★ JS 1일차 — console.log</h3>
+<pre><code class="language-javascript">// 콘솔 출력
+console.log(&#39;메시지&#39;);
+
+// 경고창
+alert(&#39;경고 메시지&#39;);
+
+// 확인창
+confirm(&#39;확인하시겠습니까?&#39;);
+
+// 입력창
+prompt(&#39;이름을 입력하세요&#39;);
+
+// HTML에 직접 출력 — 🔴 쓰지 않습니다. 페이지를 통째로 덮어쓸 수 있습니다.
+// 화면에 글자를 넣을 때는 element.textContent (5일차)
+document.write(&#39;내용&#39;);
+</code></pre>
+<hr>
+<h2 id="변수와-상수">변수와 상수</h2>
+<h3 id="var-구형---사용-지양--js-1일차"><code>var</code> (구형 - 사용 지양) ★ JS 1일차</h3>
+<pre><code class="language-javascript">var name = &#39;홍길동&#39;;
+var age = 30;
+</code></pre>
+<h3 id="let-변수---재할당-가능--js-1일차"><code>let</code> (변수 - 재할당 가능) ★ JS 1일차</h3>
+<pre><code class="language-javascript">let name = &#39;홍길동&#39;;
+name = &#39;김철수&#39;; // 재할당 가능
+
+let age = 30;
+age = 31;
+</code></pre>
+<h3 id="const-상수---재할당-불가--js-1일차"><code>const</code> (상수 - 재할당 불가) ★ JS 1일차</h3>
+<pre><code class="language-javascript">const PI = 3.14159;
+// PI = 3.14; // 에러!
+
+const name = &#39;홍길동&#39;;
+// name = &#39;김철수&#39;; // 에러!
+</code></pre>
+<h3 id="변수-명명-규칙">변수 명명 규칙</h3>
+<pre><code class="language-javascript">// 카멜 케이스 (권장)
+let userName = &#39;홍길동&#39;;
+let userAge = 30;
+
+// 스네이크 케이스
+let user_name = &#39;홍길동&#39;;
+
+// 상수는 대문자
+const MAX_SIZE = 100;
+const API_KEY = &#39;abc123&#39;; // 이름 짓기 예시일 뿐 — 🔴 진짜 API 키는 화면 코드(JS)에 적지 않는다. 브라우저에서 누구나 본다
+</code></pre>
+<hr>
+<h2 id="데이터-타입">데이터 타입</h2>
+<h3 id="원시-타입-primitive-types--js-1일차">원시 타입 (Primitive Types) ★ JS 1일차</h3>
+<h4 id="number-숫자">Number (숫자)</h4>
+<pre><code class="language-javascript">let age = 30;
+let price = 19.99;
+let negative = -10;
+let infinity = Infinity;
+let nan = NaN; // Not a Number
+</code></pre>
+<h4 id="string-문자열">String (문자열)</h4>
+<pre><code class="language-javascript">let name = &#39;홍길동&#39;;
+let greeting = &quot;안녕하세요&quot;;
+let message = `반갑습니다`; // 템플릿 리터럴
+
+// 문자열 연결
+let fullName = &#39;홍&#39; + &#39;길동&#39;;
+let text = `이름: ${name}`; // 템플릿 리터럴
+</code></pre>
+<h4 id="boolean-불리언">Boolean (불리언)</h4>
+<pre><code class="language-javascript">let isActive = true;
+let isLoggedIn = false;
+</code></pre>
+<h4 id="undefined-정의되지-않음">Undefined (정의되지 않음)</h4>
+<pre><code class="language-javascript">let value;
+console.log(value); // undefined
+</code></pre>
+<h4 id="null-없음">Null (없음)</h4>
+<pre><code class="language-javascript">let data = null;
+</code></pre>
+<h4 id="symbol-심볼---es6">Symbol (심볼) - ES6</h4>
+<pre><code class="language-javascript">let symbol = Symbol(&#39;description&#39;);
+</code></pre>
+<h3 id="참조-타입-reference-types--js-3일차">참조 타입 (Reference Types) ★ JS 3일차</h3>
+<h4 id="object-객체">Object (객체)</h4>
+<pre><code class="language-javascript">let person = {
+  name: &#39;홍길동&#39;,
+  age: 30
+};
+</code></pre>
+<h4 id="array-배열">Array (배열)</h4>
+<pre><code class="language-javascript">let numbers = [1, 2, 3, 4, 5];
+</code></pre>
+<h4 id="function-함수">Function (함수)</h4>
+<pre><code class="language-javascript">function greet() {
+  console.log(&#39;안녕하세요&#39;);
+}
+</code></pre>
+<h3 id="타입-확인--js-1일차">타입 확인 ★ JS 1일차</h3>
+<pre><code class="language-javascript">typeof 123;           // &#39;number&#39;
+typeof &#39;안녕&#39;;        // &#39;string&#39;
+typeof true;          // &#39;boolean&#39;
+typeof undefined;     // &#39;undefined&#39;
+typeof null;          // &#39;object&#39; (버그)
+typeof {};            // &#39;object&#39;
+typeof [];            // &#39;object&#39;
+typeof function(){}   // &#39;function&#39;
+</code></pre>
+<h3 id="타입-변환--js-1일차">타입 변환 ★ JS 1일차</h3>
+<pre><code class="language-javascript">// 문자열 → 숫자
+Number(&#39;123&#39;);        // 123
+parseInt(&#39;123&#39;);      // 123
+parseFloat(&#39;3.14&#39;);   // 3.14
++&#39;123&#39;;               // 123
+
+// 숫자 → 문자열
+String(123);          // &#39;123&#39;
+(123).toString();     // &#39;123&#39;
+123 + &#39;&#39;;             // &#39;123&#39;
+
+// Boolean 변환
+Boolean(1);           // true
+Boolean(0);           // false
+Boolean(&#39;hello&#39;);     // true
+Boolean(&#39;&#39;);          // false
+!!value;              // Boolean으로 변환
+</code></pre>
+<hr>
+<h2 id="연산자">연산자</h2>
+<h3 id="산술-연산자">산술 연산자</h3>
+<pre><code class="language-javascript">let a = 10;
+let b = 3;
+
+a + b;  // 13 (덧셈)
+a - b;  // 7  (뺄셈)
+a * b;  // 30 (곱셈)
+a / b;  // 3.333... (나눗셈)
+a % b;  // 1  (나머지)
+a ** b; // 1000 (거듭제곱)
+
+// 증감 연산자
+let count = 0;
+count++;    // 1 (후위 증가)
+++count;    // 2 (전위 증가)
+count--;    // 1 (후위 감소)
+--count;    // 0 (전위 감소)
+// 주석은 «실행한 뒤의 count». 🔴 식 자체의 값은 다르다 — let x = count++; 이면 x 는 «올리기 전» 값
+</code></pre>
+<h3 id="할당-연산자">할당 연산자</h3>
+<pre><code class="language-javascript">let x = 10;
+
+x += 5;  // x = x + 5  (15)
+x -= 3;  // x = x - 3  (12)
+x *= 2;  // x = x * 2  (24)
+x /= 4;  // x = x / 4  (6)
+x %= 4;  // x = x % 4  (2)
+</code></pre>
+<h3 id="비교-연산자--js-1일차--">비교 연산자 ★ JS 1일차 — ===</h3>
+<pre><code class="language-javascript">// 동등 연산자 (타입 변환 O)
+5 == &#39;5&#39;;   // true
+0 == false; // true
+
+// 일치 연산자 (타입 변환 X) - 권장
+5 === &#39;5&#39;;   // false
+0 === false; // false
+
+// 부등 연산자
+5 != &#39;5&#39;;    // false
+5 !== &#39;5&#39;;   // true
+
+// 크기 비교
+10 &gt; 5;   // true
+10 &lt; 5;   // false
+10 &gt;= 10; // true
+10 &lt;= 5;  // false
+</code></pre>
+<h3 id="논리-연산자--js-2일차">논리 연산자 ★ JS 2일차</h3>
+<pre><code class="language-javascript">// AND (&amp;&amp;) - 모두 true여야 true
+true &amp;&amp; true;   // true
+true &amp;&amp; false;  // false
+
+// OR (||) - 하나라도 true면 true
+true || false;  // true
+false || false; // false
+
+// NOT (!) - 반대
+!true;  // false
+!false; // true
+
+// 단축 평가
+let result1 = value || &#39;기본값&#39;; // value가 falsy면 &#39;기본값&#39;
+let result2 = value &amp;&amp; func();   // value가 truthy면 func() 실행
+</code></pre>
+<h3 id="삼항-연산자">삼항 연산자</h3>
+<pre><code class="language-javascript">let age = 20;
+let message = age &gt;= 18 ? &#39;성인&#39; : &#39;미성년자&#39;;
+
+// 중첩 가능
+let grade = score &gt;= 90 ? &#39;A&#39; :
+            score &gt;= 80 ? &#39;B&#39; :
+            score &gt;= 70 ? &#39;C&#39; : &#39;F&#39;;
+</code></pre>
+<h3 id="null-병합-연산자----es2020">null 병합 연산자 (??) - ES2020</h3>
+<pre><code class="language-javascript">let value = null;
+let result = value ?? &#39;기본값&#39;; // &#39;기본값&#39;
+
+let num = 0;
+result = num ?? 10;  // 0 (0은 falsy지만 null/undefined 아님)
+result = num || 10;  // 10 (||는 falsy 체크)
+</code></pre>
+<h3 id="옵셔널-체이닝----es2020">옵셔널 체이닝 (?.) - ES2020</h3>
+<pre><code class="language-javascript">let user = {
+  name: &#39;홍길동&#39;,
+  address: {
+    city: &#39;서울&#39;
+  }
+};
+
+// 안전한 접근
+user?.address?.city;        // &#39;서울&#39;
+user?.contact?.phone;       // undefined (에러 없음)
+nonExistent?.someProperty;  // undefined
+</code></pre>
+<hr>
+<h2 id="조건문">조건문</h2>
+<h3 id="if-문--js-2일차">if 문 ★ JS 2일차</h3>
+<pre><code class="language-javascript">let age = 20;
+
+if (age &gt;= 18) {
+  console.log(&#39;성인입니다&#39;);
+}
+</code></pre>
+<h3 id="if-else-문--js-2일차">if-else 문 ★ JS 2일차</h3>
+<pre><code class="language-javascript">if (age &gt;= 18) {
+  console.log(&#39;성인입니다&#39;);
+} else {
+  console.log(&#39;미성년자입니다&#39;);
+}
+</code></pre>
+<h3 id="if-else-if-else-문--js-2일차">if-else if-else 문 ★ JS 2일차</h3>
+<pre><code class="language-javascript">let score = 85;
+
+if (score &gt;= 90) {
+  console.log(&#39;A&#39;);
+} else if (score &gt;= 80) {
+  console.log(&#39;B&#39;);
+} else if (score &gt;= 70) {
+  console.log(&#39;C&#39;);
+} else {
+  console.log(&#39;F&#39;);
+}
+</code></pre>
+<h3 id="switch-문">switch 문</h3>
+<pre><code class="language-javascript">let day = 3;
+
+switch (day) {
+  case 1:
+    console.log(&#39;월요일&#39;);
+    break;
+  case 2:
+    console.log(&#39;화요일&#39;);
+    break;
+  case 3:
+    console.log(&#39;수요일&#39;);
+    break;
+  default:
+    console.log(&#39;기타&#39;);
+}
+</code></pre>
+<hr>
+<h2 id="반복문">반복문</h2>
+<h3 id="for-문--js-2일차">for 문 ★ JS 2일차</h3>
+<pre><code class="language-javascript">for (let i = 0; i &lt; 5; i++) {
+  console.log(i); // 0, 1, 2, 3, 4
+}
+
+// 역순
+for (let i = 5; i &gt; 0; i--) {
+  console.log(i); // 5, 4, 3, 2, 1
+}
+</code></pre>
+<h3 id="while-문--js-2일차">while 문 ★ JS 2일차</h3>
+<pre><code class="language-javascript">let count = 0;
+
+while (count &lt; 5) {
+  console.log(count);
+  count++;
+}
+</code></pre>
+<h3 id="do-while-문">do-while 문</h3>
+<pre><code class="language-javascript">let count = 0;
+
+do {
+  console.log(count);
+  count++;
+} while (count &lt; 5);
+</code></pre>
+<h3 id="forof-배열-순회--js-3일차">for...of (배열 순회) ★ JS 3일차</h3>
+<pre><code class="language-javascript">let fruits = [&#39;사과&#39;, &#39;바나나&#39;, &#39;오렌지&#39;];
+
+for (let fruit of fruits) {
+  console.log(fruit);
+}
+</code></pre>
+<h3 id="forin-객체-순회">for...in (객체 순회)</h3>
+<pre><code class="language-javascript">let person = {
+  name: &#39;홍길동&#39;,
+  age: 30,
+  city: &#39;서울&#39;
+};
+
+for (let key in person) {
+  console.log(key, person[key]);
+}
+</code></pre>
+<h3 id="break와-continue--js-2일차">break와 continue ★ JS 2일차</h3>
+<pre><code class="language-javascript">// break: 반복문 종료
+for (let i = 0; i &lt; 10; i++) {
+  if (i === 5) break;
+  console.log(i); // 0, 1, 2, 3, 4
+}
+
+// continue: 현재 반복 건너뛰기
+for (let i = 0; i &lt; 5; i++) {
+  if (i === 2) continue;
+  console.log(i); // 0, 1, 3, 4
+}
+</code></pre>
+<hr>
+<h2 id="함수">함수</h2>
+<h3 id="함수-선언문--js-2일차">함수 선언문 ★ JS 2일차</h3>
+<pre><code class="language-javascript">function greet(name) {
+  return `안녕하세요, ${name}님!`;
+}
+
+console.log(greet(&#39;홍길동&#39;)); // &#39;안녕하세요, 홍길동님!&#39;
+</code></pre>
+<h3 id="함수-표현식">함수 표현식</h3>
+<pre><code class="language-javascript">const greet = function(name) {
+  return `안녕하세요, ${name}님!`;
+};
+</code></pre>
+<h3 id="화살표-함수-arrow-function---es6--js-2일차">화살표 함수 (Arrow Function) - ES6 ★ JS 2일차</h3>
+<pre><code class="language-javascript">// 기본 형태
+const greet1 = (name) =&gt; {
+  return `안녕하세요, ${name}님!`;
+};
+
+// 매개변수가 하나일 때 괄호 생략 가능
+const greet2 = name =&gt; {
+  return `안녕하세요, ${name}님!`;
+};
+
+// 단일 표현식일 때 중괄호와 return 생략 가능
+const greet3 = name =&gt; `안녕하세요, ${name}님!`;
+
+// 매개변수가 없을 때
+const sayHello = () =&gt; console.log(&#39;Hello!&#39;);
+
+// 여러 매개변수
+const add = (a, b) =&gt; a + b;
+</code></pre>
+<h3 id="기본-매개변수-default-parameters">기본 매개변수 (Default Parameters)</h3>
+<pre><code class="language-javascript">function greet(name = &#39;손님&#39;) {
+  return `안녕하세요, ${name}님!`;
+}
+
+greet();         // &#39;안녕하세요, 손님님!&#39;
+greet(&#39;홍길동&#39;); // &#39;안녕하세요, 홍길동님!&#39;
+</code></pre>
+<h3 id="나머지-매개변수-rest-parameters">나머지 매개변수 (Rest Parameters)</h3>
+<pre><code class="language-javascript">function sum(...numbers) {
+  return numbers.reduce((total, num) =&gt; total + num, 0);
+}
+
+sum(1, 2, 3);       // 6
+sum(1, 2, 3, 4, 5); // 15
+</code></pre>
+<h3 id="즉시-실행-함수-iife">즉시 실행 함수 (IIFE)</h3>
+<pre><code class="language-javascript">(function() {
+  console.log(&#39;즉시 실행!&#39;);
+})();
+
+(() =&gt; {
+  console.log(&#39;화살표 함수로도 가능!&#39;);
+})();
+</code></pre>
+<h3 id="콜백-함수--js-4일차">콜백 함수 ★ JS 4일차</h3>
+<pre><code class="language-javascript">function processData(data, callback) {
+  // 데이터 처리
+  const result = data * 2;
+  callback(result);
+}
+
+processData(5, function(result) {
+  console.log(result); // 10
+});
+</code></pre>
+<hr>
+<h2 id="배열">배열</h2>
+<h3 id="배열-생성--js-3일차">배열 생성 ★ JS 3일차</h3>
+<pre><code class="language-javascript">let arr1 = [1, 2, 3, 4, 5];
+let arr2 = new Array(1, 2, 3);
+let arr3 = Array.of(1, 2, 3);
+let arr4 = Array(5).fill(0); // [0, 0, 0, 0, 0]
+</code></pre>
+<h3 id="배열-요소-접근--js-3일차">배열 요소 접근 ★ JS 3일차</h3>
+<pre><code class="language-javascript">let fruits = [&#39;사과&#39;, &#39;바나나&#39;, &#39;오렌지&#39;];
+
+fruits[0];     // &#39;사과&#39;
+fruits[1];     // &#39;바나나&#39;
+fruits.at(-1); // &#39;오렌지&#39; (마지막 요소)
+</code></pre>
+<h3 id="배열-길이--js-3일차">배열 길이 ★ JS 3일차</h3>
+<pre><code class="language-javascript">let fruits = [&#39;사과&#39;, &#39;바나나&#39;, &#39;오렌지&#39;];
+fruits.length; // 3
+</code></pre>
+<h3 id="배열-요소-추가제거--js-3일차--push">배열 요소 추가/제거 ★ JS 3일차 — push</h3>
+<h4 id="push--pop-끝">push / pop (끝)</h4>
+<pre><code class="language-javascript">let arr = [1, 2, 3];
+
+arr.push(4);      // [1, 2, 3, 4] - 끝에 추가
+arr.pop();        // [1, 2, 3] - 끝에서 제거
+// 주석은 «실행한 뒤의 arr». 🔴 돌려주는 값은 다르다 — push 는 새 길이(4), pop 은 꺼낸 값(4)
+</code></pre>
+<h4 id="unshift--shift-앞">unshift / shift (앞)</h4>
+<pre><code class="language-javascript">let arr = [2, 3, 4];
+
+arr.unshift(1);   // [1, 2, 3, 4] - 앞에 추가
+arr.shift();      // [2, 3, 4] - 앞에서 제거
+</code></pre>
+<h4 id="splice-중간">splice (중간)</h4>
+<pre><code class="language-javascript">let arr = [1, 2, 3, 4, 5];
+
+// 삭제
+arr.splice(2, 1);        // [1, 2, 4, 5] - 인덱스 2부터 1개 삭제
+
+// 삽입
+arr.splice(2, 0, 3);     // [1, 2, 3, 4, 5] - 인덱스 2에 3 삽입
+
+// 교체
+arr.splice(2, 1, 10);    // [1, 2, 10, 4, 5] - 인덱스 2를 10으로 교체
+</code></pre>
+<h3 id="배열-검색--js-4일차--find--includes">배열 검색 ★ JS 4일차 — find · includes</h3>
+<pre><code class="language-javascript">let fruits = [&#39;사과&#39;, &#39;바나나&#39;, &#39;오렌지&#39;];
+
+fruits.indexOf(&#39;바나나&#39;);      // 1
+fruits.indexOf(&#39;포도&#39;);        // -1 (없음)
+fruits.includes(&#39;사과&#39;);       // true
+fruits.find(f =&gt; f === &#39;바나나&#39;); // &#39;바나나&#39;
+</code></pre>
+<h3 id="배열-변환--js-4일차--join--slice--sort">배열 변환 ★ JS 4일차 — join · slice · sort</h3>
+<pre><code class="language-javascript">let arr = [1, 2, 3];
+
+// join: 배열 → 문자열
+arr.join(&#39;-&#39;);        // &#39;1-2-3&#39;
+
+// slice: 부분 배열
+arr.slice(1, 3);      // [2, 3]
+
+// concat: 배열 합치기
+arr.concat([4, 5]);   // [1, 2, 3, 4, 5]
+
+// reverse: 순서 뒤집기
+arr.reverse();        // [3, 2, 1]
+
+// sort: 정렬
+[3, 1, 2].sort();     // [1, 2, 3]
+[10, 2, 1].sort();    // 🔴 [1, 10, 2] — 글자로 비교한다! 숫자는 sort((a, b) =&gt; a - b)
+</code></pre>
+<hr>
+<h2 id="객체">객체</h2>
+<h3 id="객체-생성--js-3일차">객체 생성 ★ JS 3일차</h3>
+<pre><code class="language-javascript">// 객체 리터럴
+let person = {
+  name: &#39;홍길동&#39;,
+  age: 30,
+  city: &#39;서울&#39;
+};
+
+// new Object()
+let person2 = new Object();
+person2.name = &#39;홍길동&#39;;
+</code></pre>
+<h3 id="프로퍼티-접근--js-3일차">프로퍼티 접근 ★ JS 3일차</h3>
+<pre><code class="language-javascript">let person = {
+  name: &#39;홍길동&#39;,
+  age: 30
+};
+
+// 점 표기법
+person.name;        // &#39;홍길동&#39;
+
+// 대괄호 표기법
+person[&#39;name&#39;];     // &#39;홍길동&#39;
+person[&#39;age&#39;];      // 30
+</code></pre>
+<h3 id="프로퍼티-추가수정삭제--js-3일차">프로퍼티 추가/수정/삭제 ★ JS 3일차</h3>
+<pre><code class="language-javascript">let person = {
+  name: &#39;홍길동&#39;
+};
+
+// 추가
+person.age = 30;
+
+// 수정
+person.name = &#39;김철수&#39;;
+
+// 삭제
+delete person.age;
+</code></pre>
+<h3 id="메서드">메서드</h3>
+<pre><code class="language-javascript">let person = {
+  name: &#39;홍길동&#39;,
+  greet: function() {
+    return `안녕하세요, ${this.name}입니다.`;
+  },
+  // ES6 단축 문법
+  sayHello() {
+    return `Hello, ${this.name}`;
+  }
+};
+
+person.greet();    // &#39;안녕하세요, 홍길동입니다.&#39;
+person.sayHello(); // &#39;Hello, 홍길동&#39;
+</code></pre>
+<h3 id="객체-순회">객체 순회</h3>
+<pre><code class="language-javascript">let person = {
+  name: &#39;홍길동&#39;,
+  age: 30,
+  city: &#39;서울&#39;
+};
+
+// for...in
+for (let key in person) {
+  console.log(key, person[key]);
+}
+
+// Object.keys()
+Object.keys(person);    // [&#39;name&#39;, &#39;age&#39;, &#39;city&#39;]
+
+// Object.values()
+Object.values(person);  // [&#39;홍길동&#39;, 30, &#39;서울&#39;]
+
+// Object.entries()
+Object.entries(person); // [[&#39;name&#39;, &#39;홍길동&#39;], [&#39;age&#39;, 30], [&#39;city&#39;, &#39;서울&#39;]]
+</code></pre>
+<h3 id="구조-분해-할당-destructuring--js-3일차">구조 분해 할당 (Destructuring) ★ JS 3일차</h3>
+<pre><code class="language-javascript">let person = {
+  name: &#39;홍길동&#39;,
+  age: 30,
+  city: &#39;서울&#39;
+};
+
+// 객체 구조 분해
+let { name, age } = person;
+console.log(name); // &#39;홍길동&#39;
+console.log(age);  // 30
+
+// 배열 구조 분해
+let [a, b, c] = [1, 2, 3];
+console.log(a); // 1
+console.log(b); // 2
+</code></pre>
+<h3 id="전개-연산자-spread-operator--js-3일차">전개 연산자 (Spread Operator) ★ JS 3일차</h3>
+<pre><code class="language-javascript">// 객체 복사
+let person = { name: &#39;홍길동&#39;, age: 30 };
+let copy = { ...person };
+
+// 객체 병합
+let person1 = { name: &#39;홍길동&#39; };
+let person2 = { age: 30 };
+let merged = { ...person1, ...person2 };
+
+// 배열 복사
+let arr = [1, 2, 3];
+let arrCopy = [...arr];
+
+// 배열 합치기
+let arr1 = [1, 2];
+let arr2 = [3, 4];
+let mergedArr = [...arr1, ...arr2]; // [1, 2, 3, 4]
+</code></pre>
+<hr>
+<h2 id="dom-조작">DOM 조작</h2>
+<h3 id="요소-선택--js-5일차">요소 선택 ★ JS 5일차</h3>
+<h4 id="단일-요소-선택">단일 요소 선택</h4>
+<pre><code class="language-javascript">// ID로 선택
+document.getElementById(&#39;myId&#39;);
+
+// CSS 선택자로 선택 (첫 번째 요소)
+document.querySelector(&#39;.myClass&#39;);
+document.querySelector(&#39;#myId&#39;);
+document.querySelector(&#39;div.container &gt; p&#39;);
+</code></pre>
+<h4 id="여러-요소-선택">여러 요소 선택</h4>
+<pre><code class="language-javascript">// 클래스로 선택
+document.getElementsByClassName(&#39;myClass&#39;);
+
+// 태그로 선택
+document.getElementsByTagName(&#39;div&#39;);
+
+// CSS 선택자로 선택 (모든 요소)
+document.querySelectorAll(&#39;.myClass&#39;);
+document.querySelectorAll(&#39;div p&#39;);
+</code></pre>
+<h3 id="요소-내용-조작--js-5일차">요소 내용 조작 ★ JS 5일차</h3>
+<pre><code class="language-javascript">let element = document.querySelector(&#39;#myElement&#39;);
+
+// 텍스트 내용
+element.textContent = &#39;새로운 텍스트&#39;;
+
+// HTML 내용
+element.innerHTML = &#39;&lt;strong&gt;굵은 텍스트&lt;/strong&gt;&#39;;
+// 🔴 사용자가 입력한 글자를 innerHTML 에 넣지 마십시오 — 그 안의 코드가 실행될 수 있습니다(XSS).
+//    글자는 textContent 로. innerHTML 은 내가 만든 HTML 에만 씁니다
+
+// 입력 값
+let input = document.querySelector(&#39;input&#39;);
+input.value = &#39;입력값&#39;;
+</code></pre>
+<h3 id="스타일-조작">스타일 조작</h3>
+<pre><code class="language-javascript">let element = document.querySelector(&#39;#myElement&#39;);
+
+// 인라인 스타일
+element.style.color = &#39;red&#39;;
+element.style.backgroundColor = &#39;blue&#39;;
+element.style.fontSize = &#39;20px&#39;;
+
+// 여러 스타일 한 번에
+Object.assign(element.style, {
+  color: &#39;red&#39;,
+  backgroundColor: &#39;blue&#39;,
+  fontSize: &#39;20px&#39;
+});
+</code></pre>
+<h3 id="클래스-조작--js-5일차">클래스 조작 ★ JS 5일차</h3>
+<pre><code class="language-javascript">let element = document.querySelector(&#39;#myElement&#39;);
+
+// 클래스 추가
+element.classList.add(&#39;active&#39;);
+
+// 클래스 제거
+element.classList.remove(&#39;hidden&#39;);
+
+// 클래스 토글
+element.classList.toggle(&#39;show&#39;);
+
+// 클래스 포함 여부
+element.classList.contains(&#39;active&#39;); // true/false
+</code></pre>
+<h3 id="속성-조작--js-6일차--dataset">속성 조작 ★ JS 6일차 — dataset</h3>
+<pre><code class="language-javascript">let img = document.querySelector(&#39;img&#39;);
+
+// 속성 가져오기
+img.getAttribute(&#39;src&#39;);
+
+// 속성 설정
+img.setAttribute(&#39;src&#39;, &#39;image.jpg&#39;);
+img.setAttribute(&#39;alt&#39;, &#39;이미지 설명&#39;);
+
+// 속성 제거
+img.removeAttribute(&#39;alt&#39;);
+
+// 직접 접근
+img.src = &#39;image.jpg&#39;;
+img.alt = &#39;이미지 설명&#39;;
+
+// data-* 속성 — &lt;li data-id=&quot;17&quot;&gt; 의 값 (6일차)
+let li = document.querySelector(&#39;li&#39;);
+li.dataset.id; // &#39;17&#39; (언제나 문자열)
+</code></pre>
+<h3 id="요소-생성-및-추가--js-5일차">요소 생성 및 추가 ★ JS 5일차</h3>
+<pre><code class="language-javascript">// 요소 생성
+let div = document.createElement(&#39;div&#39;);
+div.textContent = &#39;새로운 div&#39;;
+div.classList.add(&#39;box&#39;);
+
+// 요소 추가
+let container = document.querySelector(&#39;#container&#39;);
+container.appendChild(div);        // 끝에 추가
+container.prepend(div);            // 앞에 추가
+container.insertBefore(div, ref);  // ref 앞에 추가
+
+// HTML 문자열로 추가
+container.insertAdjacentHTML(&#39;beforeend&#39;, &#39;&lt;div&gt;새로운 div&lt;/div&gt;&#39;);
+</code></pre>
+<h3 id="요소-제거">요소 제거</h3>
+<pre><code class="language-javascript">let element = document.querySelector(&#39;#myElement&#39;);
+
+// 요소 제거
+element.remove();
+
+// 자식 요소 제거
+let parent = document.querySelector(&#39;#parent&#39;);
+parent.removeChild(child);
+</code></pre>
+<h3 id="요소-탐색">요소 탐색</h3>
+<pre><code class="language-javascript">let element = document.querySelector(&#39;#myElement&#39;);
+
+// 부모 요소
+element.parentElement;
+
+// 자식 요소
+element.children;          // HTMLCollection
+element.firstElementChild;
+element.lastElementChild;
+
+// 형제 요소
+element.nextElementSibling;
+element.previousElementSibling;
+</code></pre>
+<hr>
+<h2 id="이벤트">이벤트</h2>
+<h3 id="이벤트-리스너-등록--js-56일차">이벤트 리스너 등록 ★ JS 5·6일차</h3>
+<h4 id="addeventlistener-권장">addEventListener (권장)</h4>
+<pre><code class="language-javascript">let button = document.querySelector(&#39;#myButton&#39;);
+
+button.addEventListener(&#39;click&#39;, function() {
+  console.log(&#39;버튼 클릭!&#39;);
+});
+
+// 화살표 함수
+button.addEventListener(&#39;click&#39;, () =&gt; {
+  console.log(&#39;버튼 클릭!&#39;);
+});
+</code></pre>
+<h4 id="이벤트-리스너-제거">이벤트 리스너 제거</h4>
+<pre><code class="language-javascript">function handleClick() {
+  console.log(&#39;클릭!&#39;);
+}
+
+button.addEventListener(&#39;click&#39;, handleClick);
+button.removeEventListener(&#39;click&#39;, handleClick);
+</code></pre>
+<h3 id="주요-이벤트-타입">주요 이벤트 타입</h3>
+<h4 id="마우스-이벤트">마우스 이벤트</h4>
+<pre><code class="language-javascript">element.addEventListener(&#39;click&#39;, () =&gt; {});       // 클릭
+element.addEventListener(&#39;dblclick&#39;, () =&gt; {});    // 더블 클릭
+element.addEventListener(&#39;mouseenter&#39;, () =&gt; {});  // 마우스 진입
+element.addEventListener(&#39;mouseleave&#39;, () =&gt; {});  // 마우스 이탈
+element.addEventListener(&#39;mousemove&#39;, () =&gt; {});   // 마우스 이동
+element.addEventListener(&#39;mousedown&#39;, () =&gt; {});   // 마우스 버튼 누름
+element.addEventListener(&#39;mouseup&#39;, () =&gt; {});     // 마우스 버튼 뗌
+</code></pre>
+<h4 id="키보드-이벤트">키보드 이벤트</h4>
+<pre><code class="language-javascript">input.addEventListener(&#39;keydown&#39;, () =&gt; {});   // 키 누름
+input.addEventListener(&#39;keyup&#39;, () =&gt; {});     // 키 뗌
+input.addEventListener(&#39;keypress&#39;, () =&gt; {});  // 키 입력 (deprecated)
+</code></pre>
+<h4 id="폼-이벤트">폼 이벤트</h4>
+<pre><code class="language-javascript">form.addEventListener(&#39;submit&#39;, () =&gt; {});     // 폼 제출
+input.addEventListener(&#39;focus&#39;, () =&gt; {});     // 포커스 받음
+input.addEventListener(&#39;blur&#39;, () =&gt; {});      // 포커스 잃음
+input.addEventListener(&#39;change&#39;, () =&gt; {});    // 값 변경
+input.addEventListener(&#39;input&#39;, () =&gt; {});     // 입력 (실시간)
+</code></pre>
+<h4 id="기타-이벤트">기타 이벤트</h4>
+<pre><code class="language-javascript">window.addEventListener(&#39;load&#39;, () =&gt; {});     // 페이지 로드 완료
+window.addEventListener(&#39;resize&#39;, () =&gt; {});   // 윈도우 크기 변경
+window.addEventListener(&#39;scroll&#39;, () =&gt; {});   // 스크롤
+</code></pre>
+<h3 id="이벤트-객체--js-6일차">이벤트 객체 ★ JS 6일차</h3>
+<pre><code class="language-javascript">button.addEventListener(&#39;click&#39;, function(event) {
+  console.log(event.type);        // &#39;click&#39;
+  console.log(event.target);      // 이벤트가 발생한 요소
+  console.log(event.currentTarget); // 이벤트 리스너가 등록된 요소
+
+  event.preventDefault();  // 기본 동작 방지
+  event.stopPropagation(); // 이벤트 전파 중단
+});
+</code></pre>
+<h3 id="이벤트-위임-event-delegation--js-6일차">이벤트 위임 (Event Delegation) ★ JS 6일차</h3>
+<pre><code class="language-javascript">// 부모에 이벤트 리스너 하나만 등록
+let list = document.querySelector(&#39;#list&#39;);
+
+list.addEventListener(&#39;click&#39;, function(e) {
+  if (e.target.tagName === &#39;LI&#39;) {
+    console.log(&#39;클릭한 항목:&#39;, e.target.textContent);
+  }
+});
+</code></pre>
+<h3 id="domcontentloaded">DOMContentLoaded</h3>
+<pre><code class="language-javascript">// DOM이 로드되면 실행
+document.addEventListener(&#39;DOMContentLoaded&#39;, () =&gt; {
+  console.log(&#39;DOM 로드 완료!&#39;);
+  // 초기화 코드
+});
+</code></pre>
+<hr>
+<h2 id="문자열-메서드">문자열 메서드</h2>
+<h3 id="문자열-길이--js-1일차">문자열 길이 ★ JS 1일차</h3>
+<pre><code class="language-javascript">let str = &#39;안녕하세요&#39;;
+str.length; // 5
+</code></pre>
+<h3 id="문자열-검색--js-6일차--includes">문자열 검색 ★ JS 6일차 — includes</h3>
+<pre><code class="language-javascript">let str = &#39;Hello World&#39;;
+
+str.indexOf(&#39;World&#39;);      // 6
+str.indexOf(&#39;world&#39;);      // -1 (대소문자 구분)
+str.lastIndexOf(&#39;o&#39;);      // 7
+str.includes(&#39;World&#39;);     // true
+str.startsWith(&#39;Hello&#39;);   // true
+str.endsWith(&#39;World&#39;);     // true
+</code></pre>
+<h3 id="문자열-추출">문자열 추출</h3>
+<pre><code class="language-javascript">let str = &#39;Hello World&#39;;
+
+str.charAt(0);          // &#39;H&#39;
+str[0];                 // &#39;H&#39;
+str.slice(0, 5);        // &#39;Hello&#39;
+str.slice(-5);          // &#39;World&#39;
+str.substring(0, 5);    // &#39;Hello&#39;
+str.substr(6, 5);       // &#39;World&#39; (deprecated)
+</code></pre>
+<h3 id="문자열-변환--js-6일차--trim">문자열 변환 ★ JS 6일차 — trim</h3>
+<pre><code class="language-javascript">let str = &#39;Hello World&#39;;
+
+str.toLowerCase();      // &#39;hello world&#39;
+str.toUpperCase();      // &#39;HELLO WORLD&#39;
+str.trim();             // 앞뒤 공백 제거
+str.trimStart();        // 앞 공백 제거
+str.trimEnd();          // 뒤 공백 제거
+str.repeat(3);          // &#39;Hello WorldHello WorldHello World&#39;
+</code></pre>
+<h3 id="문자열-분할결합">문자열 분할/결합</h3>
+<pre><code class="language-javascript">let str = &#39;apple,banana,orange&#39;;
+
+str.split(&#39;,&#39;);         // [&#39;apple&#39;, &#39;banana&#39;, &#39;orange&#39;]
+str.split(&#39;&#39;);          // [&#39;a&#39;, &#39;p&#39;, &#39;p&#39;, &#39;l&#39;, &#39;e&#39;, ...]
+
+let arr = [&#39;apple&#39;, &#39;banana&#39;, &#39;orange&#39;];
+arr.join(&#39;-&#39;);          // &#39;apple-banana-orange&#39;
+</code></pre>
+<h3 id="문자열-치환">문자열 치환</h3>
+<pre><code class="language-javascript">let str = &#39;Hello World&#39;;
+
+str.replace(&#39;World&#39;, &#39;JavaScript&#39;);      // &#39;Hello JavaScript&#39;
+str.replaceAll(&#39;o&#39;, &#39;0&#39;);                // &#39;Hell0 W0rld&#39;
+
+// 정규식
+str.replace(/world/i, &#39;JavaScript&#39;);     // &#39;Hello JavaScript&#39; (대소문자 무시)
+</code></pre>
+<h3 id="템플릿-리터럴--js-1일차">템플릿 리터럴 ★ JS 1일차</h3>
+<pre><code class="language-javascript">let name = &#39;홍길동&#39;;
+let age = 30;
+
+// 문자열 보간
+let message = `이름: ${name}, 나이: ${age}`;
+
+// 여러 줄 문자열
+let html = `
+  &lt;div&gt;
+    &lt;h1&gt;${name}&lt;/h1&gt;
+    &lt;p&gt;${age}세&lt;/p&gt;
+  &lt;/div&gt;
+`;
+
+// 표현식 사용
+let result = `2 + 3 = ${2 + 3}`;  // &#39;2 + 3 = 5&#39;
+</code></pre>
+<hr>
+<h2 id="배열-메서드">배열 메서드</h2>
+<h3 id="foreach-순회--js-4일차">forEach (순회) ★ JS 4일차</h3>
+<pre><code class="language-javascript">let arr = [1, 2, 3, 4, 5];
+
+arr.forEach((item, index) =&gt; {
+  console.log(index, item);
+});
+</code></pre>
+<h3 id="map-변환--js-4일차">map (변환) ★ JS 4일차</h3>
+<pre><code class="language-javascript">let numbers = [1, 2, 3, 4, 5];
+
+let doubled = numbers.map(num =&gt; num * 2);
+// [2, 4, 6, 8, 10]
+
+let squared = numbers.map(num =&gt; num ** 2);
+// [1, 4, 9, 16, 25]
+</code></pre>
+<h3 id="filter-필터링--js-4일차">filter (필터링) ★ JS 4일차</h3>
+<pre><code class="language-javascript">let numbers = [1, 2, 3, 4, 5, 6];
+
+let evens = numbers.filter(num =&gt; num % 2 === 0);
+// [2, 4, 6]
+
+let greaterThan3 = numbers.filter(num =&gt; num &gt; 3);
+// [4, 5, 6]
+</code></pre>
+<h3 id="find--findindex-검색--js-4일차">find / findIndex (검색) ★ JS 4일차</h3>
+<pre><code class="language-javascript">let users = [
+  { id: 1, name: &#39;홍길동&#39; },
+  { id: 2, name: &#39;김철수&#39; },
+  { id: 3, name: &#39;이영희&#39; }
+];
+
+let user = users.find(u =&gt; u.id === 2);
+// { id: 2, name: &#39;김철수&#39; }
+
+let index = users.findIndex(u =&gt; u.id === 2);
+// 1
+</code></pre>
+<h3 id="reduce-누적--js-4일차">reduce (누적) ★ JS 4일차</h3>
+<pre><code class="language-javascript">let numbers = [1, 2, 3, 4, 5];
+
+// 합계
+let sum = numbers.reduce((acc, cur) =&gt; acc + cur, 0);
+// 15
+
+// 곱
+let product = numbers.reduce((acc, cur) =&gt; acc * cur, 1);
+// 120
+
+// 최대값
+let max = numbers.reduce((acc, cur) =&gt; Math.max(acc, cur));
+// 5
+</code></pre>
+<h3 id="some--every-조건-검사--js-4일차">some / every (조건 검사) ★ JS 4일차</h3>
+<pre><code class="language-javascript">let numbers = [1, 2, 3, 4, 5];
+
+// some: 하나라도 만족하면 true
+numbers.some(num =&gt; num &gt; 3);   // true
+numbers.some(num =&gt; num &gt; 10);  // false
+
+// every: 모두 만족해야 true
+numbers.every(num =&gt; num &gt; 0);  // true
+numbers.every(num =&gt; num &gt; 3);  // false
+</code></pre>
+<h3 id="sort-정렬--js-4일차">sort (정렬) ★ JS 4일차</h3>
+<pre><code class="language-javascript">let numbers = [3, 1, 4, 1, 5, 9, 2];
+
+// 오름차순
+numbers.sort((a, b) =&gt; a - b);
+// [1, 1, 2, 3, 4, 5, 9]
+
+// 내림차순
+numbers.sort((a, b) =&gt; b - a);
+// [9, 5, 4, 3, 2, 1, 1]
+
+// 문자열 정렬
+let fruits = [&#39;banana&#39;, &#39;apple&#39;, &#39;cherry&#39;];
+fruits.sort();
+// [&#39;apple&#39;, &#39;banana&#39;, &#39;cherry&#39;]
+</code></pre>
+<h3 id="메서드-체이닝--js-4일차">메서드 체이닝 ★ JS 4일차</h3>
+<pre><code class="language-javascript">let numbers = [1, 2, 3, 4, 5, 6];
+
+let result = numbers
+  .filter(num =&gt; num % 2 === 0)  // [2, 4, 6]
+  .map(num =&gt; num * 2)            // [4, 8, 12]
+  .reduce((sum, num) =&gt; sum + num, 0); // 24
+</code></pre>
+<hr>
+<h2 id="비동기-처리">비동기 처리</h2>
+<h3 id="동기-vs-비동기--js-7일차">동기 vs 비동기 ★ JS 7일차</h3>
+<pre><code class="language-javascript">// 동기 (Synchronous)
+console.log(&#39;1&#39;);
+console.log(&#39;2&#39;);
+console.log(&#39;3&#39;);
+// 출력: 1, 2, 3
+
+// 비동기 (Asynchronous)
+console.log(&#39;1&#39;);
+setTimeout(() =&gt; console.log(&#39;2&#39;), 1000);
+console.log(&#39;3&#39;);
+// 출력: 1, 3, 2
+</code></pre>
+<h3 id="settimeout--setinterval--js-7일차--settimeout">setTimeout / setInterval ★ JS 7일차 — setTimeout</h3>
+<pre><code class="language-javascript">// setTimeout: 일정 시간 후 한 번 실행
+setTimeout(() =&gt; {
+  console.log(&#39;1초 후 실행&#39;);
+}, 1000);
+
+// setInterval: 일정 시간마다 반복 실행
+let intervalId = setInterval(() =&gt; {
+  console.log(&#39;1초마다 실행&#39;);
+}, 1000);
+
+// 중단
+let timeoutId = setTimeout(() =&gt; {}, 1000);
+clearTimeout(timeoutId);
+clearInterval(intervalId);
+</code></pre>
+<h3 id="콜백-callback">콜백 (Callback)</h3>
+<pre><code class="language-javascript">function fetchData(callback) {
+  setTimeout(() =&gt; {
+    const data = { name: &#39;홍길동&#39; };
+    callback(data);
+  }, 1000);
+}
+
+fetchData((data) =&gt; {
+  console.log(data);
+});
+
+// 콜백 지옥 (Callback Hell)
+getData((a) =&gt; {
+  getMoreData(a, (b) =&gt; {
+    getEvenMoreData(b, (c) =&gt; {
+      console.log(c);
+    });
+  });
+});
+</code></pre>
+<h3 id="promise--js-7일차">Promise ★ JS 7일차</h3>
+<pre><code class="language-javascript">// Promise 생성
+let promise = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    const success = true;
+    if (success) {
+      resolve(&#39;성공!&#39;);
+    } else {
+      reject(&#39;실패!&#39;);
+    }
+  }, 1000);
+});
+
+// Promise 사용
+promise
+  .then(result =&gt; {
+    console.log(result); // &#39;성공!&#39;
+  })
+  .catch(error =&gt; {
+    console.log(error);
+  })
+  .finally(() =&gt; {
+    console.log(&#39;완료!&#39;);
+  });
+</code></pre>
+<h3 id="promise-체이닝">Promise 체이닝</h3>
+<pre><code class="language-javascript">fetchUser()
+  .then(user =&gt; fetchPosts(user.id))
+  .then(posts =&gt; fetchComments(posts[0].id))
+  .then(comments =&gt; {
+    console.log(comments);
+  })
+  .catch(error =&gt; {
+    console.error(error);
+  });
+</code></pre>
+<h3 id="asyncawait--js-7일차">async/await ★ JS 7일차</h3>
+<pre><code class="language-javascript">// async 함수
+async function fetchData() {
+  try {
+    const response = await fetch(&#39;https://api.example.com/data&#39;);
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+fetchData();
+
+// 여러 Promise 를 한꺼번에 기다리기
+async function fetchAll() {
+  try {
+    const [users, posts] = await Promise.all([
+      fetch(&#39;/api/users&#39;).then(r =&gt; r.json()),
+      fetch(&#39;/api/posts&#39;).then(r =&gt; r.json())
+    ]);
+    console.log(users, posts);
+  } catch (error) {
+    console.error(error);
+  }
+}
+</code></pre>
+<h3 id="fetch-api--js-8일차">Fetch API ★ JS 8일차</h3>
+<pre><code class="language-javascript">// GET 요청
+// 🔴 fetch 는 404·500 이 나도 catch 로 가지 않습니다 — response.ok 를 직접 봐야 합니다 (8일차)
+fetch(&#39;https://api.example.com/data&#39;)
+  .then(response =&gt; {
+    if (!response.ok) throw new Error(&#39;HTTP &#39; + response.status);
+    return response.json();
+  })
+  .then(data =&gt; console.log(data))
+  .catch(error =&gt; console.error(error));
+
+// POST 요청
+fetch(&#39;https://api.example.com/data&#39;, {
+  method: &#39;POST&#39;,
+  headers: {
+    &#39;Content-Type&#39;: &#39;application/json&#39;
+  },
+  body: JSON.stringify({ name: &#39;홍길동&#39; })
+})
+  .then(response =&gt; response.json())
+  .then(data =&gt; console.log(data));
+
+// async/await 사용
+async function getData() {
+  try {
+    const response = await fetch(&#39;https://api.example.com/data&#39;);
+    if (!response.ok) throw new Error(&#39;HTTP &#39; + response.status);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+</code></pre>
+<hr>
+<h2 id="es6-문법">ES6+ 문법</h2>
+<h3 id="let과-const--js-1일차">let과 const ★ JS 1일차</h3>
+<pre><code class="language-javascript">// let: 블록 스코프, 재할당 가능
+let count = 0;
+count = 1;
+
+// const: 블록 스코프, 재할당 불가
+const PI = 3.14159;
+// PI = 3.14; // 에러!
+</code></pre>
+<h3 id="템플릿-리터럴--js-1일차">템플릿 리터럴 ★ JS 1일차</h3>
+<pre><code class="language-javascript">let name = &#39;홍길동&#39;;
+let age = 30;
+
+let message = `이름: ${name}, 나이: ${age}`;
+</code></pre>
+<h3 id="화살표-함수--js-2일차">화살표 함수 ★ JS 2일차</h3>
+<pre><code class="language-javascript">const add = (a, b) =&gt; a + b;
+const square = x =&gt; x ** 2;
+</code></pre>
+<h3 id="구조-분해-할당--js-3일차">구조 분해 할당 ★ JS 3일차</h3>
+<pre><code class="language-javascript">// 배열
+let [a, b] = [1, 2];
+
+// 객체
+let { name, age } = { name: &#39;홍길동&#39;, age: 30 };
+</code></pre>
+<h3 id="전개-연산자--js-3일차">전개 연산자 ★ JS 3일차</h3>
+<pre><code class="language-javascript">let arr1 = [1, 2, 3];
+let arr2 = [...arr1, 4, 5]; // [1, 2, 3, 4, 5]
+
+let obj1 = { a: 1, b: 2 };
+let obj2 = { ...obj1, c: 3 }; // { a: 1, b: 2, c: 3 }
+</code></pre>
+<h3 id="기본-매개변수">기본 매개변수</h3>
+<pre><code class="language-javascript">function greet(name = &#39;손님&#39;) {
+  return `안녕하세요, ${name}님!`;
+}
+</code></pre>
+<h3 id="나머지-매개변수">나머지 매개변수</h3>
+<pre><code class="language-javascript">function sum(...numbers) {
+  return numbers.reduce((a, b) =&gt; a + b, 0);
+}
+
+sum(1, 2, 3, 4, 5); // 15
+</code></pre>
+<h3 id="단축-프로퍼티">단축 프로퍼티</h3>
+<pre><code class="language-javascript">let name = &#39;홍길동&#39;;
+let age = 30;
+
+// 기존 방식
+let person1 = { name: name, age: age };
+
+// 단축 프로퍼티
+let person2 = { name, age };
+</code></pre>
+<h3 id="계산된-프로퍼티-이름">계산된 프로퍼티 이름</h3>
+<pre><code class="language-javascript">let key = &#39;name&#39;;
+let person = {
+  [key]: &#39;홍길동&#39;,
+  [&#39;age&#39;]: 30
+};
+</code></pre>
+<h3 id="옵셔널-체이닝">옵셔널 체이닝</h3>
+<pre><code class="language-javascript">let user = {
+  name: &#39;홍길동&#39;,
+  address: {
+    city: &#39;서울&#39;
+  }
+};
+
+user?.address?.city;        // &#39;서울&#39;
+user?.contact?.phone;       // undefined
+</code></pre>
+<h3 id="null-병합-연산자">null 병합 연산자</h3>
+<pre><code class="language-javascript">let value = null;
+let result = value ?? &#39;기본값&#39;; // &#39;기본값&#39;
+</code></pre>
+<h3 id="class">Class</h3>
+<pre><code class="language-javascript">class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  greet() {
+    return `안녕하세요, ${this.name}입니다.`;
+  }
+
+  static create(name, age) {
+    return new Person(name, age);
+  }
+}
+
+let person = new Person(&#39;홍길동&#39;, 30);
+person.greet(); // &#39;안녕하세요, 홍길동입니다.&#39;
+</code></pre>
+<h3 id="module-es6-모듈--js-8일차">Module (ES6 모듈) ★ JS 8일차</h3>
+<pre><code class="language-javascript">// export (내보내기)
+export const PI = 3.14159;
+export function add(a, b) {
+  return a + b;
+}
+export default class Calculator {}
+
+// import (가져오기)
+import Calculator, { PI, add } from &#39;./math.js&#39;;
+</code></pre>
+<pre><code class="language-html">
+&lt;script type=&quot;module&quot; src=&quot;main.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<hr>
+<h2 id="모범-사례">모범 사례</h2>
+<h3 id="1-명명-규칙">1. 명명 규칙</h3>
+<pre><code class="language-javascript">// 변수/함수: 카멜 케이스
+let userName = &#39;홍길동&#39;;
+function getUserName() {}
+
+// 상수: 대문자 스네이크 케이스
+const MAX_SIZE = 100;
+const API_KEY = &#39;abc123&#39;; // 🔴 이름 예시일 뿐 — 진짜 키는 서버에 둔다
+
+// 클래스: 파스칼 케이스
+class UserProfile {}
+
+// private: 언더스코어 접두사 (관례)
+let _privateVar = &#39;private&#39;;
+</code></pre>
+<h3 id="2-변수-선언">2. 변수 선언</h3>
+<pre><code class="language-javascript">// const를 기본으로, 재할당이 필요할 때만 let
+const name = &#39;홍길동&#39;;
+let count = 0;
+
+// var는 사용하지 않기
+// var x = 10; ❌
+</code></pre>
+<h3 id="3-비교-연산">3. 비교 연산</h3>
+<pre><code class="language-javascript">// 일치 연산자(===) 사용
+if (value === 10) {} // ✅
+// if (value == 10) {} // ❌
+
+// 불일치 연산자(!==) 사용
+if (value !== 10) {} // ✅
+// if (value != 10) {} // ❌
+</code></pre>
+<h3 id="4-함수">4. 함수</h3>
+<pre><code class="language-javascript">// 함수는 한 가지 일만 하도록
+function getUserName(user) {
+  return user.name;
+}
+
+// 매개변수는 3개 이하로
+function createUser(name, age, city) {}
+
+// 화살표 함수 활용
+const double = x =&gt; x * 2;
+</code></pre>
+<h3 id="5-배열-메서드-활용">5. 배열 메서드 활용</h3>
+<pre><code class="language-javascript">// for 대신 forEach, map, filter 사용
+// ❌
+let doubledA = [];
+for (let i = 0; i &lt; arr.length; i++) {
+  doubledA.push(arr[i] * 2);
+}
+
+// ✅
+let doubledB = arr.map(x =&gt; x * 2);
+</code></pre>
+<h3 id="6-에러-처리">6. 에러 처리</h3>
+<pre><code class="language-javascript">// try-catch 사용
+try {
+  const data = JSON.parse(jsonString);
+} catch (error) {
+  console.error(&#39;파싱 에러:&#39;, error);
+}
+
+// async/await에서도 try-catch
+async function fetchData() {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(&#39;요청 실패:&#39;, error);
+  }
+}
+</code></pre>
+<h3 id="7-주석">7. 주석</h3>
+<pre><code class="language-javascript">// 복잡한 로직에만 주석 추가
+// ✅ 좋은 주석
+// 사용자 권한이 없으면 기본 페이지로 리다이렉트
+if (!user.hasPermission) {
+  redirect(&#39;/&#39;);
+}
+
+// ❌ 불필요한 주석
+// count를 1 증가시킴
+count++;
+</code></pre>
+<h3 id="8-코드-구조">8. 코드 구조</h3>
+<pre><code class="language-javascript">// 관련된 코드는 함께 묶기
+// 상수 선언
+const MAX_RETRY = 3;
+const TIMEOUT = 5000;
+
+// 함수 선언
+function fetchData() {}
+function processData() {}
+
+// 이벤트 리스너
+button.addEventListener(&#39;click&#39;, handleClick);
+</code></pre>
+<h3 id="9-성능-최적화">9. 성능 최적화</h3>
+<pre><code class="language-javascript">// DOM 조작 최소화
+// ❌
+for (let i = 0; i &lt; 100; i++) {
+  document.body.innerHTML += `&lt;div&gt;${i}&lt;/div&gt;`;
+}
+
+// ✅
+let html = &#39;&#39;;
+for (let i = 0; i &lt; 100; i++) {
+  html += `&lt;div&gt;${i}&lt;/div&gt;`;
+}
+document.body.innerHTML = html;
+// 🔴 숫자처럼 «내가 만든» 값일 때만. 사용자가 쓴 글자가 섞이면 createElement + textContent 로
+
+// 이벤트 위임 사용
+// ✅
+list.addEventListener(&#39;click&#39;, (e) =&gt; {
+  if (e.target.tagName === &#39;LI&#39;) {
+    // 처리
+  }
+});
+</code></pre>
+<h3 id="10-디버깅">10. 디버깅</h3>
+<pre><code class="language-javascript">// console.log 활용
+console.log(&#39;값:&#39;, value);
+console.table(array);
+console.error(&#39;에러:&#39;, error);
+console.warn(&#39;경고:&#39;, warning);
+
+// debugger 사용
+function complexFunction() {
+  debugger; // 브라우저 개발자 도구에서 중단점
+  // 복잡한 로직
+}
+</code></pre>
+<hr>
+<h2 id="섹션별-요약-표">섹션별 요약 표</h2>
+<h3 id="1-javascript-기본">1. JavaScript 기본</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>설명</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>인라인 JavaScript</td>
+<td>HTML 태그 속성에 직접 작성</td>
+<td><code>&lt;button onclick=&quot;alert(&#39;클릭!&#39;)&quot;&gt;</code></td>
+</tr>
+<tr>
+<td>내부 스크립트</td>
+<td><code>&lt;script&gt;</code> 태그 안에 작성</td>
+<td><code>&lt;script&gt;console.log(&#39;Hello&#39;);&lt;/script&gt;</code></td>
+</tr>
+<tr>
+<td>외부 스크립트 (권장)</td>
+<td>별도 .js 파일로 분리</td>
+<td><code>&lt;script src=&quot;script.js&quot; defer&gt;&lt;/script&gt;</code></td>
+</tr>
+<tr>
+<td>한 줄 주석</td>
+<td><code>//</code> 사용</td>
+<td><code>// 주석</code></td>
+</tr>
+<tr>
+<td>여러 줄 주석</td>
+<td><code>/* */</code> 사용</td>
+<td><code>/* 주석 */</code></td>
+</tr>
+<tr>
+<td>콘솔 출력</td>
+<td>개발자 도구 콘솔에 출력</td>
+<td><code>console.log(&#39;메시지&#39;)</code></td>
+</tr>
+<tr>
+<td>경고창</td>
+<td>알림 팝업 표시</td>
+<td><code>alert(&#39;경고&#39;)</code></td>
+</tr>
+<tr>
+<td>확인창</td>
+<td>확인/취소 선택 팝업</td>
+<td><code>confirm(&#39;확인?&#39;)</code></td>
+</tr>
+<tr>
+<td>입력창</td>
+<td>사용자 입력 팝업</td>
+<td><code>prompt(&#39;입력하세요&#39;)</code></td>
+</tr>
+<tr>
+<td>HTML 출력</td>
+<td>문서에 직접 출력 — 🔴 쓰지 않는다</td>
+<td><code>document.write(&#39;내용&#39;)</code></td>
+</tr>
+</tbody></table>
+<h3 id="2-변수와-상수">2. 변수와 상수</h3>
+<table>
+<thead>
+<tr>
+<th>키워드</th>
+<th>재할당</th>
+<th>스코프</th>
+<th>호이스팅</th>
+<th>권장 여부</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>var</code></td>
+<td>가능</td>
+<td>함수 스코프</td>
+<td>O (undefined)</td>
+<td>사용 지양</td>
+</tr>
+<tr>
+<td><code>let</code></td>
+<td>가능</td>
+<td>블록 스코프</td>
+<td>O (TDZ)</td>
+<td>재할당 필요 시 사용</td>
+</tr>
+<tr>
+<td><code>const</code></td>
+<td>불가</td>
+<td>블록 스코프</td>
+<td>O (TDZ)</td>
+<td>기본으로 사용 (권장)</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>명명 규칙</th>
+<th>표기법</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>변수/함수</td>
+<td>카멜 케이스</td>
+<td><code>userName</code>, <code>userAge</code></td>
+</tr>
+<tr>
+<td>스네이크 케이스</td>
+<td>언더스코어 구분</td>
+<td><code>user_name</code></td>
+</tr>
+<tr>
+<td>상수</td>
+<td>대문자 + 언더스코어</td>
+<td><code>MAX_SIZE</code>, <code>API_KEY</code></td>
+</tr>
+</tbody></table>
+<h3 id="3-데이터-타입">3. 데이터 타입</h3>
+<table>
+<thead>
+<tr>
+<th>분류</th>
+<th>타입</th>
+<th>설명</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>원시 타입</td>
+<td>Number</td>
+<td>정수, 실수, Infinity, NaN</td>
+<td><code>30</code>, <code>19.99</code>, <code>NaN</code></td>
+</tr>
+<tr>
+<td>원시 타입</td>
+<td>String</td>
+<td>문자열</td>
+<td><code>&#39;홍길동&#39;</code>, <code>&quot;안녕&quot;</code>, <code>`템플릿`</code></td>
+</tr>
+<tr>
+<td>원시 타입</td>
+<td>Boolean</td>
+<td>참/거짓</td>
+<td><code>true</code>, <code>false</code></td>
+</tr>
+<tr>
+<td>원시 타입</td>
+<td>Undefined</td>
+<td>값이 할당되지 않음</td>
+<td><code>undefined</code></td>
+</tr>
+<tr>
+<td>원시 타입</td>
+<td>Null</td>
+<td>의도적으로 비어있음</td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td>원시 타입</td>
+<td>Symbol</td>
+<td>고유 식별자 (ES6)</td>
+<td><code>Symbol(&#39;desc&#39;)</code></td>
+</tr>
+<tr>
+<td>참조 타입</td>
+<td>Object</td>
+<td>키-값 쌍</td>
+<td><code>{ name: &#39;홍길동&#39; }</code></td>
+</tr>
+<tr>
+<td>참조 타입</td>
+<td>Array</td>
+<td>순서가 있는 목록</td>
+<td><code>[1, 2, 3]</code></td>
+</tr>
+<tr>
+<td>참조 타입</td>
+<td>Function</td>
+<td>실행 가능한 코드 블록</td>
+<td><code>function() {}</code></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>타입 변환</th>
+<th>방법</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>문자열 → 숫자</td>
+<td><code>Number()</code>, <code>parseInt()</code>, <code>parseFloat()</code>, <code>+</code></td>
+<td><code>Number(&#39;123&#39;)</code> → <code>123</code></td>
+</tr>
+<tr>
+<td>숫자 → 문자열</td>
+<td><code>String()</code>, <code>.toString()</code>, <code>+ &#39;&#39;</code></td>
+<td><code>String(123)</code> → <code>&#39;123&#39;</code></td>
+</tr>
+<tr>
+<td>Boolean 변환</td>
+<td><code>Boolean()</code>, <code>!!</code></td>
+<td><code>Boolean(1)</code> → <code>true</code></td>
+</tr>
+</tbody></table>
+<h3 id="4-연산자">4. 연산자</h3>
+<table>
+<thead>
+<tr>
+<th>분류</th>
+<th>연산자</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>산술</td>
+<td><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>**</code></td>
+<td>덧셈, 뺄셈, 곱셈, 나눗셈, 나머지, 거듭제곱</td>
+</tr>
+<tr>
+<td>증감</td>
+<td><code>++</code>, <code>--</code></td>
+<td>전위/후위 증가, 전위/후위 감소</td>
+</tr>
+<tr>
+<td>할당</td>
+<td><code>=</code>, <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>%=</code></td>
+<td>값 할당 및 복합 할당</td>
+</tr>
+<tr>
+<td>비교 (동등)</td>
+<td><code>==</code>, <code>!=</code></td>
+<td>타입 변환 후 비교</td>
+</tr>
+<tr>
+<td>비교 (일치)</td>
+<td><code>===</code>, <code>!==</code></td>
+<td>타입 변환 없이 비교 (권장)</td>
+</tr>
+<tr>
+<td>비교 (크기)</td>
+<td><code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code></td>
+<td>크기 비교</td>
+</tr>
+<tr>
+<td>논리</td>
+<td><code>&amp;&amp;</code>, <code>||</code>, <code>!</code></td>
+<td>AND, OR, NOT</td>
+</tr>
+<tr>
+<td>삼항</td>
+<td><code>조건 ? 참 : 거짓</code></td>
+<td>간단한 조건 분기</td>
+</tr>
+<tr>
+<td>null 병합</td>
+<td><code>??</code></td>
+<td>null/undefined일 때 기본값 (ES2020)</td>
+</tr>
+<tr>
+<td>옵셔널 체이닝</td>
+<td><code>?.</code></td>
+<td>안전한 프로퍼티 접근 (ES2020)</td>
+</tr>
+</tbody></table>
+<h3 id="5-조건문">5. 조건문</h3>
+<table>
+<thead>
+<tr>
+<th>구문</th>
+<th>용도</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>if</code></td>
+<td>단일 조건 분기</td>
+<td>조건이 true일 때 실행</td>
+</tr>
+<tr>
+<td><code>if-else</code></td>
+<td>이중 조건 분기</td>
+<td>true/false 두 경우 처리</td>
+</tr>
+<tr>
+<td><code>if-else if-else</code></td>
+<td>다중 조건 분기</td>
+<td>여러 조건을 순차 검사</td>
+</tr>
+<tr>
+<td><code>switch</code></td>
+<td>값에 따른 분기</td>
+<td>특정 값과 일치 여부로 분기, <code>break</code> 필수</td>
+</tr>
+</tbody></table>
+<h3 id="6-반복문">6. 반복문</h3>
+<table>
+<thead>
+<tr>
+<th>구문</th>
+<th>용도</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>for</code></td>
+<td>횟수 기반 반복</td>
+<td>초기값, 조건, 증감식 지정</td>
+</tr>
+<tr>
+<td><code>while</code></td>
+<td>조건 기반 반복</td>
+<td>조건이 true인 동안 반복</td>
+</tr>
+<tr>
+<td><code>do-while</code></td>
+<td>최소 1회 실행 반복</td>
+<td>먼저 실행 후 조건 검사</td>
+</tr>
+<tr>
+<td><code>for...of</code></td>
+<td>배열 순회</td>
+<td>배열 요소를 직접 순회</td>
+</tr>
+<tr>
+<td><code>for...in</code></td>
+<td>객체 순회</td>
+<td>객체의 키를 순회</td>
+</tr>
+<tr>
+<td><code>break</code></td>
+<td>반복문 종료</td>
+<td>즉시 반복문 탈출</td>
+</tr>
+<tr>
+<td><code>continue</code></td>
+<td>현재 반복 건너뛰기</td>
+<td>다음 반복으로 이동</td>
+</tr>
+</tbody></table>
+<h3 id="7-함수">7. 함수</h3>
+<table>
+<thead>
+<tr>
+<th>종류</th>
+<th>문법</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>함수 선언문</td>
+<td><code>function greet() {}</code></td>
+<td>호이스팅 가능</td>
+</tr>
+<tr>
+<td>함수 표현식</td>
+<td><code>const greet = function() {}</code></td>
+<td>변수에 할당</td>
+</tr>
+<tr>
+<td>화살표 함수</td>
+<td><code>const greet = () =&gt; {}</code></td>
+<td>간결한 문법, <code>this</code> 바인딩 없음 (ES6)</td>
+</tr>
+<tr>
+<td>기본 매개변수</td>
+<td><code>function f(x = 10) {}</code></td>
+<td>인수 미전달 시 기본값 사용</td>
+</tr>
+<tr>
+<td>나머지 매개변수</td>
+<td><code>function f(...args) {}</code></td>
+<td>가변 인수를 배열로 수집</td>
+</tr>
+<tr>
+<td>IIFE</td>
+<td><code>(function() {})()</code></td>
+<td>즉시 실행, 스코프 격리</td>
+</tr>
+<tr>
+<td>콜백 함수</td>
+<td><code>func(data, callback)</code></td>
+<td>다른 함수에 인수로 전달</td>
+</tr>
+</tbody></table>
+<h3 id="8-배열">8. 배열</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>메서드/문법</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>생성</td>
+<td><code>[]</code>, <code>new Array()</code>, <code>Array.of()</code>, <code>Array().fill()</code></td>
+<td>배열 생성 방법들</td>
+</tr>
+<tr>
+<td>요소 접근</td>
+<td><code>arr[0]</code>, <code>arr.at(-1)</code></td>
+<td>인덱스로 접근, 음수 인덱스 지원</td>
+</tr>
+<tr>
+<td>길이</td>
+<td><code>arr.length</code></td>
+<td>배열 요소 개수</td>
+</tr>
+<tr>
+<td>끝 추가/제거</td>
+<td><code>push()</code> / <code>pop()</code></td>
+<td>배열 끝에서 추가/제거</td>
+</tr>
+<tr>
+<td>앞 추가/제거</td>
+<td><code>unshift()</code> / <code>shift()</code></td>
+<td>배열 앞에서 추가/제거</td>
+</tr>
+<tr>
+<td>중간 조작</td>
+<td><code>splice(index, count, ...items)</code></td>
+<td>삭제, 삽입, 교체 모두 가능</td>
+</tr>
+<tr>
+<td>검색</td>
+<td><code>indexOf()</code>, <code>includes()</code>, <code>find()</code></td>
+<td>요소 위치/존재/조건 검색</td>
+</tr>
+<tr>
+<td>변환</td>
+<td><code>join()</code>, <code>slice()</code>, <code>concat()</code>, <code>reverse()</code>, <code>sort()</code></td>
+<td>문자열 변환, 부분 추출, 합치기, 뒤집기, 정렬</td>
+</tr>
+</tbody></table>
+<h3 id="9-객체">9. 객체</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>설명</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>객체 리터럴</td>
+<td>중괄호로 생성</td>
+<td><code>{ name: &#39;홍길동&#39;, age: 30 }</code></td>
+</tr>
+<tr>
+<td>점 표기법</td>
+<td><code>.</code>으로 프로퍼티 접근</td>
+<td><code>person.name</code></td>
+</tr>
+<tr>
+<td>대괄호 표기법</td>
+<td><code>[]</code>로 프로퍼티 접근</td>
+<td><code>person[&#39;name&#39;]</code></td>
+</tr>
+<tr>
+<td>프로퍼티 추가</td>
+<td>새 키에 값 할당</td>
+<td><code>person.age = 30</code></td>
+</tr>
+<tr>
+<td>프로퍼티 삭제</td>
+<td><code>delete</code> 연산자 사용</td>
+<td><code>delete person.age</code></td>
+</tr>
+<tr>
+<td>메서드</td>
+<td>객체 안의 함수</td>
+<td><code>greet() { return this.name; }</code></td>
+</tr>
+<tr>
+<td>객체 순회</td>
+<td><code>for...in</code>, <code>Object.keys/values/entries</code></td>
+<td>키, 값, 키-값 쌍 순회</td>
+</tr>
+<tr>
+<td>구조 분해 할당</td>
+<td>변수에 바로 추출</td>
+<td><code>let { name, age } = person</code></td>
+</tr>
+<tr>
+<td>전개 연산자</td>
+<td>객체/배열 복사 및 병합</td>
+<td><code>{ ...obj1, ...obj2 }</code></td>
+</tr>
+</tbody></table>
+<h3 id="10-dom-조작">10. DOM 조작</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>메서드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ID 선택</td>
+<td><code>getElementById(&#39;id&#39;)</code></td>
+<td>ID로 단일 요소 선택</td>
+</tr>
+<tr>
+<td>CSS 선택자 (단일)</td>
+<td><code>querySelector(&#39;선택자&#39;)</code></td>
+<td>첫 번째 일치 요소 선택</td>
+</tr>
+<tr>
+<td>CSS 선택자 (복수)</td>
+<td><code>querySelectorAll(&#39;선택자&#39;)</code></td>
+<td>모든 일치 요소 선택</td>
+</tr>
+<tr>
+<td>텍스트 조작</td>
+<td><code>textContent</code></td>
+<td>요소의 텍스트 내용 변경</td>
+</tr>
+<tr>
+<td>HTML 조작</td>
+<td><code>innerHTML</code></td>
+<td>요소의 HTML 내용 변경</td>
+</tr>
+<tr>
+<td>스타일 조작</td>
+<td><code>element.style.속성</code></td>
+<td>인라인 스타일 변경</td>
+</tr>
+<tr>
+<td>클래스 조작</td>
+<td><code>classList.add/remove/toggle/contains</code></td>
+<td>클래스 추가/제거/토글/확인</td>
+</tr>
+<tr>
+<td>속성 조작</td>
+<td><code>getAttribute/setAttribute/removeAttribute</code></td>
+<td>HTML 속성 읽기/설정/제거</td>
+</tr>
+<tr>
+<td>요소 생성</td>
+<td><code>createElement(&#39;태그&#39;)</code></td>
+<td>새 DOM 요소 생성</td>
+</tr>
+<tr>
+<td>요소 추가</td>
+<td><code>appendChild()</code>, <code>prepend()</code>, <code>insertBefore()</code></td>
+<td>자식 요소 추가</td>
+</tr>
+<tr>
+<td>요소 제거</td>
+<td><code>remove()</code>, <code>removeChild()</code></td>
+<td>요소 삭제</td>
+</tr>
+<tr>
+<td>요소 탐색</td>
+<td><code>parentElement</code>, <code>children</code>, <code>nextElementSibling</code></td>
+<td>부모/자식/형제 탐색</td>
+</tr>
+</tbody></table>
+<h3 id="11-이벤트">11. 이벤트</h3>
+<table>
+<thead>
+<tr>
+<th>분류</th>
+<th>이벤트</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>마우스</td>
+<td><code>click</code>, <code>dblclick</code></td>
+<td>클릭, 더블 클릭</td>
+</tr>
+<tr>
+<td>마우스</td>
+<td><code>mouseenter</code>, <code>mouseleave</code></td>
+<td>마우스 진입, 이탈</td>
+</tr>
+<tr>
+<td>마우스</td>
+<td><code>mousemove</code>, <code>mousedown</code>, <code>mouseup</code></td>
+<td>이동, 버튼 누름, 버튼 뗌</td>
+</tr>
+<tr>
+<td>키보드</td>
+<td><code>keydown</code>, <code>keyup</code></td>
+<td>키 누름, 키 뗌</td>
+</tr>
+<tr>
+<td>폼</td>
+<td><code>submit</code>, <code>change</code>, <code>input</code></td>
+<td>폼 제출, 값 변경, 실시간 입력</td>
+</tr>
+<tr>
+<td>폼</td>
+<td><code>focus</code>, <code>blur</code></td>
+<td>포커스 받음, 포커스 잃음</td>
+</tr>
+<tr>
+<td>윈도우</td>
+<td><code>load</code>, <code>resize</code>, <code>scroll</code></td>
+<td>로드 완료, 크기 변경, 스크롤</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>이벤트 관련 개념</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>addEventListener</code></td>
+<td>이벤트 리스너 등록 (권장)</td>
+</tr>
+<tr>
+<td><code>removeEventListener</code></td>
+<td>이벤트 리스너 제거</td>
+</tr>
+<tr>
+<td><code>event.target</code></td>
+<td>이벤트가 발생한 요소</td>
+</tr>
+<tr>
+<td><code>event.currentTarget</code></td>
+<td>이벤트 리스너가 등록된 요소</td>
+</tr>
+<tr>
+<td><code>event.preventDefault()</code></td>
+<td>기본 동작 방지</td>
+</tr>
+<tr>
+<td><code>event.stopPropagation()</code></td>
+<td>이벤트 전파 중단</td>
+</tr>
+<tr>
+<td>이벤트 위임</td>
+<td>부모에 리스너 등록하여 자식 이벤트 처리</td>
+</tr>
+<tr>
+<td><code>DOMContentLoaded</code></td>
+<td>DOM 로드 완료 시 실행</td>
+</tr>
+</tbody></table>
+<h3 id="12-문자열-메서드">12. 문자열 메서드</h3>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>설명</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>length</code></td>
+<td>문자열 길이</td>
+<td><code>&#39;Hello&#39;.length</code> → <code>5</code></td>
+</tr>
+<tr>
+<td><code>indexOf()</code></td>
+<td>문자열 위치 검색</td>
+<td><code>&#39;Hello&#39;.indexOf(&#39;l&#39;)</code> → <code>2</code></td>
+</tr>
+<tr>
+<td><code>includes()</code></td>
+<td>포함 여부 확인</td>
+<td><code>&#39;Hello&#39;.includes(&#39;He&#39;)</code> → <code>true</code></td>
+</tr>
+<tr>
+<td><code>startsWith()</code></td>
+<td>시작 문자열 확인</td>
+<td><code>&#39;Hello&#39;.startsWith(&#39;He&#39;)</code> → <code>true</code></td>
+</tr>
+<tr>
+<td><code>endsWith()</code></td>
+<td>끝 문자열 확인</td>
+<td><code>&#39;Hello&#39;.endsWith(&#39;lo&#39;)</code> → <code>true</code></td>
+</tr>
+<tr>
+<td><code>charAt()</code> / <code>[]</code></td>
+<td>특정 위치 문자 반환</td>
+<td><code>&#39;Hello&#39;[0]</code> → <code>&#39;H&#39;</code></td>
+</tr>
+<tr>
+<td><code>slice()</code></td>
+<td>부분 문자열 추출</td>
+<td><code>&#39;Hello&#39;.slice(0, 2)</code> → <code>&#39;He&#39;</code></td>
+</tr>
+<tr>
+<td><code>toLowerCase()</code></td>
+<td>소문자 변환</td>
+<td><code>&#39;Hello&#39;.toLowerCase()</code> → <code>&#39;hello&#39;</code></td>
+</tr>
+<tr>
+<td><code>toUpperCase()</code></td>
+<td>대문자 변환</td>
+<td><code>&#39;Hello&#39;.toUpperCase()</code> → <code>&#39;HELLO&#39;</code></td>
+</tr>
+<tr>
+<td><code>trim()</code></td>
+<td>앞뒤 공백 제거</td>
+<td><code>&#39; Hi &#39;.trim()</code> → <code>&#39;Hi&#39;</code></td>
+</tr>
+<tr>
+<td><code>repeat()</code></td>
+<td>문자열 반복</td>
+<td><code>&#39;ab&#39;.repeat(3)</code> → <code>&#39;ababab&#39;</code></td>
+</tr>
+<tr>
+<td><code>split()</code></td>
+<td>문자열 분할 (→ 배열)</td>
+<td><code>&#39;a,b&#39;.split(&#39;,&#39;)</code> → <code>[&#39;a&#39;, &#39;b&#39;]</code></td>
+</tr>
+<tr>
+<td><code>replace()</code></td>
+<td>문자열 치환 (첫 번째)</td>
+<td><code>&#39;abc&#39;.replace(&#39;a&#39;, &#39;x&#39;)</code> → <code>&#39;xbc&#39;</code></td>
+</tr>
+<tr>
+<td><code>replaceAll()</code></td>
+<td>문자열 치환 (전체)</td>
+<td><code>&#39;aba&#39;.replaceAll(&#39;a&#39;, &#39;x&#39;)</code> → <code>&#39;xbx&#39;</code></td>
+</tr>
+<tr>
+<td>템플릿 리터럴</td>
+<td>문자열 보간 및 여러 줄</td>
+<td><code>`이름: ${name}`</code></td>
+</tr>
+</tbody></table>
+<h3 id="13-배열-메서드">13. 배열 메서드</h3>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>반환값</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>forEach()</code></td>
+<td><code>undefined</code></td>
+<td>배열 순회 (반환값 없음)</td>
+</tr>
+<tr>
+<td><code>map()</code></td>
+<td>새 배열</td>
+<td>각 요소를 변환한 새 배열 반환</td>
+</tr>
+<tr>
+<td><code>filter()</code></td>
+<td>새 배열</td>
+<td>조건을 만족하는 요소만 추출</td>
+</tr>
+<tr>
+<td><code>find()</code></td>
+<td>요소 / <code>undefined</code></td>
+<td>조건을 만족하는 첫 번째 요소 반환</td>
+</tr>
+<tr>
+<td><code>findIndex()</code></td>
+<td>인덱스 / <code>-1</code></td>
+<td>조건을 만족하는 첫 번째 인덱스 반환</td>
+</tr>
+<tr>
+<td><code>reduce()</code></td>
+<td>누적값</td>
+<td>배열을 하나의 값으로 누적</td>
+</tr>
+<tr>
+<td><code>some()</code></td>
+<td><code>boolean</code></td>
+<td>하나라도 조건 만족 시 <code>true</code></td>
+</tr>
+<tr>
+<td><code>every()</code></td>
+<td><code>boolean</code></td>
+<td>모든 요소가 조건 만족 시 <code>true</code></td>
+</tr>
+<tr>
+<td><code>sort()</code></td>
+<td>정렬된 배열</td>
+<td>배열 정렬 (원본 변경)</td>
+</tr>
+<tr>
+<td>메서드 체이닝</td>
+<td>최종 결과</td>
+<td><code>filter → map → reduce</code> 등 연결 사용</td>
+</tr>
+</tbody></table>
+<h3 id="14-비동기-처리">14. 비동기 처리</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>설명</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>동기 (Synchronous)</td>
+<td>코드가 순서대로 실행</td>
+<td>한 작업이 끝나야 다음 실행</td>
+</tr>
+<tr>
+<td>비동기 (Asynchronous)</td>
+<td>기다려야 하는 일을 맡겨 두고 다음 줄로 넘어감</td>
+<td>결과는 나중에 콜백·Promise 로 받는다 (코드는 여전히 한 번에 한 줄씩 실행)</td>
+</tr>
+<tr>
+<td><code>setTimeout</code></td>
+<td>일정 시간 후 한 번 실행</td>
+<td><code>clearTimeout()</code>으로 취소</td>
+</tr>
+<tr>
+<td><code>setInterval</code></td>
+<td>일정 시간마다 반복 실행</td>
+<td><code>clearInterval()</code>로 취소</td>
+</tr>
+<tr>
+<td>콜백 (Callback)</td>
+<td>함수를 인수로 전달하여 나중에 실행</td>
+<td>중첩 시 콜백 지옥 발생</td>
+</tr>
+<tr>
+<td>Promise</td>
+<td>비동기 작업의 미래 결과를 나타내는 객체</td>
+<td><code>.then()</code>, <code>.catch()</code>, <code>.finally()</code></td>
+</tr>
+<tr>
+<td>Promise 체이닝</td>
+<td><code>.then()</code>을 연결하여 순차 처리</td>
+<td>콜백 지옥 해결</td>
+</tr>
+<tr>
+<td><code>async/await</code></td>
+<td>Promise를 동기 코드처럼 작성</td>
+<td><code>try-catch</code>로 에러 처리</td>
+</tr>
+<tr>
+<td><code>Promise.all()</code></td>
+<td>여러 Promise를 한꺼번에 기다림</td>
+<td>모두 완료될 때까지 대기 · 하나라도 실패하면 실패</td>
+</tr>
+<tr>
+<td>Fetch API</td>
+<td>HTTP 요청</td>
+<td>GET, POST 등 지원</td>
+</tr>
+</tbody></table>
+<h3 id="15-es6-문법">15. ES6+ 문법</h3>
+<table>
+<thead>
+<tr>
+<th>문법</th>
+<th>설명</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>let</code> / <code>const</code></td>
+<td>블록 스코프 변수/상수 선언</td>
+<td><code>let x = 1;</code> / <code>const y = 2;</code></td>
+</tr>
+<tr>
+<td>템플릿 리터럴</td>
+<td>백틱을 사용한 문자열 보간</td>
+<td><code>`이름: ${name}`</code></td>
+</tr>
+<tr>
+<td>화살표 함수</td>
+<td>간결한 함수 표현</td>
+<td><code>const add = (a, b) =&gt; a + b</code></td>
+</tr>
+<tr>
+<td>구조 분해 할당</td>
+<td>배열/객체에서 값 추출</td>
+<td><code>let { name } = obj</code></td>
+</tr>
+<tr>
+<td>전개 연산자</td>
+<td>배열/객체 펼치기</td>
+<td><code>[...arr]</code>, <code>{ ...obj }</code></td>
+</tr>
+<tr>
+<td>기본 매개변수</td>
+<td>매개변수 기본값 설정</td>
+<td><code>function f(x = 10) {}</code></td>
+</tr>
+<tr>
+<td>나머지 매개변수</td>
+<td>가변 인수를 배열로 수집</td>
+<td><code>function f(...args) {}</code></td>
+</tr>
+<tr>
+<td>단축 프로퍼티</td>
+<td>변수명과 키가 같으면 생략</td>
+<td><code>{ name }</code> = <code>{ name: name }</code></td>
+</tr>
+<tr>
+<td>계산된 프로퍼티 이름</td>
+<td>동적으로 키 설정</td>
+<td><code>{ [key]: value }</code></td>
+</tr>
+<tr>
+<td>옵셔널 체이닝</td>
+<td>안전한 프로퍼티 접근</td>
+<td><code>user?.address?.city</code></td>
+</tr>
+<tr>
+<td>null 병합 연산자</td>
+<td>null/undefined 시 기본값</td>
+<td><code>value ?? &#39;기본값&#39;</code></td>
+</tr>
+<tr>
+<td>Class</td>
+<td>클래스 기반 객체 생성</td>
+<td><code>class Person { constructor() {} }</code></td>
+</tr>
+<tr>
+<td>Module</td>
+<td>모듈 내보내기/가져오기</td>
+<td><code>export</code> / <code>import</code></td>
+</tr>
+</tbody></table>
+<h3 id="16-모범-사례">16. 모범 사례</h3>
+<table>
+<thead>
+<tr>
+<th>분류</th>
+<th>권장 사항</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>명명 규칙</td>
+<td>변수/함수: 카멜 케이스, 상수: 대문자 스네이크 케이스, 클래스: 파스칼 케이스</td>
+</tr>
+<tr>
+<td>변수 선언</td>
+<td><code>const</code>를 기본으로, 재할당 필요 시만 <code>let</code> 사용, <code>var</code> 사용 지양</td>
+</tr>
+<tr>
+<td>비교 연산</td>
+<td>일치 연산자(<code>===</code>, <code>!==</code>) 사용 권장</td>
+</tr>
+<tr>
+<td>함수</td>
+<td>한 가지 일만 하도록, 매개변수 3개 이하, 화살표 함수 활용</td>
+</tr>
+<tr>
+<td>배열 메서드</td>
+<td><code>for</code> 대신 <code>forEach</code>, <code>map</code>, <code>filter</code> 등 활용</td>
+</tr>
+<tr>
+<td>에러 처리</td>
+<td><code>try-catch</code> 사용, <code>async/await</code>에서도 <code>try-catch</code> 적용</td>
+</tr>
+<tr>
+<td>주석</td>
+<td>복잡한 로직에만 주석 추가, 불필요한 주석 지양</td>
+</tr>
+<tr>
+<td>코드 구조</td>
+<td>관련된 코드는 함께 묶기 (상수 → 함수 → 이벤트 리스너)</td>
+</tr>
+<tr>
+<td>성능 최적화</td>
+<td>DOM 조작 최소화, 이벤트 위임 사용</td>
+</tr>
+<tr>
+<td>디버깅</td>
+<td><code>console.log/table/error/warn</code> 활용, <code>debugger</code> 사용</td>
+</tr>
+</tbody></table>
+</article>
+</main></body>
+</html>
