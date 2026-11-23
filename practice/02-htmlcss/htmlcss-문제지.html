@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTML/CSS 연습 문제지 — 미디어 프론티어</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--paper:#121B23;--panel:#1A2630;--line:#2B3B47;--text:#DDE7ED;--muted:#9DB0BE;--accent:#5CC6DE;--warn:#F2C879;
+--sans:"Pretendard Variable",Pretendard,-apple-system,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+--mono:"D2Coding","Cascadia Code",Consolas,"JetBrains Mono",Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--sans);line-height:1.7;font-size:17px}
+main{max-width:920px;margin:0 auto;padding:40px 16px 80px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:34px;margin:6px 0 4px;font-weight:700}h2{font-size:22px;margin:40px 0 14px;font-weight:700;border-bottom:2px solid var(--accent);padding-bottom:6px}
+h3{font-size:19px;margin:28px 0 10px}
+.kicker{color:var(--muted);margin:0;font-size:15px}.sub{color:var(--muted);margin:0}
+.cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;height:100%}
+.card:hover{border-color:var(--accent);text-decoration:none}
+.card .t{display:block;color:var(--text);font-weight:600}.card .s{display:block;color:var(--muted);font-size:14px}
+.days{list-style:none;padding:0;margin:0}
+.days li{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:10px}
+.days .when{display:block;color:var(--muted);font-size:14px}
+.days .deck{font-weight:600;font-size:18px}.days .s{display:block;color:var(--muted);font-size:15px}
+.days .labs{display:block;margin-top:6px;font-size:14px;word-break:break-all}
+.note{color:var(--muted);font-size:15px}.next strong{color:var(--warn)}
+footer{margin-top:48px;color:var(--muted);font-size:14px}
+kbd{font-family:var(--mono);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+code{font-family:var(--mono);background:#0C1318;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:.92em}
+pre{background:#0C1318;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto}pre code{border:0;padding:0;background:none}
+blockquote{margin:16px 0;padding:8px 16px;border-left:4px solid var(--accent);background:var(--panel);border-radius:0 8px 8px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}th{background:var(--panel)}
+img{max-width:100%;height:auto;border-radius:6px}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+.back{margin:0 0 8px}
+</style>
+</head>
+<body><main>
+<p class="back"><a href="../../index.html">← 처음으로</a> · <a href="htmlcss.html">풀러 가기</a></p>
+<article class="guide"><h1 id="htmlcss-연습-문제지">HTML/CSS 연습 문제지</h1>
+<blockquote>
+<p>총 <strong>40문제</strong> — 초급 15 · 중급 17 · 고급 8 (코드 작성 35 · 고르기 5)
+풀이 페이지(<strong>HTML/CSS 연습장</strong>)에서 바로 그려 보고 채점할 수 있습니다. 정답과 해설은 <code>htmlcss-답안지.md</code> 에 있습니다.</p>
+</blockquote>
+<h2 id="채점은-이렇게-합니다">채점은 이렇게 합니다</h2>
+<ul>
+<li>여러분의 코드를 화면에 <strong>그려 놓고 결과를 잽니다</strong> — 계산된 스타일(F12 의 Computed 에 보이는 값) · 상자의 위치와 크기 · 태그 구조. <strong>쓰는 방법은 자유</strong>입니다. 같은 화면이 나오면 정답입니다.</li>
+<li>「창 375px」처럼 폭이 적힌 검사는 <strong>그 창 폭으로 다시 그려서</strong> 잽니다. 미디어 쿼리가 그 폭으로 동작합니다.</li>
+<li><strong>고정</strong>이라고 적힌 코드는 고칠 수 없고, 여러분의 코드가 그 위에 얹힙니다(고정 CSS 가 먼저, 내 CSS 가 나중).</li>
+<li><code>:hover</code> · <code>:focus-visible</code> 은 그 상태를 <strong>켠 것처럼</strong> 바꿔 그려서 잽니다.</li>
+<li>틀리면 <strong>어느 검사에서 걸렸는지</strong>와 잰 값이 나옵니다 — 그것이 힌트입니다.</li>
+</ul>
+<h2 id="목차">목차</h2>
+<ul>
+<li><strong>초급</strong> (1~15번, 15문제): HTML 뼈대 · 시맨틱 · 목록 · 링크 · 경로 · 표 · 폼 · 선택자 · 글자 · 박스 모델</li>
+<li><strong>중급</strong> (16~32번, 17문제): 상속 · 우선순위 · display · Flexbox · Grid · 미디어 쿼리 · CSS 변수 · 상태(:hover · :focus-visible)</li>
+<li><strong>고급</strong> (33~40번, 8문제): 종합 — 시맨틱 고치기 · 카드 · 우선순위 디버깅 · 표 · 반응형 · 어두운 화면 · 목록 화면</li>
+</ul>
+<h2 id="초급-15문제">초급 (15문제)</h2>
+<h3 id="문제-1-문서-뼈대">문제 1. 문서 뼈대</h3>
+<p>다음 조건을 지키는 HTML 문서를 <strong>처음부터</strong> 작성하시오.</p>
+<ul>
+<li>문서 형식 선언(<code>&lt;!DOCTYPE html&gt;</code>)</li>
+<li>언어는 한국어(<code>lang=&quot;ko&quot;</code>)</li>
+<li>문자 인코딩은 UTF-8</li>
+<li>탭에 보이는 제목은 <code>오늘의 뉴스</code></li>
+<li>본문에 <code>h1</code> 하나: <code>오늘의 뉴스</code></li>
+</ul>
+<p><strong>작성할 것 — HTML 문서 전체</strong></p>
+<pre><code class="language-html">
+</code></pre>
+<h3 id="문제-2-시맨틱-배치">문제 2. 시맨틱 배치</h3>
+<p>뉴스 사이트의 큰 틀을 <strong>이름이 있는 상자</strong>(시맨틱 태그)로 만드시오.</p>
+<ul>
+<li><code>body</code> 바로 아래에 차례대로 <strong>머리 · 메뉴 · 본문 · 바닥</strong> 네 상자</li>
+<li>상자마다 안에 글자를 아무거나 넣을 것 (예: <code>오늘의 뉴스</code>, <code>정치 경제 사회</code>, <code>기사 목록</code>, <code>© 오늘의 뉴스</code>)</li>
+</ul>
+<p><strong>작성할 것 — HTML (body 안에 들어갈 내용)</strong></p>
+<pre><code class="language-html">
+</code></pre>
+<h3 id="문제-3-strong-과-b">문제 3. strong 과 b</h3>
+<p>기사 본문에서 「<strong>오늘 오후 3시부터 운행 중단</strong>」은 독자가 꼭 알아야 할 <strong>중요한 내용</strong>이라 굵게 보이게 하려 합니다. 가장 알맞은 것은?</p>
+<p>① <code>&lt;b&gt;</code> — 굵게 보이기만 하면 된다<br>② <code>&lt;strong&gt;</code> — 「중요하다」는 뜻을 담는다<br>③ <code>&lt;h3&gt;</code> — 크고 굵게 보인다<br>④ <code>&lt;br&gt;</code> 으로 앞뒤를 끊어 눈에 띄게 한다</p>
+<h3 id="문제-4-순위-목록">문제 4. 순위 목록</h3>
+<p>「많이 본 기사」 1~3위를 <strong>순서가 있는 목록</strong>으로 만드시오. 항목은 차례대로 <code>금리 동결</code>, <code>신작 개봉</code>, <code>폭설 주의보</code> 입니다.</p>
+<p><strong>작성할 것 — HTML (body 안에 들어갈 내용)</strong></p>
+<pre><code class="language-html">
+</code></pre>
+<h3 id="문제-5-이름값-목록">문제 5. 이름–값 목록</h3>
+<p>기사 정보 세 가지를 <strong>이름–값 목록</strong>(<code>dl</code>)으로 만드시오.</p>
+<ul>
+<li>기자 — 김하나</li>
+<li>날짜 — 2024-11-05</li>
+<li>조회수 — 1,204</li>
+</ul>
+<p><strong>작성할 것 — HTML (body 안에 들어갈 내용)</strong></p>
+<pre><code class="language-html">
+</code></pre>
+<h3 id="문제-6-링크-안의-사진">문제 6. 링크 안의 사진</h3>
+<p>기사 사진 <code>photo.jpg</code> 를 누르면 <code>detail.html</code> 로 가도록 만드시오. 사진의 대체 글은 <code>폭설로 멈춘 버스</code> 입니다.
+(미리보기에는 사진 파일이 없어 대체 글이 보입니다 — 그게 정상입니다)</p>
+<p><strong>작성할 것 — HTML (body 안에 들어갈 내용)</strong></p>
+<pre><code class="language-html">
+</code></pre>
+<h3 id="문제-7-경로">문제 7. 경로</h3>
+<p>폴더가 이렇게 되어 있습니다.</p>
+<pre><code class="language-text">site/
+├─ index.html
+├─ images/
+│   └─ logo.png
+└─ news/
+    └─ list.html
+</code></pre>
+<p><code>news/list.html</code> 에서 로고를 띄우려면 <code>&lt;img src=&quot;?&quot;&gt;</code> 의 <code>?</code> 에 무엇을 써야 합니까?</p>
+<p>① <code>images/logo.png</code><br>② <code>../images/logo.png</code><br>③ <code>/images/logo.png</code><br>④ <code>news/images/logo.png</code></p>
+<h3 id="문제-8-표">문제 8. 표</h3>
+<p>분야별 기사 수를 <strong>표</strong>로 만드시오. 머리 줄(<code>thead</code>)과 몸통(<code>tbody</code>)을 나눕니다.</p>
+<table>
+<thead>
+<tr>
+<th>분야</th>
+<th>기사 수</th>
+<th>비율</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>사회</td>
+<td>121</td>
+<td>24.2%</td>
+</tr>
+<tr>
+<td>정치</td>
+<td>115</td>
+<td>23.0%</td>
+</tr>
+<tr>
+<td>경제</td>
+<td>88</td>
+<td>17.6%</td>
+</tr>
+<tr>
+<td>스포츠</td>
+<td>80</td>
+<td>16.0%</td>
+</tr>
+</tbody></table>
+<p><strong>작성할 것 — HTML (body 안에 들어갈 내용)</strong></p>
+<pre><code class="language-html">
+</code></pre>
+<h3 id="문제-9-폼">문제 9. 폼</h3>
+<p>뉴스레터 신청 폼을 만드시오.</p>
+<ul>
+<li>「이메일」 글자표(<code>label</code>)와 <strong>이메일 형식</strong> 입력 칸 — 글자표를 누르면 칸에 커서가 가도록 <strong>이어 붙일 것</strong></li>
+<li>「신청」 버튼
+(미리보기에서 버튼을 눌러도 아무 데도 보내지 않습니다)</li>
+</ul>
+<p><strong>작성할 것 — HTML (body 안에 들어갈 내용)</strong></p>
+<pre><code class="language-html">
+</code></pre>
+<h3 id="문제-10-클래스-선택자">문제 10. 클래스 선택자</h3>
+<p>기사 제목(<code>title</code> 클래스)만 글자 색을 <code>#0d6b75</code> 로 바꾸시오. 「많이 본 기사」 제목은 그대로 둡니다.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;h2 class=&quot;title&quot;&gt;금리 동결&lt;/h2&gt;
+&lt;p&gt;한국은행이 기준금리를 동결했다.&lt;/p&gt;
+&lt;h2&gt;많이 본 기사&lt;/h2&gt;
+&lt;h2 class=&quot;title&quot;&gt;신작 개봉&lt;/h2&gt;
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-11-자손-선택자">문제 11. 자손 선택자</h3>
+<p><strong>메뉴(nav) 안의 링크만</strong> 밑줄을 없애시오. 바닥(footer)의 링크는 밑줄이 그대로 있어야 합니다.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;nav&gt;
+  &lt;a href=&quot;#&quot;&gt;정치&lt;/a&gt;
+  &lt;a href=&quot;#&quot;&gt;경제&lt;/a&gt;
+&lt;/nav&gt;
+&lt;p&gt;본문&lt;/p&gt;
+&lt;footer&gt;
+  &lt;a href=&quot;#&quot;&gt;회사 소개&lt;/a&gt;
+&lt;/footer&gt;
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-12-글자-꾸미기">문제 12. 글자 꾸미기</h3>
+<p>기사 본문 문단(<code>.news</code> 안의 <code>p</code>)을 이렇게 꾸미시오.</p>
+<ul>
+<li>글자 크기 <code>18px</code></li>
+<li>줄 간격 <code>1.6</code> (글자 크기의 1.6배)</li>
+<li>글자 색 <code>#333333</code></li>
+</ul>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;article class=&quot;news&quot;&gt;
+  &lt;h2&gt;폭설 주의보&lt;/h2&gt;
+  &lt;p&gt;오늘 밤부터 중부 지방에 많은 눈이 내리겠습니다. 출근길 교통에 주의하십시오.&lt;/p&gt;
+&lt;/article&gt;
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-13-박스-네-겹">문제 13. 박스 네 겹</h3>
+<p>카드(<code>.card</code>)를 이렇게 꾸미시오.</p>
+<ul>
+<li>안쪽 여백 <code>16px</code> (네 방향 모두)</li>
+<li>테두리 <code>1px</code> 실선, 색 <code>#d8dfe7</code></li>
+<li>카드 사이 간격 <code>12px</code> (아래쪽 바깥 여백)</li>
+</ul>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;card&quot;&gt;첫 번째 카드&lt;/div&gt;
+&lt;div class=&quot;card&quot;&gt;두 번째 카드&lt;/div&gt;
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-14-box-sizing">문제 14. box-sizing</h3>
+<p>상자(<code>.box</code>)에 폭 <code>300px</code>, 안쪽 여백 <code>20px</code>, 테두리 <code>2px</code> 실선을 주시오. 단, <strong>화면에 보이는 상자의 폭이 정확히 300px</strong> 이어야 합니다.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;box&quot;&gt;상자&lt;/div&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-15-우선순위-①">문제 15. 우선순위 ①</h3>
+<p>다음 HTML 과 CSS 에서 「첫 문단」의 글자 색은 무엇입니까?</p>
+<pre><code class="language-html">&lt;p id=&quot;lead&quot; class=&quot;intro&quot;&gt;첫 문단&lt;/p&gt;
+</code></pre>
+<pre><code class="language-css">#lead  { color: red; }
+.intro { color: blue; }
+p      { color: green; }
+</code></pre>
+<p>① 빨강 (red)<br>② 파랑 (blue)<br>③ 초록 (green)<br>④ 검정 (아무것도 안 먹는다)</p>
+<h2 id="중급-17문제">중급 (17문제)</h2>
+<h3 id="문제-16-상속">문제 16. 상속</h3>
+<p>기사(<code>.news</code>)의 글자 색을 <code>#333333</code> 으로 주면 문단은 그 색을 <strong>물려받지만</strong>, 링크는 파란색 그대로입니다.
+링크도 <strong>둘러싼 글자의 색을 물려받게</strong> 하시오. 링크에 색 값(<code>#333333</code>)을 다시 쓰지 말 것 — 기사 색을 나중에 바꾸면 링크도 따라 바뀌어야 합니다.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;article class=&quot;news&quot;&gt;
+  &lt;p&gt;폭설로 버스 운행이 멈췄다. &lt;a href=&quot;#&quot;&gt;관련 기사&lt;/a&gt;도 함께 보십시오.&lt;/p&gt;
+&lt;/article&gt;
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-17-우선순위-②">문제 17. 우선순위 ②</h3>
+<p>다음에서 「제목」의 글자 색은 무엇입니까?</p>
+<pre><code class="language-html">&lt;h2 class=&quot;title main&quot;&gt;제목&lt;/h2&gt;
+</code></pre>
+<pre><code class="language-css">.main  { color: red; }
+.title { color: blue; }
+</code></pre>
+<p>① 빨강 — HTML 의 class 에서 <code>main</code> 이 뒤에 있으니까<br>② 파랑 — CSS 에서 <code>.title</code> 이 뒤에 있으니까<br>③ 보라 — 두 색이 섞인다<br>④ 검정 — 둘이 부딪혀 아무것도 안 먹는다</p>
+<h3 id="문제-18-inline-block">문제 18. inline-block</h3>
+<p>탭(<code>span.tab</code>)에 폭 <code>120px</code> 을 줬는데(고정 CSS) <strong>안 먹습니다</strong>. 탭이 <strong>한 줄에 나란히 놓인 채로</strong> 폭이 120px 이 되게 하시오.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;nav&gt;
+  &lt;span class=&quot;tab&quot;&gt;정치&lt;/span&gt;
+  &lt;span class=&quot;tab&quot;&gt;경제&lt;/span&gt;
+  &lt;span class=&quot;tab&quot;&gt;사회&lt;/span&gt;
+&lt;/nav&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">.tab { width: 120px; background: #e2f1f3; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-19-메뉴를-가로로">문제 19. 메뉴를 가로로</h3>
+<p><strong>Flexbox</strong> 로 메뉴 다섯 칸을 <strong>한 줄</strong>로 놓고, 목록의 점을 없애시오.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;nav&gt;
+  &lt;ul class=&quot;menu&quot;&gt;
+    &lt;li&gt;정치&lt;/li&gt;
+    &lt;li&gt;경제&lt;/li&gt;
+    &lt;li&gt;사회&lt;/li&gt;
+    &lt;li&gt;IT&lt;/li&gt;
+    &lt;li&gt;문화&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-20-양-끝-정렬">문제 20. 양 끝 정렬</h3>
+<p>머리(<code>.top</code>, 폭 800px · 이미 flex)에서 <strong>로고는 왼쪽 끝, 메뉴는 오른쪽 끝</strong>에 놓으시오.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;header class=&quot;top&quot;&gt;
+  &lt;div class=&quot;logo&quot;&gt;오늘의 뉴스&lt;/div&gt;
+  &lt;nav class=&quot;menu&quot;&gt;정치 · 경제 · 사회&lt;/nav&gt;
+&lt;/header&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+.top { display: flex; width: 800px; background: #e2f1f3; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-21-세로-가운데">문제 21. 세로 가운데</h3>
+<p>사진(<code>.thumb</code>, 높이 80px)과 제목(<code>.txt</code>)을 <strong>세로 가운데</strong>로 맞추시오. 제목 상자가 사진 높이만큼 늘어나지 않아야 합니다.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;thumb&quot;&gt;&lt;/div&gt;
+  &lt;p class=&quot;txt&quot;&gt;금리 동결 — 한국은행&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+.row { display: flex; gap: 12px; }
+.thumb { width: 80px; height: 80px; background: #b8c7d3; }
+.txt { margin: 0; background: #e2f1f3; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-22-gap">문제 22. gap</h3>
+<p>카드 <strong>사이</strong>의 간격을 <code>16px</code> 로 만드시오. 첫 카드는 왼쪽 끝에 붙어 있어야 합니다(바깥 양 끝에는 간격 없음).</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;cards&quot;&gt;
+  &lt;div class=&quot;card&quot;&gt;1&lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;2&lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;3&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+.cards { display: flex; }
+.card { width: 200px; height: 100px; background: #e2f1f3; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-23-flex-wrap">문제 23. flex-wrap</h3>
+<p>폭 540px 상자에 250px 카드 네 장이 한 줄로 <strong>우겨 들어가 줄어들었습니다</strong>. 카드 폭(250px)은 그대로 두고, 넘치는 카드는 <strong>다음 줄로</strong> 넘기시오 (한 줄에 2장씩 2줄).</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;cards&quot;&gt;
+  &lt;div class=&quot;card&quot;&gt;1&lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;2&lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;3&lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;4&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+.cards { display: flex; gap: 20px; width: 540px; }
+.card { width: 250px; height: 80px; background: #e2f1f3; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-24-flex-direction">문제 24. flex-direction</h3>
+<p>카드(<code>.card</code>, 이미 flex) 안의 세 요소(사진 · 제목 · 정보)가 <strong>위에서 아래로</strong> 쌓이고, 사이 간격이 <code>8px</code> 이 되게 하시오. 사진은 카드 폭에 꽉 차야 합니다.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;article class=&quot;card&quot;&gt;
+  &lt;div class=&quot;pic&quot;&gt;&lt;/div&gt;
+  &lt;h3&gt;폭설 주의보&lt;/h3&gt;
+  &lt;p class=&quot;meta&quot;&gt;김하나 · 11/05&lt;/p&gt;
+&lt;/article&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+.card { display: flex; width: 300px; }
+.pic { height: 120px; background: #b8c7d3; }
+h3, p { margin: 0; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-25-grid-3열">문제 25. Grid 3열</h3>
+<p><strong>Grid</strong> 로 폭 900px 상자를 <strong>같은 폭 3열</strong>로 나누시오. 열 사이 간격은 <code>30px</code> 입니다.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;grid&quot;&gt;
+  &lt;div class=&quot;item&quot;&gt;1&lt;/div&gt;
+  &lt;div class=&quot;item&quot;&gt;2&lt;/div&gt;
+  &lt;div class=&quot;item&quot;&gt;3&lt;/div&gt;
+  &lt;div class=&quot;item&quot;&gt;4&lt;/div&gt;
+  &lt;div class=&quot;item&quot;&gt;5&lt;/div&gt;
+  &lt;div class=&quot;item&quot;&gt;6&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+.grid { width: 900px; }
+.item { height: 60px; background: #e2f1f3; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-26-fr-비율">문제 26. fr 비율</h3>
+<p>Grid 로 본문(<code>main</code>)과 곁(<code>aside</code>)의 폭을 <strong>2 : 1</strong> 로 나누시오. 사이 간격은 <code>24px</code> 입니다.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;page&quot;&gt;
+  &lt;main&gt;본문&lt;/main&gt;
+  &lt;aside&gt;많이 본 기사&lt;/aside&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+.page { width: 960px; }
+main { height: 200px; background: #e2f1f3; }
+aside { height: 200px; background: #edf1f5; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-27-grid-template-areas">문제 27. grid-template-areas</h3>
+<p><code>grid-template-areas</code> 로 그림처럼 배치하시오. 열은 본문 <code>3fr</code> · 곁 <code>1fr</code>, 간격은 없습니다.</p>
+<pre><code class="language-text">┌──────────── header ────────────┐
+├──────────── nav ───────────────┤
+├────────── main ─────────┬ aside ┤
+├──────────── footer ────────────┤
+</code></pre>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;page&quot;&gt;
+  &lt;header&gt;머리&lt;/header&gt;
+  &lt;nav&gt;메뉴&lt;/nav&gt;
+  &lt;main&gt;본문&lt;/main&gt;
+  &lt;aside&gt;곁&lt;/aside&gt;
+  &lt;footer&gt;바닥&lt;/footer&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+.page { width: 1000px; }
+.page &gt; * { min-height: 60px; background: #e2f1f3; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-28-미디어-쿼리">문제 28. 미디어 쿼리</h3>
+<p>창이 <strong>넓으면 3열</strong>, 창 폭이 <strong>600px 이하면 1열</strong>이 되게 하시오. (601px 이면 3열입니다.)
+미리보기 위의 폭 단추로 375 · 600 · 1000 을 눌러 확인할 수 있습니다.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;grid&quot;&gt;
+  &lt;div class=&quot;item&quot;&gt;1&lt;/div&gt;
+  &lt;div class=&quot;item&quot;&gt;2&lt;/div&gt;
+  &lt;div class=&quot;item&quot;&gt;3&lt;/div&gt;
+  &lt;div class=&quot;item&quot;&gt;4&lt;/div&gt;
+  &lt;div class=&quot;item&quot;&gt;5&lt;/div&gt;
+  &lt;div class=&quot;item&quot;&gt;6&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+.grid { display: grid; gap: 20px; }
+.item { height: 60px; background: #e2f1f3; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-29-사진이-넘칠-때">문제 29. 사진이 넘칠 때</h3>
+<p>폭 375px 휴대폰 화면에서 사진(480px) 때문에 <strong>가로 스크롤</strong>이 생깁니다. 사진이 카드 폭에 맞게 <strong>줄어들고 비율은 그대로</strong> 유지되게 하시오. 넓은 화면에서는 원래 크기(480px)보다 <strong>커지면 안 됩니다</strong>.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;article class=&quot;card&quot;&gt;
+  &lt;img src=&quot;data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;480&#39; height=&#39;270&#39;%3E%3Crect width=&#39;480&#39; height=&#39;270&#39; fill=&#39;%23b8c7d3&#39;/%3E%3Ccircle cx=&#39;150&#39; cy=&#39;110&#39; r=&#39;40&#39; fill=&#39;%23e5ecf2&#39;/%3E%3Cpath d=&#39;M0 270 L170 150 L280 230 L360 170 L480 270 Z&#39; fill=&#39;%2359677a&#39;/%3E%3C/svg%3E&quot; width=&quot;480&quot; height=&quot;270&quot; alt=&quot;폭설로 멈춘 버스&quot;&gt;
+  &lt;h3&gt;폭설 주의보&lt;/h3&gt;
+&lt;/article&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+.card { padding: 16px; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-30-css-변수">문제 30. CSS 변수</h3>
+<p>브랜드 색 <code>#0d6b75</code> 를 <code>:root</code> 에 변수 <code>--brand</code> 로 정의하고, <strong>제목 글자 색</strong>(<code>.brand</code>)과 <strong>배지 바탕색</strong>(<code>.badge</code>)이 그 변수를 쓰게 하시오. 배지 글자는 흰색입니다.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;h1 class=&quot;brand&quot;&gt;오늘의 뉴스&lt;/h1&gt;
+&lt;span class=&quot;badge&quot;&gt;속보&lt;/span&gt;
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-31-상태--hover--focus-visible">문제 31. 상태 — :hover · :focus-visible</h3>
+<p>버튼(<code>.btn</code>)을 이렇게 꾸미시오.</p>
+<ul>
+<li>평소: 바탕 <code>#0d6b75</code>, 글자 흰색</li>
+<li>마우스를 올리면: 바탕 <code>#0a5058</code></li>
+<li><strong>키보드(Tab)로 왔을 때</strong>: 굵기 <code>3px</code> 의 바깥선(<code>outline</code>)이 보이게 (색은 자유 — 바탕과 대비가 나는 색)
+(채점은 마우스를 올린 상태 · Tab 으로 온 상태를 켠 것처럼 바꿔 그려서 잽니다)</li>
+</ul>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;button class=&quot;btn&quot; type=&quot;button&quot;&gt;구독하기&lt;/button&gt;
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-32-박스-계산">문제 32. 박스 계산</h3>
+<p><code>box-sizing</code> 이 기본값(<code>content-box</code>)일 때, 이 상자의 <strong>눈에 보이는 폭</strong>(테두리 바깥쪽 끝에서 끝까지)은?</p>
+<pre><code class="language-css">.box {
+  width: 200px;
+  padding: 10px;
+  border: 2px solid #16202a;
+  margin: 8px;
+}
+</code></pre>
+<p>① 200px<br>② 220px<br>③ 224px<br>④ 240px</p>
+<h2 id="고급-8문제">고급 (8문제)</h2>
+<h3 id="문제-33-div-를-이름-있는-상자로">문제 33. div 를 이름 있는 상자로</h3>
+<p>시작 코드는 <code>div</code> 로만 짠 화면입니다. <strong>화면은 그대로 두고</strong> 태그만 이름 있는 상자로 바꾸시오.</p>
+<ul>
+<li>머리 → <code>header</code>, 메뉴 → <code>nav</code>, 본문 → <code>main</code>, 기사 → <code>article</code>, 기사 제목 → <code>h2</code>, 바닥 → <code>footer</code></li>
+<li><code>class</code> 는 그대로 두십시오 — 고정 CSS 가 class 로 꾸미고 있어서, class 를 지우면 화면이 바뀝니다</li>
+</ul>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; font-family: sans-serif; }
+.header { display: flex; justify-content: space-between; padding: 12px 16px; background: #0d6b75; color: #ffffff; }
+.logo { font-weight: 700; }
+.menu a { color: #ffffff; margin-left: 12px; }
+.main { padding: 16px; }
+.news { border: 1px solid #d8dfe7; border-radius: 8px; padding: 12px; }
+.title { font-size: 20px; font-weight: 700; margin: 0 0 8px; }
+.footer { padding: 12px 16px; color: #59677a; }
+</code></pre>
+<p><strong>작성할 것 — HTML (body 안에 들어갈 내용)</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;header&quot;&gt;
+  &lt;div class=&quot;logo&quot;&gt;오늘의 뉴스&lt;/div&gt;
+  &lt;div class=&quot;menu&quot;&gt;&lt;a href=&quot;#&quot;&gt;정치&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;경제&lt;/a&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;main&quot;&gt;
+  &lt;div class=&quot;news&quot;&gt;
+    &lt;div class=&quot;title&quot;&gt;금리 동결&lt;/div&gt;
+    &lt;div class=&quot;body&quot;&gt;한국은행이 기준금리를 동결했다.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footer&quot;&gt;© 오늘의 뉴스&lt;/div&gt;
+</code></pre>
+<h3 id="문제-34-뉴스-카드-한-장">문제 34. 뉴스 카드 한 장</h3>
+<p>뉴스 카드 한 장을 HTML 과 CSS 로 만드시오. 사진 주소는 시작 코드에 들어 있습니다.</p>
+<ul>
+<li><code>article.card</code> 안에 사진(<code>img</code>, 대체 글 있음) · 제목(<code>h3</code>) · 정보 목록(<code>dl</code> — 기자 · 날짜 두 쌍)</li>
+<li>카드: 폭 <code>320px</code>(테두리까지), 안쪽 여백 <code>16px</code>, 테두리 <code>1px</code> 실선 <code>#d8dfe7</code>, 둥근 모서리 <code>12px</code></li>
+<li>카드 안의 요소는 <strong>위에서 아래로</strong>, 사이 간격 <code>12px</code> (Flexbox) — 제목 · 정보 목록의 기본 바깥 여백은 <code>0</code></li>
+<li>사진은 카드 안쪽 폭에 꽉 차게 (<code>286px</code> — 320 − 안쪽 여백 16×2 − 테두리 1×2)</li>
+</ul>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; padding: 16px; font-family: sans-serif; }
+</code></pre>
+<p><strong>작성할 것 — HTML + CSS</strong></p>
+<pre><code class="language-html">&lt;article class=&quot;card&quot;&gt;
+  &lt;img src=&quot;data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;480&#39; height=&#39;270&#39;%3E%3Crect width=&#39;480&#39; height=&#39;270&#39; fill=&#39;%23b8c7d3&#39;/%3E%3Ccircle cx=&#39;150&#39; cy=&#39;110&#39; r=&#39;40&#39; fill=&#39;%23e5ecf2&#39;/%3E%3Cpath d=&#39;M0 270 L170 150 L280 230 L360 170 L480 270 Z&#39; fill=&#39;%2359677a&#39;/%3E%3C/svg%3E&quot; alt=&quot;&quot;&gt;
+&lt;/article&gt;
+</code></pre>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-35-안-먹는-스타일-고치기">문제 35. 안 먹는 스타일 고치기</h3>
+<p>제목은 <code>#0d6b75</code> 이어야 하는데 <strong>회색으로 나옵니다</strong>. F12 로 이유를 찾아 CSS 를 고치시오.</p>
+<ul>
+<li>HTML 은 고칠 수 없습니다</li>
+<li><code>!important</code> 는 쓰지 마십시오</li>
+</ul>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;article id=&quot;top-news&quot; class=&quot;news&quot;&gt;
+  &lt;h2 class=&quot;title&quot;&gt;금리 동결&lt;/h2&gt;
+  &lt;p&gt;한국은행이 기준금리를 동결했다.&lt;/p&gt;
+&lt;/article&gt;
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">#top-news h2 {
+  color: #59677a;
+}
+.title {
+  color: #0d6b75;
+  font-size: 22px;
+}
+</code></pre>
+<h3 id="문제-36-표-꾸미기">문제 36. 표 꾸미기</h3>
+<p>표를 이렇게 꾸미시오.</p>
+<ul>
+<li>칸 사이의 <strong>겹선을 한 줄로</strong></li>
+<li>모든 칸(<code>th</code> · <code>td</code>)에 테두리 <code>1px</code> 실선 <code>#d8dfe7</code>, 안쪽 여백 위아래 <code>8px</code> · 좌우 <code>12px</code></li>
+<li>머리 칸(<code>th</code>) 바탕 <code>#edf1f5</code></li>
+<li>숫자 칸(<code>.num</code>)만 <strong>오른쪽 정렬</strong> (분야 이름은 왼쪽 그대로)</li>
+</ul>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;분야&lt;/th&gt;&lt;th&gt;기사 수&lt;/th&gt;&lt;th&gt;평균 조회수&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;사회&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;121&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;1,845&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;정치&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;115&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;2,102&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;경제&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;88&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;1,560&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;스포츠&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;80&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;2,733&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-37-미디어-쿼리-없는-반응형">문제 37. 미디어 쿼리 없는 반응형</h3>
+<p><strong>미디어 쿼리 없이</strong>, 카드 폭이 <strong>최소 280px</strong> 을 지키면서 들어갈 만큼 열이 생기게 하시오. 남는 폭은 카드들이 고르게 나눠 가집니다.
+(창 1000px → 3열 · 640px → 2열 · 375px → 1열이 됩니다)</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;cards&quot;&gt;
+  &lt;div class=&quot;card&quot;&gt;1&lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;2&lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;3&lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;4&lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;5&lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;6&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+.cards { display: grid; gap: 16px; }
+.card { height: 80px; background: #e2f1f3; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-38-페이지-반응형">문제 38. 페이지 반응형</h3>
+<p>페이지 틀을 이렇게 바꾸시오 (간격 16px 은 고정 CSS 에 있음).</p>
+<ul>
+<li><strong>넓을 때</strong>(769px 이상): 머리는 위에 가로 전체 · 본문 | 곁 을 <strong>2fr 1fr</strong> 로 나란히 · 바닥은 아래 가로 전체</li>
+<li><strong>768px 이하</strong>: 한 열로 머리 → 본문 → 곁 → 바닥 차례</li>
+</ul>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;page&quot;&gt;
+  &lt;header&gt;머리&lt;/header&gt;
+  &lt;main&gt;본문&lt;/main&gt;
+  &lt;aside&gt;곁&lt;/aside&gt;
+  &lt;footer&gt;바닥&lt;/footer&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+.page { display: grid; gap: 16px; }
+.page &gt; * { min-height: 60px; background: #e2f1f3; }
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">
+</code></pre>
+<h3 id="문제-39-어두운-화면--값만-바꾸기">문제 39. 어두운 화면 — 값만 바꾸기</h3>
+<p>시작 코드는 밝은 화면입니다. 이 코드는 그대로 두고 <strong>규칙을 더해서</strong>, <code>&lt;html data-theme=&quot;dark&quot;&gt;</code> 일 때 <strong>변수 값만 바꿔</strong> 어두운 화면이 되게 하시오.</p>
+<ul>
+<li>바탕 <code>#0e1418</code> · 카드 <code>#161f26</code> · 글자 <code>#e5ecf2</code></li>
+<li>흐린 글자(<code>--muted</code>)는 <strong>카드 바탕 위에서 대비 4.5 : 1 이상</strong>이 되는 색을 직접 고르시오</li>
+<li>어두운 화면 규칙에는 <strong>변수만</strong> 적습니다 (<code>background</code> · <code>color</code> 를 다시 쓰지 말 것)
+(채점할 때 검사가 <code>data-theme=&quot;dark&quot;</code> 를 붙여 봅니다)</li>
+</ul>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;article class=&quot;card&quot;&gt;
+  &lt;h3&gt;금리 동결&lt;/h3&gt;
+  &lt;p class=&quot;meta&quot;&gt;김하나 · 11/05&lt;/p&gt;
+&lt;/article&gt;
+</code></pre>
+<p><strong>작성할 것 — CSS</strong></p>
+<pre><code class="language-css">:root {
+  --bg: #ffffff;
+  --surface: #f3f5f7;
+  --text: #16202a;
+  --muted: #59677a;
+}
+body {
+  margin: 0;
+  padding: 16px;
+  background: var(--bg);
+  color: var(--text);
+}
+.card {
+  background: var(--surface);
+  padding: 16px;
+  border-radius: 8px;
+}
+.meta {
+  color: var(--muted);
+}
+</code></pre>
+<h3 id="문제-40-뉴스-목록-화면">문제 40. 뉴스 목록 화면</h3>
+<p>6일차에 만든 뉴스 목록 화면의 축소판을 HTML 과 CSS 로 만드시오.</p>
+<ul>
+<li><strong>머리</strong>(<code>header</code>): 로고(<code>h1</code>, <code>오늘의 뉴스</code>)와 메뉴(<code>nav</code> 안의 링크 3개 — 정치 · 경제 · 사회). 로고는 머리 안쪽의 왼쪽 끝, 메뉴는 오른쪽 끝, 메뉴 링크는 한 줄</li>
+<li><strong>본문</strong>(<code>main</code>): <code>ul.list</code> 안에 카드 <code>li.card</code> 4개 — 각 카드에 제목 <code>h3</code> 와 정보 <code>p.meta</code><ul>
+<li>금리 동결 / 김하나 · 11/05 · 신작 개봉 / 이도윤 · 11/05 · 폭설 주의보 / 박서준 · 11/04 · 야구 개막 / 최지우 · 11/04</li>
+</ul>
+</li>
+<li>목록의 점은 없앱니다</li>
+<li>카드 목록: <strong>넓을 때 2열</strong>(사이 <code>16px</code>), <strong>600px 이하에서 1열</strong></li>
+<li>375px 화면에서 가로 스크롤이 없을 것</li>
+</ul>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; font-family: sans-serif; }
+</code></pre>
+<p><strong>작성할 것 — HTML + CSS</strong></p>
+<pre><code class="language-html">
+</code></pre>
+<pre><code class="language-css">
+</code></pre>
+</article>
+</main></body>
+</html>
