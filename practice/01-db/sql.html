@@ -121,8 +121,11 @@ details.schema summary { cursor: pointer; font-weight: 600; font-size: 14px; }
 
 .editor-label { font-size: 13px; font-weight: 600; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: baseline; }
 .editor-label span { font-weight: 400; color: var(--muted); font-size: 12px; }
-textarea#sql { width: 100%; min-height: 168px; resize: vertical; font-family: var(--font-mono); font-size: 14px; line-height: 1.55; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); tab-size: 2; }
-textarea#sql:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+/* 편집기 — Monaco(../mf-editor.js). 못 띄우면 같은 자리에 평범한 입력칸. 오른쪽 아래를 끌어 높이를 바꾼다 */
+.code-host { height: 220px; min-height: 140px; resize: vertical; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.code-host:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.mf-ta { display: block; width: 100%; height: 100%; resize: none; border: 0; outline: none; font-family: var(--font-mono); font-size: 14px; line-height: 1.55; padding: 12px 14px; background: var(--surface); color: var(--ink); tab-size: 2; }
+.mf-loading { padding: 12px 14px; color: var(--muted); font-size: 13px; }
 .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
 .actions .sp { flex: 1; }
 
@@ -224,6 +227,7 @@ pre.code { margin: 0 0 12px; padding: 12px 14px; background: var(--code-bg); bor
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/sql-asm.js" onerror="window.__sqlLoadFail=true"></script>
+<script src="../mf-editor.js"></script>
 <script>
 /* ── MySQL 흉내층 ─────────────────────────────────────────────
    채점 엔진은 브라우저 안의 SQLite(sql.js)다. 훈련생은 MySQL 문법으로 쓰므로, 실행 전에
@@ -641,8 +645,8 @@ function applyRemote(merged, rerender) {
   store = merged; saveLocal();
   if (typeof core !== "undefined" && core && rerender) {
     renderSummary(); renderNav();
-    const ta = document.getElementById("sql"), p = PROBLEMS[cur];
-    if (ta && document.activeElement !== ta) ta.value = store.drafts[p.no] || "";
+    const p = PROBLEMS[cur];
+    if (editor && !editor.hasFocus()) editor.set(undefined, store.drafts[p.no] || "");
     refreshState();
   }
 }
@@ -709,6 +713,9 @@ function tableHtml(cols, rows, max) {
 }
 
 let core = null, cur = 0, explOpen = false, schemaTab = 0, schemaOpen = false, tables = null;
+let editor = null, editorGen = 0;
+/* 편집기 검사용 입구(verify-practice.js) — 훈련생 화면에는 쓰이지 않는다 */
+window.MF_UI = { editor: () => editor, ready: () => !!core };
 const byLevel = (lv) => PROBLEMS.filter((p) => p.level === lv);
 
 /* ── 즐겨찾기 — 다시 볼 문제 · 어려운 문제 표시 ── */
@@ -784,19 +791,24 @@ function renderProblem() {
     '<section class="card"><div class="p-head"><span class="lv">' + MARK[p.level] + " " + p.level + " " + idxInLv + "/" + lvList.length + '</span><span class="p-no">전체 ' + p.no + "/" + PROBLEMS.length + "번</span>" + favButtonHtml(p.no) + state + "</div>" +
     '<h2 class="p-title">' + esc(p.topic) + '</h2><div class="txt">' + block(p.q) + "</div></section>" +
     '<section class="card"><details class="schema" id="schemaBox"' + (schemaOpen ? " open" : "") + "><summary>테이블 구조와 샘플 데이터 보기</summary><div id=\"schemaBody\"></div></details></section>" +
-    '<section class="card"><div class="editor-label">내 SQL (MySQL)<span>Ctrl + Enter: 실행 · Tab: 들여쓰기</span></div>' +
-    '<textarea id="sql" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="여기에 SQL을 작성하세요"></textarea>' +
+    '<section class="card"><div class="editor-label">내 SQL (MySQL)<span>Ctrl + Enter: 실행 · Tab: 들여쓰기 (편집기 밖으로는 Ctrl + M 뒤 Tab)</span></div>' +
+    '<div id="sql" class="code-host"></div>' +
     '<div class="actions"><button class="btn" id="run" type="button">실행</button><button class="btn primary" id="check" type="button">확인 (제출)</button>' +
     '<button class="btn" id="expl" type="button" aria-expanded="false">해설 보기</button><span class="sp"></span>' +
     '<button class="btn ghost" id="prev" type="button"' + (cur === 0 ? " disabled" : "") + '>← 이전</button><button class="btn ghost" id="next" type="button"' + (cur === PROBLEMS.length - 1 ? " disabled" : "") + ">다음 →</button></div></section>" +
     '<section class="card" id="resCard" hidden></section><section class="card expl" id="explCard" hidden></section>';
-  const ta = $("sql");
-  ta.value = store.drafts[p.no] || "";
+  /* 편집기 — Monaco(../mf-editor.js). 못 띄우면 평범한 입력칸 */
+  if (editor) { editor.dispose(); editor = null; }
+  const gen = ++editorGen;
   let t;
-  ta.addEventListener("input", () => { clearTimeout(t); t = setTimeout(() => { store.drafts[p.no] = ta.value; store.draftsAt[p.no] = Date.now(); save(); }, 400); });
-  ta.addEventListener("keydown", (e) => {
-    if (e.key === "Tab") { e.preventDefault(); const s = ta.selectionStart; ta.setRangeText("  ", s, ta.selectionEnd, "end"); }
-    else if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); run(); }
+  MFEditor.create($("sql"), {
+    key: "sql", language: "mysql", value: store.drafts[p.no] || "", ariaLabel: "내 SQL",
+    onChange: (v) => { clearTimeout(t); t = setTimeout(() => { store.drafts[p.no] = v; store.draftsAt[p.no] = Date.now(); save(); }, 400); },
+    onSubmit: run,
+  }).then((ed) => {
+    if (!ed) return;
+    if (gen !== editorGen) { ed.dispose(); return; }
+    editor = ed;
   });
   $("run").onclick = run; $("check").onclick = check; $("expl").onclick = toggleExpl;
   $("prev").onclick = () => { const j = neighbor(-1); if (j >= 0) go(j); };
@@ -816,15 +828,17 @@ function renderSchema() {
 }
 
 function showResult(html) { const c = $("resCard"); c.hidden = false; c.innerHTML = html; }
+/** 지금 쓴 SQL — 편집기가 아직 안 떴으면 저장해 둔 것 */
+const mySql = () => (editor ? editor.get() : store.drafts[PROBLEMS[cur].no] || "");
 function run() {
-  const p = PROBLEMS[cur], sql = $("sql").value;
+  const p = PROBLEMS[cur], sql = mySql();
   const r = core.runSql(p, sql);
   if (!r.ok) { showResult('<div class="banner bad">SQL 오류: ' + esc(r.error) + "</div>" + notesHtml(r.notes)); return; }
   const title = r.mode === "verify" ? "실행 후 확인 쿼리 결과 (이 문제는 실행 결과 상태로 채점합니다)" : "실행 결과";
   showResult('<div class="banner info">실행만 했습니다. 채점하려면 [확인 (제출)]을 누르세요.</div>' + notesHtml(r.notes) + '<div class="res-title">' + title + " · " + r.rows.length + "행</div>" + tableHtml(r.cols, r.rows));
 }
 function check() {
-  const p = PROBLEMS[cur], sql = $("sql").value;
+  const p = PROBLEMS[cur], sql = mySql();
   store.drafts[p.no] = sql; store.draftsAt[p.no] = Date.now();
   const g = core.grade(p, sql);
   let banner, tbl = "";
@@ -961,7 +975,7 @@ function restoreFrom(code) {
     const merged = mergeStores(store, incoming);
     merged.updated = Date.now();
     store = merged; saveLocal(); schedulePush();
-    if (core) { renderSummary(); renderNav(); const ta = $("sql"); if (ta) ta.value = store.drafts[PROBLEMS[cur].no] || ""; refreshState(); }
+    if (core) { renderSummary(); renderNav(); if (editor) editor.set(undefined, store.drafts[PROBLEMS[cur].no] || ""); refreshState(); }
     $("bkIn").value = ""; $("bkOut").value = bkCode();
     bkMsg("bkRestoreMsg", "복원했습니다. 푼 문제 " + PROBLEMS.filter((p) => store.solved[p.no]).length + "개 · 즐겨찾기 " + favCount() + "개.", "ok");
   } catch (e) { bkMsg("bkRestoreMsg", "백업 코드를 읽을 수 없습니다. 전체를 정확히 복사했는지, 올바른 파일인지 확인하세요.", "bad"); }

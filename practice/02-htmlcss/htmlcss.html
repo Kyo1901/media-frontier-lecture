@@ -121,8 +121,14 @@ code { font-family: var(--font-mono); font-size: 0.92em; background: var(--code-
 .tabs { display: flex; gap: 6px; margin-bottom: 8px; }
 .tab { border: 1px solid var(--line); background: var(--surface); border-radius: 8px 8px 0 0; padding: 4px 14px; font-family: var(--font-mono); font-size: 13px; }
 .tab[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-textarea#code { width: 100%; min-height: 220px; resize: vertical; font-family: var(--font-mono); font-size: 14px; line-height: 1.55; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); tab-size: 2; }
-textarea#code:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+/* 편집기 — Monaco(../mf-editor.js). 못 띄우면 같은 자리에 평범한 입력칸. 오른쪽 아래를 끌어 높이를 바꾼다 */
+.code-host { height: 280px; min-height: 160px; resize: vertical; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.code-host:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.mf-ta { display: block; width: 100%; height: 100%; resize: none; border: 0; outline: none; font-family: var(--font-mono); font-size: 14px; line-height: 1.55; padding: 12px 14px; background: var(--surface); color: var(--ink); tab-size: 2; }
+.mf-loading { padding: 12px 14px; color: var(--muted); font-size: 13px; }
+.ed-opts { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+.ed-opts label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
+.ed-opts input { accent-color: var(--accent); }
 .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
 .actions .sp { flex: 1; }
 
@@ -242,6 +248,7 @@ pre.code { margin: 0 0 12px; padding: 12px 14px; background: var(--code-bg); bor
   </main>
 </div>
 <iframe id="grader" title="채점용 화면" aria-hidden="true" tabindex="-1" sandbox="allow-same-origin"></iframe>
+<script src="../mf-editor.js"></script>
 
 <script>
 /* ── 채점 엔진 ─────────────────────────────────────────────────
@@ -544,6 +551,11 @@ function block(text) {
 }
 
 let ready = false, cur = 0, explOpen = false, tab = "html", pvWidth = 0, pvDark = false, busy = false, files = {};
+let editor = null, editorGen = 0;
+/* 끝 태그 자동 닫기 — 이 브라우저의 설정(연습장끼리 같이 쓴다) */
+const AC_KEY = "mf-editor-autoclose";
+const autoCloseOn = () => { try { return localStorage.getItem(AC_KEY) !== "0"; } catch (e) { return true; } };
+const setAutoClose = (b) => { try { localStorage.setItem(AC_KEY, b ? "1" : "0"); } catch (e) {} };
 const byLevel = (lv) => PROBLEMS.filter((p) => p.level === lv);
 /** 이 문제에서 훈련생이 쓰는 칸 */
 const fields = (p) => (p.m === "css" ? ["css"] : p.m === "both" ? ["html", "css"] : p.m === "choice" ? [] : ["html"]);
@@ -649,13 +661,17 @@ function renderProblem() {
   } else {
     const fs = fields(p);
     const tabs = fs.length > 1 ? '<div class="tabs" role="tablist">' + fs.map((k) => '<button type="button" class="tab" role="tab" data-k="' + k + '" aria-selected="' + (k === tab) + '">' + k.toUpperCase() + "</button>").join("") + "</div>" : "";
-    work = '<section class="card"><div class="sec-label">내 코드 — ' + MODE[p.m] + "<span>Tab: 들여쓰기 · 고치면 아래 미리보기가 바로 바뀝니다</span></div>" + tabs +
-      '<textarea id="code" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="내 코드" placeholder="여기에 작성하세요"></textarea>' +
+    work = '<section class="card"><div class="sec-label">내 코드 — ' + MODE[p.m] + "<span>Ctrl + Enter: 제출 · 고치면 아래 미리보기가 바로 바뀝니다</span></div>" + tabs +
+      '<div id="code" class="code-host"></div>' +
+      '<div class="ed-opts">' + (fs.indexOf("html") >= 0 ? '<label><input type="checkbox" id="autoClose"' + (autoCloseOn() ? " checked" : "") + "> 끝 태그 자동으로 닫기 (VS Code 처럼)</label>" : "") +
+      "<span>Tab 은 들여쓰기 — 편집기 밖으로 나가려면 Ctrl + M 을 누른 뒤 Tab</span></div>" +
       '<div class="actions"><button class="btn primary" id="check" type="button">확인 (제출)</button><button class="btn" id="expl" type="button" aria-expanded="false">해설 보기</button><button class="btn ghost" id="restart" type="button">처음 코드로</button>' + steps + "</div></section>" +
       '<section class="card"><div class="pv-bar"><span class="sec-label" style="margin:0">미리보기</span>' + [0, 375, 600, 1000].map((w) => '<button type="button" class="chip" data-w="' + w + '" aria-pressed="' + (w === pvWidth) + '">' + (w ? w + "px" : "맞춤") + "</button>").join("") +
       (usesTheme(p) ? '<button type="button" class="chip" id="pvDark" aria-pressed="false">data-theme="dark"</button>' : "") +
       '</div><div class="pv-wrap"><iframe id="preview" title="미리보기" sandbox="allow-same-origin"></iframe></div><div class="pv-note">아래 모서리를 끌어 높이를 바꿀 수 있습니다. 폭 단추는 창 폭을 흉내 냅니다(미디어 쿼리가 그 폭으로 동작).</div></section>';
   }
+  if (editor) { editor.dispose(); editor = null; }
+  const gen = ++editorGen;
   $("main").innerHTML = head + givenHtml(p) + work + '<section class="card" id="resCard" hidden></section><section class="card expl" id="explCard" hidden></section>';
   $("check").onclick = check; $("expl").onclick = toggleExpl;
   $("prev").onclick = () => { const j = neighbor(-1); if (j >= 0) go(j); };
@@ -670,18 +686,22 @@ function renderProblem() {
     });
     return;
   }
-  const ta = $("code");
-  ta.value = files[tab];
   let tm;
-  ta.addEventListener("input", () => { files[tab] = ta.value; clearTimeout(tm); tm = setTimeout(() => { keepDraft(p); preview(); }, 300); });
-  ta.addEventListener("keydown", (e) => {
-    if (e.key === "Tab" && !e.shiftKey) { e.preventDefault(); const s = ta.selectionStart; ta.setRangeText("  ", s, ta.selectionEnd, "end"); ta.dispatchEvent(new Event("input")); }
-    else if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); check(); }
+  MFEditor.create($("code"), {
+    key: tab, language: tab, value: files[tab], ariaLabel: "내 코드 — " + MODE[p.m], autoCloseTags: autoCloseOn(),
+    onChange: (v, k) => { files[k] = v; clearTimeout(tm); tm = setTimeout(() => { keepDraft(p); preview(); }, 300); },
+    onSubmit: check,
+  }).then((ed) => {
+    if (!ed) return;
+    if (gen !== editorGen) { ed.dispose(); return; }    // 불러오는 사이 다른 문제로 넘어갔다
+    editor = ed;
   });
+  if ($("autoClose")) $("autoClose").onchange = (e) => { setAutoClose(e.target.checked); if (editor) editor.setAutoClose(e.target.checked); };
   document.querySelectorAll(".tab").forEach((b) => b.onclick = () => {
-    tab = b.dataset.k; ta.value = files[tab];
+    if (!editor) return;
+    tab = b.dataset.k; editor.open(tab, files[tab], tab);
     document.querySelectorAll(".tab").forEach((x) => x.setAttribute("aria-selected", x === b));
-    ta.focus();
+    editor.focus();
   });
   document.querySelectorAll(".pv-bar .chip[data-w]").forEach((b) => b.onclick = () => {
     pvWidth = +b.dataset.w;
@@ -695,7 +715,9 @@ function renderProblem() {
     const b = $("restart");
     if (!armed) { armed = true; b.textContent = "한 번 더 누르면 지웁니다"; armTimer = setTimeout(() => { armed = false; b.textContent = "처음 코드로"; }, 3000); return; }
     clearTimeout(armTimer); armed = false; b.textContent = "처음 코드로";
-    files = startFiles(p); ta.value = files[tab]; keepDraft(p); preview();
+    files = startFiles(p);
+    if (editor) for (const k of fields(p)) editor.set(k, files[k]);
+    keepDraft(p); preview();
   };
   preview();
 }
@@ -895,6 +917,10 @@ $("bkSave").onclick = async () => {
 /* ── 검사기(verify-practice.js)가 부르는 입구 — 훈련생 화면에는 쓰이지 않는다 ── */
 window.MF = {
   PROBLEMS, ENGINE: MF_ENGINE, ready: false,
+  /** 편집기 검사용 — 지금 편집기 · 지금 문제의 작성 코드 */
+  editor: () => editor,
+  files: () => files,
+  go: (no) => go(PROBLEMS.findIndex((p) => p.no === no)),
   /** 정답은 «전부 통과», 흔한 오답은 «wf 번 검사에서 걸림» */
   async selfTest() {
     const out = [];
