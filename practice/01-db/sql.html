@@ -53,8 +53,16 @@ code { font-family: var(--font-mono); font-size: 0.92em; background: var(--code-
 /* 상단 요약 */
 .top { position: sticky; top: 0; z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
 .top-in { max-width: 1240px; margin: 0 auto; padding: 12px 16px; display: grid; grid-template-columns: auto 1fr auto; gap: 8px 24px; align-items: center; }
-.brand { font-weight: 700; font-size: 18px; letter-spacing: -0.01em; white-space: nowrap; }
-.brand small { font-weight: 400; color: var(--muted); font-size: 12px; margin-left: 8px; }
+/* 머리 왼쪽 — 처음으로 링크 · 연습장 고르기(제목 자리의 드롭다운) · 한 줄 설명. 목록은 ../mf-nav.js 가 채운다 */
+.brand { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; min-width: 0; }
+.home { font-size: 12.5px; color: var(--muted); text-decoration: none; }
+.home:hover { color: var(--accent); text-decoration: underline; }
+/* 화살표는 직접 그린다 — Chrome 기본 화살표는 폭에 안 잡혀 글자 끝을 가렸다(2026-11-24 실측: 칸 232px · 글자는 더 김) */
+.set-pick { font: inherit; font-weight: 700; font-size: 18px; letter-spacing: -0.01em; color: var(--ink); border: 1px solid transparent; border-radius: 8px; padding: 1px 26px 1px 4px; margin-left: -5px; max-width: 100%; cursor: pointer; appearance: none; background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%237a8899' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 8px center; }
+.set-pick:hover:not(:disabled) { border-color: var(--line); background-color: var(--surface); }
+.set-pick:disabled { cursor: default; opacity: 1; background-image: none; padding-right: 4px; }
+.set-pick option { font-weight: 400; color: var(--ink); background: var(--surface); }
+.brand small { font-weight: 400; color: var(--muted); font-size: 12px; }
 .sum { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .sum-row { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
 .big { font-variant-numeric: tabular-nums; font-size: 15px; }
@@ -182,7 +190,11 @@ pre.code { margin: 0 0 12px; padding: 12px 14px; background: var(--code-bg); bor
 <body>
 <header class="top">
   <div class="top-in">
-    <div class="brand">SQL 연습장<small>MySQL 문법 · 브라우저에서 바로 채점</small></div>
+    <div class="brand">
+      <a class="home" href="../../index.html">← 강의 자료 처음으로</a>
+      <select id="setPick" class="set-pick" aria-label="다른 연습장으로 가기"><option>SQL 연습장</option></select>
+      <small>MySQL 문법 · 브라우저에서 바로 채점</small>
+    </div>
     <div class="sum" aria-live="polite">
       <div class="sum-row">
         <div class="big">푼 문제 <b id="solved">0</b> / 총 <b id="total" style="color:var(--ink)">0</b></div>
@@ -228,6 +240,8 @@ pre.code { margin: 0 0 12px; padding: 12px 14px; background: var(--code-bg); bor
 
 <script src="https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/sql-asm.js" onerror="window.__sqlLoadFail=true"></script>
 <script src="../mf-editor.js"></script>
+<script src="../mf-sets.js"></script>
+<script src="../mf-nav.js"></script>
 <script>
 /* ── MySQL 흉내층 ─────────────────────────────────────────────
    채점 엔진은 브라우저 안의 SQLite(sql.js)다. 훈련생은 MySQL 문법으로 쓰므로, 실행 전에
