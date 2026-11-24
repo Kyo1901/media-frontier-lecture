@@ -53,7 +53,7 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 <li><strong>고정</strong>이라고 적힌 코드는 고칠 수 없고, 여러분의 코드가 그 위에 얹힙니다(고정 CSS 가 먼저, 내 CSS 가 나중).</li>
 <li><code>:hover</code> · <code>:focus-visible</code> 은 그 상태를 <strong>켠 것처럼</strong> 바꿔 그려서 잽니다.</li>
 <li>틀리면 <strong>어느 검사에서 걸렸는지</strong>와 잰 값이 나옵니다 — 그것이 힌트입니다.</li>
-<li><strong>Flexbox 문제는 Flexbox 로</strong> 풀어야 합니다. 같은 화면이라도 Grid · 바깥 여백으로 흉내 내면 마지막 검사(「Flexbox 로 풀었다」)에서 걸립니다.</li>
+<li><strong>Flexbox 문제는 Flexbox 로, Grid 문제는 Grid 로</strong> 풀어야 합니다. 같은 화면이라도 다른 도구(Grid · Flexbox · 바깥 여백 · calc)로 흉내 내면 마지막 검사(「Flexbox 로 풀었다」 · 「Grid 로 풀었다」)에서 걸립니다.</li>
 <li>코드를 쓰지 않는 문제도 있습니다 — <strong>하나 고르기</strong> · <strong>모두 고르기</strong>(맞는 것을 빠짐없이) · <strong>답 적기</strong>(숫자나 경로를 적는다). 「빈칸 채우기」 · 「오류 고치기」는 시작 코드를 고쳐서 냅니다.</li>
 </ul>
 <h2 id="목차">목차</h2>
@@ -545,7 +545,7 @@ aside { height: 200px; background: #edf1f5; }
 <h2 id="고급-9문제">고급 (9문제)</h2>
 <h3 id="문제-32-미디어-쿼리">문제 32. 미디어 쿼리</h3>
 <p><em>코드 작성 · CSS</em></p>
-<p>창이 <strong>넓으면 3열</strong>, 창 폭이 <strong>600px 이하면 1열</strong>이 되게 하시오. (601px 이면 3열입니다.)
+<p>창이 <strong>넓으면 3열</strong>, 창 폭이 <strong>600px 이하면 1열</strong>이 되게 하시오. (601px 이면 3열입니다.) <code>.grid</code> 는 이미 grid 상자입니다 — Grid 의 열로 푸십시오.
 미리보기 위의 폭 단추로 375 · 600 · 1000 을 눌러 확인할 수 있습니다.</p>
 <p><strong>HTML (고정)</strong></p>
 <pre><code class="language-html">&lt;div class=&quot;grid&quot;&gt;
@@ -644,7 +644,7 @@ aside { height: 200px; background: #edf1f5; }
 <h3 id="문제-37-안-먹는-미디어-쿼리">문제 37. 안 먹는 미디어 쿼리</h3>
 <p><em>오류 고치기 · CSS</em></p>
 <p>영화 리뷰 화면입니다. 창이 <strong>700px 이하</strong>이면 평점 상자가 리뷰 <strong>아래로</strong> 내려가야(한 열) 하는데, 창을 아무리 줄여도 두 열 그대로입니다.
-시작 코드에 실수가 <strong>두 군데</strong> 있습니다. 찾아서 고치시오. (넓을 때: 리뷰 | 평점 300px, 사이 16px)</p>
+시작 코드에 실수가 <strong>두 군데</strong> 있습니다. 찾아서 고치시오. (넓을 때: 리뷰 | 평점 300px, 사이 16px) Grid 로 짠 판은 그대로 두고 고칩니다.</p>
 <p><strong>HTML (고정)</strong></p>
 <pre><code class="language-html">&lt;div class=&quot;layout&quot;&gt;
   &lt;article class=&quot;review&quot;&gt;리뷰 본문&lt;/article&gt;
@@ -736,7 +736,7 @@ body {
 </li>
 <li>카드 테두리 <code>1px</code> 실선 <code>#d8dfe7</code>, <strong>추천 카드만</strong> <code>2px</code> 실선 <code>#6b3fa0</code></li>
 <li>가격 글자 크기 <code>28px</code> · 혜택 목록의 점은 없앰</li>
-<li>카드 판: <strong>넓을 때 3열</strong>(사이 <code>20px</code>), <strong>700px 이하에서 1열</strong></li>
+<li>카드 판은 <strong>Grid 로</strong>: <strong>넓을 때 3열</strong>(사이 <code>20px</code>), <strong>700px 이하에서 1열</strong></li>
 <li>세 카드의 <strong>높이가 같을 것</strong>(혜택이 가장 많은 카드에 맞춰) · 375px 화면에서 가로 스크롤이 없을 것</li>
 </ul>
 <p><strong>CSS (고정)</strong></p>

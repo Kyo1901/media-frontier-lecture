@@ -1547,11 +1547,12 @@ aside { height: 200px; background: #edf1f5; }
 
 `2fr 1fr` 은 남은 공간을 2 : 1 로 나눕니다. 간격 24px 을 먼저 빼고(936px) 나누므로 624px · 312px 입니다. 퍼센트(`66%` · `33%`)로 쓰면 간격이 더해져 넘칩니다 — `fr` 이 간격을 알아서 빼 주는 것이 장점입니다.
 
-**검사 항목** (3개)
+**검사 항목** (4개)
 
 1. 본문 폭 624px ((960 − 24) × 2/3)
 2. 곁 폭 312px
 3. 나란히, 사이 24px
+4. Grid 로 풀었다 (.page 가 grid 상자)
 
 **흔한 오답** — 「본문 폭 624px ((960 − 24) × 2/3)」에서 걸립니다
 
@@ -1562,6 +1563,23 @@ aside { height: 200px; background: #edf1f5; }
   display: grid;
   grid-template-columns: 66% 33%;
   gap: 24px;
+}
+```
+
+**화면은 같아도 오답** — 「Grid 로 풀었다 (.page 가 grid 상자)」에서 걸립니다
+
+Flexbox 의 `flex: 2` · `flex: 1` 로도 2 : 1 이 되지만, 이 문제는 Grid 의 `fr` 을 묻습니다.
+
+```css
+.page {
+  display: flex;
+  gap: 24px;
+}
+main {
+  flex: 2;
+}
+aside {
+  flex: 1;
 }
 ```
 
@@ -1625,13 +1643,14 @@ footer { grid-area: footer; }
 `grid-template-areas` 는 칸에 **이름을 붙여 그림처럼** 적습니다. 따옴표 한 쌍이 한 줄, 이름 하나가 한 칸이고, 같은 이름을 이어 쓰면 칸이 합쳐집니다.
 각 요소는 `grid-area: 이름` 으로 자기 자리를 말합니다. 그림에 없는 이름의 요소는 자리를 못 찾아 남는 곳(맨 아래)에 붙습니다.
 
-**검사 항목** (5개)
+**검사 항목** (6개)
 
 1. 머리가 맨 위, 폭 1000px
 2. 메뉴가 머리 바로 아래, 폭 1000px
 3. 본문이 메뉴 아래 왼쪽, 폭 750px
 4. 곁이 본문 오른쪽, 폭 250px
 5. 바닥이 맨 아래, 폭 1000px
+6. Grid 의 grid-template-areas 로 풀었다
 
 **흔한 오답** — 「곁이 본문 오른쪽, 폭 250px」에서 걸립니다
 
@@ -1651,6 +1670,20 @@ header { grid-area: header; }
 nav    { grid-area: nav; }
 main   { grid-area: main; }
 footer { grid-area: footer; }
+```
+
+**화면은 같아도 오답** — 「Grid 의 grid-template-areas 로 풀었다」에서 걸립니다
+
+줄 번호(`grid-column: 1 / -1`)로도 같은 배치가 나오지만, 이 문제는 `grid-template-areas` 로 **그림처럼** 그리는 것을 묻습니다.
+
+```css
+.page {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+header, nav, footer {
+  grid-column: 1 / -1;
+}
 ```
 
 ---
@@ -1772,7 +1805,7 @@ td {
 
 **문제**
 
-창이 **넓으면 3열**, 창 폭이 **600px 이하면 1열**이 되게 하시오. (601px 이면 3열입니다.)
+창이 **넓으면 3열**, 창 폭이 **600px 이하면 1열**이 되게 하시오. (601px 이면 3열입니다.) `.grid` 는 이미 grid 상자입니다 — Grid 의 열로 푸십시오.
 미리보기 위의 폭 단추로 375 · 600 · 1000 을 눌러 확인할 수 있습니다.
 
 **HTML (고정)**
@@ -1814,12 +1847,13 @@ body { margin: 0; }
 `@media (max-width: 600px)` 은 「창 폭이 **600px 이하**일 때만」 안의 규칙을 씁니다. 바깥 규칙(3열)은 늘 쓰이고, 좁을 때만 1열이 **덮어씁니다** — 그래서 미디어 쿼리는 바깥 규칙보다 **뒤에** 둡니다.
 모바일 우선(`min-width`)으로 쓴다면 「601px 이상」이니 `min-width: 601px` 입니다. 경계값 하나 차이로 600px 화면이 달라집니다.
 
-**검사 항목** (4개)
+**검사 항목** (5개)
 
 1. 창 1000px — 한 줄에 3칸 — 창 1000px
 2. 창 1000px — 칸 폭 320px — 창 1000px
 3. 창 601px — 아직 3칸 — 창 601px
 4. 창 600px — 1열 (칸 폭 600px) — 창 600px
+5. Grid 로 풀었다 (.grid 가 grid 상자)
 
 **흔한 오답** — 「창 600px — 1열 (칸 폭 600px)」에서 걸립니다
 
@@ -1832,6 +1866,25 @@ body { margin: 0; }
 @media (min-width: 600px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+```
+
+**화면은 같아도 오답** — 「Grid 로 풀었다 (.grid 가 grid 상자)」에서 걸립니다
+
+Flexbox 로 바꾸고 폭을 calc 로 계산해도 같은 화면이지만, `.grid` 는 이미 grid 상자 — 열 정의 하나만 바꾸면 되는 문제입니다.
+
+```css
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+.item {
+  width: calc((100% - 40px) / 3);
+}
+@media (max-width: 600px) {
+  .item {
+    width: 100%;
   }
 }
 ```
@@ -2090,7 +2143,7 @@ F12 → Styles 를 보면 `.title` 의 color 에 **줄이 그어져** 있고, �
 **문제**
 
 영화 리뷰 화면입니다. 창이 **700px 이하**이면 평점 상자가 리뷰 **아래로** 내려가야(한 열) 하는데, 창을 아무리 줄여도 두 열 그대로입니다.
-시작 코드에 실수가 **두 군데** 있습니다. 찾아서 고치시오. (넓을 때: 리뷰 | 평점 300px, 사이 16px)
+시작 코드에 실수가 **두 군데** 있습니다. 찾아서 고치시오. (넓을 때: 리뷰 | 평점 300px, 사이 16px) Grid 로 짠 판은 그대로 두고 고칩니다.
 
 **HTML (고정)**
 
@@ -2143,11 +2196,12 @@ body { margin: 0; }
 ① **`700` 에 단위가 없습니다.** 미디어 쿼리의 폭은 `700px` 처럼 단위가 있어야 합니다. 단위가 없으면 그 조건은 통째로 «틀린 조건»이 되어 **절대 켜지지 않습니다**(오류도 안 납니다).
 ② **순서가 거꾸로입니다.** 미디어 쿼리는 점수를 올려 주지 않습니다 — `.layout` 과 `.layout` 은 같은 점수라 **나중에 적힌 쪽**이 이깁니다. 그래서 좁을 때 덮어쓸 규칙은 기본 규칙 **뒤에** 둡니다.
 
-**검사 항목** (3개)
+**검사 항목** (4개)
 
 1. 창 1000px — 리뷰 | 평점 300px 나란히, 사이 16px — 창 1000px
 2. 창 701px — 아직 두 열 — 창 701px
 3. 창 700px — 한 열 (평점이 리뷰 아래, 폭 700px) — 창 700px
+4. Grid 로 풀었다 (.layout 가 grid 상자)
 
 **흔한 오답** — 「창 700px — 한 열 (평점이 리뷰 아래, 폭 700px)」에서 걸립니다
 
@@ -2163,6 +2217,28 @@ body { margin: 0; }
   display: grid;
   grid-template-columns: 1fr 300px;
   gap: 16px;
+}
+```
+
+**화면은 같아도 오답** — 「Grid 로 풀었다 (.layout 가 grid 상자)」에서 걸립니다
+
+Flexbox 로 새로 짜면 같은 화면이 나오지만, 이 문제는 Grid 판은 그대로 두고 «두 실수»를 찾는 문제입니다.
+
+```css
+.layout {
+  display: flex;
+  gap: 16px;
+}
+.review {
+  flex: 1;
+}
+.score {
+  flex: 0 0 300px;
+}
+@media (max-width: 700px) {
+  .layout {
+    flex-direction: column;
+  }
 }
 ```
 
@@ -2443,7 +2519,7 @@ body {
   - 프리미엄 / 월 10,900원 / 광고 없는 재생 · 기기 4대 · 오프라인 저장 · 고음질
 - 카드 테두리 `1px` 실선 `#d8dfe7`, **추천 카드만** `2px` 실선 `#6b3fa0`
 - 가격 글자 크기 `28px` · 혜택 목록의 점은 없앰
-- 카드 판: **넓을 때 3열**(사이 `20px`), **700px 이하에서 1열**
+- 카드 판은 **Grid 로**: **넓을 때 3열**(사이 `20px`), **700px 이하에서 1열**
 - 세 카드의 **높이가 같을 것**(혜택이 가장 많은 카드에 맞춰) · 375px 화면에서 가로 스크롤이 없을 것
 
 **CSS (고정)**
@@ -2535,7 +2611,7 @@ body { margin: 0; font-family: sans-serif; }
 판은 **Grid**(`repeat(3, 1fr)` + `gap`), 좁은 화면은 **미디어 쿼리**로 한 열 — 기본 규칙 «뒤에» 둡니다.
 카드 높이는 따로 맞출 필요가 없습니다. Grid(와 Flex)의 아이템은 기본값 `stretch` 로 **그 줄에서 가장 높은 아이템에 맞춰 늘어나기** 때문입니다. 추천 카드는 `.plan.best`(클래스 둘 — 점수가 더 높음)로 테두리만 덮어씁니다.
 
-**검사 항목** (9개)
+**검사 항목** (10개)
 
 1. 구조 — 카드 3장, 카드마다 h3 · p.price · ul · a.btn
 2. 추천 카드(.best)는 「스탠다드」 하나
@@ -2546,6 +2622,7 @@ body { margin: 0; font-family: sans-serif; }
 7. 창 700px — 1열 (위에서 아래로) — 창 700px
 8. 창 701px — 아직 3열 — 창 701px
 9. 창 375px — 가로 스크롤이 없다 — 창 375px
+10. Grid 로 풀었다 (.plans 가 grid 상자)
 
 **흔한 오답** — 「창 700px — 1열 (위에서 아래로)」에서 걸립니다
 
@@ -2619,6 +2696,53 @@ body { margin: 0; font-family: sans-serif; }
   color: #ffffff;
   text-decoration: none;
   border-radius: 6px;
+}
+```
+
+**화면은 같아도 오답** — 「Grid 로 풀었다 (.plans 가 grid 상자)」에서 걸립니다
+
+Flexbox(`wrap` + calc 폭)로도 같은 판이 나오지만, 「한 줄은 Flex, 판은 Grid」 — 카드 판은 Grid 로 짜라는 문제입니다.
+
+```css
+.plans {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+.plan {
+  box-sizing: border-box;
+  width: calc((100% - 40px) / 3);
+  padding: 20px;
+  border: 1px solid #d8dfe7;
+  border-radius: 12px;
+}
+.plan.best {
+  border: 2px solid #6b3fa0;
+}
+.plan h3 {
+  margin: 0;
+}
+.price {
+  font-size: 28px;
+  margin: 8px 0;
+}
+.plan ul {
+  list-style: none;
+  padding: 0;
+}
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #6b3fa0;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+}
+@media (max-width: 700px) {
+  .plan {
+    width: 100%;
+  }
 }
 ```
 
