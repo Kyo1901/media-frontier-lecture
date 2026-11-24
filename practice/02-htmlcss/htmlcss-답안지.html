@@ -42,94 +42,34 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 <p class="back"><a href="../../index.html">← 처음으로</a> · <a href="htmlcss.html">풀러 가기</a></p>
 <article class="guide"><h1 id="htmlcss-연습-답안지-해설-포함">HTML/CSS 연습 답안지 (해설 포함)</h1>
 <blockquote>
-<p>총 <strong>40문제</strong> — 초급 15 · 중급 17 · 고급 8 (코드 작성 35 · 고르기 5)</p>
+<p>총 <strong>40문제</strong> — 초급 13 · 중급 18 · 고급 9 · 번호가 커질수록 어려워집니다
+유형: 개념 확인 5 · 결과 예측 4 · 빈칸 채우기 3 · 오류 고치기 8 · 고쳐 쓰기 2 · 코드 작성 16 · 종합 구현 2</p>
 <p>같은 화면을 그리는 다른 코드도 정답입니다. 채점은 쓴 방법이 아니라 <strong>그려진 결과</strong>(계산된 스타일 · 위치와 크기 · 구조)를 잽니다.
 아래 정답은 모두 실제 Chrome 에서 검사를 전부 통과하고, 「흔한 오답」은 적힌 검사에서 실제로 걸리는 것을 확인한 것입니다.</p>
 </blockquote>
 <h2 id="빠른-찾기">빠른 찾기</h2>
 <ul>
-<li><strong>초급</strong>: 1~15번</li>
-<li><strong>중급</strong>: 16~32번</li>
-<li><strong>고급</strong>: 33~40번</li>
+<li><strong>초급</strong>: 1~13번</li>
+<li><strong>중급</strong>: 14~31번</li>
+<li><strong>고급</strong>: 32~40번</li>
 </ul>
 <hr>
 <h2 id="초급">초급</h2>
-<h3 id="문제-1-문서-뼈대">문제 1. 문서 뼈대</h3>
+<h3 id="문제-1-이름-있는-상자-고르기">문제 1. 이름 있는 상자 고르기</h3>
+<p><em>개념 확인 · 모두 고르기</em></p>
 <p><strong>문제</strong></p>
-<p>다음 조건을 지키는 HTML 문서를 <strong>처음부터</strong> 작성하시오.</p>
-<ul>
-<li>문서 형식 선언(<code>&lt;!DOCTYPE html&gt;</code>)</li>
-<li>언어는 한국어(<code>lang=&quot;ko&quot;</code>)</li>
-<li>문자 인코딩은 UTF-8</li>
-<li>탭에 보이는 제목은 <code>오늘의 뉴스</code></li>
-<li>본문에 <code>h1</code> 하나: <code>오늘의 뉴스</code></li>
-</ul>
-<p><strong>정답</strong></p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;ko&quot;&gt;
-&lt;head&gt;
-  &lt;meta charset=&quot;utf-8&quot;&gt;
-  &lt;title&gt;오늘의 뉴스&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;h1&gt;오늘의 뉴스&lt;/h1&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+<p>화면에서는 모두 「아무 모양 없는 상자」로 보이지만, <strong>이름에 뜻이 있는 상자</strong>(시맨틱 태그)가 있습니다.
+다음 중 시맨틱 태그를 <strong>모두</strong> 고르시오.</p>
+<p>① <code>&lt;div&gt;</code><br>② <code>&lt;nav&gt;</code><br>③ <code>&lt;span&gt;</code><br>④ <code>&lt;article&gt;</code><br>⑤ <code>&lt;footer&gt;</code><br>⑥ <code>&lt;section&gt;</code></p>
+<p><strong>정답</strong> — ② ④ ⑤ ⑥</p>
 <p><strong>해설</strong></p>
-<p><code>&lt;!DOCTYPE html&gt;</code> 은 「이 문서는 지금의 HTML 규칙으로 그려 달라」는 표시입니다. 빠뜨려도 글자는 똑같이 보여서 알아차리기 어렵지만, 브라우저가 <strong>호환 모드</strong>로 그려 상자 크기 계산 같은 것이 옛날 방식이 됩니다.
-<code>&lt;meta charset=&quot;utf-8&quot;&gt;</code> 이 없으면 서버 설정에 따라 한글이 깨질 수 있습니다. <code>&lt;head&gt;</code> 의 맨 앞쪽에 둡니다.</p>
-<p><strong>검사 항목</strong> (5개)</p>
-<ol>
-<li>맨 첫 줄이 문서 형식 선언(<!DOCTYPE html>)</li>
-<li>html 의 lang 이 ko</li>
-<li>meta charset 이 utf-8</li>
-<li>탭 제목이 「오늘의 뉴스」</li>
-<li>본문의 h1 이 「오늘의 뉴스」 하나</li>
-</ol>
-<p><strong>흔한 오답</strong> — 「맨 첫 줄이 문서 형식 선언(<!DOCTYPE html>)」에서 걸립니다</p>
-<p>화면은 똑같이 나와서 빠뜨린 줄 모릅니다. 선언이 없으면 브라우저가 옛날 규칙(호환 모드)으로 그려 박스 크기 계산이 달라집니다.</p>
-<pre><code class="language-html">&lt;html lang=&quot;ko&quot;&gt;
-&lt;head&gt;
-  &lt;meta charset=&quot;utf-8&quot;&gt;
-  &lt;title&gt;오늘의 뉴스&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;h1&gt;오늘의 뉴스&lt;/h1&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+<p><code>nav</code>(메뉴) · <code>article</code>(혼자 떼어 내도 말이 되는 글 한 편) · <code>footer</code>(바닥) · <code>section</code>(주제로 묶인 구역)은 <strong>태그 이름이 곧 뜻</strong>입니다. 화면 읽기 프로그램 · 검색 엔진이 이 이름을 읽습니다.
+<code>div</code> 는 구역(블록), <code>span</code> 은 글자 줄 안(인라인)의 <strong>뜻 없는</strong> 상자입니다. 모양을 잡으려고 묶을 때만 씁니다.</p>
+<p><strong>흔한 오답</strong> — ① ② ④ ⑤ ⑥</p>
+<p><code>div</code> 도 「구역을 나누는 상자」라 함께 고르기 쉽습니다. 하지만 <code>div</code> 는 이름에 아무 뜻이 없는 상자입니다 — 그래서 뜻이 없을 때 쓰는 «마지막 수단»입니다.</p>
 <hr>
-<h3 id="문제-2-시맨틱-배치">문제 2. 시맨틱 배치</h3>
-<p><strong>문제</strong></p>
-<p>뉴스 사이트의 큰 틀을 <strong>이름이 있는 상자</strong>(시맨틱 태그)로 만드시오.</p>
-<ul>
-<li><code>body</code> 바로 아래에 차례대로 <strong>머리 · 메뉴 · 본문 · 바닥</strong> 네 상자</li>
-<li>상자마다 안에 글자를 아무거나 넣을 것 (예: <code>오늘의 뉴스</code>, <code>정치 경제 사회</code>, <code>기사 목록</code>, <code>© 오늘의 뉴스</code>)</li>
-</ul>
-<p><strong>정답</strong></p>
-<pre><code class="language-html">&lt;header&gt;오늘의 뉴스&lt;/header&gt;
-&lt;nav&gt;정치 경제 사회&lt;/nav&gt;
-&lt;main&gt;기사 목록&lt;/main&gt;
-&lt;footer&gt;© 오늘의 뉴스&lt;/footer&gt;
-</code></pre>
-<p><strong>해설</strong></p>
-<p><code>div</code> 로 다 만들어도 화면은 같습니다. 그런데 <code>&lt;div class=&quot;header&quot;&gt;</code> 의 <code>header</code> 는 <strong>사람만</strong> 읽는 이름이고, <code>&lt;header&gt;</code> 는 <strong>브라우저 · 화면 읽기 프로그램 · 검색 엔진</strong>도 읽는 이름입니다.
-<code>nav</code> 를 <code>header</code> 안에 넣는 것도 흔하고 틀린 것은 아니지만, 이 문제는 「body 바로 아래 네 개」를 요구합니다.</p>
-<p><strong>검사 항목</strong> (2개)</p>
-<ol>
-<li>body 바로 아래가 header → nav → main → footer</li>
-<li>네 상자 모두 안에 글자가 있다</li>
-</ol>
-<p><strong>흔한 오답</strong> — 「body 바로 아래가 header → nav → main → footer」에서 걸립니다</p>
-<p>화면은 똑같습니다. 하지만 class 이름은 사람만 읽고, 화면 읽기 프로그램 · 검색 엔진은 태그 이름을 읽습니다.</p>
-<pre><code class="language-html">&lt;div class=&quot;header&quot;&gt;오늘의 뉴스&lt;/div&gt;
-&lt;div class=&quot;nav&quot;&gt;정치 경제 사회&lt;/div&gt;
-&lt;div class=&quot;main&quot;&gt;기사 목록&lt;/div&gt;
-&lt;div class=&quot;footer&quot;&gt;© 오늘의 뉴스&lt;/div&gt;
-</code></pre>
-<hr>
-<h3 id="문제-3-strong-과-b">문제 3. strong 과 b</h3>
+<h3 id="문제-2-strong-과-b">문제 2. strong 과 b</h3>
+<p><em>개념 확인 · 하나 고르기</em></p>
 <p><strong>문제</strong></p>
 <p>기사 본문에서 「<strong>오늘 오후 3시부터 운행 중단</strong>」은 독자가 꼭 알아야 할 <strong>중요한 내용</strong>이라 굵게 보이게 하려 합니다. 가장 알맞은 것은?</p>
 <p>① <code>&lt;b&gt;</code> — 굵게 보이기만 하면 된다<br>② <code>&lt;strong&gt;</code> — 「중요하다」는 뜻을 담는다<br>③ <code>&lt;h3&gt;</code> — 크고 굵게 보인다<br>④ <code>&lt;br&gt;</code> 으로 앞뒤를 끊어 눈에 띄게 한다</p>
@@ -140,7 +80,8 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 <p><strong>흔한 오답</strong> — ①</p>
 <p>화면에서는 <code>&lt;b&gt;</code> 와 <code>&lt;strong&gt;</code> 이 똑같이 굵습니다. 그래서 짧은 <code>&lt;b&gt;</code> 를 고르기 쉽습니다.</p>
 <hr>
-<h3 id="문제-4-순위-목록">문제 4. 순위 목록</h3>
+<h3 id="문제-3-순위-목록">문제 3. 순위 목록</h3>
+<p><em>코드 작성 · HTML (body 안에 들어갈 내용)</em></p>
 <p><strong>문제</strong></p>
 <p>「많이 본 기사」 1~3위를 <strong>순서가 있는 목록</strong>으로 만드시오. 항목은 차례대로 <code>금리 동결</code>, <code>신작 개봉</code>, <code>폭설 주의보</code> 입니다.</p>
 <p><strong>정답</strong></p>
@@ -167,40 +108,94 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 &lt;/ul&gt;
 </code></pre>
 <hr>
-<h3 id="문제-5-이름값-목록">문제 5. 이름–값 목록</h3>
+<h3 id="문제-4-이름값-목록">문제 4. 이름–값 목록</h3>
+<p><em>코드 작성 · HTML (body 안에 들어갈 내용)</em></p>
 <p><strong>문제</strong></p>
-<p>기사 정보 세 가지를 <strong>이름–값 목록</strong>(<code>dl</code>)으로 만드시오.</p>
+<p>영화 「겨울 항구」의 정보를 <strong>이름–값 목록</strong>(<code>dl</code>)으로 만드시오.</p>
 <ul>
-<li>기자 — 김하나</li>
-<li>날짜 — 2024-11-05</li>
-<li>조회수 — 1,204</li>
+<li>감독 — 서유진</li>
+<li>개봉 — 2024-12-18</li>
+<li>출연 — 한도윤, 이서아 (<strong>이름 하나에 값 둘</strong> — 값마다 <code>dd</code> 를 따로)</li>
 </ul>
 <p><strong>정답</strong></p>
 <pre><code class="language-html">&lt;dl&gt;
-  &lt;dt&gt;기자&lt;/dt&gt;&lt;dd&gt;김하나&lt;/dd&gt;
-  &lt;dt&gt;날짜&lt;/dt&gt;&lt;dd&gt;2024-11-05&lt;/dd&gt;
-  &lt;dt&gt;조회수&lt;/dt&gt;&lt;dd&gt;1,204&lt;/dd&gt;
+  &lt;dt&gt;감독&lt;/dt&gt;&lt;dd&gt;서유진&lt;/dd&gt;
+  &lt;dt&gt;개봉&lt;/dt&gt;&lt;dd&gt;2024-12-18&lt;/dd&gt;
+  &lt;dt&gt;출연&lt;/dt&gt;
+  &lt;dd&gt;한도윤&lt;/dd&gt;
+  &lt;dd&gt;이서아&lt;/dd&gt;
 &lt;/dl&gt;
 </code></pre>
 <p><strong>해설</strong></p>
-<p><code>dl</code>(목록) 안에 <code>dt</code>(이름)와 <code>dd</code>(값)를 <strong>짝지어</strong> 차례로 씁니다. 기사 정보 · 상품 정보처럼 「항목: 값」이 이어지는 곳에 씁니다.
-<code>dd</code> 는 기본으로 왼쪽이 들여 쓰여 보입니다 — 모양은 CSS 로 바꾸면 됩니다.</p>
-<p><strong>검사 항목</strong> (3개)</p>
+<p><code>dl</code> 안에 <code>dt</code>(이름)와 <code>dd</code>(값)를 차례로 씁니다. 이름 하나에 값이 여럿이면 <strong><code>dd</code> 를 이어서 여러 개</strong> 둡니다 — 반대로 값 하나에 이름이 여럿(<code>dt</code> 둘 다음 <code>dd</code> 하나)도 됩니다.
+쉼표로 한 칸에 몰아 쓰면 화면은 비슷해도 「값이 둘」이라는 정보가 사라집니다.</p>
+<p><strong>검사 항목</strong> (4개)</p>
 <ol>
 <li>dl 이 하나 있다</li>
-<li>dt 3개 · dd 3개</li>
-<li>짝이 기자=김하나 · 날짜=2024-11-05 · 조회수=1,204</li>
+<li>dt 3개 · dd 4개</li>
+<li>감독=서유진 · 개봉=2024-12-18</li>
+<li>출연 다음에 값(dd)이 둘 — 한도윤 / 이서아</li>
 </ol>
-<p><strong>흔한 오답</strong> — 「dl 이 하나 있다」에서 걸립니다</p>
-<p>「목록」이라 <code>ul</code> 로 쓰기 쉽습니다. 이름과 값이 «짝»이면 <code>dl</code> 이 그 짝을 태그로 드러냅니다.</p>
-<pre><code class="language-html">&lt;ul&gt;
-  &lt;li&gt;기자: 김하나&lt;/li&gt;
-  &lt;li&gt;날짜: 2024-11-05&lt;/li&gt;
-  &lt;li&gt;조회수: 1,204&lt;/li&gt;
-&lt;/ul&gt;
+<p><strong>흔한 오답</strong> — 「출연 다음에 값(dd)이 둘 — 한도윤 / 이서아」에서 걸립니다</p>
+<p><code>dt</code> 와 <code>dd</code> 는 꼭 한 쌍씩이라고 생각하기 쉽습니다. 값이 여럿이면 <code>dd</code> 를 여럿 둘 수 있고, 그래야 「출연자가 두 명」이라는 것이 태그로 드러납니다.</p>
+<pre><code class="language-html">&lt;dl&gt;
+  &lt;dt&gt;감독&lt;/dt&gt;&lt;dd&gt;서유진&lt;/dd&gt;
+  &lt;dt&gt;개봉&lt;/dt&gt;&lt;dd&gt;2024-12-18&lt;/dd&gt;
+  &lt;dt&gt;출연&lt;/dt&gt;&lt;dd&gt;한도윤, 이서아&lt;/dd&gt;
+&lt;/dl&gt;
+</code></pre>
+<hr>
+<h3 id="문제-5-문서-뼈대">문제 5. 문서 뼈대</h3>
+<p><em>코드 작성 · HTML 문서 전체</em></p>
+<p><strong>문제</strong></p>
+<p>다음 조건을 지키는 HTML 문서를 <strong>처음부터</strong> 작성하시오.</p>
+<ul>
+<li>문서 형식 선언(<code>&lt;!DOCTYPE html&gt;</code>) · 언어는 한국어(<code>lang=&quot;ko&quot;</code>) · 문자 인코딩은 UTF-8</li>
+<li>탭에 보이는 제목은 <code>주간 편성표</code></li>
+<li>같은 폴더의 <code>css</code> 폴더 안에 있는 <code>style.css</code> 를 <strong>이어 붙일 것</strong></li>
+<li>본문에 <code>h1</code> 하나: <code>주간 편성표</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;주간 편성표&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/style.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;주간 편성표&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;…&quot;&gt;</code> 는 <code>&lt;head&gt;</code> 안에 둡니다. <code>rel</code> 은 「이 파일은 스타일 시트다」, <code>href</code> 는 「어디에 있나」입니다 — 둘 중 하나만 틀려도 <strong>아무 오류 없이</strong> CSS 가 안 먹습니다(F12 의 Network 탭에서 확인).
+<code>&lt;!DOCTYPE html&gt;</code> 을 빠뜨리면 브라우저가 <strong>호환 모드</strong>로 그려 표 안의 글자 크기 · 줄 높이 같은 것이 옛 브라우저 방식으로 바뀝니다. 글자는 똑같이 보여서 알아차리기 어렵습니다.</p>
+<p><strong>검사 항목</strong> (5개)</p>
+<ol>
+<li>맨 첫 줄이 문서 형식 선언(<!DOCTYPE html>)</li>
+<li>html 의 lang 이 ko · meta charset 이 utf-8</li>
+<li>탭 제목이 「주간 편성표」</li>
+<li>본문의 h1 이 「주간 편성표」 하나</li>
+<li>head 안에 css/style.css 를 잇는 link (rel=&quot;stylesheet&quot;)</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「head 안에 css/style.css 를 잇는 link (rel=&quot;stylesheet&quot;)」에서 걸립니다</p>
+<p>주소(<code>href</code>)만 맞으면 될 것 같지만, <code>rel=&quot;stylesheet&quot;</code> 가 없으면 브라우저가 «무엇을» 잇는지 몰라 CSS 를 통째로 무시합니다. 오류도 안 납니다.</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;주간 편성표&lt;/title&gt;
+  &lt;link href=&quot;css/style.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;주간 편성표&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 <hr>
 <h3 id="문제-6-링크-안의-사진">문제 6. 링크 안의 사진</h3>
+<p><em>코드 작성 · HTML (body 안에 들어갈 내용)</em></p>
 <p><strong>문제</strong></p>
 <p>기사 사진 <code>photo.jpg</code> 를 누르면 <code>detail.html</code> 로 가도록 만드시오. 사진의 대체 글은 <code>폭설로 멈춘 버스</code> 입니다.
 (미리보기에는 사진 파일이 없어 대체 글이 보입니다 — 그게 정상입니다)</p>
@@ -225,134 +220,142 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 &lt;/a&gt;
 </code></pre>
 <hr>
-<h3 id="문제-7-경로">문제 7. 경로</h3>
+<h3 id="문제-7-두-단계-위로--경로">문제 7. 두 단계 위로 — 경로</h3>
+<p><em>개념 확인 · 답 적기</em></p>
 <p><strong>문제</strong></p>
 <p>폴더가 이렇게 되어 있습니다.</p>
 <pre><code class="language-text">site/
-├─ index.html
-├─ images/
-│   └─ logo.png
-└─ news/
-    └─ list.html
+├─ assets/
+│   └─ cover.png
+└─ shows/
+    └─ 2024/
+        └─ ep01.html
 </code></pre>
-<p><code>news/list.html</code> 에서 로고를 띄우려면 <code>&lt;img src=&quot;?&quot;&gt;</code> 의 <code>?</code> 에 무엇을 써야 합니까?</p>
-<p>① <code>images/logo.png</code><br>② <code>../images/logo.png</code><br>③ <code>/images/logo.png</code><br>④ <code>news/images/logo.png</code></p>
-<p><strong>정답</strong> — ② <code>../images/logo.png</code></p>
+<p><code>shows/2024/ep01.html</code> 에서 표지 그림을 띄우려 합니다. <code>&lt;img src=&quot;?&quot;&gt;</code> 의 <code>?</code> 에 쓸 <strong>상대 경로</strong>를 적으시오.</p>
+<p><strong>정답</strong> — <code>../../assets/cover.png</code> (<code>./../../assets/cover.png</code> 도 정답)</p>
 <p><strong>해설</strong></p>
-<p>경로는 <strong>그 HTML 파일이 있는 곳</strong>에서 출발합니다. <code>list.html</code> 은 <code>news/</code> 안에 있으니, <code>../</code> 로 한 칸 올라가(<code>site/</code>) <code>images/logo.png</code> 로 내려갑니다.
-<code>images/logo.png</code> 는 <code>news/images/logo.png</code> 를 찾고, <code>/images/logo.png</code> 는 서버에 올렸을 때만(사이트 맨 위가 정해졌을 때만) 맞습니다 — 파일로 열면 깨집니다.</p>
-<p><strong>흔한 오답</strong> — ③</p>
-<p><code>/</code> 로 시작하면 「맨 위에서부터」라 맞아 보입니다. 하지만 파일을 더블클릭해 열면 맨 위가 <code>site/</code> 가 아니라 <strong>디스크의 맨 위</strong>(C:)가 됩니다.</p>
+<p>경로는 <strong>그 HTML 파일이 있는 폴더</strong>(<code>shows/2024/</code>)에서 출발합니다. <code>../</code> 한 번에 한 칸씩 올라갑니다.
+<code>../</code> → <code>shows/</code>, <code>../../</code> → <code>site/</code>, 거기서 <code>assets/cover.png</code> 로 내려갑니다. 그래서 <code>../../assets/cover.png</code> 입니다.</p>
+<p><strong>흔한 오답</strong> — <code>../assets/cover.png</code></p>
+<p><code>../</code> 를 한 번만 쓰면 <code>shows/</code> 까지만 올라가서 <code>shows/assets/cover.png</code> 를 찾습니다. 파일이 «두 겹» 안에 있다는 것을 세지 않은 경우입니다.</p>
 <hr>
-<h3 id="문제-8-표">문제 8. 표</h3>
+<h3 id="문제-8-이어지지-않은-글자표">문제 8. 이어지지 않은 글자표</h3>
+<p><em>오류 고치기 · HTML (body 안에 들어갈 내용)</em></p>
 <p><strong>문제</strong></p>
-<p>분야별 기사 수를 <strong>표</strong>로 만드시오. 머리 줄(<code>thead</code>)과 몸통(<code>tbody</code>)을 나눕니다.</p>
-<table>
-<thead>
-<tr>
-<th>분야</th>
-<th>기사 수</th>
-<th>비율</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>사회</td>
-<td>121</td>
-<td>24.2%</td>
-</tr>
-<tr>
-<td>정치</td>
-<td>115</td>
-<td>23.0%</td>
-</tr>
-<tr>
-<td>경제</td>
-<td>88</td>
-<td>17.6%</td>
-</tr>
-<tr>
-<td>스포츠</td>
-<td>80</td>
-<td>16.0%</td>
-</tr>
-</tbody></table>
+<p>공연 예매 오픈 알림을 신청하는 폼입니다. 그런데 글자표 「이름」「이메일」을 눌러도 <strong>칸에 커서가 가지 않습니다</strong>.</p>
+<ul>
+<li>두 글자표가 <strong>각자 자기 칸과 이어지게</strong> 고치시오</li>
+<li>이메일 칸은 이메일 형식 칸(<code>type=&quot;email&quot;</code>)으로 바꾸시오
+(미리보기에서 버튼을 눌러도 아무 데도 보내지 않습니다)</li>
+</ul>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-html">&lt;form&gt;
+  &lt;label for=&quot;name&quot;&gt;이름&lt;/label&gt;
+  &lt;input type=&quot;text&quot; id=&quot;username&quot;&gt;
+  &lt;label&gt;이메일&lt;/label&gt;
+  &lt;input type=&quot;text&quot; id=&quot;mail&quot;&gt;
+  &lt;button type=&quot;submit&quot;&gt;알림 신청&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-html">&lt;form&gt;
+  &lt;label for=&quot;name&quot;&gt;이름&lt;/label&gt;
+  &lt;input type=&quot;text&quot; id=&quot;name&quot;&gt;
+  &lt;label for=&quot;mail&quot;&gt;이메일&lt;/label&gt;
+  &lt;input type=&quot;email&quot; id=&quot;mail&quot;&gt;
+  &lt;button type=&quot;submit&quot;&gt;알림 신청&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>label</code> 의 <code>for</code> 와 <code>input</code> 의 <code>id</code> 가 <strong>글자까지 같아야</strong> 이어집니다(<code>name</code> ≠ <code>username</code>). 이어지면 글자표를 눌러도 칸이 선택되고, 화면 읽기 프로그램이 칸의 이름을 읽어 줍니다.
+<code>type=&quot;email&quot;</code> 은 제출할 때 「@」가 없으면 막아 주고, 휴대폰에서는 @ 가 있는 자판을 띄웁니다. <code>&lt;label&gt;이메일 &lt;input …&gt;&lt;/label&gt;</code> 처럼 감싸도 이어집니다.</p>
+<p><strong>검사 항목</strong> (4개)</p>
+<ol>
+<li>「이름」 글자표가 칸과 이어져 있다</li>
+<li>「이메일」 글자표가 칸과 이어져 있다</li>
+<li>「이메일」 칸이 이메일 형식(type=email)</li>
+<li>form 안에 「알림 신청」 버튼</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「「이메일」 글자표가 칸과 이어져 있다」에서 걸립니다</p>
+<p>「이름」만 고치고 나면 다 된 것 같습니다. <code>for</code> 가 아예 없는 「이메일」 글자표는 칸 바로 옆에 있어도 남남입니다 — 글자표를 하나씩 눌러 보면 압니다.</p>
+<pre><code class="language-html">&lt;form&gt;
+  &lt;label for=&quot;name&quot;&gt;이름&lt;/label&gt;
+  &lt;input type=&quot;text&quot; id=&quot;name&quot;&gt;
+  &lt;label&gt;이메일&lt;/label&gt;
+  &lt;input type=&quot;email&quot; id=&quot;mail&quot;&gt;
+  &lt;button type=&quot;submit&quot;&gt;알림 신청&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<hr>
+<h3 id="문제-9-머리-줄이-섞인-표">문제 9. 머리 줄이 섞인 표</h3>
+<p><em>오류 고치기 · HTML (body 안에 들어갈 내용)</em></p>
+<p><strong>문제</strong></p>
+<p>팟캐스트 회차 표에 잘못된 곳이 <strong>두 군데</strong> 있습니다. 고치시오.</p>
+<ul>
+<li>머리 줄(회차 · 제목 · 재생 수)이 몸통(<code>tbody</code>) 안에 들어가 있다 → 머리 줄은 <code>thead</code> 로</li>
+<li>13회 줄은 칸이 하나 모자란다 → 13회의 재생 수는 <code>7,302</code></li>
+</ul>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-html">&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;th&gt;회차&lt;/th&gt;&lt;th&gt;제목&lt;/th&gt;&lt;th&gt;재생 수&lt;/th&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;첫 출근 브이로그&lt;/td&gt;&lt;td&gt;8,420&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;편집실의 하루&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;라이브 뒷이야기&lt;/td&gt;&lt;td&gt;6,915&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</code></pre>
 <p><strong>정답</strong></p>
 <pre><code class="language-html">&lt;table&gt;
   &lt;thead&gt;
-    &lt;tr&gt;&lt;th&gt;분야&lt;/th&gt;&lt;th&gt;기사 수&lt;/th&gt;&lt;th&gt;비율&lt;/th&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;th&gt;회차&lt;/th&gt;&lt;th&gt;제목&lt;/th&gt;&lt;th&gt;재생 수&lt;/th&gt;&lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
-    &lt;tr&gt;&lt;td&gt;사회&lt;/td&gt;&lt;td&gt;121&lt;/td&gt;&lt;td&gt;24.2%&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td&gt;정치&lt;/td&gt;&lt;td&gt;115&lt;/td&gt;&lt;td&gt;23.0%&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td&gt;경제&lt;/td&gt;&lt;td&gt;88&lt;/td&gt;&lt;td&gt;17.6%&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td&gt;스포츠&lt;/td&gt;&lt;td&gt;80&lt;/td&gt;&lt;td&gt;16.0%&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;첫 출근 브이로그&lt;/td&gt;&lt;td&gt;8,420&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;편집실의 하루&lt;/td&gt;&lt;td&gt;7,302&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;라이브 뒷이야기&lt;/td&gt;&lt;td&gt;6,915&lt;/td&gt;&lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 </code></pre>
 <p><strong>해설</strong></p>
-<p><code>th</code> 는 머리 칸(굵게 · 가운데), <code>td</code> 는 데이터 칸입니다. <code>thead</code> · <code>tbody</code> 로 나누면 「어느 줄이 머리인가」가 태그로 드러나고, 나중에 CSS 로 머리 줄만 꾸미기도 쉽습니다.
-🔴 <code>tbody</code> 를 안 써도 브라우저가 <strong>알아서 넣습니다</strong>(F12 의 Elements 에 보입니다). 그래서 <code>thead</code> 없이 쓰면 머리 줄까지 몸통 안에 들어갑니다.</p>
-<p><strong>검사 항목</strong> (5개)</p>
+<p><code>thead</code> 를 안 쓰면 브라우저가 <strong>몰래 <code>tbody</code> 하나에 모든 줄을 넣습니다</strong>(F12 의 Elements 에 보입니다). 그러면 「어느 줄이 머리인가」가 태그로 드러나지 않고, 머리 줄만 꾸미기도 어렵습니다.
+줄마다 칸 수가 다르면 표가 들쭉날쭉해집니다. 브라우저는 오류를 내지 않으므로 <strong>세어 보는 수밖에</strong> 없습니다.</p>
+<p><strong>검사 항목</strong> (4개)</p>
 <ol>
-<li>표가 하나 있다</li>
 <li>머리 줄(thead)에 칸(th) 3개</li>
-<li>몸통(tbody)에 4줄</li>
-<li>몸통 줄마다 칸(td) 3개</li>
-<li>첫 몸통 줄이 「사회」로 시작</li>
+<li>몸통(tbody)에는 회차 3줄만</li>
+<li>몸통 줄마다 칸이 3개</li>
+<li>13회 줄의 재생 수가 7,302</li>
 </ol>
-<p><strong>흔한 오답</strong> — 「머리 줄(thead)에 칸(th) 3개」에서 걸립니다</p>
-<p>화면은 같습니다. 그런데 <code>thead</code> 를 안 쓰면 브라우저가 몰래 <code>tbody</code> 하나에 다섯 줄을 다 넣습니다 — F12 로 보면 보입니다.</p>
+<p><strong>흔한 오답</strong> — 「몸통 줄마다 칸이 3개」에서 걸립니다</p>
+<p>칸이 모자란 줄도 브라우저는 오류 없이 그립니다 — 오른쪽 끝이 비어 있을 뿐이라 눈에 잘 안 띕니다. 줄마다 칸 수를 세어 보는 습관이 필요합니다.</p>
 <pre><code class="language-html">&lt;table&gt;
-  &lt;tr&gt;&lt;th&gt;분야&lt;/th&gt;&lt;th&gt;기사 수&lt;/th&gt;&lt;th&gt;비율&lt;/th&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;사회&lt;/td&gt;&lt;td&gt;121&lt;/td&gt;&lt;td&gt;24.2%&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;정치&lt;/td&gt;&lt;td&gt;115&lt;/td&gt;&lt;td&gt;23.0%&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;경제&lt;/td&gt;&lt;td&gt;88&lt;/td&gt;&lt;td&gt;17.6%&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;스포츠&lt;/td&gt;&lt;td&gt;80&lt;/td&gt;&lt;td&gt;16.0%&lt;/td&gt;&lt;/tr&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;회차&lt;/th&gt;&lt;th&gt;제목&lt;/th&gt;&lt;th&gt;재생 수&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;첫 출근 브이로그&lt;/td&gt;&lt;td&gt;8,420&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;편집실의 하루&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;라이브 뒷이야기&lt;/td&gt;&lt;td&gt;6,915&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
 &lt;/table&gt;
 </code></pre>
 <hr>
-<h3 id="문제-9-폼">문제 9. 폼</h3>
-<p><strong>문제</strong></p>
-<p>뉴스레터 신청 폼을 만드시오.</p>
-<ul>
-<li>「이메일」 글자표(<code>label</code>)와 <strong>이메일 형식</strong> 입력 칸 — 글자표를 누르면 칸에 커서가 가도록 <strong>이어 붙일 것</strong></li>
-<li>「신청」 버튼
-(미리보기에서 버튼을 눌러도 아무 데도 보내지 않습니다)</li>
-</ul>
-<p><strong>정답</strong></p>
-<pre><code class="language-html">&lt;form&gt;
-  &lt;label for=&quot;email&quot;&gt;이메일&lt;/label&gt;
-  &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot;&gt;
-  &lt;button type=&quot;submit&quot;&gt;신청&lt;/button&gt;
-&lt;/form&gt;
-</code></pre>
-<p><strong>해설</strong></p>
-<p><code>label</code> 의 <code>for</code> 와 <code>input</code> 의 <code>id</code> 를 <strong>같은 이름</strong>으로 쓰면 둘이 이어집니다. 글자표를 눌러도 칸이 선택되고, 화면 읽기 프로그램이 칸의 이름을 읽어 줍니다. (<code>&lt;label&gt;이메일 &lt;input …&gt;&lt;/label&gt;</code> 처럼 감싸도 이어집니다.)
-<code>type=&quot;email&quot;</code> 은 제출할 때 「@」가 없으면 막아 주고, 휴대폰에서는 @ 가 있는 자판을 띄웁니다.</p>
-<p><strong>검사 항목</strong> (4개)</p>
-<ol>
-<li>form 이 있다</li>
-<li>form 안에 이메일 형식 입력 칸</li>
-<li>「이메일」 글자표가 입력 칸과 이어져 있다</li>
-<li>form 안에 「신청」 버튼</li>
-</ol>
-<p><strong>흔한 오답</strong> — 「「이메일」 글자표가 입력 칸과 이어져 있다」에서 걸립니다</p>
-<p>글자표가 칸 옆에 보이면 이어진 것 같지만, <code>for</code> 와 <code>id</code> 가 없으면 서로 남남입니다. 글자표를 눌러 보면 압니다.</p>
-<pre><code class="language-html">&lt;form&gt;
-  &lt;label&gt;이메일&lt;/label&gt;
-  &lt;input type=&quot;email&quot; name=&quot;email&quot;&gt;
-  &lt;button type=&quot;submit&quot;&gt;신청&lt;/button&gt;
-&lt;/form&gt;
-</code></pre>
-<hr>
 <h3 id="문제-10-클래스-선택자">문제 10. 클래스 선택자</h3>
+<p><em>빈칸 채우기 · CSS</em></p>
 <p><strong>문제</strong></p>
-<p>기사 제목(<code>title</code> 클래스)만 글자 색을 <code>#0d6b75</code> 로 바꾸시오. 「많이 본 기사」 제목은 그대로 둡니다.</p>
+<p>기사 제목(<code>title</code> 클래스)만 글자 색을 <code>#0d6b75</code> 로 바꾸려 합니다. 「많이 본 기사」 제목은 그대로 둡니다.
+빈칸(<code>___</code>)에 알맞은 <strong>선택자</strong>를 채우시오.</p>
 <p><strong>HTML (고정)</strong></p>
 <pre><code class="language-html">&lt;h2 class=&quot;title&quot;&gt;금리 동결&lt;/h2&gt;
 &lt;p&gt;한국은행이 기준금리를 동결했다.&lt;/p&gt;
 &lt;h2&gt;많이 본 기사&lt;/h2&gt;
 &lt;h2 class=&quot;title&quot;&gt;신작 개봉&lt;/h2&gt;
+</code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-css">___ {
+  color: #0d6b75;
+}
 </code></pre>
 <p><strong>정답</strong></p>
 <pre><code class="language-css">.title {
@@ -374,38 +377,37 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 </code></pre>
 <hr>
 <h3 id="문제-11-자손-선택자">문제 11. 자손 선택자</h3>
+<p><em>코드 작성 · CSS</em></p>
 <p><strong>문제</strong></p>
-<p><strong>메뉴(nav) 안의 링크만</strong> 밑줄을 없애시오. 바닥(footer)의 링크는 밑줄이 그대로 있어야 합니다.</p>
+<p><strong>회차 목록(<code>.episodes</code>) 안의 링크만</strong> 밑줄을 없애시오. 아래 「유튜브」 구독 링크는 밑줄이 그대로 있어야 합니다.</p>
 <p><strong>HTML (고정)</strong></p>
-<pre><code class="language-html">&lt;nav&gt;
-  &lt;a href=&quot;#&quot;&gt;정치&lt;/a&gt;
-  &lt;a href=&quot;#&quot;&gt;경제&lt;/a&gt;
-&lt;/nav&gt;
-&lt;p&gt;본문&lt;/p&gt;
-&lt;footer&gt;
-  &lt;a href=&quot;#&quot;&gt;회사 소개&lt;/a&gt;
-&lt;/footer&gt;
+<pre><code class="language-html">&lt;ul class=&quot;episodes&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;12회 첫 출근 브이로그&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;13회 편집실의 하루&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class=&quot;sns&quot;&gt;구독하기: &lt;a href=&quot;#&quot;&gt;유튜브&lt;/a&gt;&lt;/p&gt;
 </code></pre>
 <p><strong>정답</strong></p>
-<pre><code class="language-css">nav a {
+<pre><code class="language-css">.episodes a {
   text-decoration: none;
 }
 </code></pre>
 <p><strong>해설</strong></p>
-<p>선택자 사이의 <strong>띄어쓰기</strong>는 「안에 있는」이라는 뜻입니다. <code>nav a</code> 는 「nav 안에 있는 a」만 고릅니다. 바로 아래 자식만이 아니라 몇 겹 안에 있어도 고릅니다.</p>
+<p>선택자 사이의 <strong>띄어쓰기</strong>는 「안에 있는」이라는 뜻입니다. <code>.episodes a</code> 는 「class=&quot;episodes&quot; 안에 있는 a」만 고릅니다. 바로 아래 자식이 아니라 <code>li</code> 를 한 겹 거쳐 있어도 고릅니다(바로 아래만 고르려면 <code>&gt;</code>).</p>
 <p><strong>검사 항목</strong> (2개)</p>
 <ol>
-<li>nav 안 링크의 밑줄이 없다</li>
-<li>footer 안 링크의 밑줄은 그대로</li>
+<li>회차 목록 안 링크의 밑줄이 없다</li>
+<li>구독 링크의 밑줄은 그대로</li>
 </ol>
-<p><strong>흔한 오답</strong> — 「footer 안 링크의 밑줄은 그대로」에서 걸립니다</p>
-<p><code>a</code> 하나로 쓰면 짧고 메뉴도 잘 바뀌어서, 바닥 링크까지 바뀐 것을 못 보고 넘어갑니다.</p>
+<p><strong>흔한 오답</strong> — 「구독 링크의 밑줄은 그대로」에서 걸립니다</p>
+<p><code>a</code> 하나로 쓰면 짧고 회차 목록도 잘 바뀌어서, 아래 구독 링크까지 바뀐 것을 못 보고 넘어갑니다.</p>
 <pre><code class="language-css">a {
   text-decoration: none;
 }
 </code></pre>
 <hr>
 <h3 id="문제-12-글자-꾸미기">문제 12. 글자 꾸미기</h3>
+<p><em>코드 작성 · CSS</em></p>
 <p><strong>문제</strong></p>
 <p>기사 본문 문단(<code>.news</code> 안의 <code>p</code>)을 이렇게 꾸미시오.</p>
 <ul>
@@ -435,25 +437,35 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 <li>글자 색 #333333</li>
 </ol>
 <p><strong>흔한 오답</strong> — 「줄 간격 28.8px (18 × 1.6)」에서 걸립니다</p>
-<p>줄 간격을 px 로 쓰면서 글자 크기보다 작게 쓰면 줄이 겹칩니다. 「1.6」 은 단위 없이 씁니다.</p>
+<p>다른 속성처럼 단위를 붙이는 습관 때문에 <code>1.6px</code> 로 쓰기 쉽습니다. 그러면 줄 간격이 1.6px 이 되어 줄이 완전히 겹칩니다.</p>
 <pre><code class="language-css">.news p {
   font-size: 18px;
-  line-height: 16px;
+  line-height: 1.6px;
   color: #333333;
 }
 </code></pre>
 <hr>
-<h3 id="문제-13-박스-네-겹">문제 13. 박스 네 겹</h3>
+<h3 id="문제-13-안쪽과-바깥쪽">문제 13. 안쪽과 바깥쪽</h3>
+<p><em>오류 고치기 · CSS</em></p>
 <p><strong>문제</strong></p>
-<p>카드(<code>.card</code>)를 이렇게 꾸미시오.</p>
+<p>카드 글자가 <strong>테두리에 딱 붙어</strong> 있고, 카드끼리는 너무 벌어져 있습니다. 아래처럼 되게 고치시오.</p>
 <ul>
-<li>안쪽 여백 <code>16px</code> (네 방향 모두)</li>
-<li>테두리 <code>1px</code> 실선, 색 <code>#d8dfe7</code></li>
-<li>카드 사이 간격 <code>12px</code> (아래쪽 바깥 여백)</li>
+<li>글자와 테두리 사이(안쪽 여백) <code>16px</code> — 네 방향 모두</li>
+<li>카드 사이 간격 <code>12px</code></li>
+<li>테두리(<code>1px</code> 실선 <code>#d8dfe7</code>)는 그대로</li>
 </ul>
 <p><strong>HTML (고정)</strong></p>
 <pre><code class="language-html">&lt;div class=&quot;card&quot;&gt;첫 번째 카드&lt;/div&gt;
 &lt;div class=&quot;card&quot;&gt;두 번째 카드&lt;/div&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+</code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-css">.card {
+  margin: 16px;
+  border: 1px solid #d8dfe7;
+}
 </code></pre>
 <p><strong>정답</strong></p>
 <pre><code class="language-css">.card {
@@ -463,112 +475,178 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 }
 </code></pre>
 <p><strong>해설</strong></p>
-<p>상자는 안에서부터 <strong>내용 → 안쪽 여백(padding) → 테두리(border) → 바깥 여백(margin)</strong> 네 겹입니다. 안쪽 여백은 테두리 «안», 바깥 여백은 테두리 «밖»입니다. 카드에 바탕색을 주면 padding 은 색이 칠해지고 margin 은 안 칠해져서 구분됩니다.</p>
+<p>상자는 안에서부터 <strong>내용 → 안쪽 여백(padding) → 테두리(border) → 바깥 여백(margin)</strong> 네 겹입니다. 글자가 테두리에 붙은 것은 안쪽 여백이 없어서, 카드가 벌어진 것은 바깥 여백 때문입니다.
+위아래로 맞닿은 두 바깥 여백은 <strong>더해지지 않고 큰 쪽 하나만</strong> 남습니다(16 + 16 이 아니라 16). F12 의 Computed 탭 상자 그림으로 네 겹을 숫자로 볼 수 있습니다.</p>
 <p><strong>검사 항목</strong> (3개)</p>
 <ol>
 <li>안쪽 여백 16px</li>
 <li>테두리 1px 실선 #d8dfe7</li>
 <li>두 카드 사이 간격 12px</li>
 </ol>
-<p><strong>흔한 오답</strong> — 「안쪽 여백 16px」에서 걸립니다</p>
-<p>안쪽 여백(padding)과 바깥 여백(margin)을 바꿔 쓰는 실수입니다. 화면에서는 둘 다 「빈 곳」이라 헷갈립니다.</p>
+<p><strong>흔한 오답</strong> — 「두 카드 사이 간격 12px」에서 걸립니다</p>
+<p>안쪽 여백을 더하고 나면 다 고친 것 같지만, 원래 있던 <code>margin: 16px</code> 이 남아 카드 사이가 여전히 16px 입니다.</p>
 <pre><code class="language-css">.card {
-  padding: 12px;
+  margin: 16px;
+  padding: 16px;
   border: 1px solid #d8dfe7;
-  margin-bottom: 16px;
 }
 </code></pre>
 <hr>
-<h3 id="문제-14-box-sizing">문제 14. box-sizing</h3>
+<h2 id="중급">중급</h2>
+<h3 id="문제-14-div-를-이름-있는-상자로">문제 14. div 를 이름 있는 상자로</h3>
+<p><em>고쳐 쓰기 · HTML (body 안에 들어갈 내용)</em></p>
 <p><strong>문제</strong></p>
-<p>상자(<code>.box</code>)에 폭 <code>300px</code>, 안쪽 여백 <code>20px</code>, 테두리 <code>2px</code> 실선을 주시오. 단, <strong>화면에 보이는 상자의 폭이 정확히 300px</strong> 이어야 합니다.</p>
+<p>시작 코드는 <code>div</code> 로만 짠 화면입니다. <strong>화면은 그대로 두고</strong> 태그만 이름 있는 상자로 바꾸시오.</p>
+<ul>
+<li>머리 → <code>header</code>, 메뉴 → <code>nav</code>, 본문 → <code>main</code>, 기사 → <code>article</code>, 기사 제목 → <code>h2</code>, 바닥 → <code>footer</code></li>
+<li><code>class</code> 는 그대로 두십시오 — 고정 CSS 가 class 로 꾸미고 있어서, class 를 지우면 화면이 바뀝니다</li>
+</ul>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; font-family: sans-serif; }
+.header { display: flex; justify-content: space-between; padding: 12px 16px; background: #0d6b75; color: #ffffff; }
+.logo { font-weight: 700; }
+.menu a { color: #ffffff; margin-left: 12px; }
+.main { padding: 16px; }
+.news { border: 1px solid #d8dfe7; border-radius: 8px; padding: 12px; }
+.title { font-size: 20px; font-weight: 700; margin: 0 0 8px; }
+.footer { padding: 12px 16px; color: #59677a; }
+</code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-html">&lt;div class=&quot;header&quot;&gt;
+  &lt;div class=&quot;logo&quot;&gt;오늘의 뉴스&lt;/div&gt;
+  &lt;div class=&quot;menu&quot;&gt;&lt;a href=&quot;#&quot;&gt;정치&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;경제&lt;/a&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;main&quot;&gt;
+  &lt;div class=&quot;news&quot;&gt;
+    &lt;div class=&quot;title&quot;&gt;금리 동결&lt;/div&gt;
+    &lt;div class=&quot;body&quot;&gt;한국은행이 기준금리를 동결했다.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footer&quot;&gt;© 오늘의 뉴스&lt;/div&gt;
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-html">&lt;header class=&quot;header&quot;&gt;
+  &lt;div class=&quot;logo&quot;&gt;오늘의 뉴스&lt;/div&gt;
+  &lt;nav class=&quot;menu&quot;&gt;&lt;a href=&quot;#&quot;&gt;정치&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;경제&lt;/a&gt;&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main class=&quot;main&quot;&gt;
+  &lt;article class=&quot;news&quot;&gt;
+    &lt;h2 class=&quot;title&quot;&gt;금리 동결&lt;/h2&gt;
+    &lt;p class=&quot;body&quot;&gt;한국은행이 기준금리를 동결했다.&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/main&gt;
+&lt;footer class=&quot;footer&quot;&gt;© 오늘의 뉴스&lt;/footer&gt;
+</code></pre>
+<p><strong>해설</strong></p>
+<p>태그를 바꿔도 <code>class</code> 가 그대로면 고정 CSS 가 그대로 적용되어 <strong>화면은 한 픽셀도 안 바뀝니다</strong>. 바뀌는 것은 「이 상자가 무엇인가」를 <strong>기계가 읽을 수 있게</strong> 된다는 것입니다.
+<code>h2</code> 는 기본 글자 크기(1.5em)를 갖고 있지만 <code>.title</code> 의 20px 이 덮어써서 같아 보입니다. <code>body</code> 문단도 <code>p</code> 로 바꾸면 더 좋습니다.</p>
+<p><strong>검사 항목</strong> (8개)</p>
+<ol>
+<li>머리가 body 바로 아래의 header</li>
+<li>메뉴가 header 안의 nav</li>
+<li>본문이 body 바로 아래의 main</li>
+<li>기사가 main 안의 article</li>
+<li>기사 제목이 article 안의 h2</li>
+<li>바닥이 body 바로 아래의 footer</li>
+<li>div 로 남은 상자가 없다</li>
+<li>화면이 그대로 (제목 글자 크기 20px)</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「기사 제목이 article 안의 h2」에서 걸립니다</p>
+<p>큰 상자만 바꾸고 기사 제목은 <code>div</code> 로 남기기 쉽습니다. 화면이 같아서 놓칩니다 — 제목은 제목 태그여야 목차가 됩니다.</p>
+<pre><code class="language-html">&lt;header class=&quot;header&quot;&gt;
+  &lt;div class=&quot;logo&quot;&gt;오늘의 뉴스&lt;/div&gt;
+  &lt;nav class=&quot;menu&quot;&gt;&lt;a href=&quot;#&quot;&gt;정치&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;경제&lt;/a&gt;&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main class=&quot;main&quot;&gt;
+  &lt;article class=&quot;news&quot;&gt;
+    &lt;div class=&quot;title&quot;&gt;금리 동결&lt;/div&gt;
+    &lt;p class=&quot;body&quot;&gt;한국은행이 기준금리를 동결했다.&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/main&gt;
+&lt;footer class=&quot;footer&quot;&gt;© 오늘의 뉴스&lt;/footer&gt;
+</code></pre>
+<hr>
+<h3 id="문제-15-border-box-상자가-차지하는-자리">문제 15. border-box 상자가 차지하는 자리</h3>
+<p><em>결과 예측 · 답 적기</em></p>
+<p><strong>문제</strong></p>
+<p>다음 상자가 가로로 <strong>차지하는 자리</strong>(바깥 여백까지 포함)는 몇 px 입니까?</p>
+<pre><code class="language-css">.box {
+  box-sizing: border-box;
+  width: 240px;
+  padding: 20px;
+  border: 4px solid #16202a;
+  margin: 10px;
+}
+</code></pre>
+<p><strong>정답</strong> — <code>260</code> px — 실제 Chrome 에서 그려 재서 확인한 값</p>
+<p><strong>해설</strong></p>
+<p><code>border-box</code> 에서 <code>width: 240px</code> 은 <strong>테두리까지 포함한</strong> 폭이라 보이는 상자가 240px 입니다(글이 놓이는 폭은 240 − 20×2 − 4×2 = 192px).
+바깥 여백은 테두리 밖이라 따로 더합니다 — 240 + 10×2 = <strong>260px</strong>. 보이는 폭(240)과 차지하는 자리(260)를 구별하십시오.</p>
+<p><strong>흔한 오답</strong> — <code>308</code></p>
+<p>기본값(content-box)처럼 계산해 240 + 20×2 + 4×2 + 10×2 = 308 로 답한 경우입니다. <code>border-box</code> 에서는 width 가 이미 테두리까지 포함합니다.</p>
+<hr>
+<h3 id="문제-16-글이-놓이는-폭-맞추기">문제 16. 글이 놓이는 폭 맞추기</h3>
+<p><em>코드 작성 · CSS</em></p>
+<p><strong>문제</strong></p>
+<p>모든 상자가 <code>border-box</code> 입니다(고정 CSS). 안내 상자 <code>.note</code> 를 이렇게 만드시오.</p>
+<ul>
+<li><strong>글이 놓이는 폭</strong>(내용 폭)이 정확히 <code>200px</code></li>
+<li>안쪽 여백 <code>16px</code>(네 방향), 테두리 <code>2px</code> 실선 <code>#d8dfe7</code></li>
+</ul>
 <p><strong>HTML (고정)</strong></p>
-<pre><code class="language-html">&lt;div class=&quot;box&quot;&gt;상자&lt;/div&gt;
+<pre><code class="language-html">&lt;div class=&quot;note&quot;&gt;편성 안내 — 이번 주 금요일은 특집 생방송으로 정규 방송을 쉽니다.&lt;/div&gt;
 </code></pre>
 <p><strong>CSS (고정)</strong></p>
 <pre><code class="language-css">body { margin: 0; }
+*, *::before, *::after { box-sizing: border-box; }
 </code></pre>
 <p><strong>정답</strong></p>
-<pre><code class="language-css">.box {
-  box-sizing: border-box;
-  width: 300px;
-  padding: 20px;
-  border: 2px solid #16202a;
+<pre><code class="language-css">.note {
+  width: 236px;
+  padding: 16px;
+  border: 2px solid #d8dfe7;
 }
 </code></pre>
 <p><strong>해설</strong></p>
-<p>기본(<code>content-box</code>)에서 <code>width</code> 는 <strong>내용의 폭</strong>이라 안쪽 여백과 테두리가 <strong>더해집니다</strong>(300 + 40 + 4 = 344). <code>box-sizing: border-box</code> 를 주면 <code>width</code> 가 <strong>테두리까지 포함한 폭</strong>이 되어 300px 그대로입니다.
-그래서 보통 CSS 맨 위에 <code>*, *::before, *::after { box-sizing: border-box; }</code> 를 둡니다.</p>
+<p><code>border-box</code> 의 <code>width</code> = 내용 + 안쪽 여백 + 테두리 입니다. 거꾸로 풀면 200 + 16×2 + 2×2 = <strong>236px</strong>.
+이 상자만 <code>box-sizing: content-box</code> 로 되돌리고 <code>width: 200px</code> 로 써도 같은 화면이라 정답입니다 — 채점은 그려진 결과를 잽니다.</p>
 <p><strong>검사 항목</strong> (3개)</p>
 <ol>
-<li>보이는 폭이 300px</li>
-<li>안쪽 여백 20px</li>
-<li>테두리 2px</li>
+<li>글이 놓이는 폭 200px</li>
+<li>안쪽 여백 16px</li>
+<li>테두리 2px 실선 #d8dfe7</li>
 </ol>
-<p><strong>흔한 오답</strong> — 「보이는 폭이 300px」에서 걸립니다</p>
-<p>width 300px 이라고 썼으니 300px 이겠지 하고 넘어갑니다. 실제로는 300 + 20×2 + 2×2 = 344px 입니다.</p>
-<pre><code class="language-css">.box {
-  width: 300px;
-  padding: 20px;
-  border: 2px solid #16202a;
+<p><strong>흔한 오답</strong> — 「글이 놓이는 폭 200px」에서 걸립니다</p>
+<p>「200px 이면 width: 200px」 이라고 쓰기 쉽습니다. border-box 에서는 그 200 안에서 안쪽 여백 · 테두리를 빼므로 글 폭은 164px 밖에 안 됩니다.</p>
+<pre><code class="language-css">.note {
+  width: 200px;
+  padding: 16px;
+  border: 2px solid #d8dfe7;
 }
 </code></pre>
 <hr>
-<h3 id="문제-15-우선순위-①">문제 15. 우선순위 ①</h3>
+<h3 id="문제-17-점수가-같을-때--다를-때">문제 17. 점수가 같을 때 · 다를 때</h3>
+<p><em>결과 예측 · 하나 고르기</em></p>
 <p><strong>문제</strong></p>
-<p>다음 HTML 과 CSS 에서 「첫 문단」의 글자 색은 무엇입니까?</p>
-<pre><code class="language-html">&lt;p id=&quot;lead&quot; class=&quot;intro&quot;&gt;첫 문단&lt;/p&gt;
+<p>다음에서 「별점 4.5」의 글자 색은 무엇입니까?</p>
+<pre><code class="language-html">&lt;section class=&quot;review&quot;&gt;
+  &lt;p class=&quot;score&quot;&gt;별점 4.5&lt;/p&gt;
+&lt;/section&gt;
 </code></pre>
-<pre><code class="language-css">#lead  { color: red; }
-.intro { color: blue; }
-p      { color: green; }
+<pre><code class="language-css">.review p { color: green; }
+p.score   { color: blue; }
+.score    { color: red; }
 </code></pre>
-<p>① 빨강 (red)<br>② 파랑 (blue)<br>③ 초록 (green)<br>④ 검정 (아무것도 안 먹는다)</p>
-<p><strong>정답</strong> — ① 빨강 (red)</p>
+<p>① 초록 (green)<br>② 파랑 (blue)<br>③ 빨강 (red)<br>④ 검정 — 셋이 부딪혀 아무것도 안 먹는다</p>
+<p><strong>정답</strong> — ② 파랑 (blue)</p>
 <p><strong>해설</strong></p>
-<p>여러 규칙이 겹치면 <strong>선택자의 점수</strong>로 정합니다 — id(<code>#</code>) &gt; 클래스(<code>.</code>) &gt; 태그. 순서와 상관없이 id 규칙이 이기므로 빨강입니다.
-「나중 것이 이긴다」는 점수가 <strong>같을 때</strong> 쓰는 규칙입니다. F12 의 Styles 탭을 보면 진 규칙에 줄이 그어져 있습니다.</p>
+<p>먼저 <strong>점수</strong>를 셉니다. <code>.review p</code> 는 클래스 1 + 태그 1, <code>p.score</code> 도 클래스 1 + 태그 1 — <strong>같은 점수</strong>입니다. <code>.score</code> 는 클래스 1 뿐이라 가장 낮습니다.
+가장 높은 점수가 둘이므로 그 둘 중 <strong>나중에 적힌</strong> <code>p.score</code> 가 이깁니다 — 파랑. <code>.score</code> 는 맨 뒤에 있어도 점수에서 졌습니다.</p>
 <p><strong>흔한 오답</strong> — ③</p>
-<p>「나중에 쓴 것이 이긴다」만 기억하면 맨 아래의 초록을 고릅니다. 그 규칙은 <strong>점수가 같을 때만</strong> 씁니다.</p>
+<p>「맨 나중에 쓴 것이 이긴다」만 기억하면 빨강을 고릅니다. 순서는 <strong>점수가 같을 때만</strong> 따집니다 — <code>.score</code> 는 점수가 가장 낮습니다.</p>
 <hr>
-<h2 id="중급">중급</h2>
-<h3 id="문제-16-상속">문제 16. 상속</h3>
-<p><strong>문제</strong></p>
-<p>기사(<code>.news</code>)의 글자 색을 <code>#333333</code> 으로 주면 문단은 그 색을 <strong>물려받지만</strong>, 링크는 파란색 그대로입니다.
-링크도 <strong>둘러싼 글자의 색을 물려받게</strong> 하시오. 링크에 색 값(<code>#333333</code>)을 다시 쓰지 말 것 — 기사 색을 나중에 바꾸면 링크도 따라 바뀌어야 합니다.</p>
-<p><strong>HTML (고정)</strong></p>
-<pre><code class="language-html">&lt;article class=&quot;news&quot;&gt;
-  &lt;p&gt;폭설로 버스 운행이 멈췄다. &lt;a href=&quot;#&quot;&gt;관련 기사&lt;/a&gt;도 함께 보십시오.&lt;/p&gt;
-&lt;/article&gt;
-</code></pre>
-<p><strong>정답</strong></p>
-<pre><code class="language-css">.news {
-  color: #333333;
-}
-.news a {
-  color: inherit;
-}
-</code></pre>
-<p><strong>해설</strong></p>
-<p>글자 색 · 글꼴 같은 «글자» 속성은 <strong>안쪽 요소가 물려받습니다</strong>(상속). 그런데 링크는 브라우저가 <strong>자기 색(파랑)을 따로</strong> 정해 두어서 물려받지 않습니다.
-<code>color: inherit</code> 는 「둘러싼 요소의 값을 그대로 쓴다」는 뜻입니다. 색을 한 곳(<code>.news</code>)에만 두면 고칠 곳도 한 곳입니다.</p>
-<p><strong>검사 항목</strong> (3개)</p>
-<ol>
-<li>문단 글자 색 #333333</li>
-<li>링크 글자 색 #333333</li>
-<li>기사 색을 바꾸면 링크도 따라 바뀐다</li>
-</ol>
-<p><strong>흔한 오답</strong> — 「기사 색을 바꾸면 링크도 따라 바뀐다」에서 걸립니다</p>
-<p>지금 화면은 정답과 똑같습니다. 하지만 기사 색을 바꾸는 날 링크만 옛 색으로 남습니다.</p>
-<pre><code class="language-css">.news {
-  color: #333333;
-}
-.news a {
-  color: #333333;
-}
-</code></pre>
-<hr>
-<h3 id="문제-17-우선순위-②">문제 17. 우선순위 ②</h3>
+<h3 id="문제-18-우선순위-②">문제 18. 우선순위 ②</h3>
+<p><em>개념 확인 · 하나 고르기</em></p>
 <p><strong>문제</strong></p>
 <p>다음에서 「제목」의 글자 색은 무엇입니까?</p>
 <pre><code class="language-html">&lt;h2 class=&quot;title main&quot;&gt;제목&lt;/h2&gt;
@@ -584,7 +662,51 @@ p      { color: green; }
 <p><strong>흔한 오답</strong> — ①</p>
 <p>HTML 에 적은 class 순서가 영향을 줄 것 같아 보입니다. 순서를 보는 곳은 <strong>CSS 쪽</strong>뿐입니다.</p>
 <hr>
-<h3 id="문제-18-inline-block">문제 18. inline-block</h3>
+<h3 id="문제-19-단추는-글꼴을-물려받지-않는다">문제 19. 단추는 글꼴을 물려받지 않는다</h3>
+<p><em>고쳐 쓰기 · CSS</em></p>
+<p><strong>문제</strong></p>
+<p>문단은 둘러싼 <code>.sub</code> 의 글꼴(Georgia · 18px)을 물려받는데, <strong>단추는 물려받지 않아서</strong> 누군가 시작 코드처럼 값을 다시 적어 맞춰 두었습니다.
+지금 화면은 맞지만, <code>.sub</code> 의 글꼴을 바꾸는 날 단추만 옛 글꼴로 남습니다. 단추가 <strong>둘러싼 글꼴을 물려받게</strong> 고치시오. 단추 규칙에 글꼴 이름 · 크기 값을 직접 쓰지 말 것.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;section class=&quot;sub&quot;&gt;
+  &lt;p&gt;매주 금요일, 새 회차 알림을 받아 보세요.&lt;/p&gt;
+  &lt;button type=&quot;button&quot;&gt;구독하기&lt;/button&gt;
+&lt;/section&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">.sub { font-family: Georgia, serif; font-size: 18px; }
+</code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-css">button {
+  font-family: Georgia, serif;
+  font-size: 18px;
+}
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-css">button {
+  font-family: inherit;
+  font-size: inherit;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p>글꼴 · 글자 색 같은 «글자» 속성은 보통 안쪽 요소가 물려받지만, <strong>폼 요소(<code>button</code> · <code>input</code> · <code>select</code>)는 브라우저가 자기 글꼴을 따로</strong> 정해 두어서 물려받지 않습니다(링크가 파란색을 따로 갖는 것과 같은 이치).
+<code>inherit</code> 는 「둘러싼 요소의 값을 그대로」입니다. <code>font: inherit;</code> 한 줄로 글꼴 · 크기 · 굵기를 한꺼번에 물려받게 할 수도 있습니다.</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>단추 글자 크기 18px</li>
+<li>단추 글꼴이 문단과 같다</li>
+<li>.sub 의 글꼴을 바꾸면 단추도 따라 바뀐다</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「.sub 의 글꼴을 바꾸면 단추도 따라 바뀐다」에서 걸립니다</p>
+<p>시작 코드 그대로입니다. 지금 화면은 정답과 똑같아서 고칠 이유를 못 느끼지만, 값이 두 곳에 있어 한쪽만 바뀌는 날 어긋납니다.</p>
+<pre><code class="language-css">button {
+  font-family: Georgia, serif;
+  font-size: 18px;
+}
+</code></pre>
+<hr>
+<h3 id="문제-20-inline-block">문제 20. inline-block</h3>
+<p><em>코드 작성 · CSS</em></p>
 <p><strong>문제</strong></p>
 <p>탭(<code>span.tab</code>)에 폭 <code>120px</code> 을 줬는데(고정 CSS) <strong>안 먹습니다</strong>. 탭이 <strong>한 줄에 나란히 놓인 채로</strong> 폭이 120px 이 되게 하시오.</p>
 <p><strong>HTML (고정)</strong></p>
@@ -617,45 +739,67 @@ p      { color: green; }
 }
 </code></pre>
 <hr>
-<h3 id="문제-19-메뉴를-가로로">문제 19. 메뉴를 가로로</h3>
+<h3 id="문제-21-오른쪽-끝에-모으기">문제 21. 오른쪽 끝에 모으기</h3>
+<p><em>빈칸 채우기 · CSS</em></p>
 <p><strong>문제</strong></p>
-<p><strong>Flexbox</strong> 로 메뉴 다섯 칸을 <strong>한 줄</strong>로 놓고, 목록의 점을 없애시오.</p>
+<p>공연 예매 화면 아래의 단추 줄입니다. 두 단추를 한 줄에 나란히(사이 <code>8px</code>) 두고 <strong>오른쪽 끝</strong>에 모으려 합니다. <strong>Flexbox 로</strong> — 빈칸(<code>___</code>) 두 곳을 채우시오.</p>
 <p><strong>HTML (고정)</strong></p>
-<pre><code class="language-html">&lt;nav&gt;
-  &lt;ul class=&quot;menu&quot;&gt;
-    &lt;li&gt;정치&lt;/li&gt;
-    &lt;li&gt;경제&lt;/li&gt;
-    &lt;li&gt;사회&lt;/li&gt;
-    &lt;li&gt;IT&lt;/li&gt;
-    &lt;li&gt;문화&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/nav&gt;
+<pre><code class="language-html">&lt;div class=&quot;bar&quot;&gt;
+  &lt;button type=&quot;button&quot;&gt;취소&lt;/button&gt;
+  &lt;button type=&quot;button&quot;&gt;좌석 선택 완료&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>CSS (고정)</strong></p>
+<pre><code class="language-css">body { margin: 0; }
+.bar { width: 600px; padding: 8px; background: #edf1f5; box-sizing: border-box; }
+button { margin: 0; }
+</code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-css">.bar {
+  display: ___;
+  justify-content: ___;
+  gap: 8px;
+}
 </code></pre>
 <p><strong>정답</strong></p>
-<pre><code class="language-css">.menu {
+<pre><code class="language-css">.bar {
   display: flex;
-  list-style: none;
+  justify-content: flex-end;
+  gap: 8px;
 }
 </code></pre>
 <p><strong>해설</strong></p>
-<p><code>display: flex</code> 는 <strong>그 상자의 자식들</strong>을 가로 한 줄로 놓습니다. 그래서 <code>li</code> 가 아니라 <strong><code>ul</code>(컨테이너)</strong> 에 줍니다.
-<code>list-style: none</code> 은 <code>ul</code> 에 주면 <code>li</code> 가 물려받습니다.</p>
-<p><strong>검사 항목</strong> (3개)</p>
+<p><code>justify-content</code> 는 <strong>주축(가로)</strong> 에서 아이템을 어디로 모을지 정합니다. <code>flex-start</code>(기본 — 왼쪽) · <code>center</code> · <code>flex-end</code>(오른쪽) · <code>space-between</code>(양 끝).
+확인 · 다음 같은 «앞으로 가는» 단추를 오른쪽 끝에 두는 것은 흔한 화면 관례입니다.</p>
+<p><strong>검사 항목</strong> (4개)</p>
 <ol>
-<li>다섯 칸이 한 줄에 있다</li>
-<li>왼쪽에서 오른쪽으로 차례대로</li>
-<li>목록의 점이 없다</li>
+<li>두 단추가 한 줄</li>
+<li>「좌석 선택 완료」가 줄의 오른쪽 끝</li>
+<li>단추 사이 8px</li>
+<li>Flexbox 로 풀었다 (.bar 가 flex 상자)</li>
 </ol>
-<p><strong>흔한 오답</strong> — 「다섯 칸이 한 줄에 있다」에서 걸립니다</p>
-<p>점이 사라지면 할 일을 다 한 것 같습니다. <code>li</code> 는 블록이라 여전히 세로로 쌓여 있습니다.</p>
-<pre><code class="language-css">.menu {
-  list-style: none;
+<p><strong>흔한 오답</strong> — 「「좌석 선택 완료」가 줄의 오른쪽 끝」에서 걸립니다</p>
+<p><code>justify-content</code> 만 맞게 쓰고 <code>display</code> 를 그대로 두면 아무 오류 없이 <strong>무시됩니다</strong>. 이 속성은 flex(또는 grid) 상자에서만 일합니다.</p>
+<pre><code class="language-css">.bar {
+  display: block;
+  justify-content: flex-end;
+  gap: 8px;
+}
+</code></pre>
+<p><strong>화면은 같아도 오답</strong> — 「Flexbox 로 풀었다 (.bar 가 flex 상자)」에서 걸립니다</p>
+<p>Grid 로도 같은 화면이 나오지만 이 문제는 Flexbox 의 <code>justify-content</code> 를 묻습니다.</p>
+<pre><code class="language-css">.bar {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: end;
+  gap: 8px;
 }
 </code></pre>
 <hr>
-<h3 id="문제-20-양-끝-정렬">문제 20. 양 끝 정렬</h3>
+<h3 id="문제-22-양-끝-정렬">문제 22. 양 끝 정렬</h3>
+<p><em>코드 작성 · CSS</em></p>
 <p><strong>문제</strong></p>
-<p>머리(<code>.top</code>, 폭 800px · 이미 flex)에서 <strong>로고는 왼쪽 끝, 메뉴는 오른쪽 끝</strong>에 놓으시오.</p>
+<p>머리(<code>.top</code>, 폭 800px · 이미 flex)에서 <strong>로고는 왼쪽 끝, 메뉴는 오른쪽 끝</strong>에 놓으시오. Flexbox 로 풉니다(머리의 <code>display</code> 는 바꾸지 말 것).</p>
 <p><strong>HTML (고정)</strong></p>
 <pre><code class="language-html">&lt;header class=&quot;top&quot;&gt;
   &lt;div class=&quot;logo&quot;&gt;오늘의 뉴스&lt;/div&gt;
@@ -674,11 +818,12 @@ p      { color: green; }
 <p><strong>해설</strong></p>
 <p><code>justify-content</code> 는 <strong>주축(가로)</strong> 에서 남는 공간을 어떻게 나눌지 정합니다. <code>space-between</code> 은 첫 아이템을 시작 끝, 마지막 아이템을 반대쪽 끝에 붙이고 <strong>사이에</strong> 공간을 나눕니다.
 <code>center</code> 는 둘을 붙여서 가운데로 모읍니다.</p>
-<p><strong>검사 항목</strong> (3개)</p>
+<p><strong>검사 항목</strong> (4개)</p>
 <ol>
 <li>로고가 머리의 왼쪽 끝</li>
 <li>메뉴가 머리의 오른쪽 끝</li>
 <li>로고와 메뉴가 한 줄</li>
+<li>Flexbox 로 풀었다 (.top 가 flex 상자)</li>
 </ol>
 <p><strong>흔한 오답</strong> — 「로고가 머리의 왼쪽 끝」에서 걸립니다</p>
 <p>「가운데로 벌린다」와 「양 끝으로 민다」를 헷갈리는 경우입니다.</p>
@@ -686,10 +831,20 @@ p      { color: green; }
   justify-content: center;
 }
 </code></pre>
+<p><strong>화면은 같아도 오답</strong> — 「Flexbox 로 풀었다 (.top 가 flex 상자)」에서 걸립니다</p>
+<p>머리를 Grid 로 바꿔도 양 끝에 놓이지만, 이미 flex 인 상자에서 <code>justify-content</code> 하나로 끝나는 문제입니다.</p>
+<pre><code class="language-css">.top {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+}
+</code></pre>
 <hr>
-<h3 id="문제-21-세로-가운데">문제 21. 세로 가운데</h3>
+<h3 id="문제-23-세로-가운데">문제 23. 세로 가운데</h3>
+<p><em>오류 고치기 · CSS</em></p>
 <p><strong>문제</strong></p>
-<p>사진(<code>.thumb</code>, 높이 80px)과 제목(<code>.txt</code>)을 <strong>세로 가운데</strong>로 맞추시오. 제목 상자가 사진 높이만큼 늘어나지 않아야 합니다.</p>
+<p>사진(<code>.thumb</code>, 높이 80px)과 제목(<code>.txt</code>)을 <strong>세로 가운데</strong>로 맞추려고 시작 코드처럼 썼는데 <strong>아무 일도 일어나지 않습니다</strong>. 고치시오.
+제목 상자가 사진 높이만큼 늘어나지 않아야 합니다. <code>.row</code> 는 flex 상자 그대로 둡니다(Flexbox 로 풀 것).</p>
 <p><strong>HTML (고정)</strong></p>
 <pre><code class="language-html">&lt;div class=&quot;row&quot;&gt;
   &lt;div class=&quot;thumb&quot;&gt;&lt;/div&gt;
@@ -702,6 +857,11 @@ p      { color: green; }
 .thumb { width: 80px; height: 80px; background: #b8c7d3; }
 .txt { margin: 0; background: #e2f1f3; }
 </code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-css">.txt {
+  vertical-align: middle;
+}
+</code></pre>
 <p><strong>정답</strong></p>
 <pre><code class="language-css">.row {
   align-items: center;
@@ -710,10 +870,11 @@ p      { color: green; }
 <p><strong>해설</strong></p>
 <p><code>align-items</code> 는 <strong>교차축(세로)</strong> 에서 아이템을 어디에 둘지 정합니다. 기본값은 <code>stretch</code> — 가장 높은 아이템에 맞춰 <strong>늘립니다</strong>. 제목에 바탕색을 주면 늘어난 것이 보입니다.
 <code>center</code> 를 주면 늘리지 않고 세로 가운데에 둡니다.</p>
-<p><strong>검사 항목</strong> (2개)</p>
+<p><strong>검사 항목</strong> (3개)</p>
 <ol>
 <li>제목 상자가 80px 까지 늘어나지 않았다</li>
 <li>사진과 제목의 세로 중심이 같다</li>
+<li>Flexbox 로 풀었다 (.row 가 flex 상자)</li>
 </ol>
 <p><strong>흔한 오답</strong> — 「제목 상자가 80px 까지 늘어나지 않았다」에서 걸립니다</p>
 <p><code>vertical-align</code> 은 글자 줄 안에서만 쓰는 속성이라 flex 아이템에는 아무 일도 안 합니다. 이름 때문에 가장 먼저 떠올리기 쉽습니다.</p>
@@ -721,10 +882,21 @@ p      { color: green; }
   vertical-align: middle;
 }
 </code></pre>
+<p><strong>화면은 같아도 오답</strong> — 「Flexbox 로 풀었다 (.row 가 flex 상자)」에서 걸립니다</p>
+<p>Grid 로 바꿔 <code>align-items: center</code> 를 줘도 화면은 같지만, flex 상자 그대로 고치는 문제입니다.</p>
+<pre><code class="language-css">.row {
+  display: grid;
+  grid-template-columns: 80px auto;
+  justify-content: start;
+  align-items: center;
+}
+</code></pre>
 <hr>
-<h3 id="문제-22-gap">문제 22. gap</h3>
+<h3 id="문제-24-gap">문제 24. gap</h3>
+<p><em>오류 고치기 · CSS</em></p>
 <p><strong>문제</strong></p>
-<p>카드 <strong>사이</strong>의 간격을 <code>16px</code> 로 만드시오. 첫 카드는 왼쪽 끝에 붙어 있어야 합니다(바깥 양 끝에는 간격 없음).</p>
+<p>카드 <strong>사이</strong>를 <code>16px</code> 로 벌리려고 시작 코드처럼 썼더니, 사이는 16px 이 되었지만 <strong>첫 카드가 왼쪽 끝에서 8px 떨어졌습니다</strong>.
+첫 카드는 왼쪽 끝에 붙고, 카드 사이만 16px 이 되게 고치시오. <code>.cards</code> 는 flex 상자 그대로 둡니다.</p>
 <p><strong>HTML (고정)</strong></p>
 <pre><code class="language-html">&lt;div class=&quot;cards&quot;&gt;
   &lt;div class=&quot;card&quot;&gt;1&lt;/div&gt;
@@ -737,6 +909,11 @@ p      { color: green; }
 .cards { display: flex; }
 .card { width: 200px; height: 100px; background: #e2f1f3; }
 </code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-css">.card {
+  margin: 0 8px;
+}
+</code></pre>
 <p><strong>정답</strong></p>
 <pre><code class="language-css">.cards {
   gap: 16px;
@@ -744,22 +921,32 @@ p      { color: green; }
 </code></pre>
 <p><strong>해설</strong></p>
 <p><code>gap</code> 은 아이템 <strong>사이에만</strong> 간격을 둡니다. 바깥 양 끝에는 안 생기므로 margin 으로 끝을 따로 처리할 필요가 없습니다. 줄이 바뀌면(<code>flex-wrap</code>) 줄 사이에도 같은 간격이 생깁니다.</p>
-<p><strong>검사 항목</strong> (3개)</p>
+<p><strong>검사 항목</strong> (4개)</p>
 <ol>
 <li>첫 카드가 왼쪽 끝</li>
 <li>1번과 2번 사이 16px</li>
 <li>2번과 3번 사이 16px</li>
+<li>Flexbox 로 풀었다 (.cards 가 flex 상자)</li>
 </ol>
 <p><strong>흔한 오답</strong> — 「첫 카드가 왼쪽 끝」에서 걸립니다</p>
-<p>카드마다 양쪽 8px 이면 사이는 16px 이 맞지만, 첫 카드 왼쪽에도 8px 이 생깁니다.</p>
+<p>시작 코드 그대로입니다. 카드마다 양쪽 8px 이면 사이는 16px 이 맞지만, 첫 카드 왼쪽 · 마지막 카드 오른쪽에도 8px 이 생깁니다.</p>
 <pre><code class="language-css">.card {
   margin: 0 8px;
 }
 </code></pre>
+<p><strong>화면은 같아도 오답</strong> — 「Flexbox 로 풀었다 (.cards 가 flex 상자)」에서 걸립니다</p>
+<p>Grid 로 바꿔도 사이 16px 이 되지만, flex 상자 그대로 간격을 고치는 문제입니다.</p>
+<pre><code class="language-css">.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 200px);
+  gap: 16px;
+}
+</code></pre>
 <hr>
-<h3 id="문제-23-flex-wrap">문제 23. flex-wrap</h3>
+<h3 id="문제-25-flex-wrap">문제 25. flex-wrap</h3>
+<p><em>코드 작성 · CSS</em></p>
 <p><strong>문제</strong></p>
-<p>폭 540px 상자에 250px 카드 네 장이 한 줄로 <strong>우겨 들어가 줄어들었습니다</strong>. 카드 폭(250px)은 그대로 두고, 넘치는 카드는 <strong>다음 줄로</strong> 넘기시오 (한 줄에 2장씩 2줄).</p>
+<p>폭 540px 상자에 250px 카드 네 장이 한 줄로 <strong>우겨 들어가 줄어들었습니다</strong>. 카드 폭(250px)은 그대로 두고, 넘치는 카드는 <strong>다음 줄로</strong> 넘기시오 (한 줄에 2장씩 2줄). <code>.cards</code> 는 flex 상자 그대로 — Flexbox 로 풉니다.</p>
 <p><strong>HTML (고정)</strong></p>
 <pre><code class="language-html">&lt;div class=&quot;cards&quot;&gt;
   &lt;div class=&quot;card&quot;&gt;1&lt;/div&gt;
@@ -780,10 +967,11 @@ p      { color: green; }
 </code></pre>
 <p><strong>해설</strong></p>
 <p>flex 는 기본으로 <strong>한 줄</strong>입니다. 넘치면 아이템을 줄여서라도(<code>flex-shrink</code>) 한 줄에 넣습니다. <code>flex-wrap: wrap</code> 을 주면 넘치는 아이템이 <strong>다음 줄로</strong> 갑니다. <code>gap</code> 이 줄 사이에도 적용됩니다.</p>
-<p><strong>검사 항목</strong> (2개)</p>
+<p><strong>검사 항목</strong> (3개)</p>
 <ol>
 <li>카드 폭이 모두 250px</li>
 <li>한 줄에 2장씩 2줄</li>
+<li>Flexbox 로 풀었다 (.cards 가 flex 상자)</li>
 </ol>
 <p><strong>흔한 오답</strong> — 「한 줄에 2장씩 2줄」에서 걸립니다</p>
 <p>줄어들지 않게 막으면 폭은 250px 이 되지만, 한 줄로 그대로 있어 상자 밖으로 삐져나갑니다.</p>
@@ -791,91 +979,84 @@ p      { color: green; }
   flex-shrink: 0;
 }
 </code></pre>
+<p><strong>화면은 같아도 오답</strong> — 「Flexbox 로 풀었다 (.cards 가 flex 상자)」에서 걸립니다</p>
+<p>Grid 로 2열을 직접 그리면 같은 화면이지만, 「넘치면 다음 줄로」 를 Flexbox 로 하는 문제입니다.</p>
+<pre><code class="language-css">.cards {
+  display: grid;
+  grid-template-columns: 250px 250px;
+}
+</code></pre>
 <hr>
-<h3 id="문제-24-flex-direction">문제 24. flex-direction</h3>
+<h3 id="문제-26-flex-direction">문제 26. flex-direction</h3>
+<p><em>코드 작성 · CSS</em></p>
 <p><strong>문제</strong></p>
-<p>카드(<code>.card</code>, 이미 flex) 안의 세 요소(사진 · 제목 · 정보)가 <strong>위에서 아래로</strong> 쌓이고, 사이 간격이 <code>8px</code> 이 되게 하시오. 사진은 카드 폭에 꽉 차야 합니다.</p>
+<p>영화 포스터 카드(<code>.poster</code>, 이미 flex) 안의 세 요소(포스터 · 제목 · 정보)가 <strong>위에서 아래로</strong> 쌓이고, 사이 간격이 <code>8px</code> 이 되게 하시오. 포스터는 카드 폭에 꽉 차야 합니다.</p>
 <p><strong>HTML (고정)</strong></p>
-<pre><code class="language-html">&lt;article class=&quot;card&quot;&gt;
+<pre><code class="language-html">&lt;article class=&quot;poster&quot;&gt;
   &lt;div class=&quot;pic&quot;&gt;&lt;/div&gt;
-  &lt;h3&gt;폭설 주의보&lt;/h3&gt;
-  &lt;p class=&quot;meta&quot;&gt;김하나 · 11/05&lt;/p&gt;
+  &lt;h3&gt;겨울 항구&lt;/h3&gt;
+  &lt;p class=&quot;meta&quot;&gt;드라마 · 118분&lt;/p&gt;
 &lt;/article&gt;
 </code></pre>
 <p><strong>CSS (고정)</strong></p>
 <pre><code class="language-css">body { margin: 0; }
-.card { display: flex; width: 300px; }
+.poster { display: flex; width: 300px; }
 .pic { height: 120px; background: #b8c7d3; }
 h3, p { margin: 0; }
 </code></pre>
 <p><strong>정답</strong></p>
-<pre><code class="language-css">.card {
+<pre><code class="language-css">.poster {
   flex-direction: column;
   gap: 8px;
 }
 </code></pre>
 <p><strong>해설</strong></p>
 <p><code>flex-direction: column</code> 은 <strong>주축을 세로로</strong> 바꿉니다. 이제 아이템이 위에서 아래로 놓이고, <code>gap</code> 은 세로 간격이 됩니다.
-축이 바뀌면 <code>justify-content</code>(주축)와 <code>align-items</code>(교차축)의 방향도 같이 바뀝니다 — 기본 <code>stretch</code> 가 이번엔 <strong>가로로</strong> 늘려서 사진이 300px 에 꽉 찹니다.</p>
-<p><strong>검사 항목</strong> (3개)</p>
+축이 바뀌면 <code>justify-content</code>(주축)와 <code>align-items</code>(교차축)의 방향도 같이 바뀝니다 — 기본 <code>stretch</code> 가 이번엔 <strong>가로로</strong> 늘려서 포스터가 300px 에 꽉 찹니다.</p>
+<p><strong>검사 항목</strong> (4개)</p>
 <ol>
-<li>사진이 카드 폭(300px)에 꽉 찬다</li>
-<li>사진 아래 8px 에 제목</li>
+<li>포스터가 카드 폭(300px)에 꽉 찬다</li>
+<li>포스터 아래 8px 에 제목</li>
 <li>제목 아래 8px 에 정보</li>
+<li>Flexbox 로 풀었다 (.poster 가 flex 상자 · flex-direction: column)</li>
 </ol>
-<p><strong>흔한 오답</strong> — 「사진이 카드 폭(300px)에 꽉 찬다」에서 걸립니다</p>
-<p>간격만 주면 셋이 여전히 가로로 놓입니다. 폭을 안 준 사진은 가로 줄에서 폭이 0 이 되어 아예 안 보입니다.</p>
-<pre><code class="language-css">.card {
+<p><strong>흔한 오답</strong> — 「포스터가 카드 폭(300px)에 꽉 찬다」에서 걸립니다</p>
+<p>간격만 주면 셋이 여전히 가로로 놓입니다. 폭을 안 준 포스터는 가로 줄에서 폭이 0 이 되어 아예 안 보입니다.</p>
+<pre><code class="language-css">.poster {
   gap: 8px;
 }
 </code></pre>
-<hr>
-<h3 id="문제-25-grid-3열">문제 25. Grid 3열</h3>
-<p><strong>문제</strong></p>
-<p><strong>Grid</strong> 로 폭 900px 상자를 <strong>같은 폭 3열</strong>로 나누시오. 열 사이 간격은 <code>30px</code> 입니다.</p>
-<p><strong>HTML (고정)</strong></p>
-<pre><code class="language-html">&lt;div class=&quot;grid&quot;&gt;
-  &lt;div class=&quot;item&quot;&gt;1&lt;/div&gt;
-  &lt;div class=&quot;item&quot;&gt;2&lt;/div&gt;
-  &lt;div class=&quot;item&quot;&gt;3&lt;/div&gt;
-  &lt;div class=&quot;item&quot;&gt;4&lt;/div&gt;
-  &lt;div class=&quot;item&quot;&gt;5&lt;/div&gt;
-  &lt;div class=&quot;item&quot;&gt;6&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<p><strong>CSS (고정)</strong></p>
-<pre><code class="language-css">body { margin: 0; }
-.grid { width: 900px; }
-.item { height: 60px; background: #e2f1f3; }
-</code></pre>
-<p><strong>정답</strong></p>
-<pre><code class="language-css">.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+<p><strong>화면은 같아도 오답</strong> — 「Flexbox 로 풀었다 (.poster 가 flex 상자 · flex-direction: column)」에서 걸립니다</p>
+<p>flex 를 꺼서 블록으로 쌓고 바깥 여백으로 간격을 맞추면 화면은 같습니다. 이 문제는 Flexbox 의 <strong>축을 바꾸는</strong> 문제입니다.</p>
+<pre><code class="language-css">.poster {
+  display: block;
+}
+h3, .meta {
+  margin-top: 8px;
 }
 </code></pre>
+<hr>
+<h3 id="문제-27-고정-열과-fr-이-섞일-때">문제 27. 고정 열과 fr 이 섞일 때</h3>
+<p><em>결과 예측 · 답 적기</em></p>
+<p><strong>문제</strong></p>
+<p>다음 판에서 <strong>가운데 열</strong>의 폭은 몇 px 입니까?</p>
+<pre><code class="language-css">.grid {
+  display: grid;
+  width: 840px;
+  grid-template-columns: 200px 1fr 1fr;
+  gap: 20px;
+}
+</code></pre>
+<p><strong>정답</strong> — <code>300</code> px — 실제 Chrome 에서 그려 재서 확인한 값</p>
 <p><strong>해설</strong></p>
-<p><code>fr</code> 은 <strong>간격을 빼고 남은 공간</strong>을 나누는 단위입니다. <code>repeat(3, 1fr)</code> 은 남은 840px 을 셋으로 — 280px 씩입니다.
-px 로 직접 쓰면 간격을 계산에 넣어야 하고, 상자 폭이 바뀌면 다시 계산해야 합니다.</p>
-<p><strong>검사 항목</strong> (3개)</p>
-<ol>
-<li>칸 폭이 모두 280px ((900 − 30×2) ÷ 3)</li>
-<li>한 줄에 3칸</li>
-<li>열 사이 30px</li>
-</ol>
-<p><strong>흔한 오답</strong> — 「칸 폭이 모두 280px ((900 − 30×2) ÷ 3)」에서 걸립니다</p>
-<p>900 ÷ 3 = 300 이라 300px 로 쓰기 쉽습니다. 간격 60px 이 더해져 960px 이 되어 상자를 넘칩니다.</p>
-<pre><code class="language-css">.grid {
-  display: grid;
-  grid-template-columns: 300px 300px 300px;
-  gap: 30px;
-}
-</code></pre>
+<p><code>fr</code> 은 <strong>고정된 것과 간격을 모두 빼고 남은 공간</strong>을 나눕니다. 840 − 200(고정 열) − 20×2(간격 둘) = 600, 그것을 <code>1fr 1fr</code> 로 반씩 — <strong>300px</strong> 입니다.</p>
+<p><strong>흔한 오답</strong> — <code>320</code></p>
+<p>고정 열 200px 만 빼고 (840 − 200) ÷ 2 = 320 으로 나눈 경우입니다. 열이 셋이면 <strong>간격도 둘</strong>이라 그것도 먼저 빼야 합니다.</p>
 <hr>
-<h3 id="문제-26-fr-비율">문제 26. fr 비율</h3>
+<h3 id="문제-28-fr-비율">문제 28. fr 비율</h3>
+<p><em>빈칸 채우기 · CSS</em></p>
 <p><strong>문제</strong></p>
-<p>Grid 로 본문(<code>main</code>)과 곁(<code>aside</code>)의 폭을 <strong>2 : 1</strong> 로 나누시오. 사이 간격은 <code>24px</code> 입니다.</p>
+<p>Grid 로 본문(<code>main</code>)과 곁(<code>aside</code>)의 폭을 <strong>2 : 1</strong> 로 나누고 사이 간격을 <code>24px</code> 로 하려 합니다. 빈칸(<code>___</code>) 두 곳을 채우시오.</p>
 <p><strong>HTML (고정)</strong></p>
 <pre><code class="language-html">&lt;div class=&quot;page&quot;&gt;
   &lt;main&gt;본문&lt;/main&gt;
@@ -887,6 +1068,13 @@ px 로 직접 쓰면 간격을 계산에 넣어야 하고, 상자 폭이 바뀌�
 .page { width: 960px; }
 main { height: 200px; background: #e2f1f3; }
 aside { height: 200px; background: #edf1f5; }
+</code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-css">.page {
+  display: grid;
+  grid-template-columns: ___;
+  gap: ___;
+}
 </code></pre>
 <p><strong>정답</strong></p>
 <pre><code class="language-css">.page {
@@ -904,14 +1092,16 @@ aside { height: 200px; background: #edf1f5; }
 <li>나란히, 사이 24px</li>
 </ol>
 <p><strong>흔한 오답</strong> — 「본문 폭 624px ((960 − 24) × 2/3)」에서 걸립니다</p>
-<p>비율은 맞게 썼는데 간격을 빠뜨린 경우입니다. 본문이 640px 이 되어 검사에서 걸립니다.</p>
+<p>2 : 1 을 퍼센트(66% · 33%)로 옮긴 경우입니다. 퍼센트는 간격을 모르고 나눠서, 간격 24px 이 더해져 판을 넘칩니다.</p>
 <pre><code class="language-css">.page {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 66% 33%;
+  gap: 24px;
 }
 </code></pre>
 <hr>
-<h3 id="문제-27-grid-template-areas">문제 27. grid-template-areas</h3>
+<h3 id="문제-29-grid-template-areas">문제 29. grid-template-areas</h3>
+<p><em>코드 작성 · CSS</em></p>
 <p><strong>문제</strong></p>
 <p><code>grid-template-areas</code> 로 그림처럼 배치하시오. 열은 본문 <code>3fr</code> · 곁 <code>1fr</code>, 간격은 없습니다.</p>
 <pre><code class="language-text">┌──────────── header ────────────┐
@@ -977,7 +1167,88 @@ main   { grid-area: main; }
 footer { grid-area: footer; }
 </code></pre>
 <hr>
-<h3 id="문제-28-미디어-쿼리">문제 28. 미디어 쿼리</h3>
+<h3 id="문제-30-표-꾸미기">문제 30. 표 꾸미기</h3>
+<p><em>코드 작성 · CSS</em></p>
+<p><strong>문제</strong></p>
+<p>표를 이렇게 꾸미시오.</p>
+<ul>
+<li>칸 사이의 <strong>겹선을 한 줄로</strong></li>
+<li>모든 칸(<code>th</code> · <code>td</code>)에 테두리 <code>1px</code> 실선 <code>#d8dfe7</code>, 안쪽 여백 위아래 <code>8px</code> · 좌우 <code>12px</code></li>
+<li>머리 칸(<code>th</code>) 바탕 <code>#edf1f5</code></li>
+<li>숫자 칸(<code>.num</code>)만 <strong>오른쪽 정렬</strong> (회차 제목은 왼쪽 그대로)</li>
+</ul>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;제목&lt;/th&gt;&lt;th&gt;재생 수&lt;/th&gt;&lt;th&gt;평균 청취(분)&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;첫 출근 브이로그&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;8,420&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;31&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;편집실의 하루&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;7,302&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;27&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;라이브 뒷이야기&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;6,915&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;42&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-css">table {
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #d8dfe7;
+  padding: 8px 12px;
+}
+th {
+  background: #edf1f5;
+}
+.num {
+  text-align: right;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p>표의 칸은 기본으로 <strong>각자 테두리</strong>를 그려 이웃 칸과 두 줄이 됩니다. <code>border-collapse: collapse</code> 를 주면 이웃한 테두리를 한 줄로 합칩니다.
+숫자는 오른쪽 정렬해야 자릿수가 맞아 크기를 비교하기 쉽습니다. 숫자 칸에만 class(<code>num</code>)를 붙여 두면 그 칸만 고를 수 있습니다.</p>
+<p><strong>검사 항목</strong> (6개)</p>
+<ol>
+<li>겹선이 한 줄 (border-collapse)</li>
+<li>모든 칸 테두리 1px 실선 #d8dfe7</li>
+<li>안쪽 여백 8px 12px</li>
+<li>숫자 칸은 오른쪽 정렬</li>
+<li>제목 칸은 오른쪽 정렬이 아니다</li>
+<li>머리 칸 바탕 #edf1f5</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「제목 칸은 오른쪽 정렬이 아니다」에서 걸립니다</p>
+<p>숫자만 오른쪽으로 보내려다 <code>td</code> 전체를 골라 제목까지 오른쪽으로 갑니다. 그래서 숫자 칸에 class 가 붙어 있습니다.</p>
+<pre><code class="language-css">table {
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #d8dfe7;
+  padding: 8px 12px;
+}
+th {
+  background: #edf1f5;
+}
+td {
+  text-align: right;
+}
+</code></pre>
+<hr>
+<h3 id="문제-31-변수로-묶어도-되는-것">문제 31. 변수로 묶어도 되는 것</h3>
+<p><em>개념 확인 · 모두 고르기</em></p>
+<p><strong>문제</strong></p>
+<p>공연 예매 사이트에서 보라색 <code>#6b3fa0</code> 이 다섯 군데에 쓰였습니다. 이 색을 <code>:root { --brand: #6b3fa0; }</code> 하나로 묶으려 합니다.
+<strong>브랜드 색을 바꾸는 날 함께 바뀌어야 하는 것</strong>만 <code>var(--brand)</code> 로 묶어야 합니다. 묶어도 되는 것을 <strong>모두</strong> 고르시오.</p>
+<p>① 로고 글자 색<br>② 「예매하기」 단추의 바탕색<br>③ 선택한 좌석의 테두리 색<br>④ 「매진 임박」 경고 글자 색 — 남은 좌석이 적다는 알림<br>⑤ 메뉴에서 «지금 보는 곳»을 표시하는 밑줄 색</p>
+<p><strong>정답</strong> — ① ② ③ ⑤</p>
+<p><strong>해설</strong></p>
+<p>변수는 <strong>같은 숫자가 아니라 같은 뜻</strong>을 묶습니다. 로고 · 예매 단추 · 선택한 좌석 · 지금 보는 곳 표시는 모두 「우리 브랜드」라는 뜻이라 함께 바뀌어야 합니다.
+「매진 임박」은 <strong>경고</strong>라는 다른 뜻인데 지금 우연히 같은 색일 뿐입니다. <code>--warn</code> 같은 다른 이름으로 따로 두어야 브랜드 색을 바꿔도 경고는 경고로 남습니다.</p>
+<p><strong>흔한 오답</strong> — ① ② ③ ④ ⑤</p>
+<p>값이 지금 똑같이 <code>#6b3fa0</code> 이라 다섯 개를 다 묶기 쉽습니다. 그러면 브랜드 색을 초록으로 바꾸는 날 「매진 임박」 경고까지 초록이 되어 경고로 안 보입니다.</p>
+<hr>
+<h2 id="고급">고급</h2>
+<h3 id="문제-32-미디어-쿼리">문제 32. 미디어 쿼리</h3>
+<p><em>코드 작성 · CSS</em></p>
 <p><strong>문제</strong></p>
 <p>창이 <strong>넓으면 3열</strong>, 창 폭이 <strong>600px 이하면 1열</strong>이 되게 하시오. (601px 이면 3열입니다.)
 미리보기 위의 폭 단추로 375 · 600 · 1000 을 눌러 확인할 수 있습니다.</p>
@@ -1028,7 +1299,8 @@ footer { grid-area: footer; }
 }
 </code></pre>
 <hr>
-<h3 id="문제-29-사진이-넘칠-때">문제 29. 사진이 넘칠 때</h3>
+<h3 id="문제-33-사진이-넘칠-때">문제 33. 사진이 넘칠 때</h3>
+<p><em>코드 작성 · CSS</em></p>
 <p><strong>문제</strong></p>
 <p>폭 375px 휴대폰 화면에서 사진(480px) 때문에 <strong>가로 스크롤</strong>이 생깁니다. 사진이 카드 폭에 맞게 <strong>줄어들고 비율은 그대로</strong> 유지되게 하시오. 넓은 화면에서는 원래 크기(480px)보다 <strong>커지면 안 됩니다</strong>.</p>
 <p><strong>HTML (고정)</strong></p>
@@ -1064,259 +1336,97 @@ footer { grid-area: footer; }
 }
 </code></pre>
 <hr>
-<h3 id="문제-30-css-변수">문제 30. CSS 변수</h3>
+<h3 id="문제-34-auto-fill-은-몇-열이-될까">문제 34. auto-fill 은 몇 열이 될까</h3>
+<p><em>결과 예측 · 답 적기</em></p>
 <p><strong>문제</strong></p>
-<p>브랜드 색 <code>#0d6b75</code> 를 <code>:root</code> 에 변수 <code>--brand</code> 로 정의하고, <strong>제목 글자 색</strong>(<code>.brand</code>)과 <strong>배지 바탕색</strong>(<code>.badge</code>)이 그 변수를 쓰게 하시오. 배지 글자는 흰색입니다.</p>
-<p><strong>HTML (고정)</strong></p>
-<pre><code class="language-html">&lt;h1 class=&quot;brand&quot;&gt;오늘의 뉴스&lt;/h1&gt;
-&lt;span class=&quot;badge&quot;&gt;속보&lt;/span&gt;
-</code></pre>
-<p><strong>정답</strong></p>
-<pre><code class="language-css">:root {
-  --brand: #0d6b75;
-}
-.brand {
-  color: var(--brand);
-}
-.badge {
-  background: var(--brand);
-  color: #ffffff;
+<p>카드 6장이 들어 있는 다음 판에서, <strong>한 줄에 카드가 몇 장</strong> 놓입니까?</p>
+<pre><code class="language-css">.cards {
+  display: grid;
+  width: 900px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
 }
 </code></pre>
+<p><strong>정답</strong> — <code>3</code> 장 — 실제 Chrome 에서 그려 재서 확인한 값</p>
 <p><strong>해설</strong></p>
-<p><code>--이름: 값</code> 으로 정의하고 <code>var(--이름)</code> 으로 씁니다. <code>:root</code> 는 문서 맨 바깥(<code>html</code>)이라 <strong>어디서나</strong> 쓸 수 있습니다.
-변수의 값어치는 「<strong>한 곳만 고치면 다 바뀐다</strong>」입니다. 그래서 검사가 <code>--brand</code> 를 빨강으로 바꿔 보고 둘이 함께 바뀌는지 봅니다.</p>
-<p><strong>검사 항목</strong> (5개)</p>
-<ol>
-<li>제목 글자 색 #0d6b75</li>
-<li>배지 바탕색 #0d6b75</li>
-<li>배지 글자 흰색</li>
-<li>:root 에 --brand 가 있다</li>
-<li>--brand 만 바꾸면 제목 · 배지가 함께 바뀐다</li>
-</ol>
-<p><strong>흔한 오답</strong> — 「--brand 만 바꾸면 제목 · 배지가 함께 바뀐다」에서 걸립니다</p>
-<p>변수를 만들어 놓고 정작 값을 직접 쓴 경우입니다. 화면은 똑같지만, 색을 바꾸는 날 고칠 곳이 다시 여러 군데가 됩니다.</p>
-<pre><code class="language-css">:root {
-  --brand: #0d6b75;
-}
-.brand {
-  color: #0d6b75;
-}
-.badge {
-  background: #0d6b75;
-  color: #ffffff;
-}
-</code></pre>
+<p><code>auto-fill</code> 은 「최소 폭(220px)을 지키며 <strong>간격까지 넣어서</strong> 들어갈 만큼」 열을 만듭니다. 4장: 220×4 + 20×3 = 940px &gt; 900px — 안 들어갑니다. 3장: 220×3 + 20×2 = 700px — 들어갑니다.
+그래서 <strong>3열</strong>이고, 남는 200px 은 <code>1fr</code> 이 셋에게 나눠 주어 카드 폭은 (900 − 40) ÷ 3 ≈ 287px 이 됩니다.</p>
+<p><strong>흔한 오답</strong> — <code>4</code></p>
+<p>900 ÷ 220 ≈ 4.09 라 4장이 들어갈 것 같지만, 4장이면 <strong>사이 간격 셋</strong>(60px)이 더해져 940px 이 필요합니다.</p>
 <hr>
-<h3 id="문제-31-상태--hover--focus-visible">문제 31. 상태 — :hover · :focus-visible</h3>
+<h3 id="문제-35-지워진-포커스-표시">문제 35. 지워진 포커스 표시</h3>
+<p><em>오류 고치기 · CSS</em></p>
 <p><strong>문제</strong></p>
-<p>버튼(<code>.btn</code>)을 이렇게 꾸미시오.</p>
+<p>디자이너가 「누를 때마다 테두리가 번쩍여서 보기 싫다」며 마지막 규칙(<code>.play:focus</code>)을 넣었습니다. 그 뒤로 <strong>키보드(Tab)로 다니는 사람</strong>은 지금 어디에 있는지 알 수 없게 되었습니다.</p>
 <ul>
-<li>평소: 바탕 <code>#0d6b75</code>, 글자 흰색</li>
-<li>마우스를 올리면: 바탕 <code>#0a5058</code></li>
-<li><strong>키보드(Tab)로 왔을 때</strong>: 굵기 <code>3px</code> 의 바깥선(<code>outline</code>)이 보이게 (색은 자유 — 바탕과 대비가 나는 색)
-(채점은 마우스를 올린 상태 · Tab 으로 온 상태를 켠 것처럼 바꿔 그려서 잽니다)</li>
+<li>마우스로 누를 때는 지금처럼 바깥선이 <strong>보이지 않게</strong></li>
+<li><strong>Tab 으로 왔을 때만</strong> 굵기 <code>3px</code> 의 바깥선(<code>outline</code>)이 보이게 (색은 자유)</li>
+<li>평소 · 마우스를 올렸을 때의 바탕색은 그대로
+(채점은 마우스를 올린 상태 · 마우스로 누른 상태 · Tab 으로 온 상태를 켠 것처럼 바꿔 그려서 잽니다)</li>
 </ul>
 <p><strong>HTML (고정)</strong></p>
-<pre><code class="language-html">&lt;button class=&quot;btn&quot; type=&quot;button&quot;&gt;구독하기&lt;/button&gt;
+<pre><code class="language-html">&lt;p&gt;새 회차가 올라왔습니다. &lt;a class=&quot;play&quot; href=&quot;#ep14&quot;&gt;14회 듣기&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-css">.play {
+  background: #1f6f4a;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.play:hover {
+  background: #17573a;
+}
+.play:focus {
+  outline: none;
+}
 </code></pre>
 <p><strong>정답</strong></p>
-<pre><code class="language-css">.btn {
-  background: #0d6b75;
+<pre><code class="language-css">.play {
+  background: #1f6f4a;
   color: #ffffff;
-  border: 0;
-  padding: 8px 16px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
 }
-.btn:hover {
-  background: #0a5058;
+.play:hover {
+  background: #17573a;
 }
-.btn:focus-visible {
+.play:focus-visible {
   outline: 3px solid #16202a;
   outline-offset: 2px;
 }
 </code></pre>
 <p><strong>해설</strong></p>
-<p><code>:hover</code> 는 「마우스가 올라가 있는 동안」, <code>:focus-visible</code> 은 「<strong>키보드로</strong> 와서 선택된 동안」입니다. <code>:focus</code> 는 마우스로 눌러도 켜져서 누를 때마다 테두리가 번쩍이는데, <code>:focus-visible</code> 은 키보드로 왔을 때만 보여 줍니다.
-🔴 <code>outline: none</code> 으로 바깥선을 <strong>지우기만</strong> 하면 키보드 사용자는 지금 어디에 있는지 알 수 없습니다. 지웠다면 반드시 다른 표시를 주십시오.</p>
+<p><code>:focus</code> 는 «어떻게 왔든» 선택된 동안, <code>:focus-visible</code> 은 <strong>키보드로 와서</strong> 선택된 동안(브라우저가 「표시가 필요하다」고 판단할 때)입니다. 그래서 바깥선은 <code>:focus-visible</code> 에 줍니다.
+🔴 <code>outline: none</code> 으로 <strong>지우기만</strong> 하는 것은 키보드 사용자의 «커서»를 없애는 것과 같습니다. 남겨 둔다면 <code>:focus-visible</code> 규칙보다 <strong>앞에</strong> 두어야 합니다 — 둘 다 점수가 같아 뒤에 쓴 쪽이 이깁니다.</p>
 <p><strong>검사 항목</strong> (4개)</p>
 <ol>
-<li>평소 바탕 #0d6b75</li>
-<li>평소 글자 흰색</li>
-<li>마우스를 올리면 바탕 #0a5058</li>
+<li>평소 바탕 #1f6f4a</li>
+<li>마우스를 올리면 바탕 #17573a</li>
 <li>Tab 으로 왔을 때 3px 바깥선</li>
+<li>마우스로 눌렀을 때는 바깥선이 없다</li>
 </ol>
-<p><strong>흔한 오답</strong> — 「평소 바탕 #0d6b75」에서 걸립니다</p>
-<p>마우스를 올린 색을 평소 규칙에 써 버린 경우입니다. 늘 진한 색이라 「올리면 바뀐다」가 사라집니다.</p>
-<pre><code class="language-css">.btn {
-  background: #0a5058;
+<p><strong>흔한 오답</strong> — 「마우스로 눌렀을 때는 바깥선이 없다」에서 걸립니다</p>
+<p><code>none</code> 을 <code>3px</code> 로 바꾸기만 하면 Tab 사용자는 해결됩니다. 하지만 <code>:focus</code> 는 <strong>마우스로 눌러도</strong> 켜져서, 디자이너가 싫어한 「누를 때마다 번쩍임」이 그대로 돌아옵니다.</p>
+<pre><code class="language-css">.play {
+  background: #1f6f4a;
   color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
 }
-.btn:focus-visible {
+.play:hover {
+  background: #17573a;
+}
+.play:focus {
   outline: 3px solid #16202a;
 }
 </code></pre>
 <hr>
-<h3 id="문제-32-박스-계산">문제 32. 박스 계산</h3>
-<p><strong>문제</strong></p>
-<p><code>box-sizing</code> 이 기본값(<code>content-box</code>)일 때, 이 상자의 <strong>눈에 보이는 폭</strong>(테두리 바깥쪽 끝에서 끝까지)은?</p>
-<pre><code class="language-css">.box {
-  width: 200px;
-  padding: 10px;
-  border: 2px solid #16202a;
-  margin: 8px;
-}
-</code></pre>
-<p>① 200px<br>② 220px<br>③ 224px<br>④ 240px</p>
-<p><strong>정답</strong> — ③ 224px</p>
-<p><strong>해설</strong></p>
-<p>content-box 에서 <code>width</code> 는 <strong>내용</strong>의 폭입니다. 보이는 폭 = 200 + 안쪽 여백 10×2 + 테두리 2×2 = <strong>224px</strong>.
-바깥 여백(margin)은 테두리 <strong>밖</strong>의 빈 곳이라 보이는 상자에는 안 들어갑니다(차지하는 자리는 240px). F12 의 Computed 탭 맨 위 상자 그림에 네 겹이 숫자로 나옵니다.</p>
-<p><strong>흔한 오답</strong> — ①</p>
-<p><code>width</code> 에 적은 값이 그대로 보이는 폭이라고 생각하기 쉽습니다. 기본값에서는 내용의 폭일 뿐입니다.</p>
-<hr>
-<h2 id="고급">고급</h2>
-<h3 id="문제-33-div-를-이름-있는-상자로">문제 33. div 를 이름 있는 상자로</h3>
-<p><strong>문제</strong></p>
-<p>시작 코드는 <code>div</code> 로만 짠 화면입니다. <strong>화면은 그대로 두고</strong> 태그만 이름 있는 상자로 바꾸시오.</p>
-<ul>
-<li>머리 → <code>header</code>, 메뉴 → <code>nav</code>, 본문 → <code>main</code>, 기사 → <code>article</code>, 기사 제목 → <code>h2</code>, 바닥 → <code>footer</code></li>
-<li><code>class</code> 는 그대로 두십시오 — 고정 CSS 가 class 로 꾸미고 있어서, class 를 지우면 화면이 바뀝니다</li>
-</ul>
-<p><strong>CSS (고정)</strong></p>
-<pre><code class="language-css">body { margin: 0; font-family: sans-serif; }
-.header { display: flex; justify-content: space-between; padding: 12px 16px; background: #0d6b75; color: #ffffff; }
-.logo { font-weight: 700; }
-.menu a { color: #ffffff; margin-left: 12px; }
-.main { padding: 16px; }
-.news { border: 1px solid #d8dfe7; border-radius: 8px; padding: 12px; }
-.title { font-size: 20px; font-weight: 700; margin: 0 0 8px; }
-.footer { padding: 12px 16px; color: #59677a; }
-</code></pre>
-<p><strong>정답</strong></p>
-<pre><code class="language-html">&lt;header class=&quot;header&quot;&gt;
-  &lt;div class=&quot;logo&quot;&gt;오늘의 뉴스&lt;/div&gt;
-  &lt;nav class=&quot;menu&quot;&gt;&lt;a href=&quot;#&quot;&gt;정치&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;경제&lt;/a&gt;&lt;/nav&gt;
-&lt;/header&gt;
-&lt;main class=&quot;main&quot;&gt;
-  &lt;article class=&quot;news&quot;&gt;
-    &lt;h2 class=&quot;title&quot;&gt;금리 동결&lt;/h2&gt;
-    &lt;p class=&quot;body&quot;&gt;한국은행이 기준금리를 동결했다.&lt;/p&gt;
-  &lt;/article&gt;
-&lt;/main&gt;
-&lt;footer class=&quot;footer&quot;&gt;© 오늘의 뉴스&lt;/footer&gt;
-</code></pre>
-<p><strong>해설</strong></p>
-<p>태그를 바꿔도 <code>class</code> 가 그대로면 고정 CSS 가 그대로 적용되어 <strong>화면은 한 픽셀도 안 바뀝니다</strong>. 바뀌는 것은 「이 상자가 무엇인가」를 <strong>기계가 읽을 수 있게</strong> 된다는 것입니다.
-<code>h2</code> 는 기본 글자 크기(1.5em)를 갖고 있지만 <code>.title</code> 의 20px 이 덮어써서 같아 보입니다. <code>body</code> 문단도 <code>p</code> 로 바꾸면 더 좋습니다.</p>
-<p><strong>검사 항목</strong> (8개)</p>
-<ol>
-<li>머리가 body 바로 아래의 header</li>
-<li>메뉴가 header 안의 nav</li>
-<li>본문이 body 바로 아래의 main</li>
-<li>기사가 main 안의 article</li>
-<li>기사 제목이 article 안의 h2</li>
-<li>바닥이 body 바로 아래의 footer</li>
-<li>div 로 남은 상자가 없다</li>
-<li>화면이 그대로 (제목 글자 크기 20px)</li>
-</ol>
-<p><strong>흔한 오답</strong> — 「기사 제목이 article 안의 h2」에서 걸립니다</p>
-<p>큰 상자만 바꾸고 기사 제목은 <code>div</code> 로 남기기 쉽습니다. 화면이 같아서 놓칩니다 — 제목은 제목 태그여야 목차가 됩니다.</p>
-<pre><code class="language-html">&lt;header class=&quot;header&quot;&gt;
-  &lt;div class=&quot;logo&quot;&gt;오늘의 뉴스&lt;/div&gt;
-  &lt;nav class=&quot;menu&quot;&gt;&lt;a href=&quot;#&quot;&gt;정치&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;경제&lt;/a&gt;&lt;/nav&gt;
-&lt;/header&gt;
-&lt;main class=&quot;main&quot;&gt;
-  &lt;article class=&quot;news&quot;&gt;
-    &lt;div class=&quot;title&quot;&gt;금리 동결&lt;/div&gt;
-    &lt;p class=&quot;body&quot;&gt;한국은행이 기준금리를 동결했다.&lt;/p&gt;
-  &lt;/article&gt;
-&lt;/main&gt;
-&lt;footer class=&quot;footer&quot;&gt;© 오늘의 뉴스&lt;/footer&gt;
-</code></pre>
-<hr>
-<h3 id="문제-34-뉴스-카드-한-장">문제 34. 뉴스 카드 한 장</h3>
-<p><strong>문제</strong></p>
-<p>뉴스 카드 한 장을 HTML 과 CSS 로 만드시오. 사진 주소는 시작 코드에 들어 있습니다.</p>
-<ul>
-<li><code>article.card</code> 안에 사진(<code>img</code>, 대체 글 있음) · 제목(<code>h3</code>) · 정보 목록(<code>dl</code> — 기자 · 날짜 두 쌍)</li>
-<li>카드: 폭 <code>320px</code>(테두리까지), 안쪽 여백 <code>16px</code>, 테두리 <code>1px</code> 실선 <code>#d8dfe7</code>, 둥근 모서리 <code>12px</code></li>
-<li>카드 안의 요소는 <strong>위에서 아래로</strong>, 사이 간격 <code>12px</code> (Flexbox) — 제목 · 정보 목록의 기본 바깥 여백은 <code>0</code></li>
-<li>사진은 카드 안쪽 폭에 꽉 차게 (<code>286px</code> — 320 − 안쪽 여백 16×2 − 테두리 1×2)</li>
-</ul>
-<p><strong>CSS (고정)</strong></p>
-<pre><code class="language-css">body { margin: 0; padding: 16px; font-family: sans-serif; }
-</code></pre>
-<p><strong>정답</strong></p>
-<pre><code class="language-html">&lt;article class=&quot;card&quot;&gt;
-  &lt;img src=&quot;data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;480&#39; height=&#39;270&#39;%3E%3Crect width=&#39;480&#39; height=&#39;270&#39; fill=&#39;%23b8c7d3&#39;/%3E%3Ccircle cx=&#39;150&#39; cy=&#39;110&#39; r=&#39;40&#39; fill=&#39;%23e5ecf2&#39;/%3E%3Cpath d=&#39;M0 270 L170 150 L280 230 L360 170 L480 270 Z&#39; fill=&#39;%2359677a&#39;/%3E%3C/svg%3E&quot; alt=&quot;폭설로 멈춘 버스&quot;&gt;
-  &lt;h3&gt;폭설 주의보&lt;/h3&gt;
-  &lt;dl&gt;
-    &lt;dt&gt;기자&lt;/dt&gt;&lt;dd&gt;김하나&lt;/dd&gt;
-    &lt;dt&gt;날짜&lt;/dt&gt;&lt;dd&gt;2024-11-05&lt;/dd&gt;
-  &lt;/dl&gt;
-&lt;/article&gt;
-</code></pre>
-<pre><code class="language-css">.card {
-  box-sizing: border-box;
-  width: 320px;
-  padding: 16px;
-  border: 1px solid #d8dfe7;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.card img {
-  width: 100%;
-}
-.card h3,
-.card dl {
-  margin: 0;
-}
-</code></pre>
-<p><strong>해설</strong></p>
-<p>카드 하나는 지금까지 배운 것이 다 모이는 자리입니다 — 시맨틱(<code>article</code> · <code>dl</code>), 박스(<code>border-box</code>), Flexbox(<code>column</code> + <code>gap</code>).
-🔴 flex 의 <code>gap</code> 은 아이템의 <strong>바깥 여백과 더해집니다</strong>(블록처럼 겹쳐지지 않습니다). <code>h3</code> 의 기본 margin 을 0 으로 두지 않으면 간격이 12px 보다 커집니다.</p>
-<p><strong>검사 항목</strong> (7개)</p>
-<ol>
-<li>article.card 가 하나</li>
-<li>사진의 대체 글이 있다</li>
-<li>제목 h3 하나 · 정보 dt/dd 두 쌍</li>
-<li>카드 폭 320px (테두리까지)</li>
-<li>안쪽 여백 16px · 테두리 1px · 둥근 모서리 12px</li>
-<li>사진이 카드 안쪽 폭(286px)에 꽉 찬다</li>
-<li>사진 → 제목 → 정보, 사이 12px</li>
-</ol>
-<p><strong>흔한 오답</strong> — 「카드 폭 320px (테두리까지)」에서 걸립니다</p>
-<p>14번과 같은 함정입니다 — <code>box-sizing</code> 이 없으면 카드가 354px 이 됩니다.</p>
-<pre><code class="language-html">&lt;article class=&quot;card&quot;&gt;
-  &lt;img src=&quot;data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;480&#39; height=&#39;270&#39;%3E%3Crect width=&#39;480&#39; height=&#39;270&#39; fill=&#39;%23b8c7d3&#39;/%3E%3Ccircle cx=&#39;150&#39; cy=&#39;110&#39; r=&#39;40&#39; fill=&#39;%23e5ecf2&#39;/%3E%3Cpath d=&#39;M0 270 L170 150 L280 230 L360 170 L480 270 Z&#39; fill=&#39;%2359677a&#39;/%3E%3C/svg%3E&quot; alt=&quot;폭설로 멈춘 버스&quot;&gt;
-  &lt;h3&gt;폭설 주의보&lt;/h3&gt;
-  &lt;dl&gt;
-    &lt;dt&gt;기자&lt;/dt&gt;&lt;dd&gt;김하나&lt;/dd&gt;
-    &lt;dt&gt;날짜&lt;/dt&gt;&lt;dd&gt;2024-11-05&lt;/dd&gt;
-  &lt;/dl&gt;
-&lt;/article&gt;
-</code></pre>
-<pre><code class="language-css">.card {
-  width: 320px;
-  padding: 16px;
-  border: 1px solid #d8dfe7;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.card img {
-  width: 100%;
-}
-.card h3,
-.card dl {
-  margin: 0;
-}
-</code></pre>
-<hr>
-<h3 id="문제-35-안-먹는-스타일-고치기">문제 35. 안 먹는 스타일 고치기</h3>
+<h3 id="문제-36-안-먹는-스타일-고치기">문제 36. 안 먹는 스타일 고치기</h3>
+<p><em>오류 고치기 · CSS</em></p>
 <p><strong>문제</strong></p>
 <p>제목은 <code>#0d6b75</code> 이어야 하는데 <strong>회색으로 나옵니다</strong>. F12 로 이유를 찾아 CSS 를 고치시오.</p>
 <ul>
@@ -1328,6 +1438,15 @@ footer { grid-area: footer; }
   &lt;h2 class=&quot;title&quot;&gt;금리 동결&lt;/h2&gt;
   &lt;p&gt;한국은행이 기준금리를 동결했다.&lt;/p&gt;
 &lt;/article&gt;
+</code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-css">#top-news h2 {
+  color: #59677a;
+}
+.title {
+  color: #0d6b75;
+  font-size: 22px;
+}
 </code></pre>
 <p><strong>정답</strong></p>
 <pre><code class="language-css">#top-news h2 {
@@ -1358,192 +1477,186 @@ footer { grid-area: footer; }
 }
 </code></pre>
 <hr>
-<h3 id="문제-36-표-꾸미기">문제 36. 표 꾸미기</h3>
+<h3 id="문제-37-안-먹는-미디어-쿼리">문제 37. 안 먹는 미디어 쿼리</h3>
+<p><em>오류 고치기 · CSS</em></p>
 <p><strong>문제</strong></p>
-<p>표를 이렇게 꾸미시오.</p>
-<ul>
-<li>칸 사이의 <strong>겹선을 한 줄로</strong></li>
-<li>모든 칸(<code>th</code> · <code>td</code>)에 테두리 <code>1px</code> 실선 <code>#d8dfe7</code>, 안쪽 여백 위아래 <code>8px</code> · 좌우 <code>12px</code></li>
-<li>머리 칸(<code>th</code>) 바탕 <code>#edf1f5</code></li>
-<li>숫자 칸(<code>.num</code>)만 <strong>오른쪽 정렬</strong> (분야 이름은 왼쪽 그대로)</li>
-</ul>
+<p>영화 리뷰 화면입니다. 창이 <strong>700px 이하</strong>이면 평점 상자가 리뷰 <strong>아래로</strong> 내려가야(한 열) 하는데, 창을 아무리 줄여도 두 열 그대로입니다.
+시작 코드에 실수가 <strong>두 군데</strong> 있습니다. 찾아서 고치시오. (넓을 때: 리뷰 | 평점 300px, 사이 16px)</p>
 <p><strong>HTML (고정)</strong></p>
-<pre><code class="language-html">&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;&lt;th&gt;분야&lt;/th&gt;&lt;th&gt;기사 수&lt;/th&gt;&lt;th&gt;평균 조회수&lt;/th&gt;&lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;&lt;td&gt;사회&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;121&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;1,845&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td&gt;정치&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;115&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;2,102&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td&gt;경제&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;88&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;1,560&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td&gt;스포츠&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;80&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;2,733&lt;/td&gt;&lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-</code></pre>
-<p><strong>정답</strong></p>
-<pre><code class="language-css">table {
-  border-collapse: collapse;
-}
-th, td {
-  border: 1px solid #d8dfe7;
-  padding: 8px 12px;
-}
-th {
-  background: #edf1f5;
-}
-.num {
-  text-align: right;
-}
-</code></pre>
-<p><strong>해설</strong></p>
-<p>표의 칸은 기본으로 <strong>각자 테두리</strong>를 그려 이웃 칸과 두 줄이 됩니다. <code>border-collapse: collapse</code> 를 주면 이웃한 테두리를 한 줄로 합칩니다.
-숫자는 오른쪽 정렬해야 자릿수가 맞아 크기를 비교하기 쉽습니다. 숫자 칸에만 class(<code>num</code>)를 붙여 두면 그 칸만 고를 수 있습니다.</p>
-<p><strong>검사 항목</strong> (6개)</p>
-<ol>
-<li>겹선이 한 줄 (border-collapse)</li>
-<li>모든 칸 테두리 1px 실선 #d8dfe7</li>
-<li>안쪽 여백 8px 12px</li>
-<li>숫자 칸은 오른쪽 정렬</li>
-<li>분야 이름 칸은 오른쪽 정렬이 아니다</li>
-<li>머리 칸 바탕 #edf1f5</li>
-</ol>
-<p><strong>흔한 오답</strong> — 「분야 이름 칸은 오른쪽 정렬이 아니다」에서 걸립니다</p>
-<p>숫자만 오른쪽으로 보내려다 <code>td</code> 전체를 골라 분야 이름까지 오른쪽으로 갑니다. 그래서 숫자 칸에 class 가 붙어 있습니다.</p>
-<pre><code class="language-css">table {
-  border-collapse: collapse;
-}
-th, td {
-  border: 1px solid #d8dfe7;
-  padding: 8px 12px;
-}
-th {
-  background: #edf1f5;
-}
-td {
-  text-align: right;
-}
-</code></pre>
-<hr>
-<h3 id="문제-37-미디어-쿼리-없는-반응형">문제 37. 미디어 쿼리 없는 반응형</h3>
-<p><strong>문제</strong></p>
-<p><strong>미디어 쿼리 없이</strong>, 카드 폭이 <strong>최소 280px</strong> 을 지키면서 들어갈 만큼 열이 생기게 하시오. 남는 폭은 카드들이 고르게 나눠 가집니다.
-(창 1000px → 3열 · 640px → 2열 · 375px → 1열이 됩니다)</p>
-<p><strong>HTML (고정)</strong></p>
-<pre><code class="language-html">&lt;div class=&quot;cards&quot;&gt;
-  &lt;div class=&quot;card&quot;&gt;1&lt;/div&gt;
-  &lt;div class=&quot;card&quot;&gt;2&lt;/div&gt;
-  &lt;div class=&quot;card&quot;&gt;3&lt;/div&gt;
-  &lt;div class=&quot;card&quot;&gt;4&lt;/div&gt;
-  &lt;div class=&quot;card&quot;&gt;5&lt;/div&gt;
-  &lt;div class=&quot;card&quot;&gt;6&lt;/div&gt;
+<pre><code class="language-html">&lt;div class=&quot;layout&quot;&gt;
+  &lt;article class=&quot;review&quot;&gt;리뷰 본문&lt;/article&gt;
+  &lt;aside class=&quot;score&quot;&gt;평점 4.5&lt;/aside&gt;
 &lt;/div&gt;
 </code></pre>
 <p><strong>CSS (고정)</strong></p>
 <pre><code class="language-css">body { margin: 0; }
-.cards { display: grid; gap: 16px; }
-.card { height: 80px; background: #e2f1f3; }
+.layout &gt; * { min-height: 80px; background: #e2f1f3; }
+</code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-css">@media (max-width: 700) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 16px;
+}
 </code></pre>
 <p><strong>정답</strong></p>
-<pre><code class="language-css">.cards {
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+<pre><code class="language-css">.layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 16px;
+}
+@media (max-width: 700px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
 }
 </code></pre>
 <p><strong>해설</strong></p>
-<p><code>minmax(280px, 1fr)</code> 은 「최소 280px, 최대 남는 공간의 한 몫」, <code>repeat(auto-fill, …)</code> 은 「들어갈 만큼 열을 만든다」입니다. 둘을 합치면 <strong>창 폭에 따라 열 수가 알아서</strong> 바뀝니다.
-1000px 이면 280px 짜리가 3장 들어가고(4장은 1168px 필요), 남는 폭을 셋이 나눠 323px 쯤이 됩니다.</p>
-<p><strong>검사 항목</strong> (5개)</p>
+<p>① <strong><code>700</code> 에 단위가 없습니다.</strong> 미디어 쿼리의 폭은 <code>700px</code> 처럼 단위가 있어야 합니다. 단위가 없으면 그 조건은 통째로 «틀린 조건»이 되어 <strong>절대 켜지지 않습니다</strong>(오류도 안 납니다).
+② <strong>순서가 거꾸로입니다.</strong> 미디어 쿼리는 점수를 올려 주지 않습니다 — <code>.layout</code> 과 <code>.layout</code> 은 같은 점수라 <strong>나중에 적힌 쪽</strong>이 이깁니다. 그래서 좁을 때 덮어쓸 규칙은 기본 규칙 <strong>뒤에</strong> 둡니다.</p>
+<p><strong>검사 항목</strong> (3개)</p>
 <ol>
-<li>창 1000px — 한 줄에 3장 — 창 1000px</li>
-<li>창 1000px — 카드 폭이 같고 280px 이상 — 창 1000px</li>
-<li>창 640px — 한 줄에 2장 — 창 640px</li>
-<li>창 375px — 1열 (카드 폭 375px) — 창 375px</li>
-<li>미디어 쿼리를 쓰지 않았다</li>
+<li>창 1000px — 리뷰 | 평점 300px 나란히, 사이 16px — 창 1000px</li>
+<li>창 701px — 아직 두 열 — 창 701px</li>
+<li>창 700px — 한 열 (평점이 리뷰 아래, 폭 700px) — 창 700px</li>
 </ol>
-<p><strong>흔한 오답</strong> — 「창 375px — 1열 (카드 폭 375px)」에서 걸립니다</p>
-<p>넓은 화면만 보고 3열로 고정하면, 휴대폰에서 카드가 100px 남짓으로 쪼그라듭니다.</p>
-<pre><code class="language-css">.cards {
-  grid-template-columns: repeat(3, 1fr);
+<p><strong>흔한 오답</strong> — 「창 700px — 한 열 (평점이 리뷰 아래, 폭 700px)」에서 걸립니다</p>
+<p>단위(<code>px</code>)만 고치면 미디어 쿼리는 이제 «켜지지만», 그 뒤에 오는 기본 규칙이 같은 점수로 <strong>덮어써서</strong> 여전히 두 열입니다.</p>
+<pre><code class="language-css">@media (max-width: 700px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 16px;
 }
 </code></pre>
 <hr>
-<h3 id="문제-38-페이지-반응형">문제 38. 페이지 반응형</h3>
+<h3 id="문제-38-공연-카드-한-장">문제 38. 공연 카드 한 장</h3>
+<p><em>종합 구현 · HTML + CSS</em></p>
 <p><strong>문제</strong></p>
-<p>페이지 틀을 이렇게 바꾸시오 (간격 16px 은 고정 CSS 에 있음).</p>
+<p>공연 소개 카드 한 장을 HTML 과 CSS 로 만드시오. 사진 주소는 시작 코드에 들어 있습니다.</p>
 <ul>
-<li><strong>넓을 때</strong>(769px 이상): 머리는 위에 가로 전체 · 본문 | 곁 을 <strong>2fr 1fr</strong> 로 나란히 · 바닥은 아래 가로 전체</li>
-<li><strong>768px 이하</strong>: 한 열로 머리 → 본문 → 곁 → 바닥 차례</li>
+<li><code>article.card</code> 안에 사진(<code>img</code>, 대체 글 있음) · 제목(<code>h3</code>) · 정보 목록(<code>dl</code> — 장소 · 날짜 두 쌍)</li>
+<li>카드: 폭 <code>320px</code>(테두리까지), 안쪽 여백 <code>16px</code>, 테두리 <code>1px</code> 실선 <code>#d8dfe7</code>, 둥근 모서리 <code>12px</code></li>
+<li>카드 안의 요소는 <strong>위에서 아래로</strong>, 사이 간격 <code>12px</code> (Flexbox) — 제목 · 정보 목록의 기본 바깥 여백은 <code>0</code></li>
+<li>사진은 카드 안쪽 폭에 꽉 차게 (<code>286px</code> — 320 − 안쪽 여백 16×2 − 테두리 1×2)</li>
 </ul>
-<p><strong>HTML (고정)</strong></p>
-<pre><code class="language-html">&lt;div class=&quot;page&quot;&gt;
-  &lt;header&gt;머리&lt;/header&gt;
-  &lt;main&gt;본문&lt;/main&gt;
-  &lt;aside&gt;곁&lt;/aside&gt;
-  &lt;footer&gt;바닥&lt;/footer&gt;
-&lt;/div&gt;
-</code></pre>
 <p><strong>CSS (고정)</strong></p>
-<pre><code class="language-css">body { margin: 0; }
-.page { display: grid; gap: 16px; }
-.page &gt; * { min-height: 60px; background: #e2f1f3; }
+<pre><code class="language-css">body { margin: 0; padding: 16px; font-family: sans-serif; }
+</code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-html">&lt;article class=&quot;card&quot;&gt;
+  &lt;img src=&quot;data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;480&#39; height=&#39;270&#39;%3E%3Crect width=&#39;480&#39; height=&#39;270&#39; fill=&#39;%23b8c7d3&#39;/%3E%3Ccircle cx=&#39;150&#39; cy=&#39;110&#39; r=&#39;40&#39; fill=&#39;%23e5ecf2&#39;/%3E%3Cpath d=&#39;M0 270 L170 150 L280 230 L360 170 L480 270 Z&#39; fill=&#39;%2359677a&#39;/%3E%3C/svg%3E&quot; alt=&quot;&quot;&gt;
+&lt;/article&gt;
+</code></pre>
+<pre><code class="language-css">
 </code></pre>
 <p><strong>정답</strong></p>
-<pre><code class="language-css">.page {
-  grid-template-columns: 2fr 1fr;
-  grid-template-areas:
-    &quot;header header&quot;
-    &quot;main   aside&quot;
-    &quot;footer footer&quot;;
+<pre><code class="language-html">&lt;article class=&quot;card&quot;&gt;
+  &lt;img src=&quot;data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;480&#39; height=&#39;270&#39;%3E%3Crect width=&#39;480&#39; height=&#39;270&#39; fill=&#39;%23b8c7d3&#39;/%3E%3Ccircle cx=&#39;150&#39; cy=&#39;110&#39; r=&#39;40&#39; fill=&#39;%23e5ecf2&#39;/%3E%3Cpath d=&#39;M0 270 L170 150 L280 230 L360 170 L480 270 Z&#39; fill=&#39;%2359677a&#39;/%3E%3C/svg%3E&quot; alt=&quot;야외 무대의 재즈 밴드&quot;&gt;
+  &lt;h3&gt;여름밤 재즈&lt;/h3&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;장소&lt;/dt&gt;&lt;dd&gt;한강 야외무대&lt;/dd&gt;
+    &lt;dt&gt;날짜&lt;/dt&gt;&lt;dd&gt;2025-07-19&lt;/dd&gt;
+  &lt;/dl&gt;
+&lt;/article&gt;
+</code></pre>
+<pre><code class="language-css">.card {
+  box-sizing: border-box;
+  width: 320px;
+  padding: 16px;
+  border: 1px solid #d8dfe7;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-header { grid-area: header; }
-main   { grid-area: main; }
-aside  { grid-area: aside; }
-footer { grid-area: footer; }
-@media (max-width: 768px) {
-  .page {
-    grid-template-columns: 1fr;
-    grid-template-areas: &quot;header&quot; &quot;main&quot; &quot;aside&quot; &quot;footer&quot;;
-  }
+.card img {
+  width: 100%;
+}
+.card h3,
+.card dl {
+  margin: 0;
 }
 </code></pre>
 <p><strong>해설</strong></p>
-<p>넓은 화면의 배치를 먼저 쓰고, 좁을 때 <code>grid-template-areas</code> 그림만 <strong>한 열로 다시 그리면</strong> 됩니다. HTML 은 한 글자도 안 바뀝니다.
-「769px 이상」의 반대는 「<strong>768px 이하</strong>」 = <code>max-width: 768px</code> 입니다. 경계는 늘 한쪽에만 포함되므로, 경계값 화면(768px)을 직접 넣어 보는 습관이 좋습니다.</p>
-<p><strong>검사 항목</strong> (5개)</p>
+<p>카드 하나는 지금까지 배운 것이 다 모이는 자리입니다 — 시맨틱(<code>article</code> · <code>dl</code>), 박스(<code>border-box</code>), Flexbox(<code>column</code> + <code>gap</code>).
+🔴 flex 의 <code>gap</code> 은 아이템의 <strong>바깥 여백과 더해집니다</strong>(블록처럼 겹쳐지지 않습니다). <code>h3</code> 의 기본 margin 을 0 으로 두지 않으면 간격이 12px 보다 커집니다.</p>
+<p><strong>검사 항목</strong> (8개)</p>
 <ol>
-<li>창 1000px — 머리가 맨 위 가로 전체 — 창 1000px</li>
-<li>창 1000px — 본문 656px | 곁 328px 나란히 — 창 1000px</li>
-<li>창 1000px — 바닥이 아래 가로 전체 — 창 1000px</li>
-<li>창 769px — 아직 본문 | 곁 나란히 — 창 769px</li>
-<li>창 768px — 한 열로 머리 → 본문 → 곁 → 바닥 — 창 768px</li>
+<li>article.card 가 하나</li>
+<li>사진의 대체 글이 있다</li>
+<li>제목 h3 하나 · 정보 dt/dd 두 쌍</li>
+<li>카드 폭 320px (테두리까지)</li>
+<li>안쪽 여백 16px · 테두리 1px · 둥근 모서리 12px</li>
+<li>사진이 카드 안쪽 폭(286px)에 꽉 찬다</li>
+<li>사진 → 제목 → 정보, 사이 12px</li>
+<li>Flexbox 로 풀었다 (.card 가 flex 상자 · flex-direction: column)</li>
 </ol>
-<p><strong>흔한 오답</strong> — 「창 768px — 한 열로 머리 → 본문 → 곁 → 바닥」에서 걸립니다</p>
-<p>「769px 이상이 넓은 화면」을 거꾸로 옮기다 경계를 하나 어긋나게 쓴 경우입니다. 정확히 768px 인 화면(태블릿 세로)에서 틀립니다.</p>
-<pre><code class="language-css">.page {
-  grid-template-columns: 2fr 1fr;
-  grid-template-areas:
-    &quot;header header&quot;
-    &quot;main   aside&quot;
-    &quot;footer footer&quot;;
+<p><strong>흔한 오답</strong> — 「카드 폭 320px (테두리까지)」에서 걸립니다</p>
+<p>14번과 같은 함정입니다 — <code>box-sizing</code> 이 없으면 카드가 354px 이 됩니다.</p>
+<pre><code class="language-html">&lt;article class=&quot;card&quot;&gt;
+  &lt;img src=&quot;data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;480&#39; height=&#39;270&#39;%3E%3Crect width=&#39;480&#39; height=&#39;270&#39; fill=&#39;%23b8c7d3&#39;/%3E%3Ccircle cx=&#39;150&#39; cy=&#39;110&#39; r=&#39;40&#39; fill=&#39;%23e5ecf2&#39;/%3E%3Cpath d=&#39;M0 270 L170 150 L280 230 L360 170 L480 270 Z&#39; fill=&#39;%2359677a&#39;/%3E%3C/svg%3E&quot; alt=&quot;야외 무대의 재즈 밴드&quot;&gt;
+  &lt;h3&gt;여름밤 재즈&lt;/h3&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;장소&lt;/dt&gt;&lt;dd&gt;한강 야외무대&lt;/dd&gt;
+    &lt;dt&gt;날짜&lt;/dt&gt;&lt;dd&gt;2025-07-19&lt;/dd&gt;
+  &lt;/dl&gt;
+&lt;/article&gt;
+</code></pre>
+<pre><code class="language-css">.card {
+  width: 320px;
+  padding: 16px;
+  border: 1px solid #d8dfe7;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-header { grid-area: header; }
-main   { grid-area: main; }
-aside  { grid-area: aside; }
-footer { grid-area: footer; }
-@media (max-width: 767px) {
-  .page {
-    grid-template-columns: 1fr;
-    grid-template-areas: &quot;header&quot; &quot;main&quot; &quot;aside&quot; &quot;footer&quot;;
-  }
+.card img {
+  width: 100%;
+}
+.card h3,
+.card dl {
+  margin: 0;
+}
+</code></pre>
+<p><strong>화면은 같아도 오답</strong> — 「Flexbox 로 풀었다 (.card 가 flex 상자 · flex-direction: column)」에서 걸립니다</p>
+<p>블록으로 쌓고 바깥 여백 12px 로 간격을 맞추면 화면은 같지만, 문제가 Flexbox(<code>column</code> + <code>gap</code>)로 쌓기를 요구합니다.</p>
+<pre><code class="language-css">.card {
+  box-sizing: border-box;
+  width: 320px;
+  padding: 16px;
+  border: 1px solid #d8dfe7;
+  border-radius: 12px;
+}
+.card img {
+  display: block;
+  width: 100%;
+}
+.card h3,
+.card dl {
+  margin: 12px 0 0;
 }
 </code></pre>
 <hr>
 <h3 id="문제-39-어두운-화면--값만-바꾸기">문제 39. 어두운 화면 — 값만 바꾸기</h3>
+<p><em>코드 작성 · CSS</em></p>
 <p><strong>문제</strong></p>
 <p>시작 코드는 밝은 화면입니다. 이 코드는 그대로 두고 <strong>규칙을 더해서</strong>, <code>&lt;html data-theme=&quot;dark&quot;&gt;</code> 일 때 <strong>변수 값만 바꿔</strong> 어두운 화면이 되게 하시오.</p>
 <ul>
 <li>바탕 <code>#0e1418</code> · 카드 <code>#161f26</code> · 글자 <code>#e5ecf2</code></li>
 <li>흐린 글자(<code>--muted</code>)는 <strong>카드 바탕 위에서 대비 4.5 : 1 이상</strong>이 되는 색을 직접 고르시오</li>
-<li>어두운 화면 규칙에는 <strong>변수만</strong> 적습니다 (<code>background</code> · <code>color</code> 를 다시 쓰지 말 것)
+<li>어두운 화면 규칙에는 <strong>변수만</strong> 적습니다 (<code>background</code> · <code>color</code> 를 다시 쓰지 말 것)</li>
+<li>힌트: <code>&lt;html data-theme=&quot;dark&quot;&gt;</code> 를 고르는 선택자는 <code>:root[data-theme=&quot;dark&quot;]</code> 입니다 — <code>[이름=&quot;값&quot;]</code> 은 「그 속성이 그 값인 요소」를 고르는 <strong>속성 선택자</strong>입니다
 (채점할 때 검사가 <code>data-theme=&quot;dark&quot;</code> 를 붙여 봅니다)</li>
 </ul>
 <p><strong>HTML (고정)</strong></p>
@@ -1551,6 +1664,28 @@ footer { grid-area: footer; }
   &lt;h3&gt;금리 동결&lt;/h3&gt;
   &lt;p class=&quot;meta&quot;&gt;김하나 · 11/05&lt;/p&gt;
 &lt;/article&gt;
+</code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-css">:root {
+  --bg: #ffffff;
+  --surface: #f3f5f7;
+  --text: #16202a;
+  --muted: #59677a;
+}
+body {
+  margin: 0;
+  padding: 16px;
+  background: var(--bg);
+  color: var(--text);
+}
+.card {
+  background: var(--surface);
+  padding: 16px;
+  border-radius: 8px;
+}
+.meta {
+  color: var(--muted);
+}
 </code></pre>
 <p><strong>정답</strong></p>
 <pre><code class="language-css">:root {
@@ -1620,146 +1755,180 @@ body {
 }
 </code></pre>
 <hr>
-<h3 id="문제-40-뉴스-목록-화면">문제 40. 뉴스 목록 화면</h3>
+<h3 id="문제-40-구독-요금제-화면">문제 40. 구독 요금제 화면</h3>
+<p><em>종합 구현 · HTML + CSS</em></p>
 <p><strong>문제</strong></p>
-<p>6일차에 만든 뉴스 목록 화면의 축소판을 HTML 과 CSS 로 만드시오.</p>
+<p>팟캐스트 앱의 <strong>구독 요금제</strong> 화면을 HTML 과 CSS 로 만드시오.</p>
 <ul>
-<li><strong>머리</strong>(<code>header</code>): 로고(<code>h1</code>, <code>오늘의 뉴스</code>)와 메뉴(<code>nav</code> 안의 링크 3개 — 정치 · 경제 · 사회). 로고는 머리 안쪽의 왼쪽 끝, 메뉴는 오른쪽 끝, 메뉴 링크는 한 줄</li>
-<li><strong>본문</strong>(<code>main</code>): <code>ul.list</code> 안에 카드 <code>li.card</code> 4개 — 각 카드에 제목 <code>h3</code> 와 정보 <code>p.meta</code><ul>
-<li>금리 동결 / 김하나 · 11/05 · 신작 개봉 / 이도윤 · 11/05 · 폭설 주의보 / 박서준 · 11/04 · 야구 개막 / 최지우 · 11/04</li>
+<li><code>section.plans</code> 안에 카드 <code>article.plan</code> 3장. 카드마다 요금제 이름 <code>h3</code> · 가격 <code>p.price</code> · 혜택 목록 <code>ul</code> · 「구독」 링크 <code>a.btn</code><ul>
+<li>베이직 / 월 4,900원 / 광고 없는 재생 · 기기 1대</li>
+<li>스탠다드 / 월 7,900원 / 광고 없는 재생 · 기기 2대 · 오프라인 저장 — <strong>추천 요금제</strong>: <code>class=&quot;plan best&quot;</code></li>
+<li>프리미엄 / 월 10,900원 / 광고 없는 재생 · 기기 4대 · 오프라인 저장 · 고음질</li>
 </ul>
 </li>
-<li>목록의 점은 없앱니다</li>
-<li>카드 목록: <strong>넓을 때 2열</strong>(사이 <code>16px</code>), <strong>600px 이하에서 1열</strong></li>
-<li>375px 화면에서 가로 스크롤이 없을 것</li>
+<li>카드 테두리 <code>1px</code> 실선 <code>#d8dfe7</code>, <strong>추천 카드만</strong> <code>2px</code> 실선 <code>#6b3fa0</code></li>
+<li>가격 글자 크기 <code>28px</code> · 혜택 목록의 점은 없앰</li>
+<li>카드 판: <strong>넓을 때 3열</strong>(사이 <code>20px</code>), <strong>700px 이하에서 1열</strong></li>
+<li>세 카드의 <strong>높이가 같을 것</strong>(혜택이 가장 많은 카드에 맞춰) · 375px 화면에서 가로 스크롤이 없을 것</li>
 </ul>
 <p><strong>CSS (고정)</strong></p>
 <pre><code class="language-css">body { margin: 0; font-family: sans-serif; }
 </code></pre>
 <p><strong>정답</strong></p>
-<pre><code class="language-html">&lt;header class=&quot;top&quot;&gt;
-  &lt;h1 class=&quot;logo&quot;&gt;오늘의 뉴스&lt;/h1&gt;
-  &lt;nav class=&quot;menu&quot;&gt;
-    &lt;a href=&quot;#&quot;&gt;정치&lt;/a&gt;
-    &lt;a href=&quot;#&quot;&gt;경제&lt;/a&gt;
-    &lt;a href=&quot;#&quot;&gt;사회&lt;/a&gt;
-  &lt;/nav&gt;
-&lt;/header&gt;
-&lt;main&gt;
-  &lt;ul class=&quot;list&quot;&gt;
-    &lt;li class=&quot;card&quot;&gt;&lt;h3&gt;금리 동결&lt;/h3&gt;&lt;p class=&quot;meta&quot;&gt;김하나 · 11/05&lt;/p&gt;&lt;/li&gt;
-    &lt;li class=&quot;card&quot;&gt;&lt;h3&gt;신작 개봉&lt;/h3&gt;&lt;p class=&quot;meta&quot;&gt;이도윤 · 11/05&lt;/p&gt;&lt;/li&gt;
-    &lt;li class=&quot;card&quot;&gt;&lt;h3&gt;폭설 주의보&lt;/h3&gt;&lt;p class=&quot;meta&quot;&gt;박서준 · 11/04&lt;/p&gt;&lt;/li&gt;
-    &lt;li class=&quot;card&quot;&gt;&lt;h3&gt;야구 개막&lt;/h3&gt;&lt;p class=&quot;meta&quot;&gt;최지우 · 11/04&lt;/p&gt;&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/main&gt;
+<pre><code class="language-html">&lt;section class=&quot;plans&quot;&gt;
+  &lt;article class=&quot;plan&quot;&gt;
+    &lt;h3&gt;베이직&lt;/h3&gt;
+    &lt;p class=&quot;price&quot;&gt;월 4,900원&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;광고 없는 재생&lt;/li&gt;
+      &lt;li&gt;기기 1대&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;구독&lt;/a&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;plan best&quot;&gt;
+    &lt;h3&gt;스탠다드&lt;/h3&gt;
+    &lt;p class=&quot;price&quot;&gt;월 7,900원&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;광고 없는 재생&lt;/li&gt;
+      &lt;li&gt;기기 2대&lt;/li&gt;
+      &lt;li&gt;오프라인 저장&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;구독&lt;/a&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;plan&quot;&gt;
+    &lt;h3&gt;프리미엄&lt;/h3&gt;
+    &lt;p class=&quot;price&quot;&gt;월 10,900원&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;광고 없는 재생&lt;/li&gt;
+      &lt;li&gt;기기 4대&lt;/li&gt;
+      &lt;li&gt;오프라인 저장&lt;/li&gt;
+      &lt;li&gt;고음질&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;구독&lt;/a&gt;
+  &lt;/article&gt;
+&lt;/section&gt;
 </code></pre>
-<pre><code class="language-css">.top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-}
-.logo {
-  margin: 0;
-  font-size: 22px;
-}
-.menu {
-  display: flex;
-  gap: 12px;
-}
-.list {
-  list-style: none;
-  margin: 0;
-  padding: 16px;
+<pre><code class="language-css">.plans {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
 }
-.card {
+.plan {
+  padding: 20px;
   border: 1px solid #d8dfe7;
-  border-radius: 8px;
-  padding: 12px;
+  border-radius: 12px;
 }
-.card h3 {
-  margin: 0 0 4px;
+.plan.best {
+  border: 2px solid #6b3fa0;
 }
-.meta {
+.plan h3 {
   margin: 0;
-  color: #59677a;
 }
-@media (max-width: 600px) {
-  .list {
+.price {
+  font-size: 28px;
+  margin: 8px 0;
+}
+.plan ul {
+  list-style: none;
+  padding: 0;
+}
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #6b3fa0;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+}
+@media (max-width: 700px) {
+  .plans {
     grid-template-columns: 1fr;
   }
 }
 </code></pre>
 <p><strong>해설</strong></p>
-<p>이 화면은 JS 9일차 · React 10일차가 그대로 다시 씁니다. 머리는 <strong>Flexbox</strong>(한 줄 · 양 끝), 카드 목록은 <strong>Grid</strong>(판), 좁은 화면은 <strong>미디어 쿼리</strong> — 「한 줄은 Flex, 판은 Grid」입니다.
-<code>ul</code> 은 기본 안쪽 여백(왼쪽 40px)과 바깥 여백이 있어서, 카드 목록으로 쓸 때는 점과 함께 여백도 정리합니다.</p>
-<p><strong>검사 항목</strong> (8개)</p>
+<p>판은 <strong>Grid</strong>(<code>repeat(3, 1fr)</code> + <code>gap</code>), 좁은 화면은 <strong>미디어 쿼리</strong>로 한 열 — 기본 규칙 «뒤에» 둡니다.
+카드 높이는 따로 맞출 필요가 없습니다. Grid(와 Flex)의 아이템은 기본값 <code>stretch</code> 로 <strong>그 줄에서 가장 높은 아이템에 맞춰 늘어나기</strong> 때문입니다. 추천 카드는 <code>.plan.best</code>(클래스 둘 — 점수가 더 높음)로 테두리만 덮어씁니다.</p>
+<p><strong>검사 항목</strong> (9개)</p>
 <ol>
-<li>구조 — 머리의 로고 h1 · 메뉴 링크 3개 · 카드 4장(제목 · 정보)</li>
-<li>로고는 머리 안쪽 왼쪽 끝, 메뉴는 오른쪽 끝 — 창 1000px</li>
-<li>메뉴 링크가 한 줄 — 창 1000px</li>
-<li>목록의 점이 없다</li>
-<li>창 1000px — 2열, 사이 16px — 창 1000px</li>
-<li>창 600px — 1열 — 창 600px</li>
-<li>창 601px — 아직 2열 — 창 601px</li>
+<li>구조 — 카드 3장, 카드마다 h3 · p.price · ul · a.btn</li>
+<li>추천 카드(.best)는 「스탠다드」 하나</li>
+<li>테두리 — 보통 카드 1px #d8dfe7 · 추천 카드 2px #6b3fa0</li>
+<li>가격 28px · 혜택 목록의 점이 없다</li>
+<li>창 1000px — 3열, 폭이 같고 사이 20px — 창 1000px</li>
+<li>창 1000px — 세 카드의 높이가 같다 — 창 1000px</li>
+<li>창 700px — 1열 (위에서 아래로) — 창 700px</li>
+<li>창 701px — 아직 3열 — 창 701px</li>
 <li>창 375px — 가로 스크롤이 없다 — 창 375px</li>
 </ol>
-<p><strong>흔한 오답</strong> — 「창 600px — 1열」에서 걸립니다</p>
-<p>넓은 화면을 다 맞추고 좁은 화면을 잊은 경우입니다. 600px 에서도 2열이라 카드가 좁아집니다.</p>
-<pre><code class="language-html">&lt;header class=&quot;top&quot;&gt;
-  &lt;h1 class=&quot;logo&quot;&gt;오늘의 뉴스&lt;/h1&gt;
-  &lt;nav class=&quot;menu&quot;&gt;
-    &lt;a href=&quot;#&quot;&gt;정치&lt;/a&gt;
-    &lt;a href=&quot;#&quot;&gt;경제&lt;/a&gt;
-    &lt;a href=&quot;#&quot;&gt;사회&lt;/a&gt;
-  &lt;/nav&gt;
-&lt;/header&gt;
-&lt;main&gt;
-  &lt;ul class=&quot;list&quot;&gt;
-    &lt;li class=&quot;card&quot;&gt;&lt;h3&gt;금리 동결&lt;/h3&gt;&lt;p class=&quot;meta&quot;&gt;김하나 · 11/05&lt;/p&gt;&lt;/li&gt;
-    &lt;li class=&quot;card&quot;&gt;&lt;h3&gt;신작 개봉&lt;/h3&gt;&lt;p class=&quot;meta&quot;&gt;이도윤 · 11/05&lt;/p&gt;&lt;/li&gt;
-    &lt;li class=&quot;card&quot;&gt;&lt;h3&gt;폭설 주의보&lt;/h3&gt;&lt;p class=&quot;meta&quot;&gt;박서준 · 11/04&lt;/p&gt;&lt;/li&gt;
-    &lt;li class=&quot;card&quot;&gt;&lt;h3&gt;야구 개막&lt;/h3&gt;&lt;p class=&quot;meta&quot;&gt;최지우 · 11/04&lt;/p&gt;&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/main&gt;
+<p><strong>흔한 오답</strong> — 「창 700px — 1열 (위에서 아래로)」에서 걸립니다</p>
+<p>넓은 화면을 다 맞추고 좁은 화면을 잊은 경우입니다. 700px 에서도 3열이라 카드 한 장이 200px 남짓으로 좁아집니다.</p>
+<pre><code class="language-html">&lt;section class=&quot;plans&quot;&gt;
+  &lt;article class=&quot;plan&quot;&gt;
+    &lt;h3&gt;베이직&lt;/h3&gt;
+    &lt;p class=&quot;price&quot;&gt;월 4,900원&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;광고 없는 재생&lt;/li&gt;
+      &lt;li&gt;기기 1대&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;구독&lt;/a&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;plan best&quot;&gt;
+    &lt;h3&gt;스탠다드&lt;/h3&gt;
+    &lt;p class=&quot;price&quot;&gt;월 7,900원&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;광고 없는 재생&lt;/li&gt;
+      &lt;li&gt;기기 2대&lt;/li&gt;
+      &lt;li&gt;오프라인 저장&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;구독&lt;/a&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;plan&quot;&gt;
+    &lt;h3&gt;프리미엄&lt;/h3&gt;
+    &lt;p class=&quot;price&quot;&gt;월 10,900원&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;광고 없는 재생&lt;/li&gt;
+      &lt;li&gt;기기 4대&lt;/li&gt;
+      &lt;li&gt;오프라인 저장&lt;/li&gt;
+      &lt;li&gt;고음질&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;a class=&quot;btn&quot; href=&quot;#&quot;&gt;구독&lt;/a&gt;
+  &lt;/article&gt;
+&lt;/section&gt;
 </code></pre>
-<pre><code class="language-css">.top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-}
-.logo {
-  margin: 0;
-  font-size: 22px;
-}
-.menu {
-  display: flex;
-  gap: 12px;
-}
-.list {
-  list-style: none;
-  margin: 0;
-  padding: 16px;
+<pre><code class="language-css">.plans {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
 }
-.card {
+.plan {
+  padding: 20px;
   border: 1px solid #d8dfe7;
-  border-radius: 8px;
-  padding: 12px;
+  border-radius: 12px;
 }
-.card h3 {
-  margin: 0 0 4px;
+.plan.best {
+  border: 2px solid #6b3fa0;
 }
-.meta {
+.plan h3 {
   margin: 0;
-  color: #59677a;
+}
+.price {
+  font-size: 28px;
+  margin: 8px 0;
+}
+.plan ul {
+  list-style: none;
+  padding: 0;
+}
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #6b3fa0;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
 }
 </code></pre>
 <hr>

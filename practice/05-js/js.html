@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<!-- 연습 · 공개 2026-11-24 -->
+<meta name="mf-practice" content="js">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JS 연습장</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* 레이아웃: SQL 연습장과 같다 — 좌측 번호판(고정) + 우측 문제 · 편집기 · 미리보기 · 결과. 작은 화면에서는 한 열. */
+:root {
+  --bg: #f3f5f7;
+  --surface: #ffffff;
+  --ink: #16202a;
+  --muted: #59677a;
+  --line: #d8dfe7;
+  --accent: #0d6b75;
+  --accent-ink: #ffffff;
+  --accent-soft: #e2f1f3;
+  --ok: #17794a;
+  --ok-bg: #e6f5ec;
+  --bad: #b3261e;
+  --bad-bg: #fdecea;
+  --code-bg: #edf1f5;
+  --star: #9a5b00;
+  --font-body: "IBM Plex Sans KR", system-ui, -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "D2Coding", monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1418; --surface: #161f26; --ink: #e5ecf2; --muted: #93a2b2; --line: #2a3742;
+    --accent: #52b6c0; --accent-ink: #072a2e; --accent-soft: #14343a;
+    --ok: #52c68c; --ok-bg: #143324; --bad: #ff8f86; --bad-bg: #3a1a18; --code-bg: #1d2830; --star: #f2c879;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1418; --surface: #161f26; --ink: #e5ecf2; --muted: #93a2b2; --line: #2a3742;
+  --accent: #52b6c0; --accent-ink: #072a2e; --accent-soft: #14343a;
+  --ok: #52c68c; --ok-bg: #143324; --bad: #ff8f86; --bad-bg: #3a1a18; --code-bg: #1d2830; --star: #f2c879;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.6; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+code { font-family: var(--font-mono); font-size: 0.92em; background: var(--code-bg); padding: 1px 6px; border-radius: 4px; }
+
+/* 상단 요약 */
+.top { position: sticky; top: 0; z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+.top-in { max-width: 1240px; margin: 0 auto; padding: 12px 16px; display: grid; grid-template-columns: auto 1fr auto; gap: 8px 24px; align-items: center; }
+/* 머리 왼쪽 — 처음으로 링크 · 연습장 고르기(제목 자리의 드롭다운) · 한 줄 설명. 목록은 ../mf-nav.js 가 채운다 */
+.brand { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; min-width: 0; }
+.home { font-size: 12.5px; color: var(--muted); text-decoration: none; }
+.home:hover { color: var(--accent); text-decoration: underline; }
+/* 화살표는 직접 그린다 — Chrome 기본 화살표는 폭에 안 잡혀 글자 끝을 가렸다(2026-11-24 실측: 칸 232px · 글자는 더 김) */
+.set-pick { font: inherit; font-weight: 700; font-size: 18px; letter-spacing: -0.01em; color: var(--ink); border: 1px solid transparent; border-radius: 8px; padding: 1px 26px 1px 4px; margin-left: -5px; max-width: 100%; cursor: pointer; appearance: none; background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%237a8899' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 8px center; }
+.set-pick:hover:not(:disabled) { border-color: var(--line); background-color: var(--surface); }
+.set-pick:disabled { cursor: default; opacity: 1; background-image: none; padding-right: 4px; }
+.set-pick option { font-weight: 400; color: var(--ink); background: var(--surface); }
+.brand small { font-weight: 400; color: var(--muted); font-size: 12px; }
+.sum { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.sum-row { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.big { font-variant-numeric: tabular-nums; font-size: 15px; }
+.big b { font-size: 22px; font-weight: 700; color: var(--accent); }
+.lv-stats { display: flex; gap: 14px; color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; flex-wrap: wrap; }
+.bar { height: 8px; background: var(--code-bg); border-radius: 99px; overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+.top-btns { display: flex; gap: 8px; }
+.btn { border: 1px solid var(--line); background: var(--surface); padding: 7px 14px; border-radius: 8px; font-weight: 500; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+/* 본문 */
+.wrap { max-width: 1240px; margin: 0 auto; padding: 16px; display: grid; grid-template-columns: 272px minmax(0, 1fr); gap: 20px; align-items: start; }
+.nav { position: sticky; top: 86px; max-height: calc(100vh - 102px); overflow: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.nav h3 { margin: 0 0 8px; font-size: 13px; display: flex; justify-content: space-between; align-items: baseline; }
+.nav h3 span { color: var(--muted); font-weight: 400; font-variant-numeric: tabular-nums; }
+.nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: 5px; margin-bottom: 16px; }
+.nb { height: 34px; border: 1px solid var(--line); background: var(--surface); border-radius: 7px; font-size: 12.5px; font-variant-numeric: tabular-nums; position: relative; padding: 0; }
+.nb:hover { border-color: var(--accent); }
+.nb.tried { border-color: var(--bad); color: var(--bad); }
+.nb.tried::after { content: ""; position: absolute; right: 3px; top: 3px; width: 5px; height: 5px; border-radius: 50%; background: var(--bad); }
+.nb.solved { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.nb.cur { outline: 2px solid var(--ink); outline-offset: 1px; }
+.legend { font-size: 12px; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; margin-top: -4px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; border: 1px solid var(--line); }
+.legend .s { background: var(--accent); border-color: var(--accent); }
+.legend .t { border-color: var(--bad); }
+.legend .f { border: 0; width: auto; height: auto; color: var(--star); font-style: normal; font-size: 11px; vertical-align: 0; }
+.nb.fav::before { content: "★"; position: absolute; left: 3px; top: 1px; font-size: 9px; line-height: 1; color: var(--star); }
+.nb.solved.fav::before { color: var(--accent-ink); }
+.fav-bar { margin: 0 0 12px; }
+.fav-filter { width: 100%; font-size: 13px; padding: 6px 10px; }
+.fav-filter[aria-pressed="true"] { border-color: var(--star); color: var(--star); font-weight: 600; }
+.fav-empty { font-size: 12.5px; color: var(--muted); margin: -4px 0 12px; }
+.fav-btn { border: 1px solid var(--line); background: transparent; border-radius: 99px; padding: 1px 10px; font-size: 12.5px; color: var(--muted); }
+.fav-btn:hover { border-color: var(--star); color: var(--star); }
+.fav-btn[aria-pressed="true"] { border-color: var(--star); color: var(--star); font-weight: 600; }
+.fav-stat { color: var(--star); }
+.kind { font-size: 12px; color: var(--muted); }
+
+.main { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; min-width: 0; }
+.p-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.lv { font-size: 12px; font-weight: 600; padding: 2px 10px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); }
+.p-no { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 13px; }
+.state { margin-left: auto; font-size: 13px; font-weight: 600; }
+.state.ok { color: var(--ok); }
+.state.bad { color: var(--bad); }
+.p-title { margin: 0 0 8px; font-size: 20px; letter-spacing: -0.01em; text-wrap: balance; }
+.txt p { margin: 0 0 6px; max-width: 72ch; }
+.txt ul { margin: 0 0 6px; padding-left: 20px; }
+.txt strong { font-weight: 600; }
+.txt pre.code { margin: 6px 0 10px; }
+.txt table { margin: 6px 0 10px; width: auto; }
+
+.sec-label { font-size: 13px; font-weight: 600; margin: 0 0 6px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.sec-label span { font-weight: 400; color: var(--muted); font-size: 12px; }
+.given + .given { margin-top: 12px; }
+.tabs { display: flex; gap: 6px; margin-bottom: 8px; }
+.tab { border: 1px solid var(--line); background: var(--surface); border-radius: 8px 8px 0 0; padding: 4px 14px; font-family: var(--font-mono); font-size: 13px; }
+.tab[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+/* 편집기 — Monaco(../mf-editor.js). 못 띄우면 같은 자리에 평범한 입력칸. 오른쪽 아래를 끌어 높이를 바꾼다 */
+.code-host { height: 280px; min-height: 160px; resize: vertical; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.code-host:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.mf-ta { display: block; width: 100%; height: 100%; resize: none; border: 0; outline: none; font-family: var(--font-mono); font-size: 14px; line-height: 1.55; padding: 12px 14px; background: var(--surface); color: var(--ink); tab-size: 2; }
+.mf-loading { padding: 12px 14px; color: var(--muted); font-size: 13px; }
+.ed-opts { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+.ed-opts label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
+.ed-opts input { accent-color: var(--accent); }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
+.actions .sp { flex: 1; }
+
+/* 고르기 */
+.opts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.opts label { display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; cursor: pointer; }
+.opts label:hover { border-color: var(--accent); }
+.opts input { margin-top: 5px; accent-color: var(--accent); }
+.opts .on { border-color: var(--accent); background: var(--accent-soft); }
+.opt-no { font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* 미리보기 — 훈련생 화면은 늘 흰 바탕(브라우저 기본)이라 어두운 테마에서도 흰 칸으로 둔다 */
+.pv-bar { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 99px; padding: 2px 12px; font-family: var(--font-mono); font-size: 12.5px; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.pv-wrap { overflow: auto; border: 1px solid var(--line); border-radius: 8px; background: #ffffff; resize: vertical; height: 320px; min-height: 160px; }
+.pv-wrap iframe { display: block; border: 0; width: 100%; height: 100%; background: #ffffff; }
+.pv-note { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+.banner { border-radius: 8px; padding: 10px 14px; font-weight: 500; margin-bottom: 10px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.banner.ok { background: var(--ok-bg); color: var(--ok); }
+.banner.bad { background: var(--bad-bg); color: var(--bad); }
+.banner.info { background: var(--code-bg); color: var(--muted); }
+.banner .grow { flex: 1; min-width: 200px; }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.checks li { display: grid; grid-template-columns: 22px 1fr; gap: 4px 6px; font-size: 14px; }
+.checks .mk { font-weight: 700; }
+.checks .ok .mk { color: var(--ok); }
+.checks .bad .mk { color: var(--bad); }
+.checks .why { grid-column: 2; color: var(--bad); font-size: 13px; }
+.checks .w { color: var(--muted); font-size: 12px; font-family: var(--font-mono); margin-left: 6px; }
+table { border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+th, td { padding: 5px 12px; text-align: left; border: 1px solid var(--line); }
+th { background: var(--code-bg); font-weight: 600; }
+
+pre.code { margin: 0 0 12px; padding: 12px 14px; background: var(--code-bg); border-radius: 8px; overflow: auto; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.55; white-space: pre; }
+.expl h4 { margin: 16px 0 6px; font-size: 14px; }
+.expl h4:first-child { margin-top: 0; }
+.expl .pv-wrap { height: 260px; }
+.status-msg { padding: 40px 16px; text-align: center; color: var(--muted); }
+.cloud { font-size: 12px; color: var(--muted); }
+.cloud.ok { color: var(--ok); }
+.cloud.bad { color: var(--bad); }
+.backup { background: var(--surface); border-bottom: 1px solid var(--line); }
+.backup-in { max-width: 1240px; margin: 0 auto; padding: 16px; }
+.backup h2 { margin: 0 0 6px; font-size: 16px; }
+.backup p { margin: 0 0 12px; color: var(--muted); font-size: 13.5px; max-width: 80ch; }
+.bk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.bk-grid textarea { width: 100%; height: 96px; resize: vertical; font-family: var(--font-mono); font-size: 12px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); word-break: break-all; }
+.bk-opt { display: block; margin-top: 6px; font-size: 13px; color: var(--muted); }
+.bk-msg { font-size: 13px; color: var(--muted); }
+.bk-msg.ok { color: var(--ok); }
+.bk-msg.bad { color: var(--bad); }
+@media (max-width: 900px) {
+  .bk-grid { grid-template-columns: 1fr; }
+  .top-in { grid-template-columns: 1fr auto; }
+  .brand { grid-column: 1 / -1; }
+  .wrap { grid-template-columns: 1fr; }
+  .nav { position: static; max-height: 230px; }
+}
+@media (max-width: 600px) {
+  .top { position: static; }
+  .top-in { grid-template-columns: 1fr; }
+  .top-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+  .top-btns .btn { flex: 1 1 auto; }
+  .card { padding: 14px 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .bar > i { transition: none; } }
+
+/* JS 연습장 — 실행 결과 · 가짜 서버 표 */
+.out { margin: 0; padding: 12px 14px; background: var(--code-bg); border-radius: 8px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; min-height: 44px; max-height: 320px; overflow: auto; }
+.out .err { color: var(--bad); }
+.muted { color: var(--muted); }
+#domHost { height: 220px; margin-bottom: 10px; }
+table.routes { margin: 0; }
+table.routes td.muted { font-size: 12.5px; }
+.checks .why { white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <a class="home" href="../../index.html">← 강의 자료 처음으로</a>
+      <select id="setPick" class="set-pick" aria-label="다른 연습장으로 가기"><option>JS 연습장</option></select>
+      <small>돌려 보고 · 결과로 채점</small>
+    </div>
+    <div class="sum" aria-live="polite">
+      <div class="sum-row">
+        <div class="big">푼 문제 <b id="solved">0</b> / 총 <b id="total" style="color:var(--ink)">0</b></div>
+        <div class="lv-stats" id="lvStats"></div>
+      </div>
+      <div class="bar" role="progressbar" aria-label="진행도" aria-valuemin="0" aria-valuemax="100" id="barWrap"><i id="bar"></i></div>
+      <div class="cloud" id="cloud" aria-live="polite">이 브라우저에 저장됨</div>
+    </div>
+    <div class="top-btns">
+      <button class="btn primary" id="nextOpen" type="button">다음 미해결 문제</button>
+      <button class="btn" id="backupBtn" type="button" aria-expanded="false">백업·복원</button>
+      <button class="btn ghost" id="reset" type="button">진행 초기화</button>
+    </div>
+  </div>
+</header>
+<section class="backup" id="backupPanel" hidden>
+  <div class="backup-in">
+    <h2>다른 PC로 진행 상황 옮기기</h2>
+    <p>진행 상황(푼 문제 · 즐겨찾기)은 이 PC의 이 브라우저에만 저장됩니다. 다른 PC에서 이어서 풀려면 ① 지금 PC에서 <b>백업 코드</b>를 복사하고, ② 다른 PC에서 이 페이지를 열어 <b>백업·복원</b>의 붙여넣기 칸에 넣은 뒤 [복원]을 누르세요. 기존 진행 상황과 합쳐집니다.</p>
+    <p>공용 PC(실습실)에서는 사용을 마친 뒤 코드를 복사해 두고 [진행 초기화]를 눌러 주세요. 다음 사람에게 내 진행 상황이 보일 수 있습니다.</p>
+    <div class="bk-grid">
+      <div>
+        <div class="sec-label">백업 코드 (이 PC)</div>
+        <textarea id="bkOut" readonly spellcheck="false"></textarea>
+        <label class="bk-opt"><input type="checkbox" id="bkFull"> 작성 중인 코드도 포함 (코드가 길어집니다)</label>
+        <div class="actions"><button class="btn primary" id="bkCopy" type="button">코드 복사</button><button class="btn" id="bkSave" type="button">파일로 저장</button><span class="bk-msg" id="bkCopyMsg"></span></div>
+      </div>
+      <div>
+        <div class="sec-label">백업 코드 붙여넣기 (복원)</div>
+        <textarea id="bkIn" spellcheck="false" placeholder="다른 PC에서 복사한 백업 코드를 여기에 붙여넣으세요"></textarea>
+        <div class="actions"><button class="btn" id="bkRestore" type="button">복원</button><button class="btn" id="bkFile" type="button">파일에서 불러오기</button><input type="file" id="bkFileIn" accept=".txt,.json,text/plain" hidden><span class="bk-msg" id="bkRestoreMsg"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <nav class="nav" id="nav" aria-label="문제 목록"></nav>
+  <main class="main" id="main">
+    <div class="card status-msg" id="loading">불러오는 중입니다…</div>
+  </main>
+</div>
+<script src="../mf-editor.js"></script>
+<script src="../mf-sets.js"></script>
+<script src="../mf-nav.js"></script>
+<script>
+/* ── 채점 엔진 ─────────────────────────────────────────────────
+   훈련생 코드는 페이지와 «떨어진 곳»에서 돌린다.
+   · DOM 이 필요 없는 문제(fn · log · async) → Web Worker. 끝나지 않으면 3초 뒤 terminate — 페이지는 멈추지 않는다
+   · DOM 문제(dom) → sandbox iframe(allow-scripts · 다른 출처라 이 페이지의 저장소에 못 닿는다).
+     🔴 일반 Chrome 은 이 iframe 을 다른 프로세스에서 돌려 무한 반복이 있어도 페이지가 산다. 진단용 Chrome(headless shell)은 아니다(2026-11-24 실측)
+   검사마다 «새로» 돌린다 — 앞 검사가 바꾼 것(배열 · 화면)이 뒤로 번지지 않는다.
+   검사 식(c[].x)은 훈련생 코드 «뒤»에 붙어 같은 자리에서 돈다 — 훈련생이 만든 함수 · 변수를 그대로 부른다.
+   fetch 는 가짜다(네트워크 없음) — 문제의 fetch 표(주소 → 상태 · 내용 · 지연 · 실패)대로 진짜 Response 를 돌려준다. */
+const MF_ENGINE = (() => {
+  const TIMEOUT = 3000;
+
+  /* 샌드박스 안에 «먼저» 넣는 도구 — 이 함수의 소스를 그대로 넣는다(바깥 변수를 쓰면 안 된다) */
+  function mfHarness(post, routes) {
+    var G = typeof window !== "undefined" ? window : self;
+    var logs = [], fetchLog = [];
+    function fmt(v, d) {
+      d = d || 0;
+      if (v === undefined) return "undefined";
+      if (v === null) return "null";
+      var ty = typeof v;
+      if (ty === "string") return d ? JSON.stringify(v) : v;
+      if (ty === "number") return Object.is(v, -0) ? "-0" : String(v);
+      if (ty === "boolean" || ty === "symbol") return String(v);
+      if (ty === "bigint") return v + "n";
+      if (ty === "function") return "function " + (v.name || "(이름 없음)");
+      if (d > 5) return "…";
+      if (Array.isArray(v)) return "[" + v.map(function (x) { return fmt(x, d + 1); }).join(", ") + "]";
+      if (v instanceof Error) return v.name + ": " + v.message;
+      if (typeof Promise !== "undefined" && v instanceof Promise) return "Promise {…}";
+      if (v instanceof Set) return "Set(" + v.size + ") " + fmt(Array.from(v), d + 1);
+      if (v instanceof Map) return "Map(" + v.size + ") {" + Array.from(v).map(function (e) { return fmt(e[0], d + 1) + " => " + fmt(e[1], d + 1); }).join(", ") + "}";
+      if (v instanceof Date) return v.toISOString();
+      if (typeof Element !== "undefined" && v instanceof Element) return "<" + v.tagName.toLowerCase() + (v.id ? "#" + v.id : "") + ">";
+      var keys = Object.keys(v);
+      return keys.length ? "{ " + keys.map(function (k) { return k + ": " + fmt(v[k], d + 1); }).join(", ") + " }" : "{}";
+    }
+    function show(v) { return typeof v === "string" ? JSON.stringify(v) : fmt(v, 1); }
+    function deq(a, b) {
+      if (Object.is(a, b)) return true;
+      if (typeof a !== typeof b || a === null || b === null || typeof a !== "object") return false;
+      if (Array.isArray(a) !== Array.isArray(b)) return false;
+      if (a instanceof Set || b instanceof Set) return a instanceof Set && b instanceof Set && a.size === b.size && Array.from(a).every(function (x) { return b.has(x); });
+      if (a instanceof Map || b instanceof Map) return a instanceof Map && b instanceof Map && deq(Array.from(a), Array.from(b));
+      if (Array.isArray(a)) return a.length === b.length && a.every(function (x, i) { return deq(x, b[i]); });
+      var ka = Object.keys(a), kb = Object.keys(b);
+      return ka.length === kb.length && ka.every(function (k) { return Object.prototype.hasOwnProperty.call(b, k) && deq(a[k], b[k]); });
+    }
+    var log = function () {
+      var line = Array.prototype.map.call(arguments, function (a) { return typeof a === "string" ? a : fmt(a, 1); }).join(" ");
+      logs.push(line);
+      post({ log: line });
+    };
+    G.console = { log: log, info: log, warn: log, error: log, debug: log, table: log, dir: log };
+    G.fetch = function (url) {
+      var key = String(url).replace(/^\.?\//, "");
+      fetchLog.push(key);
+      var r = routes[key];
+      return new Promise(function (ok, no) {
+        setTimeout(function () {
+          if (!r) { ok(new Response("Not Found", { status: 404, statusText: "Not Found" })); return; }
+          if (r.fail) { no(new TypeError("Failed to fetch")); return; }
+          var text = typeof r.body === "string" ? r.body : JSON.stringify(r.body);
+          ok(new Response(text, { status: r.status || 200, headers: { "Content-Type": typeof r.body === "string" ? "text/plain" : "application/json" } }));
+        }, r && r.delay !== undefined ? r.delay : 10);
+      });
+    };
+    function need(s) {
+      var e = document.querySelector(s);
+      if (!e) throw new Error("「" + s + "」에 해당하는 요소가 없습니다");
+      return e;
+    }
+    var t = {
+      logs: logs, fetchLog: fetchLog, show: show, deq: deq,
+      ok: function (c, m) { return c ? true : m || "조건을 만족하지 않습니다"; },
+      all: function () { for (var i = 0; i < arguments.length; i++) { var r = arguments[i]; if (r !== true) return r === false ? "조건을 만족하지 않습니다" : r; } return true; },
+      eq: function (label, got, want) { return deq(got, want) ? true : label + " → " + show(got) + "   (기대 " + show(want) + ")"; },
+      logsEq: function (want) {
+        for (var i = 0; i < Math.max(want.length, logs.length); i++) {
+          if (logs[i] !== want[i]) return (i + 1) + "번째 출력 줄: " + (i < logs.length ? show(logs[i]) : "(없음)") + "   (기대 " + (i < want.length ? show(want[i]) : "(없음)") + ")";
+        }
+        return true;
+      },
+      wait: function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); },
+      until: async function (fn, ms) {
+        var end = Date.now() + (ms || 1500);
+        while (Date.now() < end) { try { if (fn()) return true; } catch (e) { /* 아직 */ } await t.wait(20); }
+        return false;
+      },
+      $: function (s) { return document.querySelector(s); },
+      $$: function (s) { return Array.from(document.querySelectorAll(s)); },
+      text: function (s) { return need(s).textContent.trim(); },
+      click: function (s) { need(s).click(); },
+      input: function (s, v) { var e = need(s); e.value = v; e.dispatchEvent(new Event("input", { bubbles: true })); },
+      submit: function (s) { var e = need(s); var ev = new Event("submit", { bubbles: true, cancelable: true }); e.dispatchEvent(ev); return ev; },
+    };
+    G.__T = t;
+  }
+
+  /** 자주 보는 오류에 한국어 설명을 붙인다 */
+  function koError(msg) {
+    msg = String(msg || "").replace(/^Uncaught /, "");
+    let m;
+    if ((m = /ReferenceError: (\S+) is not defined/.exec(msg))) return msg + " — 「" + m[1] + "」이(가) 없습니다. 이름을 문제와 똑같이(대소문자까지) 썼습니까?";
+    if ((m = /has already been declared/.exec(msg))) return msg + " — 같은 이름을 두 번 선언했습니다. 「주어진 코드」에 이미 있는 이름인지 보십시오";
+    if (/properties of null/.test(msg)) return msg + " — null 에서 속성을 쓰거나 꺼내려 했습니다. querySelector 의 결과라면 요소를 못 찾은 것입니다(선택자 확인)";
+    if (/properties of undefined/.test(msg)) return msg + " — undefined 에서 속성을 쓰거나 꺼내려 했습니다. 없는 값(이름 오타 · 빈 배열의 [0] · return 빠뜨림)인지 보십시오";
+    if (/is not a function/.test(msg)) return msg + " — 함수가 아닌 것을 불렀습니다";
+    if (/await is only valid/.test(msg)) return msg + " — await 는 async 함수 안에서만 씁니다";
+    if (/Unexpected end of input/.test(msg)) return msg + " — 괄호나 중괄호가 닫히지 않았습니다";
+    if (/is not valid JSON|in JSON at position|Unexpected end of JSON/.test(msg)) return msg + " — JSON 이 아닌 것(예: 404 의 Not Found)을 JSON 으로 읽으려 했습니다";
+    if (/^SyntaxError/.test(msg)) return msg + " — 문법이 틀렸습니다(괄호 · 중괄호 · 쉼표 · 따옴표를 보십시오)";
+    return msg;
+  }
+  const lines = (s) => (s.match(/\n/g) || []).length;
+  const bodyOf = (x) => (/\breturn\b/.test(x) ? x : "return (" + x + ");");
+  /* 오류 스택에서 «맨 위 자리»의 줄 번호 — 검사 중에 내 함수 안에서 난 오류도 몇 번째 줄인지 알려 주려고 */
+  const stackLine = (stack) => {
+    for (const l of String(stack || "").split("\n").slice(1)) { const m = /:(\d+):\d+\)?\s*$/.exec(l); if (m) return +m[1]; }
+    return 0;
+  };
+  const errLine = (m, offset, n) => {
+    const line = m.line || stackLine(m.stack);
+    return koError(m.err) + (line && line - offset > 0 && (!n || line - offset <= n) ? "  (내 코드 " + (line - offset) + "번째 줄)" : "");
+  };
+
+  /* 화면 밖의 iframe 자리 */
+  let host = null;
+  const frameHost = () => {
+    if (host && host.isConnected) return host;
+    host = document.createElement("div");
+    host.setAttribute("aria-hidden", "true");
+    host.style.cssText = "position:fixed;left:-20000px;top:0;width:800px;height:600px;overflow:hidden;";
+    document.body.appendChild(host);
+    return host;
+  };
+  const handlers = {};
+  let seq = 0;
+  window.addEventListener("message", (e) => {
+    const d = e.data;
+    if (!d || typeof d !== "object" || !d.__mf) return;
+    const h = handlers[d.__mf];
+    if (h && e.source === h.win()) h.on(d);
+  });
+
+  /**
+   * 훈련생 코드(+ 주어진 코드)를 돌리고 검사 식 x 의 결과를 받는다.
+   * opt: { pre, fetch, host(보이는 자리 — dom 미리보기), timeout }
+   * → { r, err, fatal, timeout, logs, errs }
+   */
+  function run(p, code, x, opt) {
+    opt = opt || {};
+    const pre = opt.pre !== undefined ? opt.pre : p.pre || "";
+    const routes = Object.assign({}, p.fetch || {}, opt.fetch || {});
+    const tail = "(async function (t) {\n" + bodyOf(x) + "\n})";
+    return new Promise((resolve) => {
+      const logs = [], errs = [];
+      let settled = false, kill = () => {}, offset = 0;
+      const codeLines = lines(code) + 1;
+      const finish = (r) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        kill(r.timeout);
+        resolve(Object.assign({ logs, errs }, r));
+      };
+      const on = (m) => {
+        if (m.log !== undefined) { logs.push(m.log); return; }
+        if (m.done) { finish({ r: m.r, err: m.err ? errLine(m, offset, codeLines) : undefined }); return; }
+        if (m.err !== undefined) {
+          errs.push(m.reject ? "처리하지 않은 Promise 오류: " + koError(m.err) : errLine(m, offset));
+          if (m.fatal) finish({ fatal: true });
+        }
+      };
+      const timer = setTimeout(() => finish({ timeout: true }), opt.timeout || TIMEOUT);
+
+      if (p.m !== "dom") {
+        const head = "(" + mfHarness.toString() + ")(function (m) { postMessage(m); }, " + JSON.stringify(routes) + ");\n" +
+          "self.addEventListener('unhandledrejection', function (e) { e.preventDefault(); postMessage({ err: String(e.reason && e.reason.message || e.reason), reject: true }); });\n" +
+          (pre ? pre + "\n" : "");
+        offset = lines(head);
+        const src = head + code + "\n;" + tail + "(self.__T).then(function (r) { postMessage({ done: true, r: r === undefined ? null : r }); }, function (e) { postMessage({ done: true, err: (e && e.name ? e.name + ': ' : '') + (e && e.message || e), stack: String(e && e.stack || '') }); });\n";
+        let w;
+        try { w = new Worker(URL.createObjectURL(new Blob([src], { type: "text/javascript" }))); }
+        catch (e) { finish({ err: "실행 칸을 만들지 못했습니다: " + e.message }); return; }
+        kill = () => w.terminate();
+        w.onmessage = (e) => on(e.data);
+        w.onerror = (e) => { e.preventDefault(); on({ err: e.message, line: e.lineno, fatal: true }); };
+        return;
+      }
+
+      /* dom — iframe. 주어진 HTML · 도구 · 주어진 JS · 내 JS · 검사 를 각각 <script> 로(전역 이름은 서로 보인다) */
+      const id = "r" + (++seq) + "_" + Date.now();
+      const esc = (s) => String(s).replace(/<\/script/gi, "<\\/script");
+      const post = "function (m) { m.__mf = " + JSON.stringify(id) + "; parent.postMessage(m, '*'); }";
+      const before = "<!DOCTYPE html><html lang=\"ko\"><head><meta charset=\"utf-8\"><style>body{font-family:sans-serif;margin:12px}" + (p.css || "") + "</style></head><body>\n" + (p.html || "") + "\n" +
+        "<script>(" + esc(mfHarness.toString()) + ")(" + post + ", " + esc(JSON.stringify(routes)) + ");\n" +
+        "window.__post = " + post + ";\n" +
+        "window.addEventListener('error', function (e) { __post({ err: e.message, line: e.lineno }); });\n" +
+        "window.addEventListener('unhandledrejection', function (e) { e.preventDefault(); __post({ err: String(e.reason && e.reason.message || e.reason), reject: true }); });<\/script>\n" +
+        (pre ? "<script>\n" + esc(pre) + "\n<\/script>\n" : "") + "<script>\n";
+      offset = lines(before);
+      const doc = before + esc(code) + "\n<\/script>\n<script>(async function () {\n" +
+        "await new Promise(function (r) { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(r, 0); }); else setTimeout(r, 0); });\n" +
+        "return " + esc(tail) + "(window.__T);\n})().then(function (r) { __post({ done: true, r: r === undefined ? null : r }); }, function (e) { __post({ done: true, err: (e && e.name ? e.name + ': ' : '') + (e && e.message || e), stack: String(e && e.stack || '') }); });<\/script>\n</body></html>";
+      const f = document.createElement("iframe");
+      f.setAttribute("sandbox", "allow-scripts");
+      f.setAttribute("title", opt.host ? "내 코드의 화면" : "채점용 화면");
+      if (!opt.host) f.setAttribute("tabindex", "-1");
+      f.style.cssText = opt.host ? "display:block;width:100%;height:100%;border:0;background:#fff" : "width:800px;height:600px;border:0";
+      handlers[id] = { win: () => f.contentWindow, on };
+      kill = (timedOut) => { delete handlers[id]; if (!opt.host || timedOut) f.remove(); };
+      f.srcdoc = doc;
+      (opt.host || frameHost()).appendChild(f);
+    });
+  }
+
+  /** 검사 하나의 결과 → { ok, msg } */
+  function judge(res) {
+    if (res.timeout) return { ok: false, msg: (TIMEOUT / 1000) + "초 안에 끝나지 않았습니다 — 끝나지 않는 반복(while)이 있거나, 끝나지 않는 Promise 를 기다립니다" };
+    if (res.fatal) return { ok: false, msg: res.errs[0] || "코드를 실행하지 못했습니다" };
+    const first = res.errs.length ? "\n(그 전에 내 코드에서 난 오류: " + res.errs[0] + ")" : "";
+    if (res.err) return { ok: false, msg: res.err + first };
+    if (res.r === true) return { ok: true };
+    return { ok: false, msg: (typeof res.r === "string" ? res.r : "조건을 만족하지 않습니다") + first };
+  }
+
+  /** 채점: { ok, results: [{ d, ok, msg }] } */
+  async function grade(p, files) {
+    if (p.m === "choice") {
+      const ok = !!files && files.choice === p.a;
+      return { ok, results: [{ d: "고른 답", ok, msg: ok ? "" : files && files.choice !== undefined ? "다시 생각해 보십시오" : "답을 고르십시오" }] };
+    }
+    const results = [];
+    for (const c of p.c) {
+      const j = judge(await run(p, (files && files.js) || "", c.x, c));
+      results.push({ d: c.d, ok: j.ok, msg: j.msg });
+    }
+    return { ok: results.every((r) => r.ok), results };
+  }
+
+  /** [실행] — 검사 없이 돌려 출력 · 오류만 본다. async 문제는 조금 더 기다린다 */
+  function runOnly(p, code, host) {
+    return run(p, code, "await t.wait(" + (p.runWait || (p.m === "async" || p.m === "dom" ? 1200 : 100)) + "); return true;", { host, timeout: TIMEOUT + 1500 });
+  }
+
+  return { run, grade, runOnly, judge, koError, TIMEOUT };
+})();
+if (typeof module !== "undefined") module.exports = { MF_ENGINE };
+</script>
+<script>
+const PROBLEMS = [{"no":1,"level":"초급","topic":"변수와 템플릿 리터럴","m":"log","pre":"const name = \"김하나\";\nconst views = 1845;","q":"주어진 변수 `name` 과 `views` 를 써서 아래 한 줄을 **console.log** 로 찍으시오. 템플릿 리터럴(`` ` ``)을 쓰십시오.\n```text\n김하나 기자의 기사 — 조회수 1845회\n```\n(검사는 변수 값을 바꿔서도 한 번 더 돌립니다 — 글자를 그대로 적으면 걸립니다)","s":{"js":""},"a":{"js":"console.log(`${name} 기자의 기사 — 조회수 ${views}회`);"},"wrong":{"js":"console.log(\"김하나 기자의 기사 — 조회수 1845회\");"},"wf":1,"wn":"화면에 같은 글자가 찍히니 맞은 것 같습니다. 하지만 변수가 바뀌면 따라가지 못합니다.","c":[{"d":"한 줄이 찍힌다","x":"t.logsEq(['김하나 기자의 기사 — 조회수 1845회'])"},{"d":"변수가 바뀌면 찍히는 글자도 바뀐다 (이도윤 · 920)","pre":"const name = \"이도윤\";\nconst views = 920;","x":"t.logsEq(['이도윤 기자의 기사 — 조회수 920회'])"}],"e":"템플릿 리터럴은 **백틱**(`` ` ``)으로 감싸고, 그 안의 `${...}` 자리에 값이 들어갑니다. 파이썬의 f-string 과 같습니다.\n작은따옴표 · 큰따옴표 안에서는 `${...}` 가 그냥 글자로 찍힙니다."},{"no":2,"level":"초급","topic":"+ 와 - 의 차이","m":"choice","q":"다음 두 줄은 무엇을 찍습니까?\n```js\nconsole.log(\"3\" + 1);\nconsole.log(\"3\" - 1);\n```","opts":["`31` 과 `2`","`4` 와 `2`","`31` 과 `31`","`4` 와 `NaN`"],"proof":{"js":"console.log(\"3\" + 1);\nconsole.log(\"3\" - 1);","want":["31","2"]},"a":0,"wrong":1,"wn":"둘 다 숫자 계산이라고 생각하기 쉽습니다. `+` 는 한쪽이 글자면 «이어 붙이기»가 됩니다.","e":"`+` 는 한쪽이라도 **문자열**이면 이어 붙입니다 — `\"3\" + 1` 은 `\"31\"`. `-` 는 이어 붙이는 뜻이 없어서 둘 다 숫자로 바꿔 계산합니다 — `2`.\n입력칸의 값(`input.value`)은 늘 문자열이라, 더하기 전에 `Number(...)` 로 바꿔야 합니다."},{"no":3,"level":"초급","topic":"글자를 숫자로","m":"fn","q":"입력칸에서 받은 두 값(**문자열**)을 더한 **숫자**를 돌려주는 함수 `addStrings(a, b)` 를 만드시오.\n- `addStrings(\"10\", \"5\")` → `15`","s":{"js":"function addStrings(a, b) {\n  \n}"},"a":{"js":"function addStrings(a, b) {\n  return Number(a) + Number(b);\n}"},"wrong":{"js":"function addStrings(a, b) {\n  return a + b;\n}"},"wf":0,"wn":"더하기만 쓰면 `\"105\"` 가 됩니다 — 문자열끼리는 이어 붙이기입니다.","c":[{"d":"addStrings(\"10\", \"5\") → 15","x":"t.eq('addStrings(\"10\", \"5\")', addStrings('10', '5'), 15)"},{"d":"addStrings(\"3\", \"4\") → 7 · (\"0\", \"0\") → 0","x":"t.all(t.eq('addStrings(\"3\", \"4\")', addStrings('3', '4'), 7), t.eq('addStrings(\"0\", \"0\")', addStrings('0', '0'), 0))"},{"d":"소수도 된다 — addStrings(\"1.5\", \"2\") → 3.5","x":"t.eq('addStrings(\"1.5\", \"2\")', addStrings('1.5', '2'), 3.5)"}],"e":"`Number(\"10\")` 은 숫자 `10` 입니다. 바꾼 뒤에 더해야 `15` 가 됩니다.\n`parseInt` 도 되지만 소수점 아래를 버리므로(`parseInt(\"1.5\")` → `1`) 이 문제에는 `Number`(또는 `parseFloat`)가 맞습니다."},{"no":4,"level":"초급","topic":"== 와 ===","m":"choice","q":"다음 중 결과가 `true` 인 것은?","opts":["`\"1\" === 1`","`null === undefined`","`0 == \"\"`","`NaN === NaN`"],"proof":{"js":"console.log(\"1\" === 1, null === undefined, 0 == \"\", NaN === NaN);","want":["false false true false"]},"a":2,"wrong":1,"wn":"`null == undefined` 는 `true` 라서 `===` 도 그럴 것 같습니다. `===` 는 타입까지 같아야 합니다.","e":"`==` 는 타입이 다르면 **바꿔서** 비교합니다 — `0 == \"\"` 는 `\"\"` 가 `0` 으로 바뀌어 `true`. 이런 «몰래 바꾸기» 때문에 헷갈립니다.\n`===` 는 바꾸지 않습니다 — 타입이 다르면 무조건 `false`. **늘 `===` 를 쓰십시오.** (`NaN` 은 자기 자신과도 같지 않습니다 — `Number.isNaN(x)` 로 봅니다.)"},{"no":5,"level":"초급","topic":"if … else if","m":"fn","q":"점수를 받아 등급을 돌려주는 `grade(score)` 를 만드시오.\n- 90 이상 `\"A\"` · 80 이상 `\"B\"` · 70 이상 `\"C\"` · 그 밖에는 `\"F\"`","s":{"js":"function grade(score) {\n  \n}"},"a":{"js":"function grade(score) {\n  if (score >= 90) return \"A\";\n  else if (score >= 80) return \"B\";\n  else if (score >= 70) return \"C\";\n  return \"F\";\n}"},"wrong":{"js":"function grade(score) {\n  if (score > 90) return \"A\";\n  else if (score > 80) return \"B\";\n  else if (score > 70) return \"C\";\n  return \"F\";\n}"},"wf":1,"wn":"「90 이상」을 `> 90` 으로 옮기는 실수입니다. 경계값(90 · 80 · 70)에서만 틀려서 눈에 잘 안 띕니다.","c":[{"d":"100 → A · 85 → B · 75 → C · 30 → F","x":"t.all(t.eq('grade(100)', grade(100), 'A'), t.eq('grade(85)', grade(85), 'B'), t.eq('grade(75)', grade(75), 'C'), t.eq('grade(30)', grade(30), 'F'))"},{"d":"경계값 — 90 → A · 80 → B · 70 → C","x":"t.all(t.eq('grade(90)', grade(90), 'A'), t.eq('grade(80)', grade(80), 'B'), t.eq('grade(70)', grade(70), 'C'))"},{"d":"경계 바로 아래 — 89 → B · 69 → F","x":"t.all(t.eq('grade(89)', grade(89), 'B'), t.eq('grade(69)', grade(69), 'F'))"}],"e":"파이썬의 `elif` 가 JS 에서는 `else if` 입니다. 위에서부터 처음 맞는 곳에서 멈추므로 **큰 점수부터** 묻습니다.\n「이상」은 `>=`, 「초과」는 `>` — 경계값을 꼭 넣어 시험해 보십시오."},{"no":6,"level":"초급","topic":"나머지 연산자 %","m":"fn","q":"정수가 짝수이면 `true`, 홀수이면 `false` 를 돌려주는 `isEven(n)` 을 만드시오. 음수도 들어옵니다.","s":{"js":"function isEven(n) {\n  \n}"},"a":{"js":"function isEven(n) {\n  return n % 2 === 0;\n}"},"wrong":{"js":"function isEven(n) {\n  return n % 2 === 1 ? false : true;\n}"},"wf":1,"wn":"「홀수는 나머지가 1」이라고 외우기 쉽습니다. JS 에서 `-3 % 2` 는 `-1` 이라 음수 홀수가 짝수로 나옵니다.","c":[{"d":"4 → true · 7 → false · 0 → true","x":"t.all(t.eq('isEven(4)', isEven(4), true), t.eq('isEven(7)', isEven(7), false), t.eq('isEven(0)', isEven(0), true))"},{"d":"음수 — -4 → true · -3 → false","x":"t.all(t.eq('isEven(-4)', isEven(-4), true), t.eq('isEven(-3)', isEven(-3), false))"}],"e":"`%` 는 나눈 **나머지**입니다. 짝수는 2 로 나눈 나머지가 `0` 입니다.\n🔴 JS 의 `%` 는 왼쪽 수의 부호를 따라갑니다 — `-3 % 2` 는 `-1`(파이썬은 `1`). 그래서 「`=== 1` 이면 홀수」는 음수에서 틀립니다. `=== 0` 으로 짝수를 묻는 쪽이 안전합니다."},{"no":7,"level":"초급","topic":"switch","m":"fn","q":"요일 번호(0 = 일요일 … 6 = 토요일)를 받아 한 글자 요일을 돌려주는 `dayName(n)` 을 **switch** 로 만드시오.\n- `0` → `\"일\"`, `1` → `\"월\"`, … `6` → `\"토\"`\n- 그 밖의 값 → `\"없음\"`","s":{"js":"function dayName(n) {\n  switch (n) {\n    \n  }\n}"},"a":{"js":"function dayName(n) {\n  switch (n) {\n    case 0: return \"일\";\n    case 1: return \"월\";\n    case 2: return \"화\";\n    case 3: return \"수\";\n    case 4: return \"목\";\n    case 5: return \"금\";\n    case 6: return \"토\";\n    default: return \"없음\";\n  }\n}"},"wrong":{"js":"function dayName(n) {\n  switch (n) {\n    case 0: return \"일\";\n    case 1: return \"월\";\n    case 2: return \"화\";\n    case 3: return \"수\";\n    case 4: return \"목\";\n    case 5: return \"금\";\n    case 6: return \"토\";\n  }\n}"},"wf":1,"wn":"0~6 만 시험해 보면 다 맞습니다. 맞는 case 가 없을 때를 잊으면 `undefined` 가 나옵니다.","c":[{"d":"0 → 일 · 3 → 수 · 6 → 토","x":"t.all(t.eq('dayName(0)', dayName(0), '일'), t.eq('dayName(3)', dayName(3), '수'), t.eq('dayName(6)', dayName(6), '토'))"},{"d":"그 밖의 값 — 7 → 없음 · -1 → 없음","x":"t.all(t.eq('dayName(7)', dayName(7), '없음'), t.eq('dayName(-1)', dayName(-1), '없음'))"}],"e":"`switch` 는 값 하나를 여러 `case` 와 `===` 로 비교합니다. 어느 것과도 같지 않으면 `default` 로 갑니다.\n`return` 을 쓰지 않는 `case` 에는 `break` 를 빠뜨리지 마십시오 — 없으면 아래 case 까지 **이어서** 실행됩니다."},{"no":8,"level":"초급","topic":"for 반복","m":"fn","q":"1부터 `n` 까지의 합을 돌려주는 `sumTo(n)` 을 **for** 로 만드시오. `n` 이 0 이면 `0` 입니다.","s":{"js":"function sumTo(n) {\n  \n}"},"a":{"js":"function sumTo(n) {\n  let total = 0;\n  for (let i = 1; i <= n; i++) {\n    total += i;\n  }\n  return total;\n}"},"wrong":{"js":"function sumTo(n) {\n  let total = 0;\n  for (let i = 1; i < n; i++) {\n    total += i;\n  }\n  return total;\n}"},"wf":0,"wn":"`i < n` 은 `n` 을 빼고 멈춥니다 — 반복의 끝 경계를 하나 어긋나게 쓰는 가장 흔한 실수입니다.","c":[{"d":"sumTo(10) → 55 · sumTo(100) → 5050","x":"t.all(t.eq('sumTo(10)', sumTo(10), 55), t.eq('sumTo(100)', sumTo(100), 5050))"},{"d":"sumTo(1) → 1 · sumTo(0) → 0","x":"t.all(t.eq('sumTo(1)', sumTo(1), 1), t.eq('sumTo(0)', sumTo(0), 0))"}],"e":"`for (시작; 조건; 증가)` — 조건이 참인 동안 돕니다. 「n 까지」는 `i <= n` 입니다.\n합을 모을 변수(`total`)는 반복 **바깥**에서 `let` 으로 만듭니다. 안에서 만들면 돌 때마다 0 으로 돌아갑니다."},{"no":9,"level":"초급","topic":"while 반복","m":"fn","q":"`n` 부터 1까지 거꾸로 센 배열을 돌려주는 `countdown(n)` 을 **while** 로 만드시오.\n- `countdown(3)` → `[3, 2, 1]` · `countdown(0)` → `[]`","s":{"js":"function countdown(n) {\n  const result = [];\n  \n  return result;\n}"},"a":{"js":"function countdown(n) {\n  const result = [];\n  while (n >= 1) {\n    result.push(n);\n    n--;\n  }\n  return result;\n}"},"wrong":{"js":"function countdown(n) {\n  const result = [];\n  while (n >= 0) {\n    result.push(n);\n    n--;\n  }\n  return result;\n}"},"wf":0,"wn":"「0 이 될 때까지」를 `n >= 0` 으로 쓰면 0 까지 들어갑니다.","c":[{"d":"countdown(3) → [3, 2, 1]","x":"t.eq('countdown(3)', countdown(3), [3, 2, 1])"},{"d":"countdown(1) → [1] · countdown(0) → []","x":"t.all(t.eq('countdown(1)', countdown(1), [1]), t.eq('countdown(0)', countdown(0), []))"}],"e":"`while (조건)` 은 조건이 참인 동안 돕니다. 안에서 조건을 바꾸지 않으면(`n--` 을 빠뜨리면) **끝나지 않습니다** — 이 연습장은 3초 뒤 멈추고 알려 줍니다.\n`push` 는 배열 끝에 하나를 넣습니다. `const` 배열이어도 안의 내용은 바꿀 수 있습니다."},{"no":10,"level":"초급","topic":"for…of","m":"log","pre":"const sections = [\"정치\", \"경제\", \"사회\"];","q":"주어진 배열 `sections` 를 **for…of** 로 돌며 번호를 붙여 한 줄씩 찍으시오.\n```text\n1. 정치\n2. 경제\n3. 사회\n```\n(검사는 다른 배열로도 돌립니다)","s":{"js":""},"a":{"js":"let no = 1;\nfor (const s of sections) {\n  console.log(`${no}. ${s}`);\n  no++;\n}"},"wrong":{"js":"let no = 0;\nfor (const s of sections) {\n  console.log(`${no}. ${s}`);\n  no++;\n}"},"wf":0,"wn":"배열의 번호(인덱스)가 0 부터라 그대로 찍으면 `0. 정치` 가 됩니다. 사람에게 보이는 번호는 1 부터입니다.","c":[{"d":"1. 정치 · 2. 경제 · 3. 사회","x":"t.logsEq(['1. 정치', '2. 경제', '3. 사회'])"},{"d":"다른 배열 — [\"IT\", \"문화\"] → 1. IT · 2. 문화","pre":"const sections = [\"IT\", \"문화\"];","x":"t.logsEq(['1. IT', '2. 문화'])"}],"e":"`for (const x of 배열)` 은 배열의 **값**을 하나씩 꺼냅니다(파이썬의 `for x in 리스트`). 번호가 필요하면 바깥에 세는 변수를 두거나 `sections.forEach((s, i) => …)` 의 `i + 1` 을 씁니다.\n🔴 `for…in` 은 값이 아니라 **번호(키)** 를 꺼냅니다 — 배열에는 `for…of` 를 쓰십시오."},{"no":11,"level":"초급","topic":"break","m":"fn","q":"숫자 배열에서 **처음으로** 나오는 음수의 위치(인덱스)를 돌려주는 `firstNegative(nums)` 를 만드시오. 음수가 없으면 `-1` 입니다. 반복과 `break`(또는 `return`)를 쓰십시오.","s":{"js":"function firstNegative(nums) {\n  \n}"},"a":{"js":"function firstNegative(nums) {\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] < 0) return i;\n  }\n  return -1;\n}"},"wrong":{"js":"function firstNegative(nums) {\n  let found = -1;\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] < 0) found = i;\n  }\n  return found;\n}"},"wf":0,"wn":"찾아도 멈추지 않으면 끝까지 돌며 덮어써서 «마지막» 음수의 위치가 남습니다.","c":[{"d":"[3, -1, -5] → 1 (처음 것)","x":"t.eq('firstNegative([3, -1, -5])', firstNegative([3, -1, -5]), 1)"},{"d":"[-2] → 0 · [1, 2] → -1 · [] → -1","x":"t.all(t.eq('firstNegative([-2])', firstNegative([-2]), 0), t.eq('firstNegative([1, 2])', firstNegative([1, 2]), -1), t.eq('firstNegative([])', firstNegative([]), -1))"}],"e":"찾았으면 **그 자리에서 멈춰야** 「처음」입니다. 함수 안이면 `return i` 가 반복과 함수를 한꺼번에 끝내고, 반복만 끝내려면 `break` 를 씁니다.\n배열 메서드로는 `nums.findIndex((n) => n < 0)` 한 줄입니다(4일차 `find` 의 형제)."},{"no":12,"level":"초급","topic":"|| 와 ??","m":"fn","q":"값이 **없으면**(`null` · `undefined`) `\"없음\"` 을, 있으면 그 값을 그대로 돌려주는 `withDefault(value)` 를 만드시오.\n🔴 `0` 과 빈 글자 `\"\"` 는 «있는 값»입니다 — 그대로 돌려줍니다.","s":{"js":"function withDefault(value) {\n  \n}"},"a":{"js":"function withDefault(value) {\n  return value ?? \"없음\";\n}"},"wrong":{"js":"function withDefault(value) {\n  return value || \"없음\";\n}"},"wf":1,"wn":"`||` 로 기본값을 넣는 코드를 많이 봅니다. `||` 는 0 · \"\" · false 도 «없다»로 봅니다.","c":[{"d":"null · undefined → \"없음\" · \"김하나\" → \"김하나\"","x":"t.all(t.eq('withDefault(null)', withDefault(null), '없음'), t.eq('withDefault(undefined)', withDefault(undefined), '없음'), t.eq('withDefault(\"김하나\")', withDefault('김하나'), '김하나'))"},{"d":"0 → 0 · \"\" → \"\" · false → false (있는 값)","x":"t.all(t.eq('withDefault(0)', withDefault(0), 0), t.eq('withDefault(\"\")', withDefault(''), ''), t.eq('withDefault(false)', withDefault(false), false))"}],"e":"`a || b` 는 `a` 가 **거짓 같은 값**(0 · \"\" · false · null · undefined · NaN)이면 `b` 입니다. `a ?? b` 는 `a` 가 **null · undefined 일 때만** `b` 입니다.\n조회수 0 · 빈 제목처럼 «0 도 값»인 자리에는 `??` 를 쓰십시오."},{"no":13,"level":"초급","topic":"화살표 함수 · 숫자 꾸미기","m":"fn","q":"조회수를 받아 **세 자리마다 쉼표**를 넣고 `회` 를 붙인 글자를 돌려주는 `formatViews` 를 **화살표 함수**로 만드시오.\n- `formatViews(1845)` → `\"1,845회\"`","s":{"js":"const formatViews = (n) => ;"},"a":{"js":"const formatViews = (n) => n.toLocaleString(\"ko-KR\") + \"회\";"},"wrong":{"js":"const formatViews = (n) => { n.toLocaleString(\"ko-KR\") + \"회\"; };"},"wf":0,"wn":"중괄호를 쓰는 순간 «자동 return» 이 사라집니다. 계산은 하고 버려서 `undefined` 가 나옵니다(JS 2일차 🔴).","c":[{"d":"1845 → \"1,845회\" · 920 → \"920회\"","x":"t.all(t.eq('formatViews(1845)', formatViews(1845), '1,845회'), t.eq('formatViews(920)', formatViews(920), '920회'))"},{"d":"1234567 → \"1,234,567회\" · 0 → \"0회\"","x":"t.all(t.eq('formatViews(1234567)', formatViews(1234567), '1,234,567회'), t.eq('formatViews(0)', formatViews(0), '0회'))"}],"e":"화살표 함수는 몸통이 **식 하나**이면 중괄호 없이 쓰고, 그 값이 자동으로 돌아갑니다. 중괄호를 쓰면 `return` 을 직접 적어야 합니다.\n`toLocaleString(\"ko-KR\")` 은 그 나라 방식으로 숫자를 꾸밉니다(세 자리 쉼표). 9일차 카드의 조회수가 이것입니다."},{"no":14,"level":"초급","topic":"문자열 다듬기 — trim · toLowerCase","m":"fn","q":"검색어를 비교하기 좋게 다듬는 `cleanInput(s)` 를 만드시오 — **앞뒤 공백을 없애고 영어는 소문자로** 바꿉니다.\n- `cleanInput(\"  Hello JS  \")` → `\"hello js\"`","s":{"js":"function cleanInput(s) {\n  \n}"},"a":{"js":"function cleanInput(s) {\n  return s.trim().toLowerCase();\n}"},"wrong":{"js":"function cleanInput(s) {\n  s.trim();\n  return s.toLowerCase();\n}"},"wf":0,"wn":"`s.trim()` 이 `s` 를 고친다고 생각하기 쉽습니다. 문자열은 바뀌지 않고, 다듬은 «새 글자»를 돌려줄 뿐입니다.","c":[{"d":"\"  Hello JS  \" → \"hello js\"","x":"t.eq('cleanInput(\"  Hello JS  \")', cleanInput('  Hello JS  '), 'hello js')"},{"d":"\"AI\" → \"ai\" · \"   \" → \"\" · \"금리\" → \"금리\"","x":"t.all(t.eq('cleanInput(\"AI\")', cleanInput('AI'), 'ai'), t.eq('cleanInput(\"   \")', cleanInput('   '), ''), t.eq('cleanInput(\"금리\")', cleanInput('금리'), '금리'))"}],"e":"문자열 메서드는 원래 글자를 **고치지 않고** 새 글자를 돌려줍니다. 그래서 `s.trim()` 만 쓰고 버리면 아무 일도 안 일어납니다 — 결과를 받아 쓰거나 이어서(`.trim().toLowerCase()`) 부르십시오.\n한글에는 대소문자가 없어 그대로입니다."},{"no":15,"level":"초급","topic":"문자열 자르기 — length · slice","m":"fn","q":"제목이 `max` 글자보다 **길면** 앞의 `max` 글자만 남기고 `…` 를 붙이고, 아니면 그대로 돌려주는 `shorten(title, max)` 를 만드시오.\n- `shorten(\"폭설 주의보 발령\", 5)` → `\"폭설 주의…\"` · `shorten(\"금리 동결\", 5)` → `\"금리 동결\"`","s":{"js":"function shorten(title, max) {\n  \n}"},"a":{"js":"function shorten(title, max) {\n  if (title.length > max) return title.slice(0, max) + \"…\";\n  return title;\n}"},"wrong":{"js":"function shorten(title, max) {\n  if (title.length >= max) return title.slice(0, max) + \"…\";\n  return title;\n}"},"wf":1,"wn":"「길면」을 `>=` 로 쓰면 딱 맞는 길이에도 `…` 가 붙습니다.","c":[{"d":"긴 제목 — (\"폭설 주의보 발령\", 5) → \"폭설 주의…\"","x":"t.eq('shorten(\"폭설 주의보 발령\", 5)', shorten('폭설 주의보 발령', 5), '폭설 주의…')"},{"d":"딱 맞는 길이 — (\"금리 동결\", 5) → 그대로","x":"t.eq('shorten(\"금리 동결\", 5)', shorten('금리 동결', 5), '금리 동결')"},{"d":"짧은 제목 — (\"금리 동결\", 10) → 그대로","x":"t.eq('shorten(\"금리 동결\", 10)', shorten('금리 동결', 10), '금리 동결')"}],"e":"`length` 는 글자 수(띄어쓰기 포함), `slice(0, max)` 는 0번부터 `max` 개입니다.\n「길면」은 `> max` — 딱 `max` 글자인 제목은 자를 필요가 없습니다. 경계값을 꼭 넣어 보십시오."},{"no":16,"level":"초급","topic":"숫자만 꺼내기 — parseInt 의 함정","m":"fn","q":"`\"1,845회\"` 처럼 쉼표와 글자가 섞인 조회수에서 숫자만 꺼내 **숫자**로 돌려주는 `parseViews(text)` 를 만드시오.\n- `parseViews(\"1,845회\")` → `1845`","s":{"js":"function parseViews(text) {\n  \n}"},"a":{"js":"function parseViews(text) {\n  return Number(text.replace(/[^0-9]/g, \"\"));\n}"},"wrong":{"js":"function parseViews(text) {\n  return parseInt(text);\n}"},"wf":0,"wn":"`parseInt` 가 앞의 숫자를 알아서 읽어 줘서 편해 보입니다. 하지만 쉼표에서 멈춰 `1` 이 나옵니다.","c":[{"d":"\"1,845회\" → 1845 · \"1,234,567회\" → 1234567","x":"t.all(t.eq('parseViews(\"1,845회\")', parseViews('1,845회'), 1845), t.eq('parseViews(\"1,234,567회\")', parseViews('1,234,567회'), 1234567))"},{"d":"\"920회\" → 920 · \"0회\" → 0","x":"t.all(t.eq('parseViews(\"920회\")', parseViews('920회'), 920), t.eq('parseViews(\"0회\")', parseViews('0회'), 0))"}],"e":"`parseInt` 는 앞에서부터 숫자를 읽다가 **숫자가 아닌 글자에서 멈춥니다** — `parseInt(\"1,845회\")` 는 `1`. 크롤링한 글자에서 자주 걸립니다.\n숫자가 아닌 것을 모두 지운 뒤(`replace(/[^0-9]/g, \"\")` 또는 `replaceAll(\",\", \"\").replace(\"회\", \"\")`) `Number` 로 바꿉니다."},{"no":17,"level":"초급","topic":"자리 맞추기 — padStart","m":"fn","q":"기사 번호를 **네 자리**로 맞춘 글자를 돌려주는 `padId(n)` 을 만드시오. 모자라는 자리는 앞에 `0` 을 채웁니다.\n- `padId(7)` → `\"0007\"` · `padId(12345)` → `\"12345\"`(넘치면 그대로)","s":{"js":"function padId(n) {\n  \n}"},"a":{"js":"function padId(n) {\n  return String(n).padStart(4, \"0\");\n}"},"wrong":{"js":"function padId(n) {\n  return \"000\" + n;\n}"},"wf":1,"wn":"한 자리 번호만 보고 `0` 을 세 개 붙이면 두 자리 · 세 자리에서 다섯 자리가 됩니다.","c":[{"d":"7 → \"0007\"","x":"t.eq('padId(7)', padId(7), '0007')"},{"d":"42 → \"0042\" · 123 → \"0123\" · 12345 → \"12345\"","x":"t.all(t.eq('padId(42)', padId(42), '0042'), t.eq('padId(123)', padId(123), '0123'), t.eq('padId(12345)', padId(12345), '12345'))"}],"e":"`padStart(길이, 채울 글자)` 는 그 길이가 될 때까지 **앞에** 채웁니다. 이미 길면 그대로 둡니다. 숫자에는 없는 메서드라 `String(n)` 으로 먼저 바꿉니다.\n날짜의 `\"05\"` 월 · 일을 만들 때도 같은 방법을 씁니다."},{"no":18,"level":"초급","topic":"반올림 — Math.round","m":"fn","q":"수를 소수점 아래 `digits` 자리로 **반올림한 숫자**를 돌려주는 `roundTo(x, digits)` 를 만드시오.\n- `roundTo(3.14159, 2)` → `3.14` · `roundTo(2.5, 0)` → `3`","s":{"js":"function roundTo(x, digits) {\n  \n}"},"a":{"js":"function roundTo(x, digits) {\n  const k = 10 ** digits;\n  return Math.round(x * k) / k;\n}"},"wrong":{"js":"function roundTo(x, digits) {\n  return x.toFixed(digits);\n}"},"wf":0,"wn":"`toFixed` 도 반올림한 모양을 보여 줘서 맞아 보입니다. 하지만 돌려주는 것이 «글자»라 더하면 이어 붙여집니다.","c":[{"d":"(3.14159, 2) → 3.14 · (2.5, 0) → 3 (숫자)","x":"t.all(t.eq('roundTo(3.14159, 2)', roundTo(3.14159, 2), 3.14), t.eq('roundTo(2.5, 0)', roundTo(2.5, 0), 3))"},{"d":"(17.56, 1) → 17.6 · (1946.25, 0) → 1946","x":"t.all(t.eq('roundTo(17.56, 1)', roundTo(17.56, 1), 17.6), t.eq('roundTo(1946.25, 0)', roundTo(1946.25, 0), 1946))"}],"e":"`Math.round` 는 정수로만 반올림합니다. 소수 둘째 자리라면 100 을 곱해 반올림하고 다시 100 으로 나눕니다(`10 ** digits` 는 10 의 거듭제곱).\n`toFixed(2)` 는 **화면에 보일 글자**를 만들 때 씁니다 — `\"3.14\"` 는 숫자가 아닙니다."},{"no":19,"level":"초급","topic":"무작위 정수 — Math.random","m":"fn","q":"`min` 이상 `max` 이하의 **정수**를 무작위로 돌려주는 `randomInt(min, max)` 를 만드시오. 양 끝 값도 나와야 합니다.\n(검사는 여러 번 불러 봅니다)","s":{"js":"function randomInt(min, max) {\n  \n}"},"a":{"js":"function randomInt(min, max) {\n  return Math.floor(Math.random() * (max - min + 1)) + min;\n}"},"wrong":{"js":"function randomInt(min, max) {\n  return Math.floor(Math.random() * (max - min)) + min;\n}"},"wf":1,"wn":"`+ 1` 을 빠뜨리면 `max` 가 «한 번도» 안 나옵니다. 몇 번 눌러 봐서는 모릅니다.","c":[{"d":"randomInt(1, 6) 을 300번 — 모두 1~6 의 정수","x":"const v = Array.from({ length: 300 }, () => randomInt(1, 6));\nconst bad = v.find((x) => !Number.isInteger(x) || x < 1 || x > 6);\nreturn t.ok(bad === undefined, '범위 밖이거나 정수가 아닌 값이 나왔습니다: ' + t.show(bad));"},{"d":"300번 안에 1 · 2 · 3 · 4 · 5 · 6 이 모두 나온다(양 끝 포함)","x":"const seen = new Set(Array.from({ length: 300 }, () => randomInt(1, 6)));\nreturn t.ok([1, 2, 3, 4, 5, 6].every((n) => seen.has(n)), '나온 값: ' + t.show([...seen].sort((a, b) => a - b)) + ' — 한 번도 안 나온 값이 있습니다');"},{"d":"randomInt(5, 5) → 5","x":"t.eq('randomInt(5, 5)', randomInt(5, 5), 5)"}],"e":"`Math.random()` 은 0 이상 1 **미만**의 소수입니다. 칸 수(`max - min + 1`)를 곱하고 `Math.floor` 로 내리면 0 ~ 칸 수-1, 거기에 `min` 을 더합니다.\n`Math.round` 를 쓰면 양 끝 값이 다른 값의 절반만큼만 나와 고르지 않습니다."},{"no":20,"level":"초급","topic":"기본값 매개변수","m":"fn","q":"이름을 받아 인사말을 돌려주는 `greet(name)` 을 만드시오. 이름을 **안 주면** `\"손님\"` 으로 인사합니다.\n- `greet(\"김하나\")` → `\"안녕하세요, 김하나님\"` · `greet()` → `\"안녕하세요, 손님님\"`","s":{"js":"function greet(name) {\n  \n}"},"a":{"js":"function greet(name = \"손님\") {\n  return `안녕하세요, ${name}님`;\n}"},"wrong":{"js":"function greet(name) {\n  return `안녕하세요, ${name}님`;\n}"},"wf":1,"wn":"JS 는 인자를 덜 줘도 오류가 나지 않습니다(2일차 🔴) — 빠진 인자는 `undefined` 가 되어 그대로 찍힙니다.","c":[{"d":"greet(\"김하나\") → \"안녕하세요, 김하나님\"","x":"t.eq('greet(\"김하나\")', greet('김하나'), '안녕하세요, 김하나님')"},{"d":"greet() → \"안녕하세요, 손님님\"","x":"t.eq('greet()', greet(), '안녕하세요, 손님님')"}],"e":"`function greet(name = \"손님\")` — 매개변수 자리에 `=` 로 **기본값**을 적으면, 인자가 없거나 `undefined` 일 때 그 값이 들어갑니다.\n기본값이 없으면 `name` 은 `undefined` 이고, 템플릿 리터럴에 그대로 `\"undefined\"` 로 찍힙니다."},{"no":21,"level":"초급","topic":"나머지 매개변수 ...","m":"fn","q":"인자를 **몇 개든** 받아 모두 더한 값을 돌려주는 `sumAll` 을 만드시오. 하나도 안 주면 `0` 입니다.\n- `sumAll(1, 2, 3)` → `6` · `sumAll()` → `0`","s":{"js":"function sumAll() {\n  \n}"},"a":{"js":"function sumAll(...nums) {\n  let total = 0;\n  for (const n of nums) total += n;\n  return total;\n}"},"wrong":{"js":"function sumAll(nums) {\n  let total = 0;\n  for (const n of nums) total += n;\n  return total;\n}"},"wf":0,"wn":"배열을 받는 함수처럼 쓰면 `sumAll(1, 2, 3)` 의 `nums` 는 그냥 `1` 이라 `for…of` 가 오류를 냅니다.","c":[{"d":"sumAll(1, 2, 3) → 6 · sumAll(10) → 10","x":"t.all(t.eq('sumAll(1, 2, 3)', sumAll(1, 2, 3), 6), t.eq('sumAll(10)', sumAll(10), 10))"},{"d":"sumAll() → 0","x":"t.eq('sumAll()', sumAll(), 0)"}],"e":"매개변수 앞의 `...` 는 «남은 인자를 **배열로** 모아라»입니다(나머지 매개변수). `sumAll(1, 2, 3)` 이면 `nums` 는 `[1, 2, 3]`, 아무것도 없으면 빈 배열 `[]` 입니다.\n3일차의 **전개**(`...배열` → 펼치기)와 기호는 같고 방향이 반대입니다 — 매개변수 자리에서는 «모으기»입니다."},{"no":22,"level":"초급","topic":"return 과 console.log","m":"choice","q":"다음 코드는 무엇을 찍습니까?\n```js\nfunction show(n) {\n  console.log(n * 2);\n}\nconst result = show(5);\nconsole.log(result);\n```","opts":["`10` 그리고 `10`","`10` 그리고 `undefined`","`undefined` 그리고 `10`","오류가 납니다"],"proof":{"js":"function show(n) {\n  console.log(n * 2);\n}\nconst result = show(5);\nconsole.log(result);","want":["10","undefined"]},"a":1,"wrong":0,"wn":"화면에 `10` 이 보이니 함수가 `10` 을 «돌려줬다»고 생각하기 쉽습니다(2일차 🔴).","e":"`console.log` 는 화면에 **보여 줄** 뿐이고, 함수가 값을 **돌려주는** 것은 `return` 입니다. `return` 이 없는 함수의 결과는 `undefined` 입니다.\n그래서 `show(5)` 안에서 `10` 이 찍히고, `result` 에는 `undefined` 가 담겨 그다음 줄에 찍힙니다."},{"no":23,"level":"초급","topic":"배열의 마지막","m":"fn","q":"배열의 **마지막 값**을 돌려주는 `lastItem(arr)` 를 만드시오. 빈 배열이면 `undefined` 입니다.","s":{"js":"function lastItem(arr) {\n  \n}"},"a":{"js":"function lastItem(arr) {\n  return arr[arr.length - 1];\n}"},"wrong":{"js":"function lastItem(arr) {\n  return arr[arr.length];\n}"},"wf":0,"wn":"길이가 3 이면 마지막 칸도 3번이라고 생각하기 쉽습니다. 번호는 0 부터라 마지막은 `length - 1` 입니다.","c":[{"d":"[1, 2, 3] → 3 · [\"금리\"] → \"금리\"","x":"t.all(t.eq('lastItem([1, 2, 3])', lastItem([1, 2, 3]), 3), t.eq('lastItem([\"금리\"])', lastItem(['금리']), '금리'))"},{"d":"[] → undefined","x":"t.eq('lastItem([])', lastItem([]), undefined)"}],"e":"배열 번호는 **0 부터**라 길이가 `n` 이면 마지막은 `n - 1` 번입니다. 없는 번호를 꺼내면 오류가 아니라 `undefined` 입니다(그래서 틀려도 조용합니다).\n요즘 JS 에서는 `arr.at(-1)` 로도 씁니다 — 음수는 뒤에서부터 셉니다."},{"no":24,"level":"초급","topic":"원본을 지키며 추가하기","m":"fn","q":"태그 배열 `tags` 에 `tag` 를 더한 **새 배열**을 돌려주는 `addTag(tags, tag)` 를 만드시오.\n- 이미 들어 있는 태그면 더하지 않습니다\n- 🔴 넘겨받은 `tags` 배열은 **바꾸지 않습니다**","s":{"js":"function addTag(tags, tag) {\n  \n}"},"a":{"js":"function addTag(tags, tag) {\n  if (tags.includes(tag)) return [...tags];\n  return [...tags, tag];\n}"},"wrong":{"js":"function addTag(tags, tag) {\n  if (!tags.includes(tag)) tags.push(tag);\n  return tags;\n}"},"wf":1,"wn":"`push` 로 넣고 돌려주면 결과는 맞습니다. 하지만 넘겨받은 배열까지 바뀌어 다른 곳에서 쓰던 목록이 몰래 변합니다.","c":[{"d":"[\"경제\"] 에 \"금리\" → [\"경제\", \"금리\"] · 이미 있으면 그대로","x":"t.all(t.eq('addTag([\"경제\"], \"금리\")', addTag(['경제'], '금리'), ['경제', '금리']), t.eq('addTag([\"경제\"], \"경제\")', addTag(['경제'], '경제'), ['경제']))"},{"d":"넘겨준 배열은 그대로다","x":"const tags = ['경제'];\naddTag(tags, '금리');\nreturn t.eq('addTag 를 부른 뒤의 넘겨준 배열', tags, ['경제']);"}],"e":"`push` 는 **원본을 고칩니다**. 새 배열이 필요하면 전개로 복사해 만듭니다 — `[...tags, tag]`.\n3일차 🔴 「`=` 는 복사가 아닙니다」의 연장입니다. 함수가 넘겨받은 배열을 고치면, 부른 쪽의 배열도 같이 바뀝니다(같은 배열이니까). React 의 state 는 이 «새로 만들기»를 반드시 요구합니다."},{"no":25,"level":"초급","topic":"구조 분해","m":"fn","pre":"const news = [\n  { id: 1, title: \"금리 동결\", section: \"경제\", author: \"김하나\", views: 1845, date: \"2024-11-05\" },\n  { id: 2, title: \"신작 개봉\", section: \"문화\", author: \"이도윤\", views: 920, date: \"2024-11-05\" },\n  { id: 3, title: \"폭설 주의보\", section: \"사회\", author: \"박서준\", views: 3120, date: \"2024-11-04\" },\n  { id: 4, title: \"야구 개막\", section: \"스포츠\", author: \"최지우\", views: 2733, date: \"2024-11-04\" },\n  { id: 5, title: \"국회 본회의\", section: \"정치\", author: \"김하나\", views: 2102, date: \"2024-11-03\" },\n  { id: 6, title: \"반도체 수출\", section: \"경제\", author: \"정민호\", views: 1560, date: \"2024-11-03\" },\n  { id: 7, title: \"지하철 지연\", section: \"사회\", author: \"박서준\", views: 880, date: \"2024-11-02\" },\n  { id: 8, title: \"AI 규제안\", section: \"IT\", author: \"이도윤\", views: 2410, date: \"2024-11-02\" },\n];","q":"기사 객체를 받아 `\"제목 — 분야 · 기자\"` 모양의 글자를 돌려주는 `describe(article)` 을 만드시오. **구조 분해**로 꺼내 쓰십시오.\n- `describe(news[0])` → `\"금리 동결 — 경제 · 김하나\"`","s":{"js":"function describe(article) {\n  \n}"},"a":{"js":"function describe(article) {\n  const { title, section, author } = article;\n  return `${title} — ${section} · ${author}`;\n}"},"wrong":{"js":"function describe(article) {\n  const { title, section, writer } = article;\n  return `${title} — ${section} · ${writer}`;\n}"},"wf":0,"wn":"구조 분해의 이름은 «객체의 키와 같아야» 합니다. 없는 키(`writer`)를 꺼내도 오류 없이 `undefined` 가 됩니다.","c":[{"d":"news[0] → \"금리 동결 — 경제 · 김하나\"","x":"t.eq('describe(news[0])', describe(news[0]), '금리 동결 — 경제 · 김하나')"},{"d":"news[7] → \"AI 규제안 — IT · 이도윤\"","x":"t.eq('describe(news[7])', describe(news[7]), 'AI 규제안 — IT · 이도윤')"}],"e":"`const { title, section } = article` 은 `const title = article.title` 을 여러 개 한 줄로 쓴 것입니다. **이름이 키와 같아야** 꺼내집니다.\n매개변수 자리에서 바로 꺼낼 수도 있습니다 — `function describe({ title, section, author }) { … }`. React 의 props 가 늘 이 모양입니다."},{"no":26,"level":"중급","topic":"객체 전개로 바꾼 사본","m":"fn","q":"기사 객체와 새 조회수를 받아, 조회수만 바꾼 **새 객체**를 돌려주는 `withViews(article, views)` 를 만드시오. 넘겨받은 객체는 바꾸지 않습니다.","s":{"js":"function withViews(article, views) {\n  \n}"},"a":{"js":"function withViews(article, views) {\n  return { ...article, views };\n}"},"wrong":{"js":"function withViews(article, views) {\n  article.views = views;\n  return article;\n}"},"wf":1,"wn":"값을 바꿔 돌려주면 결과는 맞습니다. 하지만 넘겨받은 객체가 «같은 객체»라 원본도 같이 바뀝니다.","c":[{"d":"조회수만 바뀐 객체가 나온다","x":"t.eq('withViews({ id: 1, views: 10 }, 99)', withViews({ id: 1, views: 10 }, 99), { id: 1, views: 99 })"},{"d":"넘겨준 객체는 그대로다 · 다른 객체다","x":"const a = { id: 1, views: 10 };\nconst b = withViews(a, 99);\nreturn t.all(t.eq('부른 뒤의 넘겨준 객체', a, { id: 1, views: 10 }), t.ok(a !== b, '돌려준 것이 넘겨준 객체와 «같은 객체»입니다 — 새로 만들어야 합니다'));"}],"e":"`{ ...article, views }` — 원래 객체를 펼쳐 **새 객체**를 만들고, 뒤에 쓴 `views` 가 같은 키를 덮어씁니다(`views` 는 `views: views` 를 줄여 쓴 것).\n객체도 배열처럼 `=` 로는 복사되지 않습니다. React 에서 state 객체를 바꿀 때 쓰는 모양 그대로입니다."},{"no":27,"level":"중급","topic":"= 는 복사가 아니다","m":"choice","q":"다음 코드는 무엇을 찍습니까?\n```js\nconst a = [1, 2];\nconst b = a;\nb.push(3);\nconsole.log(a.length);\n```","opts":["`2`","`3`","오류 — `const` 배열에는 push 할 수 없다","`undefined`"],"proof":{"js":"const a = [1, 2];\nconst b = a;\nb.push(3);\nconsole.log(a.length);","want":["3"]},"a":1,"wrong":0,"wn":"`b` 를 고쳤으니 `a` 는 그대로일 것 같습니다. 하지만 `a` 와 `b` 는 «같은 배열 하나»를 가리킵니다.","e":"`const b = a` 는 배열을 **복사하지 않고**, 같은 배열에 이름을 하나 더 붙입니다. 그래서 `b` 로 넣은 `3` 이 `a` 에서도 보입니다(3일차 🔴).\n`const` 가 막는 것은 **다시 담기**(`a = [...]`)이지, 안의 내용을 바꾸는 것이 아닙니다. 복사가 필요하면 `[...a]` 입니다."},{"no":28,"level":"중급","topic":"?. 옵셔널 체이닝","m":"fn","q":"기사의 기자 이름(`article.author.name`)을 돌려주는 `authorName(article)` 을 만드시오. 기사나 기자 정보가 **없으면**(`undefined` · `null`) 오류 대신 `\"알 수 없음\"` 을 돌려줍니다.","s":{"js":"function authorName(article) {\n  \n}"},"a":{"js":"function authorName(article) {\n  return article?.author?.name ?? \"알 수 없음\";\n}"},"wrong":{"js":"function authorName(article) {\n  return article.author.name || \"알 수 없음\";\n}"},"wf":1,"wn":"기자 정보가 있는 기사로만 시험하면 잘 돕니다. 하나라도 비어 있으면 `Cannot read properties of undefined` 로 멈춥니다.","c":[{"d":"{ author: { name: \"김하나\" } } → \"김하나\"","x":"t.eq('authorName({ author: { name: \"김하나\" } })', authorName({ author: { name: '김하나' } }), '김하나')"},{"d":"{} · { author: null } → \"알 수 없음\"","x":"t.all(t.eq('authorName({})', authorName({}), '알 수 없음'), t.eq('authorName({ author: null })', authorName({ author: null }), '알 수 없음'))"},{"d":"undefined → \"알 수 없음\"","x":"t.eq('authorName(undefined)', authorName(undefined), '알 수 없음')"}],"e":"`a?.b` 는 `a` 가 `null` · `undefined` 이면 오류 대신 `undefined` 를 돌려주고 거기서 멈춥니다. 여러 겹이면 겹마다 `?.` 를 씁니다.\n그 뒤의 `?? \"알 수 없음\"` 이 `undefined` 를 기본값으로 바꿉니다(12번). 서버에서 받은 데이터처럼 **비어 있을 수 있는 값**을 꺼낼 때 씁니다."},{"no":29,"level":"중급","topic":"Object.entries","m":"fn","q":"객체를 받아 `키=값` 을 `&` 로 이은 글자(주소 뒤에 붙는 질의 문자열)를 만드는 `toQuery(params)` 를 만드시오. 글자를 바꾸는(인코딩) 일은 하지 않습니다.\n- `toQuery({ page: 2, size: 10 })` → `\"page=2&size=10\"` · `toQuery({})` → `\"\"`","s":{"js":"function toQuery(params) {\n  \n}"},"a":{"js":"function toQuery(params) {\n  return Object.entries(params).map(([k, v]) => `${k}=${v}`).join(\"&\");\n}"},"wrong":{"js":"function toQuery(params) {\n  let s = \"\";\n  for (const k in params) s += `${k}=${params[k]}&`;\n  return s;\n}"},"wf":0,"wn":"반복하며 `&` 를 붙이면 맨 끝에도 하나가 남습니다.","c":[{"d":"{ page: 2, size: 10 } → \"page=2&size=10\"","x":"t.eq('toQuery({ page: 2, size: 10 })', toQuery({ page: 2, size: 10 }), 'page=2&size=10')"},{"d":"{ q: \"금리\" } → \"q=금리\" · {} → \"\"","x":"t.all(t.eq('toQuery({ q: \"금리\" })', toQuery({ q: '금리' }), 'q=금리'), t.eq('toQuery({})', toQuery({}), ''))"}],"e":"`Object.entries(obj)` 는 `[키, 값]` 짝의 배열입니다 — `[[\"page\", 2], [\"size\", 10]]`. 배열이 되었으니 `map` 으로 `\"page=2\"` 를 만들고 `join(\"&\")` 으로 **사이에만** `&` 를 넣습니다.\n`Object.keys`(키만) · `Object.values`(값만)도 함께 기억해 두십시오."},{"no":30,"level":"중급","topic":"map — 제목만 꺼내기","m":"fn","pre":"const news = [\n  { id: 1, title: \"금리 동결\", section: \"경제\", author: \"김하나\", views: 1845, date: \"2024-11-05\" },\n  { id: 2, title: \"신작 개봉\", section: \"문화\", author: \"이도윤\", views: 920, date: \"2024-11-05\" },\n  { id: 3, title: \"폭설 주의보\", section: \"사회\", author: \"박서준\", views: 3120, date: \"2024-11-04\" },\n  { id: 4, title: \"야구 개막\", section: \"스포츠\", author: \"최지우\", views: 2733, date: \"2024-11-04\" },\n  { id: 5, title: \"국회 본회의\", section: \"정치\", author: \"김하나\", views: 2102, date: \"2024-11-03\" },\n  { id: 6, title: \"반도체 수출\", section: \"경제\", author: \"정민호\", views: 1560, date: \"2024-11-03\" },\n  { id: 7, title: \"지하철 지연\", section: \"사회\", author: \"박서준\", views: 880, date: \"2024-11-02\" },\n  { id: 8, title: \"AI 규제안\", section: \"IT\", author: \"이도윤\", views: 2410, date: \"2024-11-02\" },\n];","q":"기사 배열을 받아 **제목만 모은 배열**을 돌려주는 `titles(list)` 를 `map` 으로 만드시오.\n(주어진 `news` 로 시험해 볼 수 있습니다 — `console.log(titles(news))`)","s":{"js":"function titles(list) {\n  \n}"},"a":{"js":"function titles(list) {\n  return list.map((a) => a.title);\n}"},"wrong":{"js":"function titles(list) {\n  return list.forEach((a) => a.title);\n}"},"wf":0,"wn":"`forEach` 도 하나씩 돌지만 «아무것도 돌려주지 않습니다» — 결과는 `undefined` 입니다(4일차).","c":[{"d":"news → 제목 8개(순서 그대로)","x":"t.eq('titles(news)', titles(news), ['금리 동결', '신작 개봉', '폭설 주의보', '야구 개막', '국회 본회의', '반도체 수출', '지하철 지연', 'AI 규제안'])"},{"d":"[] → []","x":"t.eq('titles([])', titles([]), [])"}],"e":"`map` 은 **넣은 만큼 나오는** 변환입니다 — 기사 8개를 넣으면 제목 8개. 화살표 함수가 돌려주는 값이 새 배열의 칸이 됩니다.\n`forEach` 는 돌기만 하고 결과를 버립니다. 「바꾼 배열이 필요하면 `map`」."},{"no":31,"level":"중급","topic":"filter — 분야로 거르기","m":"fn","pre":"const news = [\n  { id: 1, title: \"금리 동결\", section: \"경제\", author: \"김하나\", views: 1845, date: \"2024-11-05\" },\n  { id: 2, title: \"신작 개봉\", section: \"문화\", author: \"이도윤\", views: 920, date: \"2024-11-05\" },\n  { id: 3, title: \"폭설 주의보\", section: \"사회\", author: \"박서준\", views: 3120, date: \"2024-11-04\" },\n  { id: 4, title: \"야구 개막\", section: \"스포츠\", author: \"최지우\", views: 2733, date: \"2024-11-04\" },\n  { id: 5, title: \"국회 본회의\", section: \"정치\", author: \"김하나\", views: 2102, date: \"2024-11-03\" },\n  { id: 6, title: \"반도체 수출\", section: \"경제\", author: \"정민호\", views: 1560, date: \"2024-11-03\" },\n  { id: 7, title: \"지하철 지연\", section: \"사회\", author: \"박서준\", views: 880, date: \"2024-11-02\" },\n  { id: 8, title: \"AI 규제안\", section: \"IT\", author: \"이도윤\", views: 2410, date: \"2024-11-02\" },\n];","q":"기사 배열과 분야를 받아 **그 분야의 기사만** 돌려주는 `bySection(list, section)` 을 `filter` 로 만드시오.","s":{"js":"function bySection(list, section) {\n  \n}"},"a":{"js":"function bySection(list, section) {\n  return list.filter((a) => a.section === section);\n}"},"wrong":{"js":"function bySection(list, section) {\n  return list.filter((a) => a.section = section);\n}"},"wf":0,"wn":"`===` 대신 `=` 를 쓰면 «비교»가 아니라 «담기»가 되어, 모든 기사가 통과하고 분야까지 바뀝니다.","c":[{"d":"\"사회\" → 3번 · 7번 기사","x":"t.eq('bySection(news, \"사회\") 의 id', bySection(news, '사회').map((a) => a.id), [3, 7])"},{"d":"\"IT\" → 8번 · 없는 분야 → []","x":"t.all(t.eq('bySection(news, \"IT\") 의 id', bySection(news, 'IT').map((a) => a.id), [8]), t.eq('bySection(news, \"날씨\")', bySection(news, '날씨'), []))"},{"d":"news 는 그대로다","x":"bySection(news, '사회');\nreturn t.eq('부른 뒤 news 의 분야들', news.map((a) => a.section), ['경제', '문화', '사회', '스포츠', '정치', '경제', '사회', 'IT']);"}],"e":"`filter` 는 화살표 함수가 `true` 를 돌려준 것만 남깁니다(**0개 ~ 전부**). 조건에는 비교 `===` 를 씁니다.\n🔴 `a.section = section` 은 비교가 아니라 **담기**이고, 담은 값(글자)은 참처럼 굴어 모두 통과합니다. 원본 데이터까지 바뀌는 무서운 실수입니다."},{"no":32,"level":"중급","topic":"find — 하나 찾기","m":"fn","pre":"const news = [\n  { id: 1, title: \"금리 동결\", section: \"경제\", author: \"김하나\", views: 1845, date: \"2024-11-05\" },\n  { id: 2, title: \"신작 개봉\", section: \"문화\", author: \"이도윤\", views: 920, date: \"2024-11-05\" },\n  { id: 3, title: \"폭설 주의보\", section: \"사회\", author: \"박서준\", views: 3120, date: \"2024-11-04\" },\n  { id: 4, title: \"야구 개막\", section: \"스포츠\", author: \"최지우\", views: 2733, date: \"2024-11-04\" },\n  { id: 5, title: \"국회 본회의\", section: \"정치\", author: \"김하나\", views: 2102, date: \"2024-11-03\" },\n  { id: 6, title: \"반도체 수출\", section: \"경제\", author: \"정민호\", views: 1560, date: \"2024-11-03\" },\n  { id: 7, title: \"지하철 지연\", section: \"사회\", author: \"박서준\", views: 880, date: \"2024-11-02\" },\n  { id: 8, title: \"AI 규제안\", section: \"IT\", author: \"이도윤\", views: 2410, date: \"2024-11-02\" },\n];","q":"기사 배열과 번호를 받아 **그 번호의 기사 하나**를 돌려주는 `findById(list, id)` 를 만드시오. 없으면 `undefined` 입니다.","s":{"js":"function findById(list, id) {\n  \n}"},"a":{"js":"function findById(list, id) {\n  return list.find((a) => a.id === id);\n}"},"wrong":{"js":"function findById(list, id) {\n  return list.filter((a) => a.id === id);\n}"},"wf":0,"wn":"`filter` 로도 찾아지지만 결과가 «하나짜리 배열»입니다. `.title` 을 꺼내면 `undefined` 가 됩니다.","c":[{"d":"3 → 폭설 주의보 기사(객체 하나)","x":"t.eq('findById(news, 3)', findById(news, 3), news[2])"},{"d":"99 → undefined","x":"t.eq('findById(news, 99)', findById(news, 99), undefined)"}],"e":"`find` 는 조건에 맞는 **첫 번째 값 하나**를 돌려주고, 없으면 `undefined` 입니다. `filter` 는 늘 **배열**을 돌려줍니다(없으면 `[]`).\n「목록이 필요한가, 하나가 필요한가」로 고르십시오. 상세 화면은 `find` 입니다."},{"no":33,"level":"중급","topic":"some · every","m":"fn","pre":"const news = [\n  { id: 1, title: \"금리 동결\", section: \"경제\", author: \"김하나\", views: 1845, date: \"2024-11-05\" },\n  { id: 2, title: \"신작 개봉\", section: \"문화\", author: \"이도윤\", views: 920, date: \"2024-11-05\" },\n  { id: 3, title: \"폭설 주의보\", section: \"사회\", author: \"박서준\", views: 3120, date: \"2024-11-04\" },\n  { id: 4, title: \"야구 개막\", section: \"스포츠\", author: \"최지우\", views: 2733, date: \"2024-11-04\" },\n  { id: 5, title: \"국회 본회의\", section: \"정치\", author: \"김하나\", views: 2102, date: \"2024-11-03\" },\n  { id: 6, title: \"반도체 수출\", section: \"경제\", author: \"정민호\", views: 1560, date: \"2024-11-03\" },\n  { id: 7, title: \"지하철 지연\", section: \"사회\", author: \"박서준\", views: 880, date: \"2024-11-02\" },\n  { id: 8, title: \"AI 규제안\", section: \"IT\", author: \"이도윤\", views: 2410, date: \"2024-11-02\" },\n];","q":"기사 배열과 기준 조회수 `min` 을 받아 다음 객체를 돌려주는 `checkViews(list, min)` 을 만드시오.\n- `some`: 조회수가 `min` 이상인 기사가 **하나라도** 있으면 `true`\n- `every`: **모든** 기사의 조회수가 `min` 이상이면 `true`\n- `checkViews(news, 3000)` → `{ some: true, every: false }`","s":{"js":"function checkViews(list, min) {\n  return { some: , every:  };\n}"},"a":{"js":"function checkViews(list, min) {\n  return {\n    some: list.some((a) => a.views >= min),\n    every: list.every((a) => a.views >= min),\n  };\n}"},"wrong":{"js":"function checkViews(list, min) {\n  return {\n    some: list.find((a) => a.views >= min),\n    every: list.every((a) => a.views >= min),\n  };\n}"},"wf":0,"wn":"`find` 도 «있으면 뭔가 나오니» 참처럼 쓸 수 있어 보입니다. 하지만 나오는 것은 `true` 가 아니라 기사 객체입니다.","c":[{"d":"min 3000 → { some: true, every: false }","x":"t.eq('checkViews(news, 3000)', checkViews(news, 3000), { some: true, every: false })"},{"d":"min 800 → { some: true, every: true } · min 5000 → 둘 다 false","x":"t.all(t.eq('checkViews(news, 800)', checkViews(news, 800), { some: true, every: true }), t.eq('checkViews(news, 5000)', checkViews(news, 5000), { some: false, every: false }))"},{"d":"빈 배열 → { some: false, every: true }","x":"t.eq('checkViews([], 100)', checkViews([], 100), { some: false, every: true })"}],"e":"`some` 은 하나라도, `every` 는 전부 — 둘 다 **`true` / `false`** 를 돌려줍니다.\n🔴 빈 배열에서 `every` 는 `true` 입니다. 「조건을 어긴 것이 하나도 없다」이기 때문입니다. 빈 목록을 따로 다뤄야 하는 화면이라면 길이를 먼저 보십시오."},{"no":34,"level":"중급","topic":"reduce — 합계","m":"fn","pre":"const news = [\n  { id: 1, title: \"금리 동결\", section: \"경제\", author: \"김하나\", views: 1845, date: \"2024-11-05\" },\n  { id: 2, title: \"신작 개봉\", section: \"문화\", author: \"이도윤\", views: 920, date: \"2024-11-05\" },\n  { id: 3, title: \"폭설 주의보\", section: \"사회\", author: \"박서준\", views: 3120, date: \"2024-11-04\" },\n  { id: 4, title: \"야구 개막\", section: \"스포츠\", author: \"최지우\", views: 2733, date: \"2024-11-04\" },\n  { id: 5, title: \"국회 본회의\", section: \"정치\", author: \"김하나\", views: 2102, date: \"2024-11-03\" },\n  { id: 6, title: \"반도체 수출\", section: \"경제\", author: \"정민호\", views: 1560, date: \"2024-11-03\" },\n  { id: 7, title: \"지하철 지연\", section: \"사회\", author: \"박서준\", views: 880, date: \"2024-11-02\" },\n  { id: 8, title: \"AI 규제안\", section: \"IT\", author: \"이도윤\", views: 2410, date: \"2024-11-02\" },\n];","q":"기사 배열의 **조회수 합계**를 `reduce` 로 구하는 `totalViews(list)` 를 만드시오. 빈 배열이면 `0` 입니다.","s":{"js":"function totalViews(list) {\n  \n}"},"a":{"js":"function totalViews(list) {\n  return list.reduce((sum, a) => sum + a.views, 0);\n}"},"wrong":{"js":"function totalViews(list) {\n  return list.map((a) => a.views).reduce((sum, v) => sum + v);\n}"},"wf":1,"wn":"시작값을 빼도 기사가 있으면 잘 돕니다. 빈 배열에서 `Reduce of empty array with no initial value` 로 멈춥니다.","c":[{"d":"news → 15570","x":"t.eq('totalViews(news)', totalViews(news), 15570)"},{"d":"[] → 0","x":"t.eq('totalViews([])', totalViews([]), 0)"}],"e":"`reduce((누적, 값) => 새 누적, 시작값)` — 배열을 **하나로 합칩니다**. 함수가 돌려준 값이 다음 칸의 누적이 됩니다.\n🔴 **시작값(`0`)을 꼭 쓰십시오.** 없으면 첫 칸이 시작값이 되는데, 빈 배열에는 첫 칸이 없어 오류가 납니다. 객체 배열이면 첫 칸이 «객체»라 계산도 틀어집니다."},{"no":35,"level":"중급","topic":"sort — 원본을 지키며","m":"fn","pre":"const news = [\n  { id: 1, title: \"금리 동결\", section: \"경제\", author: \"김하나\", views: 1845, date: \"2024-11-05\" },\n  { id: 2, title: \"신작 개봉\", section: \"문화\", author: \"이도윤\", views: 920, date: \"2024-11-05\" },\n  { id: 3, title: \"폭설 주의보\", section: \"사회\", author: \"박서준\", views: 3120, date: \"2024-11-04\" },\n  { id: 4, title: \"야구 개막\", section: \"스포츠\", author: \"최지우\", views: 2733, date: \"2024-11-04\" },\n  { id: 5, title: \"국회 본회의\", section: \"정치\", author: \"김하나\", views: 2102, date: \"2024-11-03\" },\n  { id: 6, title: \"반도체 수출\", section: \"경제\", author: \"정민호\", views: 1560, date: \"2024-11-03\" },\n  { id: 7, title: \"지하철 지연\", section: \"사회\", author: \"박서준\", views: 880, date: \"2024-11-02\" },\n  { id: 8, title: \"AI 규제안\", section: \"IT\", author: \"이도윤\", views: 2410, date: \"2024-11-02\" },\n];","q":"기사를 **조회수가 많은 순**으로 정렬한 **새 배열**을 돌려주는 `sortByViews(list)` 를 만드시오. 넘겨받은 배열의 순서는 바꾸지 않습니다.","s":{"js":"function sortByViews(list) {\n  \n}"},"a":{"js":"function sortByViews(list) {\n  return [...list].sort((a, b) => b.views - a.views);\n}"},"wrong":{"js":"function sortByViews(list) {\n  return list.sort((a, b) => b.views - a.views);\n}"},"wf":1,"wn":"결과는 완벽합니다. 하지만 `sort` 가 `news` 자체를 줄 세워, 다른 곳에서 쓰던 «원래 순서»가 사라집니다.","c":[{"d":"많은 순 — 3 · 4 · 8 · 5 · 1 · 6 · 2 · 7번","x":"t.eq('sortByViews(news) 의 id', sortByViews(news).map((a) => a.id), [3, 4, 8, 5, 1, 6, 2, 7])"},{"d":"news 의 순서는 그대로다","x":"sortByViews(news);\nreturn t.eq('부른 뒤 news 의 id 순서', news.map((a) => a.id), [1, 2, 3, 4, 5, 6, 7, 8]);"}],"e":"🔴 `sort` 는 **원본을 고칩니다**(4일차). 새 배열이 필요하면 `[...list]` 로 복사한 뒤 정렬합니다(요즘 JS 는 `list.toSorted(…)` 도 있습니다).\n비교 함수 `(a, b) => b.views - a.views` 는 결과가 양수면 `b` 를 앞으로 — 즉 **큰 것부터**입니다. `a.views - b.views` 는 작은 것부터."},{"no":36,"level":"중급","topic":"sort 의 기본은 글자순","m":"choice","q":"다음 코드는 무엇을 찍습니까?\n```js\nconsole.log([10, 9, 1, 100].sort());\n```","opts":["`[1, 9, 10, 100]`","`[100, 10, 9, 1]`","`[1, 10, 100, 9]`","`[10, 9, 1, 100]` — 숫자는 비교 함수 없이 정렬하지 않는다"],"proof":{"js":"console.log([10, 9, 1, 100].sort());","want":["[1, 10, 100, 9]"]},"a":2,"wrong":0,"wn":"숫자 배열이니 숫자 크기대로 줄 설 것 같습니다. 비교 함수가 없으면 모두 «글자»로 바꿔 사전 순서로 세웁니다.","e":"비교 함수 없는 `sort()` 는 값을 **문자열로 바꿔 사전 순서**로 정렬합니다. `\"10\"` 이 `\"9\"` 보다 앞입니다(첫 글자 `1` < `9`). 그래서 `[1, 10, 100, 9]`.\n숫자는 **언제나** `sort((a, b) => a - b)` 처럼 비교 함수를 주십시오."},{"no":37,"level":"중급","topic":"숫자 정렬","m":"fn","q":"숫자 배열을 **작은 수부터** 정렬한 새 배열을 돌려주는 `sortNumbers(nums)` 를 만드시오. 넘겨받은 배열은 바꾸지 않습니다.","s":{"js":"function sortNumbers(nums) {\n  \n}"},"a":{"js":"function sortNumbers(nums) {\n  return [...nums].sort((a, b) => a - b);\n}"},"wrong":{"js":"function sortNumbers(nums) {\n  return [...nums].sort();\n}"},"wf":0,"wn":"36번의 함정입니다 — `[3, 1, 2]` 처럼 한 자리 수로만 시험하면 맞게 나옵니다.","c":[{"d":"[10, 9, 1, 100] → [1, 9, 10, 100]","x":"t.eq('sortNumbers([10, 9, 1, 100])', sortNumbers([10, 9, 1, 100]), [1, 9, 10, 100])"},{"d":"[3, -2, 0] → [-2, 0, 3] · 넘겨준 배열은 그대로","x":"const a = [3, -2, 0];\nconst r = sortNumbers(a);\nreturn t.all(t.eq('sortNumbers([3, -2, 0])', r, [-2, 0, 3]), t.eq('넘겨준 배열', a, [3, -2, 0]));"}],"e":"`(a, b) => a - b` — 결과가 음수면 `a` 가 앞, 양수면 `b` 가 앞입니다. 그래서 작은 수부터 섭니다.\n복사(`[...nums]`)를 먼저 하는 이유는 35번과 같습니다."},{"no":38,"level":"중급","topic":"이어 쓰기 — 상위 n개","m":"fn","pre":"const news = [\n  { id: 1, title: \"금리 동결\", section: \"경제\", author: \"김하나\", views: 1845, date: \"2024-11-05\" },\n  { id: 2, title: \"신작 개봉\", section: \"문화\", author: \"이도윤\", views: 920, date: \"2024-11-05\" },\n  { id: 3, title: \"폭설 주의보\", section: \"사회\", author: \"박서준\", views: 3120, date: \"2024-11-04\" },\n  { id: 4, title: \"야구 개막\", section: \"스포츠\", author: \"최지우\", views: 2733, date: \"2024-11-04\" },\n  { id: 5, title: \"국회 본회의\", section: \"정치\", author: \"김하나\", views: 2102, date: \"2024-11-03\" },\n  { id: 6, title: \"반도체 수출\", section: \"경제\", author: \"정민호\", views: 1560, date: \"2024-11-03\" },\n  { id: 7, title: \"지하철 지연\", section: \"사회\", author: \"박서준\", views: 880, date: \"2024-11-02\" },\n  { id: 8, title: \"AI 규제안\", section: \"IT\", author: \"이도윤\", views: 2410, date: \"2024-11-02\" },\n];","q":"조회수가 많은 기사 **상위 `n`개의 제목**을 돌려주는 `topTitles(list, n)` 을 만드시오. 넘겨받은 배열은 바꾸지 않습니다.\n- `topTitles(news, 3)` → `[\"폭설 주의보\", \"야구 개막\", \"AI 규제안\"]`","s":{"js":"function topTitles(list, n) {\n  \n}"},"a":{"js":"function topTitles(list, n) {\n  return [...list]\n    .sort((a, b) => b.views - a.views)\n    .slice(0, n)\n    .map((a) => a.title);\n}"},"wrong":{"js":"function topTitles(list, n) {\n  return [...list]\n    .map((a) => a.title)\n    .sort((a, b) => b.views - a.views)\n    .slice(0, n);\n}"},"wf":0,"wn":"메서드를 이을 때 순서가 중요합니다. 제목만 남긴 «뒤»에는 `views` 가 없어 정렬이 아무 일도 안 합니다.","c":[{"d":"news, 3 → 폭설 주의보 · 야구 개막 · AI 규제안","x":"t.eq('topTitles(news, 3)', topTitles(news, 3), ['폭설 주의보', '야구 개막', 'AI 규제안'])"},{"d":"news, 1 → [폭설 주의보] · 넘겨준 배열은 그대로","x":"const r = topTitles(news, 1);\nreturn t.all(t.eq('topTitles(news, 1)', r, ['폭설 주의보']), t.eq('부른 뒤 news 의 id 순서', news.map((a) => a.id), [1, 2, 3, 4, 5, 6, 7, 8]));"}],"e":"메서드는 **이어 쓸** 수 있습니다 — 앞 메서드가 돌려준 배열에 다음 메서드를 부릅니다. 줄을 바꿔 쓰면 읽기 쉽습니다.\n순서: 줄 세우고(`sort`) → 잘라서(`slice(0, n)`) → 모양 바꾸기(`map`). 모양을 먼저 바꾸면 정렬에 필요한 `views` 가 사라집니다."},{"no":39,"level":"중급","topic":"분야별 개수 세기","m":"fn","pre":"const news = [\n  { id: 1, title: \"금리 동결\", section: \"경제\", author: \"김하나\", views: 1845, date: \"2024-11-05\" },\n  { id: 2, title: \"신작 개봉\", section: \"문화\", author: \"이도윤\", views: 920, date: \"2024-11-05\" },\n  { id: 3, title: \"폭설 주의보\", section: \"사회\", author: \"박서준\", views: 3120, date: \"2024-11-04\" },\n  { id: 4, title: \"야구 개막\", section: \"스포츠\", author: \"최지우\", views: 2733, date: \"2024-11-04\" },\n  { id: 5, title: \"국회 본회의\", section: \"정치\", author: \"김하나\", views: 2102, date: \"2024-11-03\" },\n  { id: 6, title: \"반도체 수출\", section: \"경제\", author: \"정민호\", views: 1560, date: \"2024-11-03\" },\n  { id: 7, title: \"지하철 지연\", section: \"사회\", author: \"박서준\", views: 880, date: \"2024-11-02\" },\n  { id: 8, title: \"AI 규제안\", section: \"IT\", author: \"이도윤\", views: 2410, date: \"2024-11-02\" },\n];","q":"기사 배열을 받아 **분야별 기사 수**를 담은 객체를 돌려주는 `countBySection(list)` 을 만드시오.\n- `countBySection(news)` → `{ 경제: 2, 문화: 1, 사회: 2, 스포츠: 1, 정치: 1, IT: 1 }` (키의 순서는 상관없음)","s":{"js":"function countBySection(list) {\n  const counts = {};\n  \n  return counts;\n}"},"a":{"js":"function countBySection(list) {\n  const counts = {};\n  for (const a of list) {\n    counts[a.section] = (counts[a.section] ?? 0) + 1;\n  }\n  return counts;\n}"},"wrong":{"js":"function countBySection(list) {\n  const counts = {};\n  for (const a of list) {\n    counts[a.section] += 1;\n  }\n  return counts;\n}"},"wf":0,"wn":"처음 나온 분야는 아직 값이 없어(`undefined`) `+ 1` 하면 `NaN` 이 됩니다.","c":[{"d":"news → { 경제: 2, 문화: 1, 사회: 2, 스포츠: 1, 정치: 1, IT: 1 }","x":"t.eq('countBySection(news)', countBySection(news), { 경제: 2, 문화: 1, 사회: 2, 스포츠: 1, 정치: 1, IT: 1 })"},{"d":"[] → {}","x":"t.eq('countBySection([])', countBySection([]), {})"}],"e":"객체를 «칸이 이름으로 된 계산기»로 씁니다. `counts[a.section]` — 대괄호 안의 **값**이 키가 됩니다(`counts.section` 은 `\"section\"` 이라는 키).\n처음 보는 분야는 `undefined` 라서 `?? 0` 으로 0 부터 셉니다. `reduce` 로도 쓸 수 있습니다 — 9일차에서 표의 숫자를 이렇게 «세어서» 만들었습니다."},{"no":40,"level":"중급","topic":"Set — 중복 없애기","m":"fn","pre":"const news = [\n  { id: 1, title: \"금리 동결\", section: \"경제\", author: \"김하나\", views: 1845, date: \"2024-11-05\" },\n  { id: 2, title: \"신작 개봉\", section: \"문화\", author: \"이도윤\", views: 920, date: \"2024-11-05\" },\n  { id: 3, title: \"폭설 주의보\", section: \"사회\", author: \"박서준\", views: 3120, date: \"2024-11-04\" },\n  { id: 4, title: \"야구 개막\", section: \"스포츠\", author: \"최지우\", views: 2733, date: \"2024-11-04\" },\n  { id: 5, title: \"국회 본회의\", section: \"정치\", author: \"김하나\", views: 2102, date: \"2024-11-03\" },\n  { id: 6, title: \"반도체 수출\", section: \"경제\", author: \"정민호\", views: 1560, date: \"2024-11-03\" },\n  { id: 7, title: \"지하철 지연\", section: \"사회\", author: \"박서준\", views: 880, date: \"2024-11-02\" },\n  { id: 8, title: \"AI 규제안\", section: \"IT\", author: \"이도윤\", views: 2410, date: \"2024-11-02\" },\n];","q":"기사 배열에서 **기자 이름을 중복 없이**, 처음 나온 순서대로 담은 배열을 돌려주는 `uniqueAuthors(list)` 를 만드시오.\n- `uniqueAuthors(news)` → `[\"김하나\", \"이도윤\", \"박서준\", \"최지우\", \"정민호\"]`","s":{"js":"function uniqueAuthors(list) {\n  \n}"},"a":{"js":"function uniqueAuthors(list) {\n  return [...new Set(list.map((a) => a.author))];\n}"},"wrong":{"js":"function uniqueAuthors(list) {\n  return new Set(list.map((a) => a.author));\n}"},"wf":0,"wn":"`Set` 으로 중복은 사라졌지만 «배열»이 아닙니다 — `.map` · `[0]` 이 안 됩니다. 배열로 다시 펼쳐야 합니다.","c":[{"d":"news → 기자 5명(처음 나온 순서)","x":"t.eq('uniqueAuthors(news)', uniqueAuthors(news), ['김하나', '이도윤', '박서준', '최지우', '정민호'])"},{"d":"[] → []","x":"t.eq('uniqueAuthors([])', uniqueAuthors([]), [])"}],"e":"`Set` 은 **같은 값을 한 번만** 담는 상자입니다. 넣은 순서는 지킵니다. `[...new Set(배열)]` 은 「중복을 없앤 배열」의 관용구입니다.\n`Set` 에는 `map` · `filter` 가 없으니 쓸 일이 있으면 배열로 펼치십시오."},{"no":41,"level":"중급","topic":"null 이 섞인 평균","m":"fn","pre":"const news = [\n  { id: 1, title: \"금리 동결\", section: \"경제\", author: \"김하나\", views: 1845, date: \"2024-11-05\" },\n  { id: 2, title: \"신작 개봉\", section: \"문화\", author: \"이도윤\", views: 920, date: \"2024-11-05\" },\n  { id: 3, title: \"폭설 주의보\", section: \"사회\", author: \"박서준\", views: 3120, date: \"2024-11-04\" },\n  { id: 4, title: \"야구 개막\", section: \"스포츠\", author: \"최지우\", views: 2733, date: \"2024-11-04\" },\n  { id: 5, title: \"국회 본회의\", section: \"정치\", author: \"김하나\", views: 2102, date: \"2024-11-03\" },\n  { id: 6, title: \"반도체 수출\", section: \"경제\", author: \"정민호\", views: 1560, date: \"2024-11-03\" },\n  { id: 7, title: \"지하철 지연\", section: \"사회\", author: \"박서준\", views: 880, date: \"2024-11-02\" },\n  { id: 8, title: \"AI 규제안\", section: \"IT\", author: \"이도윤\", views: 2410, date: \"2024-11-02\" },\n];\n// 조회수를 아직 못 센 기사가 하나 있다\nconst newsWithNull = [...news, { id: 9, title: \"속보\", section: \"사회\", author: \"박서준\", views: null, date: \"2024-11-06\" }];","q":"기사 배열의 **평균 조회수**(정수로 반올림)를 돌려주는 `averageViews(list)` 를 만드시오. 조회수가 `null` 인 기사는 **빼고** 셉니다. 셀 기사가 없으면 `0` 입니다.\n- `averageViews(news)` → `1946` (15570 ÷ 8)","s":{"js":"function averageViews(list) {\n  \n}"},"a":{"js":"function averageViews(list) {\n  const counted = list.filter((a) => a.views !== null);\n  if (counted.length === 0) return 0;\n  const sum = counted.reduce((s, a) => s + a.views, 0);\n  return Math.round(sum / counted.length);\n}"},"wrong":{"js":"function averageViews(list) {\n  if (list.length === 0) return 0;\n  const sum = list.reduce((s, a) => s + a.views, 0);\n  return Math.round(sum / list.length);\n}"},"wf":1,"wn":"합계는 같게 나옵니다(`null` 은 더하기에서 0 처럼 굽니다). 틀리는 것은 «나누는 수» — 못 센 기사까지 세어 평균이 낮아집니다(4일차).","c":[{"d":"news → 1946","x":"t.eq('averageViews(news)', averageViews(news), 1946)"},{"d":"null 이 섞여도 → 1946 (null 기사는 빼고 8건으로 나눈다)","x":"t.eq('averageViews(newsWithNull)', averageViews(newsWithNull), 1946)"},{"d":"[] → 0 · 전부 null → 0","x":"t.all(t.eq('averageViews([])', averageViews([]), 0), t.eq('averageViews([{ views: null }])', averageViews([{ views: null }]), 0))"}],"e":"🔴 `null` 은 더하기에서 `0` 처럼 굴어 **합계는 그대로**입니다. 틀리는 것은 평균의 분모 — 9건으로 나누면 1730 이 됩니다. 「없는 값」을 먼저 걸러 내고 셉니다.\n0 으로 나누면 `NaN` 이므로 셀 것이 없을 때를 먼저 처리합니다."},{"no":42,"level":"중급","topic":"flatMap — 겹친 배열 펴기","m":"fn","pre":"const tagged = [\n  { title: \"금리 동결\", tags: [\"경제\", \"금리\"] },\n  { title: \"폭설 주의보\", tags: [\"날씨\"] },\n  { title: \"반도체 수출\", tags: [\"경제\", \"수출\"] },\n];","q":"기사마다 태그 배열(`tags`)이 있습니다. 모든 기사의 태그를 **한 줄로 펴서, 중복 없이**(처음 나온 순서) 돌려주는 `allTags(list)` 를 만드시오.\n- `allTags(tagged)` → `[\"경제\", \"금리\", \"날씨\", \"수출\"]`","s":{"js":"function allTags(list) {\n  \n}"},"a":{"js":"function allTags(list) {\n  return [...new Set(list.flatMap((a) => a.tags))];\n}"},"wrong":{"js":"function allTags(list) {\n  return [...new Set(list.map((a) => a.tags))];\n}"},"wf":0,"wn":"`map` 으로 꺼내면 «배열의 배열»이 됩니다. 배열끼리는 내용이 같아도 다른 값이라 Set 이 하나도 못 지웁니다.","c":[{"d":"tagged → [\"경제\", \"금리\", \"날씨\", \"수출\"]","x":"t.eq('allTags(tagged)', allTags(tagged), ['경제', '금리', '날씨', '수출'])"},{"d":"태그가 빈 기사 · 빈 배열","x":"t.all(t.eq('allTags([{ tags: [] }])', allTags([{ tags: [] }]), []), t.eq('allTags([])', allTags([]), []))"}],"e":"`flatMap` 은 `map` 한 뒤 **한 겹 펴기**(`flat()`)까지 합니다 — `[[\"경제\", \"금리\"], [\"날씨\"]]` 가 `[\"경제\", \"금리\", \"날씨\"]` 가 됩니다.\n펴진 뒤에야 `Set` 이 같은 글자를 하나로 묶습니다(40번)."},{"no":43,"level":"중급","topic":"클로저 — 세는 함수 만들기","m":"fn","q":"부를 때마다 1, 2, 3 … 을 돌려주는 **함수를 만들어 돌려주는** `makeCounter()` 를 만드시오. 만든 계수기끼리는 **따로** 셉니다.\n```js\nconst a = makeCounter();\na(); // 1\na(); // 2\nconst b = makeCounter();\nb(); // 1\n```","s":{"js":"function makeCounter() {\n  \n}"},"a":{"js":"function makeCounter() {\n  let count = 0;\n  return () => {\n    count++;\n    return count;\n  };\n}"},"wrong":{"js":"let count = 0;\nfunction makeCounter() {\n  return () => {\n    count++;\n    return count;\n  };\n}"},"wf":1,"wn":"계수기 하나만 시험하면 잘 셉니다. `count` 를 함수 «바깥»에 두면 모든 계수기가 한 숫자를 나눠 씁니다.","c":[{"d":"a() 세 번 → 1, 2, 3","x":"const a = makeCounter();\nreturn t.eq('a(), a(), a()', [a(), a(), a()], [1, 2, 3]);"},{"d":"계수기끼리 따로 센다","x":"const a = makeCounter(); a(); a();\nconst b = makeCounter();\nreturn t.all(t.eq('새로 만든 b()', b(), 1), t.eq('다시 a()', a(), 3));"}],"e":"안쪽 함수는 자기가 **만들어진 자리의 변수**(`count`)를 기억합니다 — 이것을 **클로저**라고 합니다. `makeCounter()` 를 부를 때마다 새 `count` 가 생기므로 계수기끼리 섞이지 않습니다.\nReact 의 이벤트 함수 · `useState` 가 이 원리 위에 서 있습니다."},{"no":44,"level":"중급","topic":"재귀 — 겹친 배열의 합","m":"fn","q":"배열 안에 배열이 **몇 겹이든** 들어 있을 때, 모든 숫자의 합을 돌려주는 `sumNested(arr)` 를 만드시오.\n- `sumNested([1, [2, [3, [4]]], 5])` → `15`","s":{"js":"function sumNested(arr) {\n  \n}"},"a":{"js":"function sumNested(arr) {\n  let total = 0;\n  for (const x of arr) {\n    total += Array.isArray(x) ? sumNested(x) : x;\n  }\n  return total;\n}"},"wrong":{"js":"function sumNested(arr) {\n  return arr.flat().reduce((s, x) => s + x, 0);\n}"},"wf":0,"wn":"`flat()` 은 «한 겹만» 폅니다. 두 겹 이상이면 배열이 남아 더하기가 글자 이어 붙이기가 됩니다.","c":[{"d":"[1, [2, [3, [4]]], 5] → 15","x":"t.eq('sumNested([1, [2, [3, [4]]], 5])', sumNested([1, [2, [3, [4]]], 5]), 15)"},{"d":"[1, 2, 3] → 6 · [] → 0 · [[[]]] → 0","x":"t.all(t.eq('sumNested([1, 2, 3])', sumNested([1, 2, 3]), 6), t.eq('sumNested([])', sumNested([]), 0), t.eq('sumNested([[[]]])', sumNested([[[]]]), 0))"}],"e":"**재귀**는 함수가 자기 자신을 부르는 것입니다. 「칸이 배열이면 그 배열의 합(= 같은 문제)을 구해 더한다」 — 겹이 몇 개든 같은 규칙으로 풀립니다.\n끝나는 조건(숫자면 그대로 더함)이 꼭 있어야 합니다. (`arr.flat(Infinity)` 로 끝까지 펴는 방법도 있습니다.)"},{"no":45,"level":"중급","topic":"DOM — 글자 바꾸기","m":"dom","html":"<h1 id=\"title\">제목<\/h1>\n<p class=\"desc\">설명<\/p>","q":"JS 로 화면의 글자를 바꾸시오.\n- 제목(`#title`) → `오늘의 뉴스`\n- 설명(`.desc`) → `8건의 기사`","s":{"js":""},"a":{"js":"document.querySelector(\"#title\").textContent = \"오늘의 뉴스\";\ndocument.querySelector(\".desc\").textContent = \"8건의 기사\";"},"wrong":{"js":"document.querySelector(\"title\").textContent = \"오늘의 뉴스\";\ndocument.querySelector(\"desc\").textContent = \"8건의 기사\";"},"wf":0,"wn":"선택자의 `#` · `.` 를 빠뜨리면 그 이름의 «태그»를 찾습니다. 못 찾으면 `null` 이고, 거기에 글자를 넣다 멈춥니다(5일차 「가장 많이 볼 오류」).","c":[{"d":"제목이 「오늘의 뉴스」","x":"t.eq('#title 의 글자', t.text('#title'), '오늘의 뉴스')"},{"d":"설명이 「8건의 기사」","x":"t.eq('.desc 의 글자', t.text('.desc'), '8건의 기사')"}],"e":"`document.querySelector(선택자)` 는 CSS 선택자 그대로 **첫 번째 요소**를 잡습니다 — id 는 `#`, class 는 `.`. 못 찾으면 `null` 입니다.\n`textContent` 에 담으면 그 요소의 글자가 바뀝니다."},{"no":46,"level":"중급","topic":"DOM — 조건에 맞는 것에 class","m":"dom","html":"<ul id=\"list\">\n  <li class=\"item\" data-views=\"1845\">금리 동결<\/li>\n  <li class=\"item\" data-views=\"920\">신작 개봉<\/li>\n  <li class=\"item\" data-views=\"3120\">폭설 주의보<\/li>\n  <li class=\"item\" data-views=\"2102\">국회 본회의<\/li>\n<\/ul>","q":"목록의 각 `.item` 에는 조회수가 `data-views` 로 적혀 있습니다. 조회수가 **2000 이상**인 항목에만 class `hot` 을 붙이시오.","s":{"js":""},"a":{"js":"document.querySelectorAll(\".item\").forEach((li) => {\n  if (Number(li.dataset.views) >= 2000) li.classList.add(\"hot\");\n});"},"wrong":{"js":"document.querySelectorAll(\".item\").forEach((li) => {\n  if (li.dataset.views >= \"2000\") li.classList.add(\"hot\");\n});"},"wf":1,"wn":"`data-` 값은 언제나 «글자»입니다. 글자끼리 비교하면 사전 순서라 `\"920\" >= \"2000\"` 이 참이 됩니다(첫 글자 9 > 2).","c":[{"d":"폭설 주의보(3120) · 국회 본회의(2102)에 hot","x":"t.eq('hot 이 붙은 항목', t.$$('.item.hot').map((li) => li.textContent), ['폭설 주의보', '국회 본회의'])"},{"d":"신작 개봉(920) · 금리 동결(1845)에는 없다","x":"t.eq('hot 이 없는 항목', t.$$('.item:not(.hot)').map((li) => li.textContent), ['금리 동결', '신작 개봉'])"}],"e":"`querySelectorAll` 은 맞는 요소를 **모두** 잡고 `forEach` 로 돌 수 있습니다(5일차: 배열처럼 생겼지만 배열은 아님).\n`data-views` 는 `dataset.views` 로 읽고, 늘 **문자열**이라 `Number` 로 바꿔 비교합니다. `classList.add` · `remove` · `toggle` 로 class 를 다룹니다."},{"no":47,"level":"중급","topic":"배열을 화면으로 — 그리기 함수","m":"dom","html":"<ul id=\"list\"><\/ul>","pre":"const news = [\n  { id: 1, title: \"금리 동결\", section: \"경제\", author: \"김하나\", views: 1845, date: \"2024-11-05\" },\n  { id: 2, title: \"신작 개봉\", section: \"문화\", author: \"이도윤\", views: 920, date: \"2024-11-05\" },\n  { id: 3, title: \"폭설 주의보\", section: \"사회\", author: \"박서준\", views: 3120, date: \"2024-11-04\" },\n  { id: 4, title: \"야구 개막\", section: \"스포츠\", author: \"최지우\", views: 2733, date: \"2024-11-04\" },\n  { id: 5, title: \"국회 본회의\", section: \"정치\", author: \"김하나\", views: 2102, date: \"2024-11-03\" },\n  { id: 6, title: \"반도체 수출\", section: \"경제\", author: \"정민호\", views: 1560, date: \"2024-11-03\" },\n  { id: 7, title: \"지하철 지연\", section: \"사회\", author: \"박서준\", views: 880, date: \"2024-11-02\" },\n  { id: 8, title: \"AI 규제안\", section: \"IT\", author: \"이도윤\", views: 2410, date: \"2024-11-02\" },\n];","q":"기사 배열을 받아 `#list` 에 기사마다 `<li>` 하나(글자는 제목)를 그리는 함수 `render(list)` 를 만들고, 맨 아래에서 `render(news)` 를 부르시오.\n🔴 `render` 를 **여러 번** 불러도 목록이 겹치면 안 됩니다 — 그릴 때마다 새로 그립니다.","s":{"js":"function render(list) {\n  const ul = document.querySelector(\"#list\");\n  \n}\n\nrender(news);"},"a":{"js":"function render(list) {\n  const ul = document.querySelector(\"#list\");\n  ul.innerHTML = \"\";\n  for (const a of list) {\n    const li = document.createElement(\"li\");\n    li.textContent = a.title;\n    ul.append(li);\n  }\n}\n\nrender(news);"},"wrong":{"js":"function render(list) {\n  const ul = document.querySelector(\"#list\");\n  for (const a of list) {\n    const li = document.createElement(\"li\");\n    li.textContent = a.title;\n    ul.append(li);\n  }\n}\n\nrender(news);"},"wf":1,"wn":"한 번 그릴 때는 완벽합니다. 검색 · 정렬로 다시 부르는 순간 목록이 두 배가 됩니다(5일차 「두 번 부르면」).","c":[{"d":"기사 8건이 제목으로, 순서대로 그려진다","x":"t.eq('#list 의 항목', t.$$('#list li').map((li) => li.textContent), ['금리 동결', '신작 개봉', '폭설 주의보', '야구 개막', '국회 본회의', '반도체 수출', '지하철 지연', 'AI 규제안'])"},{"d":"다시 render(news) 를 불러도 8건","x":"render(news);\nreturn t.eq('두 번째 render 뒤 항목 수', t.$$('#list li').length, 8);"},{"d":"render(news.slice(0, 2)) → 2건 · render([]) → 0건","x":"render(news.slice(0, 2));\nconst two = t.$$('#list li').length;\nrender([]);\nreturn t.all(t.eq('render(news.slice(0, 2)) 뒤 항목 수', two, 2), t.eq('render([]) 뒤 항목 수', t.$$('#list li').length, 0));"}],"e":"「그리기 = **비우고 · 그린다**」(5일차). 그리는 함수는 늘 지금 데이터로 **처음부터** 그려야, 몇 번 불러도 화면이 데이터와 같습니다.\n`createElement` 로 만들고 → `textContent` 로 채우고 → `append` 로 붙이는 세 줄이 한 벌입니다."},{"no":48,"level":"중급","topic":"textContent 와 innerHTML","m":"dom","html":"<h2 id=\"headline\"><\/h2>","pre":"const title = \"<b>속보<\/b> 폭설 주의보\";","q":"주어진 `title` 을 `#headline` 에 **글자 그대로** 넣으시오. 화면에 `<b>속보<\/b> 폭설 주의보` 가 꺾쇠까지 그대로 보여야 하고, 굵은 글씨(`<b>` 요소)가 생기면 안 됩니다.","s":{"js":""},"a":{"js":"document.querySelector(\"#headline\").textContent = title;"},"wrong":{"js":"document.querySelector(\"#headline\").innerHTML = title;"},"wf":1,"wn":"`innerHTML` 도 글자를 넣는 것처럼 보입니다. 하지만 꺾쇠를 «태그»로 읽어 실제 요소를 만듭니다 — 남이 쓴 글이면 위험합니다.","c":[{"d":"글자가 그대로 들어갔다","x":"t.eq('#headline 의 글자', t.$('#headline').textContent, '<b>속보<\/b> 폭설 주의보')"},{"d":"<b> 요소가 생기지 않았다","x":"t.ok(!t.$('#headline b'), '#headline 안에 <b> 요소가 생겼습니다 — 글자를 HTML 로 읽었습니다')"}],"e":"`textContent` 는 **글자로** 넣고, `innerHTML` 은 **HTML 로 읽어** 요소를 만듭니다.\n🔴 사용자 · 서버에서 온 글을 `innerHTML` 로 넣으면 그 안의 `<script>` · `<img onerror=…>` 가 실행될 수 있습니다(XSS). 데이터는 `textContent` — 5일차 「제목에 태그가 들어 있으면」."},{"no":49,"level":"중급","topic":"클릭 이벤트 — 좋아요","m":"dom","html":"<button id=\"like\">좋아요 0<\/button>","q":"버튼(`#like`)을 누를 때마다 숫자가 1씩 올라가게 하시오 — `좋아요 1`, `좋아요 2` …","s":{"js":""},"a":{"js":"let likes = 0;\nconst button = document.querySelector(\"#like\");\nbutton.addEventListener(\"click\", () => {\n  likes++;\n  button.textContent = `좋아요 ${likes}`;\n});"},"wrong":{"js":"const button = document.querySelector(\"#like\");\nbutton.addEventListener(\"click\", () => {\n  let likes = 0;\n  likes++;\n  button.textContent = `좋아요 ${likes}`;\n});"},"wf":1,"wn":"한 번 눌러 보면 `좋아요 1` 로 잘 됩니다. 숫자 변수를 이벤트 함수 «안»에 두면 누를 때마다 0 에서 다시 시작합니다.","c":[{"d":"한 번 누르면 「좋아요 1」","x":"t.click('#like');\nreturn t.eq('#like 의 글자', t.text('#like'), '좋아요 1');"},{"d":"세 번 누르면 「좋아요 3」","x":"t.click('#like'); t.click('#like'); t.click('#like');\nreturn t.eq('#like 의 글자', t.text('#like'), '좋아요 3');"}],"e":"`addEventListener(\"click\", 함수)` — 누를 때마다 그 함수가 불립니다. 누른 횟수처럼 **계속 남아야 하는 값**은 함수 **바깥**에 둡니다(43번의 클로저).\n안에 두면 불릴 때마다 새로 만들어져 0 에서 시작합니다."},{"no":50,"level":"중급","topic":"input 이벤트 — 글자 수 세기","m":"dom","html":"<input id=\"q\" placeholder=\"검색어\">\n<p id=\"count\">0자<\/p>","q":"입력칸(`#q`)에 **글자를 칠 때마다** 아래(`#count`)에 지금 글자 수를 `N자` 로 보여 주시오.","s":{"js":""},"a":{"js":"const input = document.querySelector(\"#q\");\nconst count = document.querySelector(\"#count\");\ninput.addEventListener(\"input\", () => {\n  count.textContent = `${input.value.length}자`;\n});"},"wrong":{"js":"const input = document.querySelector(\"#q\");\nconst count = document.querySelector(\"#count\");\ninput.addEventListener(\"change\", () => {\n  count.textContent = `${input.value.length}자`;\n});"},"wf":0,"wn":"`change` 도 값이 바뀔 때 같지만, 칠 때마다가 아니라 «칸을 떠날 때(또는 Enter)» 한 번 일어납니다.","c":[{"d":"「폭설」을 치면 「2자」","x":"t.input('#q', '폭설');\nreturn t.eq('#count 의 글자', t.text('#count'), '2자');"},{"d":"다 지우면 「0자」","x":"t.input('#q', '폭설 주의');\nt.input('#q', '');\nreturn t.eq('#count 의 글자', t.text('#count'), '0자');"}],"e":"`input` 이벤트는 **값이 바뀔 때마다**(한 글자마다) 일어납니다. `change` 는 다 친 뒤 칸을 떠날 때 한 번입니다(6일차 「언제 읽을 것인가」).\n입력칸의 값은 `input.value` — 언제나 **문자열**입니다."},{"no":51,"level":"고급","topic":"이벤트 위임","m":"dom","html":"<ul id=\"list\">\n  <li data-id=\"1\">금리 동결<\/li>\n  <li data-id=\"2\">신작 개봉<\/li>\n  <li data-id=\"3\">폭설 주의보<\/li>\n<\/ul>\n<p id=\"picked\">고른 기사: 없음<\/p>","q":"목록의 항목을 누르면 `#picked` 에 `고른 기사: 번호` 를 보여 주시오(번호는 `data-id`).\n🔴 이벤트는 **목록(`#list`)에 한 번만** 거십시오. 나중에 JS 로 **새로 붙인** 항목을 눌러도 동작해야 합니다.","s":{"js":""},"a":{"js":"const list = document.querySelector(\"#list\");\nconst picked = document.querySelector(\"#picked\");\nlist.addEventListener(\"click\", (e) => {\n  const li = e.target.closest(\"li\");\n  if (!li) return;\n  picked.textContent = `고른 기사: ${li.dataset.id}`;\n});"},"wrong":{"js":"const picked = document.querySelector(\"#picked\");\ndocument.querySelectorAll(\"#list li\").forEach((li) => {\n  li.addEventListener(\"click\", () => {\n    picked.textContent = `고른 기사: ${li.dataset.id}`;\n  });\n});"},"wf":1,"wn":"지금 있는 항목에는 다 걸려서 잘 됩니다. 나중에 그려 넣은 항목에는 아무도 이벤트를 걸어 주지 않았습니다.","c":[{"d":"3번 항목을 누르면 「고른 기사: 3」","x":"t.click('#list li[data-id=\"3\"]');\nreturn t.eq('#picked 의 글자', t.text('#picked'), '고른 기사: 3');"},{"d":"새로 붙인 항목(4번)을 눌러도 「고른 기사: 4」","x":"const li = document.createElement('li');\nli.dataset.id = '4';\nli.textContent = '야구 개막';\nt.$('#list').append(li);\nli.click();\nreturn t.eq('#picked 의 글자', t.text('#picked'), '고른 기사: 4');"}],"e":"클릭은 누른 요소에서 **위로 번져** 올라갑니다(버블링). 그래서 부모(`#list`)에 한 번만 걸어도 어느 항목이 눌렸는지 `e.target` 으로 알 수 있습니다 — **이벤트 위임**(6일차).\n`e.target.closest(\"li\")` 는 누른 곳에서 위로 올라가며 가장 가까운 `li` 를 찾습니다(항목 안에 `<b>` 같은 것이 있어도 안전). 목록을 다시 그려도 이벤트를 다시 걸 필요가 없습니다."},{"no":52,"level":"고급","topic":"폼 제출 — preventDefault","m":"dom","html":"<form id=\"search\">\n  <input name=\"q\" id=\"q\">\n  <button>검색<\/button>\n<\/form>\n<p id=\"result\"><\/p>","q":"검색 폼을 제출하면(버튼 · Enter) **페이지가 새로 고쳐지지 않게** 막고, `#result` 에 보여 주시오.\n- 검색어(앞뒤 공백 제거)가 있으면 `「금리」 검색`\n- 비어 있으면 `검색어를 입력하세요`","s":{"js":""},"a":{"js":"const form = document.querySelector(\"#search\");\nconst result = document.querySelector(\"#result\");\nform.addEventListener(\"submit\", (e) => {\n  e.preventDefault();\n  const q = document.querySelector(\"#q\").value.trim();\n  result.textContent = q ? `「${q}」 검색` : \"검색어를 입력하세요\";\n});"},"wrong":{"js":"const form = document.querySelector(\"#search\");\nconst result = document.querySelector(\"#result\");\nform.addEventListener(\"submit\", (e) => {\n  const q = document.querySelector(\"#q\").value.trim();\n  result.textContent = q ? `「${q}」 검색` : \"검색어를 입력하세요\";\n});"},"wf":0,"wn":"글자는 잘 바뀝니다 — 단, 한순간만. 진짜 브라우저에서는 바로 새로 고쳐져 다 사라집니다(6일차 🔴).","c":[{"d":"제출을 막았다 (preventDefault)","x":"t.input('#q', '금리');\nconst ev = t.submit('#search');\nreturn t.ok(ev.defaultPrevented, '제출의 기본 동작(새로 고침)을 막지 않았습니다 — e.preventDefault()');"},{"d":"「  금리 」 → 「금리」 검색","x":"t.input('#q', '  금리 ');\nt.submit('#search');\nreturn t.eq('#result 의 글자', t.text('#result'), '「금리」 검색');"},{"d":"빈칸(공백만) → 「검색어를 입력하세요」","x":"t.input('#q', '   ');\nt.submit('#search');\nreturn t.eq('#result 의 글자', t.text('#result'), '검색어를 입력하세요');"}],"e":"폼은 제출되면 **페이지를 새로 엽니다**(기본 동작). JS 로 처리할 때는 `submit` 이벤트에서 `e.preventDefault()` 로 막습니다.\n버튼의 `click` 이 아니라 폼의 `submit` 에 거는 이유 — Enter 로 제출해도 똑같이 잡힙니다."},{"no":53,"level":"고급","topic":"실행 순서","m":"choice","q":"다음 코드는 어떤 순서로 찍습니까?\n```js\nconsole.log(1);\nsetTimeout(() => console.log(2), 0);\nPromise.resolve().then(() => console.log(3));\nconsole.log(4);\n```","opts":["`1 2 3 4`","`1 4 2 3`","`1 4 3 2`","`1 3 4 2`"],"proof":{"js":"console.log(1);\nsetTimeout(() => console.log(2), 0);\nPromise.resolve().then(() => console.log(3));\nconsole.log(4);","want":["1","4","3","2"]},"a":2,"wrong":1,"wn":"`setTimeout` 이 0ms 라 바로 될 것 같고, 위에 적혀 있으니 먼저일 것 같습니다.","e":"일꾼은 **하나**입니다(7일차). 지금 줄을 다 돈 뒤에야 기다리던 일을 봅니다 — 그래서 `1`, `4` 가 먼저.\n기다리던 일 중에서는 **Promise 의 then 이 setTimeout 보다 먼저**입니다(마이크로태스크가 먼저). 그래서 `3`, 그다음 `2`."},{"no":54,"level":"고급","topic":"기다리는 함수 만들기 — Promise","m":"async","q":"`ms` 밀리초 뒤에 끝나는 **Promise** 를 돌려주는 `sleep(ms)` 를 만드시오. `await sleep(1000)` 처럼 쓸 수 있어야 합니다.","s":{"js":"function sleep(ms) {\n  \n}"},"a":{"js":"function sleep(ms) {\n  return new Promise((resolve) => setTimeout(resolve, ms));\n}"},"wrong":{"js":"function sleep(ms) {\n  setTimeout(() => {}, ms);\n}"},"wf":0,"wn":"`setTimeout` 을 부르면 «기다리는» 것 같지만, 아무도 그 끝을 알려 주지 않습니다 — 함수는 바로 끝나고 `undefined` 를 돌려줍니다.","c":[{"d":"Promise 를 돌려준다","x":"t.ok(sleep(10) instanceof Promise, 'sleep(10) 이 Promise 가 아닙니다: ' + t.show(sleep(10)))"},{"d":"await sleep(150) 이 150ms 쯤 기다린다","x":"const s = Date.now();\nawait sleep(150);\nconst ms = Date.now() - s;\nreturn t.ok(ms >= 140 && ms < 600, 'await sleep(150) 이 ' + ms + 'ms 걸렸습니다');"}],"e":"`new Promise((resolve) => …)` — 「나중에 줄게」 쪽지를 만들고, 일이 끝나면 `resolve()` 를 불러 «끝났다»고 알립니다. `setTimeout(resolve, ms)` 는 `ms` 뒤에 그 알림을 보냅니다.\n`await` 는 Promise 만 기다립니다. Promise 가 아닌 것(`undefined`)은 기다릴 것이 없어 바로 지나갑니다."},{"no":55,"level":"고급","topic":"async / await","m":"async","pre":"// 30ms 뒤에 n × 10 을 주는 함수 (서버에서 받아오는 흉내)\nfunction getNumber(n) {\n  return new Promise((resolve) => setTimeout(() => resolve(n * 10), 30));\n}","q":"주어진 `getNumber(n)` 은 30ms 뒤에 `n × 10` 을 주는 Promise 를 돌려줍니다. 두 수의 결과를 받아 **더한 값**을 돌려주는 `async` 함수 `sumTwo(a, b)` 를 만드시오.\n- `await sumTwo(1, 2)` → `30`","s":{"js":"async function sumTwo(a, b) {\n  \n}"},"a":{"js":"async function sumTwo(a, b) {\n  const x = await getNumber(a);\n  const y = await getNumber(b);\n  return x + y;\n}"},"wrong":{"js":"async function sumTwo(a, b) {\n  const x = getNumber(a);\n  const y = getNumber(b);\n  return x + y;\n}"},"wf":0,"wn":"`await` 를 빠뜨리면 숫자가 아니라 «쪽지»(Promise) 두 장을 더합니다 — 글자 `\"[object Promise][object Promise]\"` 가 됩니다(7일차).","c":[{"d":"await sumTwo(1, 2) → 30","x":"t.eq('await sumTwo(1, 2)', await sumTwo(1, 2), 30)"},{"d":"await sumTwo(5, 0) → 50","x":"t.eq('await sumTwo(5, 0)', await sumTwo(5, 0), 50)"}],"e":"`await` 는 Promise 가 끝날 때까지 **그 함수 안에서만** 기다리고, 끝난 값을 꺼내 줍니다. `await` 는 `async` 함수 안에서만 쓸 수 있습니다.\n`async` 함수는 늘 Promise 를 돌려주므로, 부르는 쪽도 `await sumTwo(1, 2)` 로 받습니다."},{"no":56,"level":"고급","topic":"fetch — await 가 두 번","m":"async","fetch":{"news.json":{"body":[{"id":1,"title":"금리 동결","section":"경제","author":"김하나","views":1845,"date":"2024-11-05"},{"id":2,"title":"신작 개봉","section":"문화","author":"이도윤","views":920,"date":"2024-11-05"},{"id":3,"title":"폭설 주의보","section":"사회","author":"박서준","views":3120,"date":"2024-11-04"},{"id":4,"title":"야구 개막","section":"스포츠","author":"최지우","views":2733,"date":"2024-11-04"},{"id":5,"title":"국회 본회의","section":"정치","author":"김하나","views":2102,"date":"2024-11-03"},{"id":6,"title":"반도체 수출","section":"경제","author":"정민호","views":1560,"date":"2024-11-03"},{"id":7,"title":"지하철 지연","section":"사회","author":"박서준","views":880,"date":"2024-11-02"},{"id":8,"title":"AI 규제안","section":"IT","author":"이도윤","views":2410,"date":"2024-11-02"}]}},"q":"`news.json` 을 받아(`fetch`) **제목 배열**을 돌려주는 `async` 함수 `loadTitles()` 를 만드시오.\n(이 연습장의 `fetch` 는 인터넷 대신 위 「가짜 서버」 표대로 답합니다)","s":{"js":"async function loadTitles() {\n  \n}"},"a":{"js":"async function loadTitles() {\n  const res = await fetch(\"news.json\");\n  const data = await res.json();\n  return data.map((a) => a.title);\n}"},"wrong":{"js":"async function loadTitles() {\n  const data = await fetch(\"news.json\").json();\n  return data.map((a) => a.title);\n}"},"wf":0,"wn":"한 줄로 줄이고 싶어집니다. 하지만 `fetch(…)` 가 돌려주는 것은 Promise 라 `.json()` 이 없습니다 — 먼저 기다려 응답을 받아야 합니다.","c":[{"d":"제목 8개를 돌려준다","x":"t.eq('await loadTitles()', await loadTitles(), ['금리 동결', '신작 개봉', '폭설 주의보', '야구 개막', '국회 본회의', '반도체 수출', '지하철 지연', 'AI 규제안'])"},{"d":"news.json 을 받았다","x":"await loadTitles();\nreturn t.ok(t.fetchLog.includes('news.json'), 'news.json 을 fetch 하지 않았습니다 (받은 주소: ' + t.show(t.fetchLog) + ')');"}],"e":"`fetch` 는 **두 번** 기다립니다(8일차) — ① 응답(머리)이 오기를 `await fetch(…)`, ② 몸통을 JSON 으로 읽기를 `await res.json()`.\n괄호로 묶어 `(await fetch(url)).json()` 이라고도 쓸 수 있지만, 두 줄이 읽기 쉽고 오류를 찾기도 쉽습니다."},{"no":57,"level":"고급","topic":"fetch 오류 처리 — res.ok 와 try/catch","m":"async","fetch":{"news.json":{"body":[{"id":1,"title":"금리 동결","section":"경제","author":"김하나","views":1845,"date":"2024-11-05"},{"id":2,"title":"신작 개봉","section":"문화","author":"이도윤","views":920,"date":"2024-11-05"}]},"broken.json":{"status":500,"body":"서버 오류"},"down.json":{"fail":true}},"q":"주소를 받아 결과를 **객체로** 돌려주는 `async` 함수 `loadSafe(url)` 을 만드시오. 함수는 **오류를 던지지 않습니다**.\n- 성공 → `{ ok: true, data: 받은 JSON }`\n- 응답이 200번대가 아니면(404 · 500 …) → `{ ok: false, error: \"HTTP 404\" }` 처럼 상태 번호\n- 네트워크 오류로 `fetch` 자체가 실패하면 → `{ ok: false, error: \"네트워크 오류\" }`","s":{"js":"async function loadSafe(url) {\n  \n}"},"a":{"js":"async function loadSafe(url) {\n  let res;\n  try {\n    res = await fetch(url);\n  } catch (e) {\n    return { ok: false, error: \"네트워크 오류\" };\n  }\n  if (!res.ok) return { ok: false, error: `HTTP ${res.status}` };\n  return { ok: true, data: await res.json() };\n}"},"wrong":{"js":"async function loadSafe(url) {\n  try {\n    const res = await fetch(url);\n    return { ok: true, data: await res.json() };\n  } catch (e) {\n    return { ok: false, error: \"네트워크 오류\" };\n  }\n}"},"wf":1,"wn":"`try/catch` 로 감싸면 다 잡힐 것 같습니다. 하지만 🔴 `fetch` 는 404 · 500 에도 «성공»합니다 — 몸통을 JSON 으로 읽다 실패해 엉뚱한 «네트워크 오류»가 됩니다.","c":[{"d":"news.json → { ok: true, data: [기사 2건] }","x":"const r = await loadSafe('news.json');\nreturn t.all(t.eq('ok', r && r.ok, true), t.eq('data 의 id', r && r.data && r.data.map((a) => a.id), [1, 2]));"},{"d":"없는 주소 → { ok: false, error: \"HTTP 404\" } · broken.json → \"HTTP 500\"","x":"t.all(t.eq('await loadSafe(\"nope.json\")', await loadSafe('nope.json'), { ok: false, error: 'HTTP 404' }), t.eq('await loadSafe(\"broken.json\")', await loadSafe('broken.json'), { ok: false, error: 'HTTP 500' }))"},{"d":"down.json(네트워크 오류) → { ok: false, error: \"네트워크 오류\" }","x":"t.eq('await loadSafe(\"down.json\")', await loadSafe('down.json'), { ok: false, error: '네트워크 오류' })"}],"e":"갈림길이 **둘**입니다(8일차). ① 서버에 아예 못 닿으면 `fetch` 가 **실패**(`catch` 로 잡힘). ② 닿았지만 404 · 500 이면 `fetch` 는 **성공**하고 `res.ok` 가 `false` — 직접 봐야 합니다.\n화면에서는 이 두 실패를 사용자에게 다르게 알려야 합니다(「잠시 뒤 다시」 vs 「없는 기사」)."},{"no":58,"level":"고급","topic":"Promise.all — 한꺼번에","m":"async","fetch":{"a.json":{"body":1,"delay":150},"b.json":{"body":2,"delay":150},"c.json":{"body":3,"delay":150}},"q":"주소 배열을 받아 **모두 한꺼번에** 받아온 JSON 을 **같은 순서의 배열**로 돌려주는 `async` 함수 `loadAll(urls)` 를 만드시오.\n가짜 서버는 주소마다 150ms 씩 걸립니다 — 셋을 **하나씩** 받으면 450ms, **한꺼번에** 받으면 150ms 쯤입니다. 한꺼번에 받으십시오.","s":{"js":"async function loadAll(urls) {\n  \n}"},"a":{"js":"async function loadAll(urls) {\n  return Promise.all(urls.map(async (url) => {\n    const res = await fetch(url);\n    return res.json();\n  }));\n}"},"wrong":{"js":"async function loadAll(urls) {\n  const out = [];\n  for (const url of urls) {\n    const res = await fetch(url);\n    out.push(await res.json());\n  }\n  return out;\n}"},"wf":1,"wn":"결과는 같습니다. 하지만 하나가 끝나야 다음을 시작해서 주소가 늘수록 기다리는 시간이 쌓입니다(7일차 「하나씩 vs 한꺼번에」).","c":[{"d":"[a, b, c] → [1, 2, 3] (순서대로)","x":"t.eq('await loadAll([\"a.json\", \"b.json\", \"c.json\"])', await loadAll(['a.json', 'b.json', 'c.json']), [1, 2, 3])"},{"d":"한꺼번에 받는다 — 셋에 300ms 안","x":"const s = Date.now();\nawait loadAll(['a.json', 'b.json', 'c.json']);\nconst ms = Date.now() - s;\nreturn t.ok(ms < 300, '셋을 받는 데 ' + ms + 'ms 걸렸습니다 — 하나씩 기다리고 있습니다(한꺼번에면 150ms 쯤)');"},{"d":"빈 배열 → []","x":"t.eq('await loadAll([])', await loadAll([]), [])"}],"e":"`Promise.all([쪽지들])` 은 쪽지를 **한꺼번에** 기다렸다가, 모두 끝나면 결과를 **넣은 순서대로** 배열로 줍니다(먼저 끝난 순서가 아님).\n`urls.map(async …)` 이 쪽지 배열을 만들고 — 이때 이미 셋 다 출발합니다 — `Promise.all` 이 모아서 기다립니다. 🔴 `forEach` 안의 `await` 는 아무도 기다려 주지 않습니다(7일차)."},{"no":59,"level":"고급","topic":"종합 — 받아서 그리기 (로딩 · 성공 · 실패)","m":"dom","html":"<p id=\"status\"><\/p>\n<ul id=\"list\"><\/ul>","fetch":{"news.json":{"body":[{"id":1,"title":"금리 동결","section":"경제","author":"김하나","views":1845,"date":"2024-11-05"},{"id":2,"title":"신작 개봉","section":"문화","author":"이도윤","views":920,"date":"2024-11-05"},{"id":3,"title":"폭설 주의보","section":"사회","author":"박서준","views":3120,"date":"2024-11-04"},{"id":4,"title":"야구 개막","section":"스포츠","author":"최지우","views":2733,"date":"2024-11-04"},{"id":5,"title":"국회 본회의","section":"정치","author":"김하나","views":2102,"date":"2024-11-03"},{"id":6,"title":"반도체 수출","section":"경제","author":"정민호","views":1560,"date":"2024-11-03"},{"id":7,"title":"지하철 지연","section":"사회","author":"박서준","views":880,"date":"2024-11-02"},{"id":8,"title":"AI 규제안","section":"IT","author":"이도윤","views":2410,"date":"2024-11-02"}],"delay":120}},"q":"페이지가 열리면 `news.json` 을 받아 그리시오. 화면의 상태는 **셋**입니다(8일차).\n- 받는 동안 `#status`: `불러오는 중…`\n- 성공: `#list` 에 기사마다 `<li>`(글자는 제목) — **조회수가 많은 순** · `#status`: `8건`(받은 건수)\n- 실패(응답이 200번대가 아님): `#status`: `불러오지 못했습니다 (HTTP 500)` 처럼 상태 번호","s":{"js":"async function start() {\n  const status = document.querySelector(\"#status\");\n  const list = document.querySelector(\"#list\");\n  \n}\n\nstart();"},"a":{"js":"async function start() {\n  const status = document.querySelector(\"#status\");\n  const list = document.querySelector(\"#list\");\n  status.textContent = \"불러오는 중…\";\n  const res = await fetch(\"news.json\");\n  if (!res.ok) {\n    status.textContent = `불러오지 못했습니다 (HTTP ${res.status})`;\n    return;\n  }\n  const data = await res.json();\n  const sorted = [...data].sort((a, b) => b.views - a.views);\n  list.innerHTML = \"\";\n  for (const a of sorted) {\n    const li = document.createElement(\"li\");\n    li.textContent = a.title;\n    list.append(li);\n  }\n  status.textContent = `${data.length}건`;\n}\n\nstart();"},"wrong":{"js":"async function start() {\n  const status = document.querySelector(\"#status\");\n  const list = document.querySelector(\"#list\");\n  status.textContent = \"불러오는 중…\";\n  const res = await fetch(\"news.json\");\n  const data = await res.json();\n  const sorted = [...data].sort((a, b) => b.views - a.views);\n  list.innerHTML = \"\";\n  for (const a of sorted) {\n    const li = document.createElement(\"li\");\n    li.textContent = a.title;\n    list.append(li);\n  }\n  status.textContent = `${data.length}건`;\n}\n\nstart();"},"wf":2,"wn":"성공만 시험하면 완벽합니다. 서버가 500 을 주면 몸통(「서버 오류」)을 JSON 으로 읽다 멈추고, 화면은 「불러오는 중…」에 영원히 머뭅니다.","c":[{"d":"받는 동안 「불러오는 중…」","x":"t.eq('받는 동안 #status', t.text('#status'), '불러오는 중…')"},{"d":"성공 — 조회수 많은 순 8건 · 「8건」","x":"await t.until(() => t.text('#status') === '8건', 2000);\nreturn t.all(t.eq('#status', t.text('#status'), '8건'), t.eq('#list 의 항목', t.$$('#list li').map((li) => li.textContent), ['폭설 주의보', '야구 개막', 'AI 규제안', '국회 본회의', '금리 동결', '반도체 수출', '신작 개봉', '지하철 지연']));"},{"d":"실패(500) — 「불러오지 못했습니다 (HTTP 500)」","fetch":{"news.json":{"status":500,"body":"서버 오류","delay":50}},"x":"await t.until(() => t.text('#status') !== '불러오는 중…', 1500);\nreturn t.eq('#status', t.text('#status'), '불러오지 못했습니다 (HTTP 500)');"}],"e":"9일차의 한 바퀴입니다 — **받고(fetch) → 확인하고(res.ok) → 바꾸고(sort) → 그린다(비우고 · 그린다)**. 그리고 화면에는 상태가 셋입니다: 로딩 · 성공 · 실패.\n🔴 실패를 **화면에** 알리지 않으면 사용자는 「불러오는 중…」만 보며 기다립니다. 콘솔의 빨간 줄은 사용자에게 안 보입니다."},{"no":60,"level":"고급","topic":"종합 — 실시간 검색","m":"dom","html":"<form id=\"search\">\n  <input id=\"q\" placeholder=\"제목 검색\">\n<\/form>\n<p id=\"count\"><\/p>\n<ul id=\"list\"><\/ul>","pre":"const news = [\n  { id: 1, title: \"금리 동결\", section: \"경제\", author: \"김하나\", views: 1845, date: \"2024-11-05\" },\n  { id: 2, title: \"신작 개봉\", section: \"문화\", author: \"이도윤\", views: 920, date: \"2024-11-05\" },\n  { id: 3, title: \"폭설 주의보\", section: \"사회\", author: \"박서준\", views: 3120, date: \"2024-11-04\" },\n  { id: 4, title: \"야구 개막\", section: \"스포츠\", author: \"최지우\", views: 2733, date: \"2024-11-04\" },\n  { id: 5, title: \"국회 본회의\", section: \"정치\", author: \"김하나\", views: 2102, date: \"2024-11-03\" },\n  { id: 6, title: \"반도체 수출\", section: \"경제\", author: \"정민호\", views: 1560, date: \"2024-11-03\" },\n  { id: 7, title: \"지하철 지연\", section: \"사회\", author: \"박서준\", views: 880, date: \"2024-11-02\" },\n  { id: 8, title: \"AI 규제안\", section: \"IT\", author: \"이도윤\", views: 2410, date: \"2024-11-02\" },\n];","q":"제목 검색 화면을 만드시오.\n- 처음에는 `news` 전부를 `#list` 에 그리고(`<li>` 글자는 제목, 원래 순서) `#count` 에 `8건`\n- 입력칸(`#q`)에 **칠 때마다** 검색어(앞뒤 공백 제거)가 제목에 **들어 있는** 기사만 다시 그리고 건수를 바꿉니다. 검색어가 비면 전부\n- 폼을 제출(Enter)해도 페이지가 새로 고쳐지지 않게 막습니다","s":{"js":"const list = document.querySelector(\"#list\");\nconst count = document.querySelector(\"#count\");\n\nfunction render(items) {\n  \n}\n\nrender(news);"},"a":{"js":"const list = document.querySelector(\"#list\");\nconst count = document.querySelector(\"#count\");\n\nfunction render(items) {\n  list.innerHTML = \"\";\n  for (const a of items) {\n    const li = document.createElement(\"li\");\n    li.textContent = a.title;\n    list.append(li);\n  }\n  count.textContent = `${items.length}건`;\n}\n\ndocument.querySelector(\"#q\").addEventListener(\"input\", (e) => {\n  const q = e.target.value.trim();\n  render(news.filter((a) => a.title.includes(q)));\n});\n\ndocument.querySelector(\"#search\").addEventListener(\"submit\", (e) => e.preventDefault());\n\nrender(news);"},"wrong":{"js":"const list = document.querySelector(\"#list\");\nconst count = document.querySelector(\"#count\");\n\nfunction render(items) {\n  list.innerHTML = \"\";\n  for (const a of items) {\n    const li = document.createElement(\"li\");\n    li.textContent = a.title;\n    list.append(li);\n  }\n  count.textContent = `${items.length}건`;\n}\n\ndocument.querySelector(\"#q\").addEventListener(\"input\", (e) => {\n  render(news.filter((a) => a.title.includes(e.target.value)));\n});\n\ndocument.querySelector(\"#search\").addEventListener(\"submit\", (e) => e.preventDefault());\n\nrender(news);"},"wf":2,"wn":"손으로 칠 때는 공백을 잘 안 넣어서 잘 됩니다. 앞뒤에 공백이 붙은 검색어(복사 · 붙여넣기)는 한 건도 안 맞습니다.","c":[{"d":"처음 — 8건 · 「8건」","x":"t.all(t.eq('#list 항목 수', t.$$('#list li').length, 8), t.eq('#count', t.text('#count'), '8건'))"},{"d":"「주의」 → 폭설 주의보 1건 · 「1건」","x":"t.input('#q', '주의');\nreturn t.all(t.eq('#list 의 항목', t.$$('#list li').map((li) => li.textContent), ['폭설 주의보']), t.eq('#count', t.text('#count'), '1건'));"},{"d":"「  금리 」(앞뒤 공백) → 금리 동결 1건","x":"t.input('#q', '  금리 ');\nreturn t.eq('#list 의 항목', t.$$('#list li').map((li) => li.textContent), ['금리 동결']);"},{"d":"없는 말 → 0건 · 다 지우면 다시 8건","x":"t.input('#q', '없는말');\nconst none = [t.$$('#list li').length, t.text('#count')];\nt.input('#q', '');\nreturn t.all(t.eq('「없는말」 의 [항목 수, #count]', none, [0, '0건']), t.eq('다 지운 뒤 항목 수', t.$$('#list li').length, 8));"},{"d":"제출(Enter)을 막았다","x":"const ev = t.submit('#search');\nreturn t.ok(ev.defaultPrevented, '제출의 기본 동작(새로 고침)을 막지 않았습니다');"}],"e":"**데이터는 그대로 두고, 화면만 매번 다시 그립니다.** 검색어가 바뀌면 원본 `news` 에서 거른 결과로 `render` 를 부를 뿐입니다 — 걸러 낸 결과로 `news` 를 덮어쓰면 지운 검색어를 되돌릴 수 없습니다.\n`includes(\"\")` 는 언제나 `true` 라서 빈 검색어는 저절로 「전부」가 됩니다. 이 모양(상태 → 거르기 → 그리기)이 React 에서 그대로 이어집니다."}];
+const LEVELS = ["초급", "중급", "고급"];
+const MARK = { "초급": "●", "중급": "◆", "고급": "▲" };
+const MODE = { fn: "함수 작성", log: "출력 (console.log)", async: "비동기 함수", dom: "DOM · 이벤트", choice: "고르기" };
+const CIRCLED = ["①", "②", "③", "④", "⑤", "⑥"];
+
+/* ── 진행 상태 저장 (localStorage 가 막혀도 동작) ── */
+const KEY = "js-practice-v1";
+const emptyStore = () => ({ solved: {}, tried: {}, drafts: {}, draftsAt: {}, fav: {}, favAt: {}, favOnly: false, last: 1, updated: 0, resetAt: 0 });
+let store = emptyStore();
+try { const raw = localStorage.getItem(KEY); if (raw) store = Object.assign(store, JSON.parse(raw)); } catch (e) {}
+function saveLocal() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+function save() { store.updated = Date.now(); saveLocal(); schedulePush(); }
+
+/** 두 진행 상황 합치기: 정답은 합집합, 오답 횟수는 큰 값, 작성 코드 · 즐겨찾기는 더 최근 것. 초기화 이후 데이터가 우선. */
+function mergeStores(a, b) {
+  if ((a.resetAt || 0) > (b.updated || 0)) return a;
+  if ((b.resetAt || 0) > (a.updated || 0)) return b;
+  const out = emptyStore();
+  [a, b].forEach((s) => {
+    Object.keys(s.solved || {}).forEach((k) => { if (s.solved[k]) out.solved[k] = true; });
+    Object.keys(s.tried || {}).forEach((k) => { out.tried[k] = Math.max(out.tried[k] || 0, s.tried[k] || 0); });
+    Object.keys(s.drafts || {}).forEach((k) => {
+      const at = (s.draftsAt && s.draftsAt[k]) || 0;
+      if (!(k in out.drafts) || at > (out.draftsAt[k] || 0)) { out.drafts[k] = s.drafts[k]; out.draftsAt[k] = at; }
+    });
+    Object.keys(s.favAt || {}).forEach((k) => {
+      const at = s.favAt[k] || 0;
+      if (!(k in out.favAt) || at > out.favAt[k]) { out.favAt[k] = at; if (s.fav && s.fav[k]) out.fav[k] = true; else delete out.fav[k]; }
+    });
+  });
+  out.favOnly = !!a.favOnly;
+  const newer = (a.updated || 0) >= (b.updated || 0) ? a : b;
+  out.last = newer.last || 1;
+  out.updated = Math.max(a.updated || 0, b.updated || 0);
+  out.resetAt = Math.max(a.resetAt || 0, b.resetAt || 0);
+  return out;
+}
+
+/* ── 계정 동기화 (가능한 환경에서만 켜짐, 아니면 이 브라우저 저장만 사용) ── */
+let cloudDoc = null, pushing = false, pushAgain = false, pushTimer = null;
+function setCloud(state) {
+  const el = document.getElementById("cloud"); if (!el) return;
+  const m = { local: ["이 브라우저에 저장됨 · 다른 PC는 [백업·복원]으로 이어서 풀기", ""], sync: ["☁ 계정에 저장하는 중…", ""], ok: ["☁ 계정에 동기화됨 · 다른 PC에서도 이어서 풀 수 있음", "ok"], err: ["☁ 계정 동기화 실패 · 이 브라우저에는 저장됨", "bad"] }[state];
+  el.textContent = m[0]; el.className = "cloud " + m[1];
+}
+function schedulePush() { if (!cloudDoc) return; clearTimeout(pushTimer); pushTimer = setTimeout(push, 1500); }
+function applyRemote(merged, rerender) {
+  store = merged; saveLocal();
+  if (ready && rerender) { renderSummary(); renderNav(); refreshState(); }
+}
+async function push() {
+  if (!cloudDoc) return;
+  if (pushing) { pushAgain = true; return; }
+  pushing = true; setCloud("sync");
+  try {
+    const snap = await cloudDoc.get();
+    if (snap.exists) { const m = mergeStores(store, snap.data()); if (JSON.stringify(m) !== JSON.stringify(store)) applyRemote(m, true); }
+    const same = snap.exists && JSON.stringify(snap.data()) === JSON.stringify(store);
+    if (!same) await cloudDoc.set(JSON.parse(JSON.stringify(store)));
+    setCloud("ok");
+  } catch (e) { setCloud("err"); }
+  finally { pushing = false; if (pushAgain) { pushAgain = false; push(); } }
+}
+async function pull() {
+  if (!cloudDoc || pushing) return;
+  try {
+    const snap = await cloudDoc.get();
+    if (snap.exists) { const m = mergeStores(store, snap.data()); if (JSON.stringify(m) !== JSON.stringify(store)) applyRemote(m, true); }
+    setCloud("ok");
+  } catch (e) { setCloud("err"); }
+}
+async function initCloud() {
+  try {
+    if (typeof claude === "undefined" || !claude.use) return;
+    const wait = (pr) => Promise.race([pr, new Promise((r) => setTimeout(() => r(null), 10000))]);
+    const user = await wait(claude.use("user")), db = await wait(claude.use("db"));
+    if (!user || !db) return;
+    const id = await user.id();
+    if (!id) return;
+    cloudDoc = db.doc("data/users/" + id + "/progress");
+    setCloud("sync");
+    await push();
+    window.addEventListener("focus", pull);
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) pull(); });
+  } catch (e) { cloudDoc = null; setCloud("local"); }
+}
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const inline = (s) => esc(s).replace(/`([^`]+)`/g, "<code>$1</code>").replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+/** 문제 · 해설 글 — 문단 · - 목록 · ``` 울타리 · | 표 | */
+function block(text) {
+  const out = []; let list = [], fence = null, rows = [];
+  const flushList = () => { if (list.length) { out.push("<ul>" + list.map((x) => "<li>" + inline(x) + "</li>").join("") + "</ul>"); list = []; } };
+  const flushRows = () => {
+    if (!rows.length) return;
+    const cells = (r) => r.replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+    const body = rows.filter((r) => !/^\|[\s:|-]+\|$/.test(r));
+    out.push("<table><thead><tr>" + cells(body[0]).map((c) => "<th>" + inline(c) + "</th>").join("") + "</tr></thead><tbody>" +
+      body.slice(1).map((r) => "<tr>" + cells(r).map((c) => "<td>" + inline(c) + "</td>").join("") + "</tr>").join("") + "</tbody></table>");
+    rows = [];
+  };
+  for (const line of String(text).split("\n")) {
+    if (fence) { if (/^```/.test(line)) { out.push('<pre class="code">' + esc(fence.join("\n")) + "</pre>"); fence = null; } else fence.push(line); continue; }
+    if (/^```/.test(line)) { flushList(); flushRows(); fence = []; continue; }
+    if (/^\|.*\|$/.test(line.trim())) { flushList(); rows.push(line.trim()); continue; }
+    flushRows();
+    if (/^\s*- /.test(line)) { list.push(line.replace(/^\s*- /, "")); continue; }
+    flushList();
+    if (line.trim()) out.push("<p>" + inline(line) + "</p>");
+  }
+  if (fence) out.push('<pre class="code">' + esc(fence.join("\n")) + "</pre>");
+  flushList(); flushRows();
+  return out.join("");
+}
+
+let ready = false, cur = 0, explOpen = false, busy = false, files = {};
+let editor = null, editorGen = 0;
+const byLevel = (lv) => PROBLEMS.filter((p) => p.level === lv);
+const fields = (p) => (p.m === "choice" ? [] : ["js"]);
+function startFiles(p) { return p.m === "choice" ? {} : { js: (p.s && p.s.js) || "" }; }
+function loadFiles(p) {
+  const d = store.drafts[p.no], o = startFiles(p);
+  if (d && typeof d === "object") {
+    if (typeof d.js === "string" && "js" in o) o.js = d.js;
+    if (p.m === "choice" && typeof d.choice === "number") o.choice = d.choice;
+  }
+  return o;
+}
+function keepDraft(p) { store.drafts[p.no] = Object.assign({}, files); store.draftsAt[p.no] = Date.now(); save(); }
+
+/* ── 즐겨찾기 ── */
+const isFav = (no) => !!store.fav[no];
+const favCount = () => PROBLEMS.filter((p) => isFav(p.no)).length;
+const favMode = () => store.favOnly && favCount() > 0;
+function neighbor(d) {
+  if (!favMode()) { const j = cur + d; return j >= 0 && j < PROBLEMS.length ? j : -1; }
+  const no = PROBLEMS[cur].no;
+  const list = PROBLEMS.filter((p) => isFav(p.no));
+  const c = d > 0 ? list.find((p) => p.no > no) : list.slice().reverse().find((p) => p.no < no);
+  return c ? PROBLEMS.indexOf(c) : -1;
+}
+function updateStepButtons() {
+  const pv = $("prev"), nx = $("next");
+  if (!pv || !nx) return;
+  pv.disabled = neighbor(-1) < 0; nx.disabled = neighbor(1) < 0;
+  pv.textContent = favMode() ? "← 이전 ★" : "← 이전";
+  nx.textContent = favMode() ? "다음 ★ →" : "다음 →";
+}
+function favButtonHtml(no) {
+  const on = isFav(no);
+  return '<button type="button" class="fav-btn" id="favBtn" aria-pressed="' + on + '" title="다시 볼 문제 · 어려운 문제를 표시해 두세요">' + (on ? "★ 즐겨찾기됨" : "☆ 즐겨찾기") + "</button>";
+}
+function toggleFav() {
+  const no = PROBLEMS[cur].no;
+  if (isFav(no)) delete store.fav[no]; else store.fav[no] = true;
+  store.favAt[no] = Date.now();
+  save();
+  const b = $("favBtn"); if (b) b.outerHTML = favButtonHtml(no);
+  $("favBtn").onclick = toggleFav;
+  renderSummary(); renderNav(); updateStepButtons();
+}
+
+/* ── 상단 요약 + 번호판 ── */
+function renderSummary() {
+  const total = PROBLEMS.length;
+  const solved = PROBLEMS.filter((p) => store.solved[p.no]).length;
+  $("solved").textContent = solved;
+  $("total").textContent = total;
+  $("bar").style.width = (total ? solved / total * 100 : 0) + "%";
+  $("barWrap").setAttribute("aria-valuenow", total ? Math.round(solved / total * 100) : 0);
+  $("lvStats").innerHTML = LEVELS.map((lv) => {
+    const l = byLevel(lv);
+    return "<span>" + MARK[lv] + " " + lv + " " + l.filter((p) => store.solved[p.no]).length + "/" + l.length + "</span>";
+  }).join("") + '<span class="fav-stat">★ 즐겨찾기 ' + favCount() + "</span>";
+}
+function renderNav() {
+  const n = favCount(), only = !!store.favOnly;
+  const bar = '<div class="fav-bar"><button type="button" class="btn fav-filter" id="favOnly" aria-pressed="' + only + '">' +
+    (only ? "★ 즐겨찾기만 보는 중 (" + n + ") · 전체 보기" : "☆ 즐겨찾기만 보기 (" + n + ")") + "</button></div>";
+  const empty = only && !n ? '<p class="fav-empty">즐겨찾기한 문제가 없습니다. 문제 제목 위의 <b>☆ 즐겨찾기</b>를 눌러 다시 볼 문제를 표시하세요. 지금은 전체를 보여 줍니다.</p>' : "";
+  $("nav").innerHTML = bar + empty + LEVELS.map((lv) => {
+    const l = byLevel(lv).filter((p) => !favMode() || isFav(p.no));
+    if (!l.length) return "";
+    return "<h3>" + MARK[lv] + " " + lv + "<span>" + l.filter((p) => store.solved[p.no]).length + " / " + l.length + "</span></h3>" +
+      '<div class="nav-grid">' + l.map((p) => {
+        const st = store.solved[p.no] ? "solved" : store.tried[p.no] ? "tried" : "";
+        const label = "문제 " + p.no + " " + p.topic + (p.m === "choice" ? " (고르기)" : "") + (st === "solved" ? ", 정답" : st === "tried" ? ", 오답 시도" : "") + (isFav(p.no) ? ", 즐겨찾기" : "");
+        return '<button type="button" class="nb ' + st + (isFav(p.no) ? " fav" : "") + (PROBLEMS[cur].no === p.no ? " cur" : "") + '" data-no="' + p.no + '" title="' + esc(p.topic) + '" aria-label="' + esc(label) + '">' + p.no + "</button>";
+      }).join("") + "</div>";
+  }).join("") + '<div class="legend"><span><i class="s"></i>정답</span><span><i class="t"></i>오답 시도</span><span><i></i>미풀이</span><span><i class="f">★</i>즐겨찾기</span></div>';
+}
+
+/* ── 문제 화면 ── */
+function stateHtml(p) {
+  return store.solved[p.no] ? '<span class="state ok">✓ 정답 처리됨</span>' : store.tried[p.no] ? '<span class="state bad">오답 ' + store.tried[p.no] + "회</span>" : "";
+}
+function routesHtml(p) {
+  const r = p.fetch || {};
+  const keys = Object.keys(r);
+  if (!keys.length) return "";
+  return '<div class="given"><div class="sec-label">가짜 서버 <span>fetch 로 받을 수 있는 주소 — 인터넷 없이 이 표대로 답합니다</span></div><table class="routes"><thead><tr><th>주소</th><th>답</th></tr></thead><tbody>' +
+    keys.map((k) => {
+      const x = r[k];
+      const what = x.fail ? "네트워크 오류 (fetch 가 실패)" : (x.status || 200) + " · " + (typeof x.body === "string" ? "글자 " + JSON.stringify(x.body) : Array.isArray(x.body) ? "JSON 배열 " + x.body.length + "건" : "JSON " + JSON.stringify(x.body).slice(0, 60)) + (x.delay ? " · " + x.delay + "ms 뒤" : "");
+      return "<tr><td><code>" + esc(k) + "</code></td><td>" + esc(what) + "</td></tr>";
+    }).join("") + '<tr><td colspan="2" class="muted">그 밖의 주소 → 404 Not Found</td></tr></tbody></table></div>';
+}
+function givenHtml(p) {
+  const parts = [];
+  if (p.m === "dom" && p.html) parts.push('<div class="given"><div class="sec-label">HTML <span>고정 — 이 화면 위에서 내 JS 가 돕니다</span></div><pre class="code">' + esc(p.html) + "</pre></div>");
+  if (p.pre) parts.push('<div class="given"><div class="sec-label">주어진 JS <span>이미 들어 있습니다 — 같은 이름을 다시 선언하지 마십시오</span></div><pre class="code">' + esc(p.pre) + "</pre></div>");
+  const rt = routesHtml(p);
+  if (rt) parts.push(rt);
+  return parts.length ? '<section class="card">' + parts.join("") + "</section>" : "";
+}
+function renderProblem() {
+  const p = PROBLEMS[cur];
+  const lvList = byLevel(p.level);
+  files = loadFiles(p);
+  if (editor) { editor.dispose(); editor = null; }
+  const gen = ++editorGen;
+  const head = '<section class="card"><div class="p-head"><span class="lv">' + MARK[p.level] + " " + p.level + " " + (lvList.indexOf(p) + 1) + "/" + lvList.length + '</span><span class="p-no">전체 ' + p.no + "/" + PROBLEMS.length + '번</span><span class="kind">' + MODE[p.m] + "</span>" + favButtonHtml(p.no) + stateHtml(p) + "</div>" +
+    '<h2 class="p-title">' + esc(p.topic) + '</h2><div class="txt">' + block(p.q) + "</div></section>";
+  const steps = '<span class="sp"></span><button class="btn ghost" id="prev" type="button">← 이전</button><button class="btn ghost" id="next" type="button">다음 →</button>';
+  let work;
+  if (p.m === "choice") {
+    work = '<section class="card"><div class="sec-label">답 고르기</div><ul class="opts" role="radiogroup">' + p.opts.map((o, i) =>
+      '<li><label class="' + (files.choice === i ? "on" : "") + '"><input type="radio" name="opt" value="' + i + '"' + (files.choice === i ? " checked" : "") + '><span><span class="opt-no">' + CIRCLED[i] + "</span> " + inline(o) + "</span></label></li>").join("") + "</ul>" +
+      '<div class="actions"><button class="btn primary" id="check" type="button">확인 (제출)</button><button class="btn" id="expl" type="button" aria-expanded="false">해설 보기</button>' + steps + "</div></section>";
+  } else {
+    work = '<section class="card"><div class="sec-label">내 코드 — JavaScript<span>Ctrl + Enter: 실행 · 오타 난 이름에는 빨간 밑줄이 그어집니다</span></div>' +
+      '<div id="code" class="code-host"></div>' +
+      '<div class="ed-opts"><span>Tab 은 들여쓰기 — 편집기 밖으로 나가려면 Ctrl + M 을 누른 뒤 Tab</span></div>' +
+      '<div class="actions"><button class="btn" id="run" type="button">실행</button><button class="btn primary" id="check" type="button">확인 (제출)</button><button class="btn" id="expl" type="button" aria-expanded="false">해설 보기</button><button class="btn ghost" id="restart" type="button">처음 코드로</button>' + steps + "</div></section>" +
+      '<section class="card" id="outCard"><div class="sec-label">실행 결과 <span>' + (p.m === "dom" ? "[실행]을 누르면 아래 화면에서 내 코드가 돕니다" : "[실행]을 누르면 console.log 가 여기에 찍힙니다") + "</span></div>" +
+      (p.m === "dom" ? '<div class="pv-wrap" id="domHost"></div>' : "") + '<pre class="out" id="out"><span class="muted">(아직 실행하지 않았습니다)</span></pre></section>';
+  }
+  $("main").innerHTML = head + givenHtml(p) + work + '<section class="card" id="resCard" hidden></section><section class="card expl" id="explCard" hidden></section>';
+  $("check").onclick = check; $("expl").onclick = toggleExpl;
+  $("prev").onclick = () => { const j = neighbor(-1); if (j >= 0) go(j); };
+  $("next").onclick = () => { const j = neighbor(1); if (j >= 0) go(j); };
+  $("favBtn").onclick = toggleFav;
+  updateStepButtons();
+  explOpen = false;
+  if (p.m === "choice") {
+    document.querySelectorAll('input[name="opt"]').forEach((r) => r.onchange = () => {
+      files.choice = +r.value; keepDraft(p);
+      document.querySelectorAll(".opts label").forEach((l) => l.classList.toggle("on", l.contains(document.querySelector('input[name="opt"]:checked'))));
+    });
+    return;
+  }
+  let tm;
+  MFEditor.create($("code"), {
+    key: "js", language: "javascript", value: files.js, ariaLabel: "내 코드 — JavaScript",
+    onChange: (v) => { files.js = v; clearTimeout(tm); tm = setTimeout(() => keepDraft(p), 300); },
+    onSubmit: runCode,
+  }).then((ed) => {
+    if (!ed) return;
+    if (gen !== editorGen) { ed.dispose(); return; }
+    editor = ed;
+  });
+  $("run").onclick = runCode;
+  let armed = false, armTimer;
+  $("restart").onclick = () => {
+    const b = $("restart");
+    if (!armed) { armed = true; b.textContent = "한 번 더 누르면 지웁니다"; armTimer = setTimeout(() => { armed = false; b.textContent = "처음 코드로"; }, 3000); return; }
+    clearTimeout(armTimer); armed = false; b.textContent = "처음 코드로";
+    files = startFiles(p);
+    if (editor) editor.set("js", files.js);
+    keepDraft(p);
+  };
+}
+
+/** [실행] — 검사 없이 돌려 출력 · 오류를 보여 준다 */
+let running = false;
+async function runCode() {
+  const p = PROBLEMS[cur];
+  if (p.m === "choice" || running) return;
+  running = true;
+  const out = $("out"), dh = $("domHost");
+  out.innerHTML = '<span class="muted">실행하는 중…</span>';
+  if (dh) dh.innerHTML = "";
+  let r;
+  try { r = await MF_ENGINE.runOnly(p, files.js || "", dh || undefined); } finally { running = false; }
+  if (PROBLEMS[cur] !== p || !$("out")) return;
+  const lines = r.logs.map((l) => esc(l));
+  const errs = r.errs.map((e) => '<span class="err">🔴 ' + esc(e) + "</span>");
+  if (r.timeout) errs.push('<span class="err">🔴 ' + (MF_ENGINE.TIMEOUT / 1000 + 1.5) + "초 안에 끝나지 않아 멈췄습니다 — 끝나지 않는 반복(while)이 있습니까?</span>");
+  $("out").innerHTML = lines.concat(errs).join("\n") || '<span class="muted">(찍힌 것이 없습니다' + (p.m === "fn" || p.m === "async" ? " — 함수를 만들기만 하고 부르지 않으면 아무것도 안 찍힙니다. 확인하려면 아래에 console.log(함수(…)) 를 적어 보십시오" : "") + ")</span>";
+}
+
+function showResult(html) { const c = $("resCard"); c.hidden = false; c.innerHTML = html; }
+function checksHtml(results) {
+  return '<ul class="checks">' + results.map((r) => '<li class="' + (r.ok ? "ok" : "bad") + '"><span class="mk">' + (r.ok ? "✓" : "✗") + "</span><span>" + esc(r.d) + "</span>" + (r.ok || !r.msg ? "" : '<span class="why">' + esc(r.msg) + "</span>") + "</li>").join("") + "</ul>";
+}
+async function check() {
+  if (busy) return;
+  const p = PROBLEMS[cur];
+  if (p.m === "choice" && typeof files.choice !== "number") { showResult('<div class="banner bad">답을 하나 고르십시오.</div>'); return; }
+  busy = true; $("check").disabled = true;
+  showResult('<div class="banner info">검사를 돌리는 중…</div>');
+  let g;
+  try { g = await MF_ENGINE.grade(p, files); } finally { busy = false; const b = $("check"); if (b) b.disabled = false; }
+  if (PROBLEMS[cur] !== p) return;
+  keepDraft(p);
+  let banner;
+  if (g.ok) {
+    const first = !store.solved[p.no];
+    store.solved[p.no] = true;
+    banner = '<div class="banner ok"><span class="grow">정답입니다. ' + (p.m === "choice" ? "" : "검사 " + g.results.length + "개를 모두 통과했습니다.") + "</span>" + (neighbor(1) >= 0 ? '<button class="btn primary" id="goNext" type="button">' + (favMode() ? "다음 ★ 문제 →" : "다음 문제 →") + "</button>" : "") + "</div>";
+    if (first) { save(); renderSummary(); renderNav(); }
+  } else {
+    store.tried[p.no] = (store.tried[p.no] || 0) + 1;
+    const bad = g.results.filter((r) => !r.ok).length;
+    banner = '<div class="banner bad"><span class="grow">' + (p.m === "choice" ? "오답입니다. 다시 생각해 보십시오." : "오답입니다. 검사 " + g.results.length + "개 중 " + bad + "개를 통과하지 못했습니다.") + "</span></div>";
+    save(); renderNav();
+  }
+  showResult(banner + (p.m === "choice" ? "" : checksHtml(g.results)));
+  const gn = $("goNext"); if (gn) gn.onclick = () => { const j = neighbor(1); if (j >= 0) go(j); };
+  refreshState();
+}
+function refreshState() {
+  const p = PROBLEMS[cur], el = document.querySelector(".p-head .state");
+  const html = stateHtml(p);
+  if (el) el.outerHTML = html || ""; else if (html && document.querySelector(".p-head")) document.querySelector(".p-head").insertAdjacentHTML("beforeend", html);
+}
+function toggleExpl() {
+  const p = PROBLEMS[cur], c = $("explCard"), b = $("expl");
+  explOpen = !explOpen;
+  b.textContent = explOpen ? "해설 닫기" : "해설 보기";
+  b.setAttribute("aria-expanded", explOpen);
+  if (!explOpen) { c.hidden = true; return; }
+  c.hidden = false;
+  if (p.m === "choice") {
+    c.innerHTML = "<h4>정답</h4><p>" + CIRCLED[p.a] + " " + inline(p.opts[p.a]) + "</p><h4>해설</h4><div class=\"txt\">" + block(p.e) + "</div>" +
+      (p.wn ? "<h4>흔한 오답 — " + CIRCLED[p.wrong] + "</h4><div class=\"txt\">" + block(p.wn) + "</div>" : "");
+  } else {
+    c.innerHTML = '<h4>정답</h4><pre class="code">' + esc(p.a.js) + "</pre>" +
+      "<h4>해설</h4><div class=\"txt\">" + block(p.e) + "</div>" +
+      "<h4>검사 항목 " + p.c.length + "개</h4>" + checksHtml(p.c.map((x) => ({ d: x.d, ok: true }))).replace(/<span class="mk">✓<\/span>/g, '<span class="mk">·</span>') +
+      "<h4>흔한 오답 — 「" + esc(p.c[p.wf].d) + "」에서 걸립니다</h4><div class=\"txt\">" + block(p.wn) + '</div><pre class="code">' + esc(p.wrong.js) + "</pre>" +
+      '<div class="pv-note">같은 결과를 내는 다른 코드도 정답입니다 — 채점은 쓴 방법이 아니라 돌려 본 결과를 봅니다.</div>';
+  }
+  c.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+function go(i) {
+  cur = Math.max(0, Math.min(PROBLEMS.length - 1, i));
+  store.last = PROBLEMS[cur].no; save();
+  renderProblem(); renderNav();
+  try { history.replaceState(null, "", "#q" + PROBLEMS[cur].no); } catch (e) {}
+  window.scrollTo({ top: 0 });
+}
+
+/* ── 이벤트 ── */
+$("nav").addEventListener("click", (e) => {
+  if (e.target.closest("#favOnly")) { store.favOnly = !store.favOnly; saveLocal(); renderNav(); updateStepButtons(); return; }
+  const b = e.target.closest(".nb"); if (!b || !ready) return;
+  go(PROBLEMS.findIndex((p) => p.no === +b.dataset.no));
+});
+$("nextOpen").onclick = () => {
+  if (!ready) return;
+  const list = favMode() ? PROBLEMS.filter((p) => isFav(p.no)) : PROBLEMS;
+  const p = list.find((x) => !store.solved[x.no]) || list[0];
+  go(PROBLEMS.indexOf(p));
+};
+let resetArmed = false, resetTimer;
+$("reset").onclick = () => {
+  const b = $("reset");
+  if (!resetArmed) { resetArmed = true; b.textContent = "한 번 더 누르면 초기화"; resetTimer = setTimeout(() => { resetArmed = false; b.textContent = "진행 초기화"; }, 3000); return; }
+  clearTimeout(resetTimer); resetArmed = false; b.textContent = "진행 초기화";
+  const now = Date.now();
+  store = emptyStore(); store.resetAt = now; store.updated = now; saveLocal(); schedulePush();
+  if (ready) { renderSummary(); go(0); }
+};
+
+/* ── 백업 코드 (다른 PC로 옮기기) ──
+   짧은 코드(J1-): 푼 문제 비트열 + 즐겨찾기 비트열(16진수) + 마지막 문제 번호. 긴 코드(F1-): 작성 중인 코드까지. */
+function bitsHex(pick) {
+  let bits = PROBLEMS.map((p) => (pick(p) ? "1" : "0")).join("");
+  while (bits.length % 4) bits += "0";
+  let hex = "";
+  for (let i = 0; i < bits.length; i += 4) hex += parseInt(bits.slice(i, i + 4), 2).toString(16);
+  return hex;
+}
+const hexBits = (hex) => hex.split("").map((c) => parseInt(c, 16).toString(2).padStart(4, "0")).join("");
+function encodeStore(full) {
+  if (!full) return "J1-" + bitsHex((p) => store.solved[p.no]) + "-" + bitsHex((p) => isFav(p.no)) + "-" + (store.last || 1);
+  const json = JSON.stringify({ v: 1, set: "js", solved: store.solved, tried: store.tried, drafts: store.drafts, draftsAt: store.draftsAt, fav: store.fav, favAt: store.favAt, last: store.last, updated: store.updated });
+  return "F1-" + btoa(unescape(encodeURIComponent(json)));
+}
+function decodeStore(code) {
+  code = code.replace(/\s+/g, "");
+  if (/^J1-/.test(code)) {
+    const m = /^J1-([0-9a-f]+)-([0-9a-f]+)-(\d+)$/.exec(code);
+    if (!m) throw new Error("형식 오류");
+    const sb = hexBits(m[1]), fb = hexBits(m[2]);
+    if (sb.length < PROBLEMS.length || fb.length < PROBLEMS.length) throw new Error("형식 오류");
+    const s = emptyStore();
+    PROBLEMS.forEach((p, i) => { if (sb[i] === "1") s.solved[p.no] = true; if (fb[i] === "1") { s.fav[p.no] = true; s.favAt[p.no] = 1; } });
+    s.last = +m[3] || 1; s.updated = 1;
+    return s;
+  }
+  if (/^(S[12]|H1)-/.test(code)) throw new Error("다른 연습장의 코드");
+  const o = JSON.parse(decodeURIComponent(escape(atob(code.replace(/^F1-/, "")))));
+  if (!o || o.v !== 1 || typeof o.solved !== "object" || (o.set && o.set !== "js")) throw new Error("형식 오류");
+  return Object.assign(emptyStore(), { solved: o.solved || {}, tried: o.tried || {}, drafts: o.drafts || {}, draftsAt: o.draftsAt || {}, fav: o.fav || {}, favAt: o.favAt || {}, last: o.last || 1, updated: o.updated || 0 });
+}
+const bkCode = () => encodeStore($("bkFull").checked);
+function bkMsg(id, text, cls) { const el = $(id); el.textContent = text; el.className = "bk-msg " + (cls || ""); }
+$("backupBtn").onclick = () => {
+  const panel = $("backupPanel"), open = panel.hidden;
+  panel.hidden = !open;
+  $("backupBtn").setAttribute("aria-expanded", open);
+  if (open) { $("bkOut").value = bkCode(); bkMsg("bkCopyMsg", ""); bkMsg("bkRestoreMsg", ""); }
+};
+$("bkFull").onchange = () => { $("bkOut").value = bkCode(); bkMsg("bkCopyMsg", ""); };
+$("bkCopy").onclick = async () => {
+  const ta = $("bkOut"); ta.value = bkCode(); ta.select();
+  try { await navigator.clipboard.writeText(ta.value); bkMsg("bkCopyMsg", "복사했습니다.", "ok"); }
+  catch (e) { bkMsg("bkCopyMsg", "자동 복사가 막혀 있습니다. 위 코드를 직접 선택해 복사하세요.", "bad"); }
+};
+function restoreFrom(code) {
+  code = (code || "").trim();
+  if (!code) { bkMsg("bkRestoreMsg", "백업 코드를 붙여넣거나 파일을 선택해 주세요.", "bad"); return; }
+  try {
+    const incoming = decodeStore(code);
+    const merged = mergeStores(store, incoming);
+    merged.updated = Date.now();
+    store = merged; saveLocal(); schedulePush();
+    if (ready) { renderSummary(); renderNav(); renderProblem(); }
+    $("bkIn").value = ""; $("bkOut").value = bkCode();
+    bkMsg("bkRestoreMsg", "복원했습니다. 푼 문제 " + PROBLEMS.filter((p) => store.solved[p.no]).length + "개 · 즐겨찾기 " + favCount() + "개.", "ok");
+  } catch (e) {
+    bkMsg("bkRestoreMsg", e && e.message === "다른 연습장의 코드" ? "다른 연습장(SQL · HTML/CSS)의 백업 코드입니다. 그 연습장에서 복원하세요." : "백업 코드를 읽을 수 없습니다. 전체를 정확히 복사했는지, 올바른 파일인지 확인하세요.", "bad");
+  }
+}
+$("bkRestore").onclick = () => restoreFrom($("bkIn").value);
+$("bkFile").onclick = () => $("bkFileIn").click();
+$("bkFileIn").onchange = async (e) => {
+  const f = e.target.files && e.target.files[0];
+  if (!f) return;
+  if (f.size > 2 * 1024 * 1024) { bkMsg("bkRestoreMsg", "파일이 너무 큽니다. 백업 파일이 맞는지 확인하세요.", "bad"); e.target.value = ""; return; }
+  try { const text = await f.text(); $("bkIn").value = text.trim(); restoreFrom(text); }
+  catch (err) { bkMsg("bkRestoreMsg", "파일을 읽지 못했습니다.", "bad"); }
+  e.target.value = "";
+};
+$("bkSave").onclick = async () => {
+  const text = bkCode(), name = "js-practice-" + new Date().toISOString().slice(0, 10) + ".txt";
+  if (typeof claude !== "undefined" && claude.use) {
+    try {
+      const dl = await claude.use("downloads");
+      if (!dl) { bkMsg("bkCopyMsg", "이 환경에서는 파일 저장을 쓸 수 없습니다. [코드 복사]를 사용하세요.", "bad"); return; }
+      await dl.save({ filename: name, data: text });
+      bkMsg("bkCopyMsg", "파일로 저장했습니다.", "ok");
+    } catch (e) {
+      if (e && e.code === "declined") bkMsg("bkCopyMsg", "저장을 취소했습니다.");
+      else bkMsg("bkCopyMsg", "파일 저장에 실패했습니다. [코드 복사]를 사용하세요.", "bad");
+    }
+    return;
+  }
+  try {
+    const url = URL.createObjectURL(new Blob([text], { type: "text/plain" }));
+    const a = document.createElement("a"); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    bkMsg("bkCopyMsg", "파일 내려받기를 시작했습니다.", "ok");
+  } catch (e) { bkMsg("bkCopyMsg", "파일 저장에 실패했습니다. [코드 복사]를 사용하세요.", "bad"); }
+};
+
+/* ── 검사기(verify-practice.js)가 부르는 입구 — 훈련생 화면에는 쓰이지 않는다 ── */
+window.MF = {
+  PROBLEMS, ENGINE: MF_ENGINE, ready: false,
+  editor: () => editor,
+  files: () => files,
+  go: (no) => go(PROBLEMS.findIndex((p) => p.no === no)),
+  /** 정답은 «전부 통과», 흔한 오답은 «wf 번 검사에서 걸림» */
+  async selfTest() {
+    const out = [];
+    for (const p of PROBLEMS) {
+      if (p.m === "choice") {
+        const okA = Number.isInteger(p.a) && p.a >= 0 && p.a < p.opts.length, okW = Number.isInteger(p.wrong) && p.wrong !== p.a && p.wrong < p.opts.length;
+        /* 결과 예측 — 문제의 코드를 «실제로» 돌려 찍힌 줄이 적어 둔 것과 같은지(정답 보기가 그 결과를 말하는지는 사람이 본다) */
+        let proof = null;
+        if (p.proof) {
+          const r = await MF_ENGINE.run({ m: "fn" }, p.proof.js, "await t.wait(50); return true;");
+          proof = { ok: JSON.stringify(r.logs) === JSON.stringify(p.proof.want) && !r.errs.length, got: JSON.stringify(r.logs) + (r.errs.length ? " · 오류 " + r.errs[0] : ""), want: JSON.stringify(p.proof.want) };
+        }
+        out.push({ no: p.no, choice: true, aOk: okA, aFail: okA ? [] : ["정답 번호가 보기 밖"], wOk: okW, wfOk: okW, proof });
+        continue;
+      }
+      const a = await MF_ENGINE.grade(p, p.a);
+      const w = await MF_ENGINE.grade(p, p.wrong);
+      const s0 = await MF_ENGINE.grade(p, startFiles(p));   // 시작 코드가 이미 통과하면 풀 것이 없다
+      out.push({ no: p.no, sOk: !s0.ok, aOk: a.ok, aFail: a.results.filter((r) => !r.ok).map((r) => r.d + " — " + r.msg), wOk: !w.ok, wfOk: !!w.results[p.wf] && !w.results[p.wf].ok, wFails: w.results.filter((r) => !r.ok).map((r) => r.d + " — " + r.msg) });
+    }
+    return out;
+  },
+};
+
+/* ── 시작 ── */
+function start() {
+  ready = true;
+  let i = PROBLEMS.findIndex((p) => p.no === store.last);
+  const m = /^#q(\d+)$/.exec(location.hash || "");
+  if (m) { const j = PROBLEMS.findIndex((p) => p.no === +m[1]); if (j >= 0) i = j; }
+  cur = Math.max(0, i);
+  renderSummary(); renderProblem(); renderNav();
+  window.MF.ready = true;
+  initCloud();
+}
+start();
+</script>
+</body>
+</html>

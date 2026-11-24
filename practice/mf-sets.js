@@ -1,1 +1,1 @@
-window.MF_SETS = [{"id":"01-db/sql","title":"SQL 연습장","subj":"DB (MySQL)","n":110},{"id":"02-htmlcss/htmlcss","title":"HTML/CSS 연습장","subj":"HTML/CSS","n":40}];
+window.MF_SETS = [{"id":"01-db/sql","title":"SQL 연습장","subj":"DB (MySQL)","n":110},{"id":"02-htmlcss/htmlcss","title":"HTML/CSS 연습장","subj":"HTML/CSS","n":40},{"id":"05-js/js","title":"JS 연습장","subj":"JavaScript","n":60}];

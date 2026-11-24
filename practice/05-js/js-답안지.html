@@ -1,0 +1,2072 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JS 연습 답안지 (해설 포함) — 미디어 프론티어</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--paper:#121B23;--panel:#1A2630;--line:#2B3B47;--text:#DDE7ED;--muted:#9DB0BE;--accent:#5CC6DE;--warn:#F2C879;
+--sans:"Pretendard Variable",Pretendard,-apple-system,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+--mono:"D2Coding","Cascadia Code",Consolas,"JetBrains Mono",Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--sans);line-height:1.7;font-size:17px}
+main{max-width:920px;margin:0 auto;padding:40px 16px 80px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:34px;margin:6px 0 4px;font-weight:700}h2{font-size:22px;margin:40px 0 14px;font-weight:700;border-bottom:2px solid var(--accent);padding-bottom:6px}
+h3{font-size:19px;margin:28px 0 10px}
+.kicker{color:var(--muted);margin:0;font-size:15px}.sub{color:var(--muted);margin:0}
+.cards{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;height:100%}
+.card:hover{border-color:var(--accent);text-decoration:none}
+.card .t{display:block;color:var(--text);font-weight:600}.card .s{display:block;color:var(--muted);font-size:14px}
+.days{list-style:none;padding:0;margin:0}
+.days li{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:10px}
+.days .when{display:block;color:var(--muted);font-size:14px}
+.days .deck{font-weight:600;font-size:18px}.days .s{display:block;color:var(--muted);font-size:15px}
+.days .labs{display:block;margin-top:6px;font-size:14px;word-break:break-all}
+.note{color:var(--muted);font-size:15px}.next strong{color:var(--warn)}
+footer{margin-top:48px;color:var(--muted);font-size:14px}
+kbd{font-family:var(--mono);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+code{font-family:var(--mono);background:#0C1318;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:.92em}
+pre{background:#0C1318;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto}pre code{border:0;padding:0;background:none}
+blockquote{margin:16px 0;padding:8px 16px;border-left:4px solid var(--accent);background:var(--panel);border-radius:0 8px 8px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}th{background:var(--panel)}
+img{max-width:100%;height:auto;border-radius:6px}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+.back{margin:0 0 8px}
+</style>
+</head>
+<body><main>
+<p class="back"><a href="../../index.html">← 처음으로</a> · <a href="js.html">풀러 가기</a></p>
+<article class="guide"><h1 id="js-연습-답안지-해설-포함">JS 연습 답안지 (해설 포함)</h1>
+<blockquote>
+<p>총 <strong>60문제</strong> — 초급 25 · 중급 25 · 고급 10 (코드 작성 54 · 고르기 6)</p>
+<p>같은 결과를 내는 다른 코드도 정답입니다. 채점은 쓴 방법이 아니라 <strong>돌려 본 결과</strong>를 봅니다.
+아래 정답은 모두 실제 Chrome 에서 검사를 전부 통과하고, 「흔한 오답」은 적힌 검사에서 실제로 걸리는 것을 확인한 것입니다. 고르기 문제의 코드도 실제로 돌려 본 결과입니다.</p>
+</blockquote>
+<h2 id="빠른-찾기">빠른 찾기</h2>
+<ul>
+<li><strong>초급</strong>: 1~25번</li>
+<li><strong>중급</strong>: 26~50번</li>
+<li><strong>고급</strong>: 51~60번</li>
+</ul>
+<hr>
+<h2 id="초급">초급</h2>
+<h3 id="문제-1-변수와-템플릿-리터럴">문제 1. 변수와 템플릿 리터럴</h3>
+<p><strong>문제</strong></p>
+<p>주어진 변수 <code>name</code> 과 <code>views</code> 를 써서 아래 한 줄을 <strong>console.log</strong> 로 찍으시오. 템플릿 리터럴(<code>`</code>)을 쓰십시오.</p>
+<pre><code class="language-text">김하나 기자의 기사 — 조회수 1845회
+</code></pre>
+<p>(검사는 변수 값을 바꿔서도 한 번 더 돌립니다 — 글자를 그대로 적으면 걸립니다)</p>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const name = &quot;김하나&quot;;
+const views = 1845;
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">console.log(`${name} 기자의 기사 — 조회수 ${views}회`);
+</code></pre>
+<p><strong>해설</strong></p>
+<p>템플릿 리터럴은 <strong>백틱</strong>(<code>`</code>)으로 감싸고, 그 안의 <code>${...}</code> 자리에 값이 들어갑니다. 파이썬의 f-string 과 같습니다.
+작은따옴표 · 큰따옴표 안에서는 <code>${...}</code> 가 그냥 글자로 찍힙니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>한 줄이 찍힌다</li>
+<li>변수가 바뀌면 찍히는 글자도 바뀐다 (이도윤 · 920)</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「변수가 바뀌면 찍히는 글자도 바뀐다 (이도윤 · 920)」에서 걸립니다</p>
+<p>화면에 같은 글자가 찍히니 맞은 것 같습니다. 하지만 변수가 바뀌면 따라가지 못합니다.</p>
+<pre><code class="language-js">console.log(&quot;김하나 기자의 기사 — 조회수 1845회&quot;);
+</code></pre>
+<hr>
+<h3 id="문제-2--와---의-차이">문제 2. + 와 - 의 차이</h3>
+<p><strong>문제</strong></p>
+<p>다음 두 줄은 무엇을 찍습니까?</p>
+<pre><code class="language-js">console.log(&quot;3&quot; + 1);
+console.log(&quot;3&quot; - 1);
+</code></pre>
+<p>① <code>31</code> 과 <code>2</code><br>② <code>4</code> 와 <code>2</code><br>③ <code>31</code> 과 <code>31</code><br>④ <code>4</code> 와 <code>NaN</code></p>
+<p><strong>정답</strong> — ① <code>31</code> 과 <code>2</code></p>
+<p><strong>실제로 돌려 보면</strong></p>
+<pre><code class="language-text">31
+2
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>+</code> 는 한쪽이라도 <strong>문자열</strong>이면 이어 붙입니다 — <code>&quot;3&quot; + 1</code> 은 <code>&quot;31&quot;</code>. <code>-</code> 는 이어 붙이는 뜻이 없어서 둘 다 숫자로 바꿔 계산합니다 — <code>2</code>.
+입력칸의 값(<code>input.value</code>)은 늘 문자열이라, 더하기 전에 <code>Number(...)</code> 로 바꿔야 합니다.</p>
+<p><strong>흔한 오답</strong> — ②</p>
+<p>둘 다 숫자 계산이라고 생각하기 쉽습니다. <code>+</code> 는 한쪽이 글자면 «이어 붙이기»가 됩니다.</p>
+<hr>
+<h3 id="문제-3-글자를-숫자로">문제 3. 글자를 숫자로</h3>
+<p><strong>문제</strong></p>
+<p>입력칸에서 받은 두 값(<strong>문자열</strong>)을 더한 <strong>숫자</strong>를 돌려주는 함수 <code>addStrings(a, b)</code> 를 만드시오.</p>
+<ul>
+<li><code>addStrings(&quot;10&quot;, &quot;5&quot;)</code> → <code>15</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function addStrings(a, b) {
+  return Number(a) + Number(b);
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>Number(&quot;10&quot;)</code> 은 숫자 <code>10</code> 입니다. 바꾼 뒤에 더해야 <code>15</code> 가 됩니다.
+<code>parseInt</code> 도 되지만 소수점 아래를 버리므로(<code>parseInt(&quot;1.5&quot;)</code> → <code>1</code>) 이 문제에는 <code>Number</code>(또는 <code>parseFloat</code>)가 맞습니다.</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>addStrings(&quot;10&quot;, &quot;5&quot;) → 15</li>
+<li>addStrings(&quot;3&quot;, &quot;4&quot;) → 7 · (&quot;0&quot;, &quot;0&quot;) → 0</li>
+<li>소수도 된다 — addStrings(&quot;1.5&quot;, &quot;2&quot;) → 3.5</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「addStrings(&quot;10&quot;, &quot;5&quot;) → 15」에서 걸립니다</p>
+<p>더하기만 쓰면 <code>&quot;105&quot;</code> 가 됩니다 — 문자열끼리는 이어 붙이기입니다.</p>
+<pre><code class="language-js">function addStrings(a, b) {
+  return a + b;
+}
+</code></pre>
+<hr>
+<h3 id="문제-4--와-">문제 4. == 와 ===</h3>
+<p><strong>문제</strong></p>
+<p>다음 중 결과가 <code>true</code> 인 것은?</p>
+<p>① <code>&quot;1&quot; === 1</code><br>② <code>null === undefined</code><br>③ <code>0 == &quot;&quot;</code><br>④ <code>NaN === NaN</code></p>
+<p><strong>정답</strong> — ③ <code>0 == &quot;&quot;</code></p>
+<p><strong>실제로 돌려 보면</strong></p>
+<pre><code class="language-text">false false true false
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>==</code> 는 타입이 다르면 <strong>바꿔서</strong> 비교합니다 — <code>0 == &quot;&quot;</code> 는 <code>&quot;&quot;</code> 가 <code>0</code> 으로 바뀌어 <code>true</code>. 이런 «몰래 바꾸기» 때문에 헷갈립니다.
+<code>===</code> 는 바꾸지 않습니다 — 타입이 다르면 무조건 <code>false</code>. <strong>늘 <code>===</code> 를 쓰십시오.</strong> (<code>NaN</code> 은 자기 자신과도 같지 않습니다 — <code>Number.isNaN(x)</code> 로 봅니다.)</p>
+<p><strong>흔한 오답</strong> — ②</p>
+<p><code>null == undefined</code> 는 <code>true</code> 라서 <code>===</code> 도 그럴 것 같습니다. <code>===</code> 는 타입까지 같아야 합니다.</p>
+<hr>
+<h3 id="문제-5-if--else-if">문제 5. if … else if</h3>
+<p><strong>문제</strong></p>
+<p>점수를 받아 등급을 돌려주는 <code>grade(score)</code> 를 만드시오.</p>
+<ul>
+<li>90 이상 <code>&quot;A&quot;</code> · 80 이상 <code>&quot;B&quot;</code> · 70 이상 <code>&quot;C&quot;</code> · 그 밖에는 <code>&quot;F&quot;</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function grade(score) {
+  if (score &gt;= 90) return &quot;A&quot;;
+  else if (score &gt;= 80) return &quot;B&quot;;
+  else if (score &gt;= 70) return &quot;C&quot;;
+  return &quot;F&quot;;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p>파이썬의 <code>elif</code> 가 JS 에서는 <code>else if</code> 입니다. 위에서부터 처음 맞는 곳에서 멈추므로 <strong>큰 점수부터</strong> 묻습니다.
+「이상」은 <code>&gt;=</code>, 「초과」는 <code>&gt;</code> — 경계값을 꼭 넣어 시험해 보십시오.</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>100 → A · 85 → B · 75 → C · 30 → F</li>
+<li>경계값 — 90 → A · 80 → B · 70 → C</li>
+<li>경계 바로 아래 — 89 → B · 69 → F</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「경계값 — 90 → A · 80 → B · 70 → C」에서 걸립니다</p>
+<p>「90 이상」을 <code>&gt; 90</code> 으로 옮기는 실수입니다. 경계값(90 · 80 · 70)에서만 틀려서 눈에 잘 안 띕니다.</p>
+<pre><code class="language-js">function grade(score) {
+  if (score &gt; 90) return &quot;A&quot;;
+  else if (score &gt; 80) return &quot;B&quot;;
+  else if (score &gt; 70) return &quot;C&quot;;
+  return &quot;F&quot;;
+}
+</code></pre>
+<hr>
+<h3 id="문제-6-나머지-연산자-">문제 6. 나머지 연산자 %</h3>
+<p><strong>문제</strong></p>
+<p>정수가 짝수이면 <code>true</code>, 홀수이면 <code>false</code> 를 돌려주는 <code>isEven(n)</code> 을 만드시오. 음수도 들어옵니다.</p>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function isEven(n) {
+  return n % 2 === 0;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>%</code> 는 나눈 <strong>나머지</strong>입니다. 짝수는 2 로 나눈 나머지가 <code>0</code> 입니다.
+🔴 JS 의 <code>%</code> 는 왼쪽 수의 부호를 따라갑니다 — <code>-3 % 2</code> 는 <code>-1</code>(파이썬은 <code>1</code>). 그래서 「<code>=== 1</code> 이면 홀수」는 음수에서 틀립니다. <code>=== 0</code> 으로 짝수를 묻는 쪽이 안전합니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>4 → true · 7 → false · 0 → true</li>
+<li>음수 — -4 → true · -3 → false</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「음수 — -4 → true · -3 → false」에서 걸립니다</p>
+<p>「홀수는 나머지가 1」이라고 외우기 쉽습니다. JS 에서 <code>-3 % 2</code> 는 <code>-1</code> 이라 음수 홀수가 짝수로 나옵니다.</p>
+<pre><code class="language-js">function isEven(n) {
+  return n % 2 === 1 ? false : true;
+}
+</code></pre>
+<hr>
+<h3 id="문제-7-switch">문제 7. switch</h3>
+<p><strong>문제</strong></p>
+<p>요일 번호(0 = 일요일 … 6 = 토요일)를 받아 한 글자 요일을 돌려주는 <code>dayName(n)</code> 을 <strong>switch</strong> 로 만드시오.</p>
+<ul>
+<li><code>0</code> → <code>&quot;일&quot;</code>, <code>1</code> → <code>&quot;월&quot;</code>, … <code>6</code> → <code>&quot;토&quot;</code></li>
+<li>그 밖의 값 → <code>&quot;없음&quot;</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function dayName(n) {
+  switch (n) {
+    case 0: return &quot;일&quot;;
+    case 1: return &quot;월&quot;;
+    case 2: return &quot;화&quot;;
+    case 3: return &quot;수&quot;;
+    case 4: return &quot;목&quot;;
+    case 5: return &quot;금&quot;;
+    case 6: return &quot;토&quot;;
+    default: return &quot;없음&quot;;
+  }
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>switch</code> 는 값 하나를 여러 <code>case</code> 와 <code>===</code> 로 비교합니다. 어느 것과도 같지 않으면 <code>default</code> 로 갑니다.
+<code>return</code> 을 쓰지 않는 <code>case</code> 에는 <code>break</code> 를 빠뜨리지 마십시오 — 없으면 아래 case 까지 <strong>이어서</strong> 실행됩니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>0 → 일 · 3 → 수 · 6 → 토</li>
+<li>그 밖의 값 — 7 → 없음 · -1 → 없음</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「그 밖의 값 — 7 → 없음 · -1 → 없음」에서 걸립니다</p>
+<p>0~6 만 시험해 보면 다 맞습니다. 맞는 case 가 없을 때를 잊으면 <code>undefined</code> 가 나옵니다.</p>
+<pre><code class="language-js">function dayName(n) {
+  switch (n) {
+    case 0: return &quot;일&quot;;
+    case 1: return &quot;월&quot;;
+    case 2: return &quot;화&quot;;
+    case 3: return &quot;수&quot;;
+    case 4: return &quot;목&quot;;
+    case 5: return &quot;금&quot;;
+    case 6: return &quot;토&quot;;
+  }
+}
+</code></pre>
+<hr>
+<h3 id="문제-8-for-반복">문제 8. for 반복</h3>
+<p><strong>문제</strong></p>
+<p>1부터 <code>n</code> 까지의 합을 돌려주는 <code>sumTo(n)</code> 을 <strong>for</strong> 로 만드시오. <code>n</code> 이 0 이면 <code>0</code> 입니다.</p>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function sumTo(n) {
+  let total = 0;
+  for (let i = 1; i &lt;= n; i++) {
+    total += i;
+  }
+  return total;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>for (시작; 조건; 증가)</code> — 조건이 참인 동안 돕니다. 「n 까지」는 <code>i &lt;= n</code> 입니다.
+합을 모을 변수(<code>total</code>)는 반복 <strong>바깥</strong>에서 <code>let</code> 으로 만듭니다. 안에서 만들면 돌 때마다 0 으로 돌아갑니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>sumTo(10) → 55 · sumTo(100) → 5050</li>
+<li>sumTo(1) → 1 · sumTo(0) → 0</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「sumTo(10) → 55 · sumTo(100) → 5050」에서 걸립니다</p>
+<p><code>i &lt; n</code> 은 <code>n</code> 을 빼고 멈춥니다 — 반복의 끝 경계를 하나 어긋나게 쓰는 가장 흔한 실수입니다.</p>
+<pre><code class="language-js">function sumTo(n) {
+  let total = 0;
+  for (let i = 1; i &lt; n; i++) {
+    total += i;
+  }
+  return total;
+}
+</code></pre>
+<hr>
+<h3 id="문제-9-while-반복">문제 9. while 반복</h3>
+<p><strong>문제</strong></p>
+<p><code>n</code> 부터 1까지 거꾸로 센 배열을 돌려주는 <code>countdown(n)</code> 을 <strong>while</strong> 로 만드시오.</p>
+<ul>
+<li><code>countdown(3)</code> → <code>[3, 2, 1]</code> · <code>countdown(0)</code> → <code>[]</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function countdown(n) {
+  const result = [];
+  while (n &gt;= 1) {
+    result.push(n);
+    n--;
+  }
+  return result;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>while (조건)</code> 은 조건이 참인 동안 돕니다. 안에서 조건을 바꾸지 않으면(<code>n--</code> 을 빠뜨리면) <strong>끝나지 않습니다</strong> — 이 연습장은 3초 뒤 멈추고 알려 줍니다.
+<code>push</code> 는 배열 끝에 하나를 넣습니다. <code>const</code> 배열이어도 안의 내용은 바꿀 수 있습니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>countdown(3) → [3, 2, 1]</li>
+<li>countdown(1) → [1] · countdown(0) → []</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「countdown(3) → [3, 2, 1]」에서 걸립니다</p>
+<p>「0 이 될 때까지」를 <code>n &gt;= 0</code> 으로 쓰면 0 까지 들어갑니다.</p>
+<pre><code class="language-js">function countdown(n) {
+  const result = [];
+  while (n &gt;= 0) {
+    result.push(n);
+    n--;
+  }
+  return result;
+}
+</code></pre>
+<hr>
+<h3 id="문제-10-forof">문제 10. for…of</h3>
+<p><strong>문제</strong></p>
+<p>주어진 배열 <code>sections</code> 를 <strong>for…of</strong> 로 돌며 번호를 붙여 한 줄씩 찍으시오.</p>
+<pre><code class="language-text">1. 정치
+2. 경제
+3. 사회
+</code></pre>
+<p>(검사는 다른 배열로도 돌립니다)</p>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const sections = [&quot;정치&quot;, &quot;경제&quot;, &quot;사회&quot;];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">let no = 1;
+for (const s of sections) {
+  console.log(`${no}. ${s}`);
+  no++;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>for (const x of 배열)</code> 은 배열의 <strong>값</strong>을 하나씩 꺼냅니다(파이썬의 <code>for x in 리스트</code>). 번호가 필요하면 바깥에 세는 변수를 두거나 <code>sections.forEach((s, i) =&gt; …)</code> 의 <code>i + 1</code> 을 씁니다.
+🔴 <code>for…in</code> 은 값이 아니라 <strong>번호(키)</strong> 를 꺼냅니다 — 배열에는 <code>for…of</code> 를 쓰십시오.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li><ol>
+<li>정치 · 2. 경제 · 3. 사회</li>
+</ol>
+</li>
+<li>다른 배열 — [&quot;IT&quot;, &quot;문화&quot;] → 1. IT · 2. 문화</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「1. 정치 · 2. 경제 · 3. 사회」에서 걸립니다</p>
+<p>배열의 번호(인덱스)가 0 부터라 그대로 찍으면 <code>0. 정치</code> 가 됩니다. 사람에게 보이는 번호는 1 부터입니다.</p>
+<pre><code class="language-js">let no = 0;
+for (const s of sections) {
+  console.log(`${no}. ${s}`);
+  no++;
+}
+</code></pre>
+<hr>
+<h3 id="문제-11-break">문제 11. break</h3>
+<p><strong>문제</strong></p>
+<p>숫자 배열에서 <strong>처음으로</strong> 나오는 음수의 위치(인덱스)를 돌려주는 <code>firstNegative(nums)</code> 를 만드시오. 음수가 없으면 <code>-1</code> 입니다. 반복과 <code>break</code>(또는 <code>return</code>)를 쓰십시오.</p>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function firstNegative(nums) {
+  for (let i = 0; i &lt; nums.length; i++) {
+    if (nums[i] &lt; 0) return i;
+  }
+  return -1;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p>찾았으면 <strong>그 자리에서 멈춰야</strong> 「처음」입니다. 함수 안이면 <code>return i</code> 가 반복과 함수를 한꺼번에 끝내고, 반복만 끝내려면 <code>break</code> 를 씁니다.
+배열 메서드로는 <code>nums.findIndex((n) =&gt; n &lt; 0)</code> 한 줄입니다(4일차 <code>find</code> 의 형제).</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>[3, -1, -5] → 1 (처음 것)</li>
+<li>[-2] → 0 · [1, 2] → -1 · [] → -1</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「[3, -1, -5] → 1 (처음 것)」에서 걸립니다</p>
+<p>찾아도 멈추지 않으면 끝까지 돌며 덮어써서 «마지막» 음수의 위치가 남습니다.</p>
+<pre><code class="language-js">function firstNegative(nums) {
+  let found = -1;
+  for (let i = 0; i &lt; nums.length; i++) {
+    if (nums[i] &lt; 0) found = i;
+  }
+  return found;
+}
+</code></pre>
+<hr>
+<h3 id="문제-12--와-">문제 12. || 와 ??</h3>
+<p><strong>문제</strong></p>
+<p>값이 <strong>없으면</strong>(<code>null</code> · <code>undefined</code>) <code>&quot;없음&quot;</code> 을, 있으면 그 값을 그대로 돌려주는 <code>withDefault(value)</code> 를 만드시오.
+🔴 <code>0</code> 과 빈 글자 <code>&quot;&quot;</code> 는 «있는 값»입니다 — 그대로 돌려줍니다.</p>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function withDefault(value) {
+  return value ?? &quot;없음&quot;;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>a || b</code> 는 <code>a</code> 가 <strong>거짓 같은 값</strong>(0 · &quot;&quot; · false · null · undefined · NaN)이면 <code>b</code> 입니다. <code>a ?? b</code> 는 <code>a</code> 가 <strong>null · undefined 일 때만</strong> <code>b</code> 입니다.
+조회수 0 · 빈 제목처럼 «0 도 값»인 자리에는 <code>??</code> 를 쓰십시오.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>null · undefined → &quot;없음&quot; · &quot;김하나&quot; → &quot;김하나&quot;</li>
+<li>0 → 0 · &quot;&quot; → &quot;&quot; · false → false (있는 값)</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「0 → 0 · &quot;&quot; → &quot;&quot; · false → false (있는 값)」에서 걸립니다</p>
+<p><code>||</code> 로 기본값을 넣는 코드를 많이 봅니다. <code>||</code> 는 0 · &quot;&quot; · false 도 «없다»로 봅니다.</p>
+<pre><code class="language-js">function withDefault(value) {
+  return value || &quot;없음&quot;;
+}
+</code></pre>
+<hr>
+<h3 id="문제-13-화살표-함수--숫자-꾸미기">문제 13. 화살표 함수 · 숫자 꾸미기</h3>
+<p><strong>문제</strong></p>
+<p>조회수를 받아 <strong>세 자리마다 쉼표</strong>를 넣고 <code>회</code> 를 붙인 글자를 돌려주는 <code>formatViews</code> 를 <strong>화살표 함수</strong>로 만드시오.</p>
+<ul>
+<li><code>formatViews(1845)</code> → <code>&quot;1,845회&quot;</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">const formatViews = (n) =&gt; n.toLocaleString(&quot;ko-KR&quot;) + &quot;회&quot;;
+</code></pre>
+<p><strong>해설</strong></p>
+<p>화살표 함수는 몸통이 <strong>식 하나</strong>이면 중괄호 없이 쓰고, 그 값이 자동으로 돌아갑니다. 중괄호를 쓰면 <code>return</code> 을 직접 적어야 합니다.
+<code>toLocaleString(&quot;ko-KR&quot;)</code> 은 그 나라 방식으로 숫자를 꾸밉니다(세 자리 쉼표). 9일차 카드의 조회수가 이것입니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>1845 → &quot;1,845회&quot; · 920 → &quot;920회&quot;</li>
+<li>1234567 → &quot;1,234,567회&quot; · 0 → &quot;0회&quot;</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「1845 → &quot;1,845회&quot; · 920 → &quot;920회&quot;」에서 걸립니다</p>
+<p>중괄호를 쓰는 순간 «자동 return» 이 사라집니다. 계산은 하고 버려서 <code>undefined</code> 가 나옵니다(JS 2일차 🔴).</p>
+<pre><code class="language-js">const formatViews = (n) =&gt; { n.toLocaleString(&quot;ko-KR&quot;) + &quot;회&quot;; };
+</code></pre>
+<hr>
+<h3 id="문제-14-문자열-다듬기--trim--tolowercase">문제 14. 문자열 다듬기 — trim · toLowerCase</h3>
+<p><strong>문제</strong></p>
+<p>검색어를 비교하기 좋게 다듬는 <code>cleanInput(s)</code> 를 만드시오 — <strong>앞뒤 공백을 없애고 영어는 소문자로</strong> 바꿉니다.</p>
+<ul>
+<li><code>cleanInput(&quot;  Hello JS  &quot;)</code> → <code>&quot;hello js&quot;</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function cleanInput(s) {
+  return s.trim().toLowerCase();
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p>문자열 메서드는 원래 글자를 <strong>고치지 않고</strong> 새 글자를 돌려줍니다. 그래서 <code>s.trim()</code> 만 쓰고 버리면 아무 일도 안 일어납니다 — 결과를 받아 쓰거나 이어서(<code>.trim().toLowerCase()</code>) 부르십시오.
+한글에는 대소문자가 없어 그대로입니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>&quot;  Hello JS  &quot; → &quot;hello js&quot;</li>
+<li>&quot;AI&quot; → &quot;ai&quot; · &quot;   &quot; → &quot;&quot; · &quot;금리&quot; → &quot;금리&quot;</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「&quot;  Hello JS  &quot; → &quot;hello js&quot;」에서 걸립니다</p>
+<p><code>s.trim()</code> 이 <code>s</code> 를 고친다고 생각하기 쉽습니다. 문자열은 바뀌지 않고, 다듬은 «새 글자»를 돌려줄 뿐입니다.</p>
+<pre><code class="language-js">function cleanInput(s) {
+  s.trim();
+  return s.toLowerCase();
+}
+</code></pre>
+<hr>
+<h3 id="문제-15-문자열-자르기--length--slice">문제 15. 문자열 자르기 — length · slice</h3>
+<p><strong>문제</strong></p>
+<p>제목이 <code>max</code> 글자보다 <strong>길면</strong> 앞의 <code>max</code> 글자만 남기고 <code>…</code> 를 붙이고, 아니면 그대로 돌려주는 <code>shorten(title, max)</code> 를 만드시오.</p>
+<ul>
+<li><code>shorten(&quot;폭설 주의보 발령&quot;, 5)</code> → <code>&quot;폭설 주의…&quot;</code> · <code>shorten(&quot;금리 동결&quot;, 5)</code> → <code>&quot;금리 동결&quot;</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function shorten(title, max) {
+  if (title.length &gt; max) return title.slice(0, max) + &quot;…&quot;;
+  return title;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>length</code> 는 글자 수(띄어쓰기 포함), <code>slice(0, max)</code> 는 0번부터 <code>max</code> 개입니다.
+「길면」은 <code>&gt; max</code> — 딱 <code>max</code> 글자인 제목은 자를 필요가 없습니다. 경계값을 꼭 넣어 보십시오.</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>긴 제목 — (&quot;폭설 주의보 발령&quot;, 5) → &quot;폭설 주의…&quot;</li>
+<li>딱 맞는 길이 — (&quot;금리 동결&quot;, 5) → 그대로</li>
+<li>짧은 제목 — (&quot;금리 동결&quot;, 10) → 그대로</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「딱 맞는 길이 — (&quot;금리 동결&quot;, 5) → 그대로」에서 걸립니다</p>
+<p>「길면」을 <code>&gt;=</code> 로 쓰면 딱 맞는 길이에도 <code>…</code> 가 붙습니다.</p>
+<pre><code class="language-js">function shorten(title, max) {
+  if (title.length &gt;= max) return title.slice(0, max) + &quot;…&quot;;
+  return title;
+}
+</code></pre>
+<hr>
+<h3 id="문제-16-숫자만-꺼내기--parseint-의-함정">문제 16. 숫자만 꺼내기 — parseInt 의 함정</h3>
+<p><strong>문제</strong></p>
+<p><code>&quot;1,845회&quot;</code> 처럼 쉼표와 글자가 섞인 조회수에서 숫자만 꺼내 <strong>숫자</strong>로 돌려주는 <code>parseViews(text)</code> 를 만드시오.</p>
+<ul>
+<li><code>parseViews(&quot;1,845회&quot;)</code> → <code>1845</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function parseViews(text) {
+  return Number(text.replace(/[^0-9]/g, &quot;&quot;));
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>parseInt</code> 는 앞에서부터 숫자를 읽다가 <strong>숫자가 아닌 글자에서 멈춥니다</strong> — <code>parseInt(&quot;1,845회&quot;)</code> 는 <code>1</code>. 크롤링한 글자에서 자주 걸립니다.
+숫자가 아닌 것을 모두 지운 뒤(<code>replace(/[^0-9]/g, &quot;&quot;)</code> 또는 <code>replaceAll(&quot;,&quot;, &quot;&quot;).replace(&quot;회&quot;, &quot;&quot;)</code>) <code>Number</code> 로 바꿉니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>&quot;1,845회&quot; → 1845 · &quot;1,234,567회&quot; → 1234567</li>
+<li>&quot;920회&quot; → 920 · &quot;0회&quot; → 0</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「&quot;1,845회&quot; → 1845 · &quot;1,234,567회&quot; → 1234567」에서 걸립니다</p>
+<p><code>parseInt</code> 가 앞의 숫자를 알아서 읽어 줘서 편해 보입니다. 하지만 쉼표에서 멈춰 <code>1</code> 이 나옵니다.</p>
+<pre><code class="language-js">function parseViews(text) {
+  return parseInt(text);
+}
+</code></pre>
+<hr>
+<h3 id="문제-17-자리-맞추기--padstart">문제 17. 자리 맞추기 — padStart</h3>
+<p><strong>문제</strong></p>
+<p>기사 번호를 <strong>네 자리</strong>로 맞춘 글자를 돌려주는 <code>padId(n)</code> 을 만드시오. 모자라는 자리는 앞에 <code>0</code> 을 채웁니다.</p>
+<ul>
+<li><code>padId(7)</code> → <code>&quot;0007&quot;</code> · <code>padId(12345)</code> → <code>&quot;12345&quot;</code>(넘치면 그대로)</li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function padId(n) {
+  return String(n).padStart(4, &quot;0&quot;);
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>padStart(길이, 채울 글자)</code> 는 그 길이가 될 때까지 <strong>앞에</strong> 채웁니다. 이미 길면 그대로 둡니다. 숫자에는 없는 메서드라 <code>String(n)</code> 으로 먼저 바꿉니다.
+날짜의 <code>&quot;05&quot;</code> 월 · 일을 만들 때도 같은 방법을 씁니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>7 → &quot;0007&quot;</li>
+<li>42 → &quot;0042&quot; · 123 → &quot;0123&quot; · 12345 → &quot;12345&quot;</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「42 → &quot;0042&quot; · 123 → &quot;0123&quot; · 12345 → &quot;12345&quot;」에서 걸립니다</p>
+<p>한 자리 번호만 보고 <code>0</code> 을 세 개 붙이면 두 자리 · 세 자리에서 다섯 자리가 됩니다.</p>
+<pre><code class="language-js">function padId(n) {
+  return &quot;000&quot; + n;
+}
+</code></pre>
+<hr>
+<h3 id="문제-18-반올림--mathround">문제 18. 반올림 — Math.round</h3>
+<p><strong>문제</strong></p>
+<p>수를 소수점 아래 <code>digits</code> 자리로 <strong>반올림한 숫자</strong>를 돌려주는 <code>roundTo(x, digits)</code> 를 만드시오.</p>
+<ul>
+<li><code>roundTo(3.14159, 2)</code> → <code>3.14</code> · <code>roundTo(2.5, 0)</code> → <code>3</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function roundTo(x, digits) {
+  const k = 10 ** digits;
+  return Math.round(x * k) / k;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>Math.round</code> 는 정수로만 반올림합니다. 소수 둘째 자리라면 100 을 곱해 반올림하고 다시 100 으로 나눕니다(<code>10 ** digits</code> 는 10 의 거듭제곱).
+<code>toFixed(2)</code> 는 <strong>화면에 보일 글자</strong>를 만들 때 씁니다 — <code>&quot;3.14&quot;</code> 는 숫자가 아닙니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>(3.14159, 2) → 3.14 · (2.5, 0) → 3 (숫자)</li>
+<li>(17.56, 1) → 17.6 · (1946.25, 0) → 1946</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「(3.14159, 2) → 3.14 · (2.5, 0) → 3 (숫자)」에서 걸립니다</p>
+<p><code>toFixed</code> 도 반올림한 모양을 보여 줘서 맞아 보입니다. 하지만 돌려주는 것이 «글자»라 더하면 이어 붙여집니다.</p>
+<pre><code class="language-js">function roundTo(x, digits) {
+  return x.toFixed(digits);
+}
+</code></pre>
+<hr>
+<h3 id="문제-19-무작위-정수--mathrandom">문제 19. 무작위 정수 — Math.random</h3>
+<p><strong>문제</strong></p>
+<p><code>min</code> 이상 <code>max</code> 이하의 <strong>정수</strong>를 무작위로 돌려주는 <code>randomInt(min, max)</code> 를 만드시오. 양 끝 값도 나와야 합니다.
+(검사는 여러 번 불러 봅니다)</p>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>Math.random()</code> 은 0 이상 1 <strong>미만</strong>의 소수입니다. 칸 수(<code>max - min + 1</code>)를 곱하고 <code>Math.floor</code> 로 내리면 0 ~ 칸 수-1, 거기에 <code>min</code> 을 더합니다.
+<code>Math.round</code> 를 쓰면 양 끝 값이 다른 값의 절반만큼만 나와 고르지 않습니다.</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>randomInt(1, 6) 을 300번 — 모두 1~6 의 정수</li>
+<li>300번 안에 1 · 2 · 3 · 4 · 5 · 6 이 모두 나온다(양 끝 포함)</li>
+<li>randomInt(5, 5) → 5</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「300번 안에 1 · 2 · 3 · 4 · 5 · 6 이 모두 나온다(양 끝 포함)」에서 걸립니다</p>
+<p><code>+ 1</code> 을 빠뜨리면 <code>max</code> 가 «한 번도» 안 나옵니다. 몇 번 눌러 봐서는 모릅니다.</p>
+<pre><code class="language-js">function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+</code></pre>
+<hr>
+<h3 id="문제-20-기본값-매개변수">문제 20. 기본값 매개변수</h3>
+<p><strong>문제</strong></p>
+<p>이름을 받아 인사말을 돌려주는 <code>greet(name)</code> 을 만드시오. 이름을 <strong>안 주면</strong> <code>&quot;손님&quot;</code> 으로 인사합니다.</p>
+<ul>
+<li><code>greet(&quot;김하나&quot;)</code> → <code>&quot;안녕하세요, 김하나님&quot;</code> · <code>greet()</code> → <code>&quot;안녕하세요, 손님님&quot;</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function greet(name = &quot;손님&quot;) {
+  return `안녕하세요, ${name}님`;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>function greet(name = &quot;손님&quot;)</code> — 매개변수 자리에 <code>=</code> 로 <strong>기본값</strong>을 적으면, 인자가 없거나 <code>undefined</code> 일 때 그 값이 들어갑니다.
+기본값이 없으면 <code>name</code> 은 <code>undefined</code> 이고, 템플릿 리터럴에 그대로 <code>&quot;undefined&quot;</code> 로 찍힙니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>greet(&quot;김하나&quot;) → &quot;안녕하세요, 김하나님&quot;</li>
+<li>greet() → &quot;안녕하세요, 손님님&quot;</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「greet() → &quot;안녕하세요, 손님님&quot;」에서 걸립니다</p>
+<p>JS 는 인자를 덜 줘도 오류가 나지 않습니다(2일차 🔴) — 빠진 인자는 <code>undefined</code> 가 되어 그대로 찍힙니다.</p>
+<pre><code class="language-js">function greet(name) {
+  return `안녕하세요, ${name}님`;
+}
+</code></pre>
+<hr>
+<h3 id="문제-21-나머지-매개변수-">문제 21. 나머지 매개변수 ...</h3>
+<p><strong>문제</strong></p>
+<p>인자를 <strong>몇 개든</strong> 받아 모두 더한 값을 돌려주는 <code>sumAll</code> 을 만드시오. 하나도 안 주면 <code>0</code> 입니다.</p>
+<ul>
+<li><code>sumAll(1, 2, 3)</code> → <code>6</code> · <code>sumAll()</code> → <code>0</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function sumAll(...nums) {
+  let total = 0;
+  for (const n of nums) total += n;
+  return total;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p>매개변수 앞의 <code>...</code> 는 «남은 인자를 <strong>배열로</strong> 모아라»입니다(나머지 매개변수). <code>sumAll(1, 2, 3)</code> 이면 <code>nums</code> 는 <code>[1, 2, 3]</code>, 아무것도 없으면 빈 배열 <code>[]</code> 입니다.
+3일차의 <strong>전개</strong>(<code>...배열</code> → 펼치기)와 기호는 같고 방향이 반대입니다 — 매개변수 자리에서는 «모으기»입니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>sumAll(1, 2, 3) → 6 · sumAll(10) → 10</li>
+<li>sumAll() → 0</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「sumAll(1, 2, 3) → 6 · sumAll(10) → 10」에서 걸립니다</p>
+<p>배열을 받는 함수처럼 쓰면 <code>sumAll(1, 2, 3)</code> 의 <code>nums</code> 는 그냥 <code>1</code> 이라 <code>for…of</code> 가 오류를 냅니다.</p>
+<pre><code class="language-js">function sumAll(nums) {
+  let total = 0;
+  for (const n of nums) total += n;
+  return total;
+}
+</code></pre>
+<hr>
+<h3 id="문제-22-return-과-consolelog">문제 22. return 과 console.log</h3>
+<p><strong>문제</strong></p>
+<p>다음 코드는 무엇을 찍습니까?</p>
+<pre><code class="language-js">function show(n) {
+  console.log(n * 2);
+}
+const result = show(5);
+console.log(result);
+</code></pre>
+<p>① <code>10</code> 그리고 <code>10</code><br>② <code>10</code> 그리고 <code>undefined</code><br>③ <code>undefined</code> 그리고 <code>10</code><br>④ 오류가 납니다</p>
+<p><strong>정답</strong> — ② <code>10</code> 그리고 <code>undefined</code></p>
+<p><strong>실제로 돌려 보면</strong></p>
+<pre><code class="language-text">10
+undefined
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>console.log</code> 는 화면에 <strong>보여 줄</strong> 뿐이고, 함수가 값을 <strong>돌려주는</strong> 것은 <code>return</code> 입니다. <code>return</code> 이 없는 함수의 결과는 <code>undefined</code> 입니다.
+그래서 <code>show(5)</code> 안에서 <code>10</code> 이 찍히고, <code>result</code> 에는 <code>undefined</code> 가 담겨 그다음 줄에 찍힙니다.</p>
+<p><strong>흔한 오답</strong> — ①</p>
+<p>화면에 <code>10</code> 이 보이니 함수가 <code>10</code> 을 «돌려줬다»고 생각하기 쉽습니다(2일차 🔴).</p>
+<hr>
+<h3 id="문제-23-배열의-마지막">문제 23. 배열의 마지막</h3>
+<p><strong>문제</strong></p>
+<p>배열의 <strong>마지막 값</strong>을 돌려주는 <code>lastItem(arr)</code> 를 만드시오. 빈 배열이면 <code>undefined</code> 입니다.</p>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function lastItem(arr) {
+  return arr[arr.length - 1];
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p>배열 번호는 <strong>0 부터</strong>라 길이가 <code>n</code> 이면 마지막은 <code>n - 1</code> 번입니다. 없는 번호를 꺼내면 오류가 아니라 <code>undefined</code> 입니다(그래서 틀려도 조용합니다).
+요즘 JS 에서는 <code>arr.at(-1)</code> 로도 씁니다 — 음수는 뒤에서부터 셉니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>[1, 2, 3] → 3 · [&quot;금리&quot;] → &quot;금리&quot;</li>
+<li>[] → undefined</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「[1, 2, 3] → 3 · [&quot;금리&quot;] → &quot;금리&quot;」에서 걸립니다</p>
+<p>길이가 3 이면 마지막 칸도 3번이라고 생각하기 쉽습니다. 번호는 0 부터라 마지막은 <code>length - 1</code> 입니다.</p>
+<pre><code class="language-js">function lastItem(arr) {
+  return arr[arr.length];
+}
+</code></pre>
+<hr>
+<h3 id="문제-24-원본을-지키며-추가하기">문제 24. 원본을 지키며 추가하기</h3>
+<p><strong>문제</strong></p>
+<p>태그 배열 <code>tags</code> 에 <code>tag</code> 를 더한 <strong>새 배열</strong>을 돌려주는 <code>addTag(tags, tag)</code> 를 만드시오.</p>
+<ul>
+<li>이미 들어 있는 태그면 더하지 않습니다</li>
+<li>🔴 넘겨받은 <code>tags</code> 배열은 <strong>바꾸지 않습니다</strong></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function addTag(tags, tag) {
+  if (tags.includes(tag)) return [...tags];
+  return [...tags, tag];
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>push</code> 는 <strong>원본을 고칩니다</strong>. 새 배열이 필요하면 전개로 복사해 만듭니다 — <code>[...tags, tag]</code>.
+3일차 🔴 「<code>=</code> 는 복사가 아닙니다」의 연장입니다. 함수가 넘겨받은 배열을 고치면, 부른 쪽의 배열도 같이 바뀝니다(같은 배열이니까). React 의 state 는 이 «새로 만들기»를 반드시 요구합니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>[&quot;경제&quot;] 에 &quot;금리&quot; → [&quot;경제&quot;, &quot;금리&quot;] · 이미 있으면 그대로</li>
+<li>넘겨준 배열은 그대로다</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「넘겨준 배열은 그대로다」에서 걸립니다</p>
+<p><code>push</code> 로 넣고 돌려주면 결과는 맞습니다. 하지만 넘겨받은 배열까지 바뀌어 다른 곳에서 쓰던 목록이 몰래 변합니다.</p>
+<pre><code class="language-js">function addTag(tags, tag) {
+  if (!tags.includes(tag)) tags.push(tag);
+  return tags;
+}
+</code></pre>
+<hr>
+<h3 id="문제-25-구조-분해">문제 25. 구조 분해</h3>
+<p><strong>문제</strong></p>
+<p>기사 객체를 받아 <code>&quot;제목 — 분야 · 기자&quot;</code> 모양의 글자를 돌려주는 <code>describe(article)</code> 을 만드시오. <strong>구조 분해</strong>로 꺼내 쓰십시오.</p>
+<ul>
+<li><code>describe(news[0])</code> → <code>&quot;금리 동결 — 경제 · 김하나&quot;</code></li>
+</ul>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const news = [
+  { id: 1, title: &quot;금리 동결&quot;, section: &quot;경제&quot;, author: &quot;김하나&quot;, views: 1845, date: &quot;2024-11-05&quot; },
+  { id: 2, title: &quot;신작 개봉&quot;, section: &quot;문화&quot;, author: &quot;이도윤&quot;, views: 920, date: &quot;2024-11-05&quot; },
+  { id: 3, title: &quot;폭설 주의보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 3120, date: &quot;2024-11-04&quot; },
+  { id: 4, title: &quot;야구 개막&quot;, section: &quot;스포츠&quot;, author: &quot;최지우&quot;, views: 2733, date: &quot;2024-11-04&quot; },
+  { id: 5, title: &quot;국회 본회의&quot;, section: &quot;정치&quot;, author: &quot;김하나&quot;, views: 2102, date: &quot;2024-11-03&quot; },
+  { id: 6, title: &quot;반도체 수출&quot;, section: &quot;경제&quot;, author: &quot;정민호&quot;, views: 1560, date: &quot;2024-11-03&quot; },
+  { id: 7, title: &quot;지하철 지연&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 880, date: &quot;2024-11-02&quot; },
+  { id: 8, title: &quot;AI 규제안&quot;, section: &quot;IT&quot;, author: &quot;이도윤&quot;, views: 2410, date: &quot;2024-11-02&quot; },
+];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function describe(article) {
+  const { title, section, author } = article;
+  return `${title} — ${section} · ${author}`;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>const { title, section } = article</code> 은 <code>const title = article.title</code> 을 여러 개 한 줄로 쓴 것입니다. <strong>이름이 키와 같아야</strong> 꺼내집니다.
+매개변수 자리에서 바로 꺼낼 수도 있습니다 — <code>function describe({ title, section, author }) { … }</code>. React 의 props 가 늘 이 모양입니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>news[0] → &quot;금리 동결 — 경제 · 김하나&quot;</li>
+<li>news[7] → &quot;AI 규제안 — IT · 이도윤&quot;</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「news[0] → &quot;금리 동결 — 경제 · 김하나&quot;」에서 걸립니다</p>
+<p>구조 분해의 이름은 «객체의 키와 같아야» 합니다. 없는 키(<code>writer</code>)를 꺼내도 오류 없이 <code>undefined</code> 가 됩니다.</p>
+<pre><code class="language-js">function describe(article) {
+  const { title, section, writer } = article;
+  return `${title} — ${section} · ${writer}`;
+}
+</code></pre>
+<hr>
+<h2 id="중급">중급</h2>
+<h3 id="문제-26-객체-전개로-바꾼-사본">문제 26. 객체 전개로 바꾼 사본</h3>
+<p><strong>문제</strong></p>
+<p>기사 객체와 새 조회수를 받아, 조회수만 바꾼 <strong>새 객체</strong>를 돌려주는 <code>withViews(article, views)</code> 를 만드시오. 넘겨받은 객체는 바꾸지 않습니다.</p>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function withViews(article, views) {
+  return { ...article, views };
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>{ ...article, views }</code> — 원래 객체를 펼쳐 <strong>새 객체</strong>를 만들고, 뒤에 쓴 <code>views</code> 가 같은 키를 덮어씁니다(<code>views</code> 는 <code>views: views</code> 를 줄여 쓴 것).
+객체도 배열처럼 <code>=</code> 로는 복사되지 않습니다. React 에서 state 객체를 바꿀 때 쓰는 모양 그대로입니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>조회수만 바뀐 객체가 나온다</li>
+<li>넘겨준 객체는 그대로다 · 다른 객체다</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「넘겨준 객체는 그대로다 · 다른 객체다」에서 걸립니다</p>
+<p>값을 바꿔 돌려주면 결과는 맞습니다. 하지만 넘겨받은 객체가 «같은 객체»라 원본도 같이 바뀝니다.</p>
+<pre><code class="language-js">function withViews(article, views) {
+  article.views = views;
+  return article;
+}
+</code></pre>
+<hr>
+<h3 id="문제-27--는-복사가-아니다">문제 27. = 는 복사가 아니다</h3>
+<p><strong>문제</strong></p>
+<p>다음 코드는 무엇을 찍습니까?</p>
+<pre><code class="language-js">const a = [1, 2];
+const b = a;
+b.push(3);
+console.log(a.length);
+</code></pre>
+<p>① <code>2</code><br>② <code>3</code><br>③ 오류 — <code>const</code> 배열에는 push 할 수 없다<br>④ <code>undefined</code></p>
+<p><strong>정답</strong> — ② <code>3</code></p>
+<p><strong>실제로 돌려 보면</strong></p>
+<pre><code class="language-text">3
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>const b = a</code> 는 배열을 <strong>복사하지 않고</strong>, 같은 배열에 이름을 하나 더 붙입니다. 그래서 <code>b</code> 로 넣은 <code>3</code> 이 <code>a</code> 에서도 보입니다(3일차 🔴).
+<code>const</code> 가 막는 것은 <strong>다시 담기</strong>(<code>a = [...]</code>)이지, 안의 내용을 바꾸는 것이 아닙니다. 복사가 필요하면 <code>[...a]</code> 입니다.</p>
+<p><strong>흔한 오답</strong> — ①</p>
+<p><code>b</code> 를 고쳤으니 <code>a</code> 는 그대로일 것 같습니다. 하지만 <code>a</code> 와 <code>b</code> 는 «같은 배열 하나»를 가리킵니다.</p>
+<hr>
+<h3 id="문제-28--옵셔널-체이닝">문제 28. ?. 옵셔널 체이닝</h3>
+<p><strong>문제</strong></p>
+<p>기사의 기자 이름(<code>article.author.name</code>)을 돌려주는 <code>authorName(article)</code> 을 만드시오. 기사나 기자 정보가 <strong>없으면</strong>(<code>undefined</code> · <code>null</code>) 오류 대신 <code>&quot;알 수 없음&quot;</code> 을 돌려줍니다.</p>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function authorName(article) {
+  return article?.author?.name ?? &quot;알 수 없음&quot;;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>a?.b</code> 는 <code>a</code> 가 <code>null</code> · <code>undefined</code> 이면 오류 대신 <code>undefined</code> 를 돌려주고 거기서 멈춥니다. 여러 겹이면 겹마다 <code>?.</code> 를 씁니다.
+그 뒤의 <code>?? &quot;알 수 없음&quot;</code> 이 <code>undefined</code> 를 기본값으로 바꿉니다(12번). 서버에서 받은 데이터처럼 <strong>비어 있을 수 있는 값</strong>을 꺼낼 때 씁니다.</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>{ author: { name: &quot;김하나&quot; } } → &quot;김하나&quot;</li>
+<li>{} · { author: null } → &quot;알 수 없음&quot;</li>
+<li>undefined → &quot;알 수 없음&quot;</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「{} · { author: null } → &quot;알 수 없음&quot;」에서 걸립니다</p>
+<p>기자 정보가 있는 기사로만 시험하면 잘 돕니다. 하나라도 비어 있으면 <code>Cannot read properties of undefined</code> 로 멈춥니다.</p>
+<pre><code class="language-js">function authorName(article) {
+  return article.author.name || &quot;알 수 없음&quot;;
+}
+</code></pre>
+<hr>
+<h3 id="문제-29-objectentries">문제 29. Object.entries</h3>
+<p><strong>문제</strong></p>
+<p>객체를 받아 <code>키=값</code> 을 <code>&amp;</code> 로 이은 글자(주소 뒤에 붙는 질의 문자열)를 만드는 <code>toQuery(params)</code> 를 만드시오. 글자를 바꾸는(인코딩) 일은 하지 않습니다.</p>
+<ul>
+<li><code>toQuery({ page: 2, size: 10 })</code> → <code>&quot;page=2&amp;size=10&quot;</code> · <code>toQuery({})</code> → <code>&quot;&quot;</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function toQuery(params) {
+  return Object.entries(params).map(([k, v]) =&gt; `${k}=${v}`).join(&quot;&amp;&quot;);
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>Object.entries(obj)</code> 는 <code>[키, 값]</code> 짝의 배열입니다 — <code>[[&quot;page&quot;, 2], [&quot;size&quot;, 10]]</code>. 배열이 되었으니 <code>map</code> 으로 <code>&quot;page=2&quot;</code> 를 만들고 <code>join(&quot;&amp;&quot;)</code> 으로 <strong>사이에만</strong> <code>&amp;</code> 를 넣습니다.
+<code>Object.keys</code>(키만) · <code>Object.values</code>(값만)도 함께 기억해 두십시오.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>{ page: 2, size: 10 } → &quot;page=2&amp;size=10&quot;</li>
+<li>{ q: &quot;금리&quot; } → &quot;q=금리&quot; · {} → &quot;&quot;</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「{ page: 2, size: 10 } → &quot;page=2&amp;size=10&quot;」에서 걸립니다</p>
+<p>반복하며 <code>&amp;</code> 를 붙이면 맨 끝에도 하나가 남습니다.</p>
+<pre><code class="language-js">function toQuery(params) {
+  let s = &quot;&quot;;
+  for (const k in params) s += `${k}=${params[k]}&amp;`;
+  return s;
+}
+</code></pre>
+<hr>
+<h3 id="문제-30-map--제목만-꺼내기">문제 30. map — 제목만 꺼내기</h3>
+<p><strong>문제</strong></p>
+<p>기사 배열을 받아 <strong>제목만 모은 배열</strong>을 돌려주는 <code>titles(list)</code> 를 <code>map</code> 으로 만드시오.
+(주어진 <code>news</code> 로 시험해 볼 수 있습니다 — <code>console.log(titles(news))</code>)</p>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const news = [
+  { id: 1, title: &quot;금리 동결&quot;, section: &quot;경제&quot;, author: &quot;김하나&quot;, views: 1845, date: &quot;2024-11-05&quot; },
+  { id: 2, title: &quot;신작 개봉&quot;, section: &quot;문화&quot;, author: &quot;이도윤&quot;, views: 920, date: &quot;2024-11-05&quot; },
+  { id: 3, title: &quot;폭설 주의보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 3120, date: &quot;2024-11-04&quot; },
+  { id: 4, title: &quot;야구 개막&quot;, section: &quot;스포츠&quot;, author: &quot;최지우&quot;, views: 2733, date: &quot;2024-11-04&quot; },
+  { id: 5, title: &quot;국회 본회의&quot;, section: &quot;정치&quot;, author: &quot;김하나&quot;, views: 2102, date: &quot;2024-11-03&quot; },
+  { id: 6, title: &quot;반도체 수출&quot;, section: &quot;경제&quot;, author: &quot;정민호&quot;, views: 1560, date: &quot;2024-11-03&quot; },
+  { id: 7, title: &quot;지하철 지연&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 880, date: &quot;2024-11-02&quot; },
+  { id: 8, title: &quot;AI 규제안&quot;, section: &quot;IT&quot;, author: &quot;이도윤&quot;, views: 2410, date: &quot;2024-11-02&quot; },
+];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function titles(list) {
+  return list.map((a) =&gt; a.title);
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>map</code> 은 <strong>넣은 만큼 나오는</strong> 변환입니다 — 기사 8개를 넣으면 제목 8개. 화살표 함수가 돌려주는 값이 새 배열의 칸이 됩니다.
+<code>forEach</code> 는 돌기만 하고 결과를 버립니다. 「바꾼 배열이 필요하면 <code>map</code>」.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>news → 제목 8개(순서 그대로)</li>
+<li>[] → []</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「news → 제목 8개(순서 그대로)」에서 걸립니다</p>
+<p><code>forEach</code> 도 하나씩 돌지만 «아무것도 돌려주지 않습니다» — 결과는 <code>undefined</code> 입니다(4일차).</p>
+<pre><code class="language-js">function titles(list) {
+  return list.forEach((a) =&gt; a.title);
+}
+</code></pre>
+<hr>
+<h3 id="문제-31-filter--분야로-거르기">문제 31. filter — 분야로 거르기</h3>
+<p><strong>문제</strong></p>
+<p>기사 배열과 분야를 받아 <strong>그 분야의 기사만</strong> 돌려주는 <code>bySection(list, section)</code> 을 <code>filter</code> 로 만드시오.</p>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const news = [
+  { id: 1, title: &quot;금리 동결&quot;, section: &quot;경제&quot;, author: &quot;김하나&quot;, views: 1845, date: &quot;2024-11-05&quot; },
+  { id: 2, title: &quot;신작 개봉&quot;, section: &quot;문화&quot;, author: &quot;이도윤&quot;, views: 920, date: &quot;2024-11-05&quot; },
+  { id: 3, title: &quot;폭설 주의보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 3120, date: &quot;2024-11-04&quot; },
+  { id: 4, title: &quot;야구 개막&quot;, section: &quot;스포츠&quot;, author: &quot;최지우&quot;, views: 2733, date: &quot;2024-11-04&quot; },
+  { id: 5, title: &quot;국회 본회의&quot;, section: &quot;정치&quot;, author: &quot;김하나&quot;, views: 2102, date: &quot;2024-11-03&quot; },
+  { id: 6, title: &quot;반도체 수출&quot;, section: &quot;경제&quot;, author: &quot;정민호&quot;, views: 1560, date: &quot;2024-11-03&quot; },
+  { id: 7, title: &quot;지하철 지연&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 880, date: &quot;2024-11-02&quot; },
+  { id: 8, title: &quot;AI 규제안&quot;, section: &quot;IT&quot;, author: &quot;이도윤&quot;, views: 2410, date: &quot;2024-11-02&quot; },
+];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function bySection(list, section) {
+  return list.filter((a) =&gt; a.section === section);
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>filter</code> 는 화살표 함수가 <code>true</code> 를 돌려준 것만 남깁니다(<strong>0개 ~ 전부</strong>). 조건에는 비교 <code>===</code> 를 씁니다.
+🔴 <code>a.section = section</code> 은 비교가 아니라 <strong>담기</strong>이고, 담은 값(글자)은 참처럼 굴어 모두 통과합니다. 원본 데이터까지 바뀌는 무서운 실수입니다.</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>&quot;사회&quot; → 3번 · 7번 기사</li>
+<li>&quot;IT&quot; → 8번 · 없는 분야 → []</li>
+<li>news 는 그대로다</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「&quot;사회&quot; → 3번 · 7번 기사」에서 걸립니다</p>
+<p><code>===</code> 대신 <code>=</code> 를 쓰면 «비교»가 아니라 «담기»가 되어, 모든 기사가 통과하고 분야까지 바뀝니다.</p>
+<pre><code class="language-js">function bySection(list, section) {
+  return list.filter((a) =&gt; a.section = section);
+}
+</code></pre>
+<hr>
+<h3 id="문제-32-find--하나-찾기">문제 32. find — 하나 찾기</h3>
+<p><strong>문제</strong></p>
+<p>기사 배열과 번호를 받아 <strong>그 번호의 기사 하나</strong>를 돌려주는 <code>findById(list, id)</code> 를 만드시오. 없으면 <code>undefined</code> 입니다.</p>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const news = [
+  { id: 1, title: &quot;금리 동결&quot;, section: &quot;경제&quot;, author: &quot;김하나&quot;, views: 1845, date: &quot;2024-11-05&quot; },
+  { id: 2, title: &quot;신작 개봉&quot;, section: &quot;문화&quot;, author: &quot;이도윤&quot;, views: 920, date: &quot;2024-11-05&quot; },
+  { id: 3, title: &quot;폭설 주의보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 3120, date: &quot;2024-11-04&quot; },
+  { id: 4, title: &quot;야구 개막&quot;, section: &quot;스포츠&quot;, author: &quot;최지우&quot;, views: 2733, date: &quot;2024-11-04&quot; },
+  { id: 5, title: &quot;국회 본회의&quot;, section: &quot;정치&quot;, author: &quot;김하나&quot;, views: 2102, date: &quot;2024-11-03&quot; },
+  { id: 6, title: &quot;반도체 수출&quot;, section: &quot;경제&quot;, author: &quot;정민호&quot;, views: 1560, date: &quot;2024-11-03&quot; },
+  { id: 7, title: &quot;지하철 지연&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 880, date: &quot;2024-11-02&quot; },
+  { id: 8, title: &quot;AI 규제안&quot;, section: &quot;IT&quot;, author: &quot;이도윤&quot;, views: 2410, date: &quot;2024-11-02&quot; },
+];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function findById(list, id) {
+  return list.find((a) =&gt; a.id === id);
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>find</code> 는 조건에 맞는 <strong>첫 번째 값 하나</strong>를 돌려주고, 없으면 <code>undefined</code> 입니다. <code>filter</code> 는 늘 <strong>배열</strong>을 돌려줍니다(없으면 <code>[]</code>).
+「목록이 필요한가, 하나가 필요한가」로 고르십시오. 상세 화면은 <code>find</code> 입니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>3 → 폭설 주의보 기사(객체 하나)</li>
+<li>99 → undefined</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「3 → 폭설 주의보 기사(객체 하나)」에서 걸립니다</p>
+<p><code>filter</code> 로도 찾아지지만 결과가 «하나짜리 배열»입니다. <code>.title</code> 을 꺼내면 <code>undefined</code> 가 됩니다.</p>
+<pre><code class="language-js">function findById(list, id) {
+  return list.filter((a) =&gt; a.id === id);
+}
+</code></pre>
+<hr>
+<h3 id="문제-33-some--every">문제 33. some · every</h3>
+<p><strong>문제</strong></p>
+<p>기사 배열과 기준 조회수 <code>min</code> 을 받아 다음 객체를 돌려주는 <code>checkViews(list, min)</code> 을 만드시오.</p>
+<ul>
+<li><code>some</code>: 조회수가 <code>min</code> 이상인 기사가 <strong>하나라도</strong> 있으면 <code>true</code></li>
+<li><code>every</code>: <strong>모든</strong> 기사의 조회수가 <code>min</code> 이상이면 <code>true</code></li>
+<li><code>checkViews(news, 3000)</code> → <code>{ some: true, every: false }</code></li>
+</ul>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const news = [
+  { id: 1, title: &quot;금리 동결&quot;, section: &quot;경제&quot;, author: &quot;김하나&quot;, views: 1845, date: &quot;2024-11-05&quot; },
+  { id: 2, title: &quot;신작 개봉&quot;, section: &quot;문화&quot;, author: &quot;이도윤&quot;, views: 920, date: &quot;2024-11-05&quot; },
+  { id: 3, title: &quot;폭설 주의보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 3120, date: &quot;2024-11-04&quot; },
+  { id: 4, title: &quot;야구 개막&quot;, section: &quot;스포츠&quot;, author: &quot;최지우&quot;, views: 2733, date: &quot;2024-11-04&quot; },
+  { id: 5, title: &quot;국회 본회의&quot;, section: &quot;정치&quot;, author: &quot;김하나&quot;, views: 2102, date: &quot;2024-11-03&quot; },
+  { id: 6, title: &quot;반도체 수출&quot;, section: &quot;경제&quot;, author: &quot;정민호&quot;, views: 1560, date: &quot;2024-11-03&quot; },
+  { id: 7, title: &quot;지하철 지연&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 880, date: &quot;2024-11-02&quot; },
+  { id: 8, title: &quot;AI 규제안&quot;, section: &quot;IT&quot;, author: &quot;이도윤&quot;, views: 2410, date: &quot;2024-11-02&quot; },
+];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function checkViews(list, min) {
+  return {
+    some: list.some((a) =&gt; a.views &gt;= min),
+    every: list.every((a) =&gt; a.views &gt;= min),
+  };
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>some</code> 은 하나라도, <code>every</code> 는 전부 — 둘 다 <strong><code>true</code> / <code>false</code></strong> 를 돌려줍니다.
+🔴 빈 배열에서 <code>every</code> 는 <code>true</code> 입니다. 「조건을 어긴 것이 하나도 없다」이기 때문입니다. 빈 목록을 따로 다뤄야 하는 화면이라면 길이를 먼저 보십시오.</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>min 3000 → { some: true, every: false }</li>
+<li>min 800 → { some: true, every: true } · min 5000 → 둘 다 false</li>
+<li>빈 배열 → { some: false, every: true }</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「min 3000 → { some: true, every: false }」에서 걸립니다</p>
+<p><code>find</code> 도 «있으면 뭔가 나오니» 참처럼 쓸 수 있어 보입니다. 하지만 나오는 것은 <code>true</code> 가 아니라 기사 객체입니다.</p>
+<pre><code class="language-js">function checkViews(list, min) {
+  return {
+    some: list.find((a) =&gt; a.views &gt;= min),
+    every: list.every((a) =&gt; a.views &gt;= min),
+  };
+}
+</code></pre>
+<hr>
+<h3 id="문제-34-reduce--합계">문제 34. reduce — 합계</h3>
+<p><strong>문제</strong></p>
+<p>기사 배열의 <strong>조회수 합계</strong>를 <code>reduce</code> 로 구하는 <code>totalViews(list)</code> 를 만드시오. 빈 배열이면 <code>0</code> 입니다.</p>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const news = [
+  { id: 1, title: &quot;금리 동결&quot;, section: &quot;경제&quot;, author: &quot;김하나&quot;, views: 1845, date: &quot;2024-11-05&quot; },
+  { id: 2, title: &quot;신작 개봉&quot;, section: &quot;문화&quot;, author: &quot;이도윤&quot;, views: 920, date: &quot;2024-11-05&quot; },
+  { id: 3, title: &quot;폭설 주의보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 3120, date: &quot;2024-11-04&quot; },
+  { id: 4, title: &quot;야구 개막&quot;, section: &quot;스포츠&quot;, author: &quot;최지우&quot;, views: 2733, date: &quot;2024-11-04&quot; },
+  { id: 5, title: &quot;국회 본회의&quot;, section: &quot;정치&quot;, author: &quot;김하나&quot;, views: 2102, date: &quot;2024-11-03&quot; },
+  { id: 6, title: &quot;반도체 수출&quot;, section: &quot;경제&quot;, author: &quot;정민호&quot;, views: 1560, date: &quot;2024-11-03&quot; },
+  { id: 7, title: &quot;지하철 지연&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 880, date: &quot;2024-11-02&quot; },
+  { id: 8, title: &quot;AI 규제안&quot;, section: &quot;IT&quot;, author: &quot;이도윤&quot;, views: 2410, date: &quot;2024-11-02&quot; },
+];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function totalViews(list) {
+  return list.reduce((sum, a) =&gt; sum + a.views, 0);
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>reduce((누적, 값) =&gt; 새 누적, 시작값)</code> — 배열을 <strong>하나로 합칩니다</strong>. 함수가 돌려준 값이 다음 칸의 누적이 됩니다.
+🔴 <strong>시작값(<code>0</code>)을 꼭 쓰십시오.</strong> 없으면 첫 칸이 시작값이 되는데, 빈 배열에는 첫 칸이 없어 오류가 납니다. 객체 배열이면 첫 칸이 «객체»라 계산도 틀어집니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>news → 15570</li>
+<li>[] → 0</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「[] → 0」에서 걸립니다</p>
+<p>시작값을 빼도 기사가 있으면 잘 돕니다. 빈 배열에서 <code>Reduce of empty array with no initial value</code> 로 멈춥니다.</p>
+<pre><code class="language-js">function totalViews(list) {
+  return list.map((a) =&gt; a.views).reduce((sum, v) =&gt; sum + v);
+}
+</code></pre>
+<hr>
+<h3 id="문제-35-sort--원본을-지키며">문제 35. sort — 원본을 지키며</h3>
+<p><strong>문제</strong></p>
+<p>기사를 <strong>조회수가 많은 순</strong>으로 정렬한 <strong>새 배열</strong>을 돌려주는 <code>sortByViews(list)</code> 를 만드시오. 넘겨받은 배열의 순서는 바꾸지 않습니다.</p>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const news = [
+  { id: 1, title: &quot;금리 동결&quot;, section: &quot;경제&quot;, author: &quot;김하나&quot;, views: 1845, date: &quot;2024-11-05&quot; },
+  { id: 2, title: &quot;신작 개봉&quot;, section: &quot;문화&quot;, author: &quot;이도윤&quot;, views: 920, date: &quot;2024-11-05&quot; },
+  { id: 3, title: &quot;폭설 주의보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 3120, date: &quot;2024-11-04&quot; },
+  { id: 4, title: &quot;야구 개막&quot;, section: &quot;스포츠&quot;, author: &quot;최지우&quot;, views: 2733, date: &quot;2024-11-04&quot; },
+  { id: 5, title: &quot;국회 본회의&quot;, section: &quot;정치&quot;, author: &quot;김하나&quot;, views: 2102, date: &quot;2024-11-03&quot; },
+  { id: 6, title: &quot;반도체 수출&quot;, section: &quot;경제&quot;, author: &quot;정민호&quot;, views: 1560, date: &quot;2024-11-03&quot; },
+  { id: 7, title: &quot;지하철 지연&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 880, date: &quot;2024-11-02&quot; },
+  { id: 8, title: &quot;AI 규제안&quot;, section: &quot;IT&quot;, author: &quot;이도윤&quot;, views: 2410, date: &quot;2024-11-02&quot; },
+];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function sortByViews(list) {
+  return [...list].sort((a, b) =&gt; b.views - a.views);
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p>🔴 <code>sort</code> 는 <strong>원본을 고칩니다</strong>(4일차). 새 배열이 필요하면 <code>[...list]</code> 로 복사한 뒤 정렬합니다(요즘 JS 는 <code>list.toSorted(…)</code> 도 있습니다).
+비교 함수 <code>(a, b) =&gt; b.views - a.views</code> 는 결과가 양수면 <code>b</code> 를 앞으로 — 즉 <strong>큰 것부터</strong>입니다. <code>a.views - b.views</code> 는 작은 것부터.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>많은 순 — 3 · 4 · 8 · 5 · 1 · 6 · 2 · 7번</li>
+<li>news 의 순서는 그대로다</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「news 의 순서는 그대로다」에서 걸립니다</p>
+<p>결과는 완벽합니다. 하지만 <code>sort</code> 가 <code>news</code> 자체를 줄 세워, 다른 곳에서 쓰던 «원래 순서»가 사라집니다.</p>
+<pre><code class="language-js">function sortByViews(list) {
+  return list.sort((a, b) =&gt; b.views - a.views);
+}
+</code></pre>
+<hr>
+<h3 id="문제-36-sort-의-기본은-글자순">문제 36. sort 의 기본은 글자순</h3>
+<p><strong>문제</strong></p>
+<p>다음 코드는 무엇을 찍습니까?</p>
+<pre><code class="language-js">console.log([10, 9, 1, 100].sort());
+</code></pre>
+<p>① <code>[1, 9, 10, 100]</code><br>② <code>[100, 10, 9, 1]</code><br>③ <code>[1, 10, 100, 9]</code><br>④ <code>[10, 9, 1, 100]</code> — 숫자는 비교 함수 없이 정렬하지 않는다</p>
+<p><strong>정답</strong> — ③ <code>[1, 10, 100, 9]</code></p>
+<p><strong>실제로 돌려 보면</strong></p>
+<pre><code class="language-text">[1, 10, 100, 9]
+</code></pre>
+<p><strong>해설</strong></p>
+<p>비교 함수 없는 <code>sort()</code> 는 값을 <strong>문자열로 바꿔 사전 순서</strong>로 정렬합니다. <code>&quot;10&quot;</code> 이 <code>&quot;9&quot;</code> 보다 앞입니다(첫 글자 <code>1</code> &lt; <code>9</code>). 그래서 <code>[1, 10, 100, 9]</code>.
+숫자는 **언제나** <code>sort((a, b) =&gt; a - b)</code> 처럼 비교 함수를 주십시오.</p>
+<p><strong>흔한 오답</strong> — ①</p>
+<p>숫자 배열이니 숫자 크기대로 줄 설 것 같습니다. 비교 함수가 없으면 모두 «글자»로 바꿔 사전 순서로 세웁니다.</p>
+<hr>
+<h3 id="문제-37-숫자-정렬">문제 37. 숫자 정렬</h3>
+<p><strong>문제</strong></p>
+<p>숫자 배열을 <strong>작은 수부터</strong> 정렬한 새 배열을 돌려주는 <code>sortNumbers(nums)</code> 를 만드시오. 넘겨받은 배열은 바꾸지 않습니다.</p>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function sortNumbers(nums) {
+  return [...nums].sort((a, b) =&gt; a - b);
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>(a, b) =&gt; a - b</code> — 결과가 음수면 <code>a</code> 가 앞, 양수면 <code>b</code> 가 앞입니다. 그래서 작은 수부터 섭니다.
+복사(<code>[...nums]</code>)를 먼저 하는 이유는 35번과 같습니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>[10, 9, 1, 100] → [1, 9, 10, 100]</li>
+<li>[3, -2, 0] → [-2, 0, 3] · 넘겨준 배열은 그대로</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「[10, 9, 1, 100] → [1, 9, 10, 100]」에서 걸립니다</p>
+<p>36번의 함정입니다 — <code>[3, 1, 2]</code> 처럼 한 자리 수로만 시험하면 맞게 나옵니다.</p>
+<pre><code class="language-js">function sortNumbers(nums) {
+  return [...nums].sort();
+}
+</code></pre>
+<hr>
+<h3 id="문제-38-이어-쓰기--상위-n개">문제 38. 이어 쓰기 — 상위 n개</h3>
+<p><strong>문제</strong></p>
+<p>조회수가 많은 기사 <strong>상위 <code>n</code>개의 제목</strong>을 돌려주는 <code>topTitles(list, n)</code> 을 만드시오. 넘겨받은 배열은 바꾸지 않습니다.</p>
+<ul>
+<li><code>topTitles(news, 3)</code> → <code>[&quot;폭설 주의보&quot;, &quot;야구 개막&quot;, &quot;AI 규제안&quot;]</code></li>
+</ul>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const news = [
+  { id: 1, title: &quot;금리 동결&quot;, section: &quot;경제&quot;, author: &quot;김하나&quot;, views: 1845, date: &quot;2024-11-05&quot; },
+  { id: 2, title: &quot;신작 개봉&quot;, section: &quot;문화&quot;, author: &quot;이도윤&quot;, views: 920, date: &quot;2024-11-05&quot; },
+  { id: 3, title: &quot;폭설 주의보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 3120, date: &quot;2024-11-04&quot; },
+  { id: 4, title: &quot;야구 개막&quot;, section: &quot;스포츠&quot;, author: &quot;최지우&quot;, views: 2733, date: &quot;2024-11-04&quot; },
+  { id: 5, title: &quot;국회 본회의&quot;, section: &quot;정치&quot;, author: &quot;김하나&quot;, views: 2102, date: &quot;2024-11-03&quot; },
+  { id: 6, title: &quot;반도체 수출&quot;, section: &quot;경제&quot;, author: &quot;정민호&quot;, views: 1560, date: &quot;2024-11-03&quot; },
+  { id: 7, title: &quot;지하철 지연&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 880, date: &quot;2024-11-02&quot; },
+  { id: 8, title: &quot;AI 규제안&quot;, section: &quot;IT&quot;, author: &quot;이도윤&quot;, views: 2410, date: &quot;2024-11-02&quot; },
+];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function topTitles(list, n) {
+  return [...list]
+    .sort((a, b) =&gt; b.views - a.views)
+    .slice(0, n)
+    .map((a) =&gt; a.title);
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p>메서드는 <strong>이어 쓸</strong> 수 있습니다 — 앞 메서드가 돌려준 배열에 다음 메서드를 부릅니다. 줄을 바꿔 쓰면 읽기 쉽습니다.
+순서: 줄 세우고(<code>sort</code>) → 잘라서(<code>slice(0, n)</code>) → 모양 바꾸기(<code>map</code>). 모양을 먼저 바꾸면 정렬에 필요한 <code>views</code> 가 사라집니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>news, 3 → 폭설 주의보 · 야구 개막 · AI 규제안</li>
+<li>news, 1 → [폭설 주의보] · 넘겨준 배열은 그대로</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「news, 3 → 폭설 주의보 · 야구 개막 · AI 규제안」에서 걸립니다</p>
+<p>메서드를 이을 때 순서가 중요합니다. 제목만 남긴 «뒤»에는 <code>views</code> 가 없어 정렬이 아무 일도 안 합니다.</p>
+<pre><code class="language-js">function topTitles(list, n) {
+  return [...list]
+    .map((a) =&gt; a.title)
+    .sort((a, b) =&gt; b.views - a.views)
+    .slice(0, n);
+}
+</code></pre>
+<hr>
+<h3 id="문제-39-분야별-개수-세기">문제 39. 분야별 개수 세기</h3>
+<p><strong>문제</strong></p>
+<p>기사 배열을 받아 <strong>분야별 기사 수</strong>를 담은 객체를 돌려주는 <code>countBySection(list)</code> 을 만드시오.</p>
+<ul>
+<li><code>countBySection(news)</code> → <code>{ 경제: 2, 문화: 1, 사회: 2, 스포츠: 1, 정치: 1, IT: 1 }</code> (키의 순서는 상관없음)</li>
+</ul>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const news = [
+  { id: 1, title: &quot;금리 동결&quot;, section: &quot;경제&quot;, author: &quot;김하나&quot;, views: 1845, date: &quot;2024-11-05&quot; },
+  { id: 2, title: &quot;신작 개봉&quot;, section: &quot;문화&quot;, author: &quot;이도윤&quot;, views: 920, date: &quot;2024-11-05&quot; },
+  { id: 3, title: &quot;폭설 주의보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 3120, date: &quot;2024-11-04&quot; },
+  { id: 4, title: &quot;야구 개막&quot;, section: &quot;스포츠&quot;, author: &quot;최지우&quot;, views: 2733, date: &quot;2024-11-04&quot; },
+  { id: 5, title: &quot;국회 본회의&quot;, section: &quot;정치&quot;, author: &quot;김하나&quot;, views: 2102, date: &quot;2024-11-03&quot; },
+  { id: 6, title: &quot;반도체 수출&quot;, section: &quot;경제&quot;, author: &quot;정민호&quot;, views: 1560, date: &quot;2024-11-03&quot; },
+  { id: 7, title: &quot;지하철 지연&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 880, date: &quot;2024-11-02&quot; },
+  { id: 8, title: &quot;AI 규제안&quot;, section: &quot;IT&quot;, author: &quot;이도윤&quot;, views: 2410, date: &quot;2024-11-02&quot; },
+];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function countBySection(list) {
+  const counts = {};
+  for (const a of list) {
+    counts[a.section] = (counts[a.section] ?? 0) + 1;
+  }
+  return counts;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p>객체를 «칸이 이름으로 된 계산기»로 씁니다. <code>counts[a.section]</code> — 대괄호 안의 <strong>값</strong>이 키가 됩니다(<code>counts.section</code> 은 <code>&quot;section&quot;</code> 이라는 키).
+처음 보는 분야는 <code>undefined</code> 라서 <code>?? 0</code> 으로 0 부터 셉니다. <code>reduce</code> 로도 쓸 수 있습니다 — 9일차에서 표의 숫자를 이렇게 «세어서» 만들었습니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>news → { 경제: 2, 문화: 1, 사회: 2, 스포츠: 1, 정치: 1, IT: 1 }</li>
+<li>[] → {}</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「news → { 경제: 2, 문화: 1, 사회: 2, 스포츠: 1, 정치: 1, IT: 1 }」에서 걸립니다</p>
+<p>처음 나온 분야는 아직 값이 없어(<code>undefined</code>) <code>+ 1</code> 하면 <code>NaN</code> 이 됩니다.</p>
+<pre><code class="language-js">function countBySection(list) {
+  const counts = {};
+  for (const a of list) {
+    counts[a.section] += 1;
+  }
+  return counts;
+}
+</code></pre>
+<hr>
+<h3 id="문제-40-set--중복-없애기">문제 40. Set — 중복 없애기</h3>
+<p><strong>문제</strong></p>
+<p>기사 배열에서 <strong>기자 이름을 중복 없이</strong>, 처음 나온 순서대로 담은 배열을 돌려주는 <code>uniqueAuthors(list)</code> 를 만드시오.</p>
+<ul>
+<li><code>uniqueAuthors(news)</code> → <code>[&quot;김하나&quot;, &quot;이도윤&quot;, &quot;박서준&quot;, &quot;최지우&quot;, &quot;정민호&quot;]</code></li>
+</ul>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const news = [
+  { id: 1, title: &quot;금리 동결&quot;, section: &quot;경제&quot;, author: &quot;김하나&quot;, views: 1845, date: &quot;2024-11-05&quot; },
+  { id: 2, title: &quot;신작 개봉&quot;, section: &quot;문화&quot;, author: &quot;이도윤&quot;, views: 920, date: &quot;2024-11-05&quot; },
+  { id: 3, title: &quot;폭설 주의보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 3120, date: &quot;2024-11-04&quot; },
+  { id: 4, title: &quot;야구 개막&quot;, section: &quot;스포츠&quot;, author: &quot;최지우&quot;, views: 2733, date: &quot;2024-11-04&quot; },
+  { id: 5, title: &quot;국회 본회의&quot;, section: &quot;정치&quot;, author: &quot;김하나&quot;, views: 2102, date: &quot;2024-11-03&quot; },
+  { id: 6, title: &quot;반도체 수출&quot;, section: &quot;경제&quot;, author: &quot;정민호&quot;, views: 1560, date: &quot;2024-11-03&quot; },
+  { id: 7, title: &quot;지하철 지연&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 880, date: &quot;2024-11-02&quot; },
+  { id: 8, title: &quot;AI 규제안&quot;, section: &quot;IT&quot;, author: &quot;이도윤&quot;, views: 2410, date: &quot;2024-11-02&quot; },
+];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function uniqueAuthors(list) {
+  return [...new Set(list.map((a) =&gt; a.author))];
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>Set</code> 은 <strong>같은 값을 한 번만</strong> 담는 상자입니다. 넣은 순서는 지킵니다. <code>[...new Set(배열)]</code> 은 「중복을 없앤 배열」의 관용구입니다.
+<code>Set</code> 에는 <code>map</code> · <code>filter</code> 가 없으니 쓸 일이 있으면 배열로 펼치십시오.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>news → 기자 5명(처음 나온 순서)</li>
+<li>[] → []</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「news → 기자 5명(처음 나온 순서)」에서 걸립니다</p>
+<p><code>Set</code> 으로 중복은 사라졌지만 «배열»이 아닙니다 — <code>.map</code> · <code>[0]</code> 이 안 됩니다. 배열로 다시 펼쳐야 합니다.</p>
+<pre><code class="language-js">function uniqueAuthors(list) {
+  return new Set(list.map((a) =&gt; a.author));
+}
+</code></pre>
+<hr>
+<h3 id="문제-41-null-이-섞인-평균">문제 41. null 이 섞인 평균</h3>
+<p><strong>문제</strong></p>
+<p>기사 배열의 <strong>평균 조회수</strong>(정수로 반올림)를 돌려주는 <code>averageViews(list)</code> 를 만드시오. 조회수가 <code>null</code> 인 기사는 <strong>빼고</strong> 셉니다. 셀 기사가 없으면 <code>0</code> 입니다.</p>
+<ul>
+<li><code>averageViews(news)</code> → <code>1946</code> (15570 ÷ 8)</li>
+</ul>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const news = [
+  { id: 1, title: &quot;금리 동결&quot;, section: &quot;경제&quot;, author: &quot;김하나&quot;, views: 1845, date: &quot;2024-11-05&quot; },
+  { id: 2, title: &quot;신작 개봉&quot;, section: &quot;문화&quot;, author: &quot;이도윤&quot;, views: 920, date: &quot;2024-11-05&quot; },
+  { id: 3, title: &quot;폭설 주의보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 3120, date: &quot;2024-11-04&quot; },
+  { id: 4, title: &quot;야구 개막&quot;, section: &quot;스포츠&quot;, author: &quot;최지우&quot;, views: 2733, date: &quot;2024-11-04&quot; },
+  { id: 5, title: &quot;국회 본회의&quot;, section: &quot;정치&quot;, author: &quot;김하나&quot;, views: 2102, date: &quot;2024-11-03&quot; },
+  { id: 6, title: &quot;반도체 수출&quot;, section: &quot;경제&quot;, author: &quot;정민호&quot;, views: 1560, date: &quot;2024-11-03&quot; },
+  { id: 7, title: &quot;지하철 지연&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 880, date: &quot;2024-11-02&quot; },
+  { id: 8, title: &quot;AI 규제안&quot;, section: &quot;IT&quot;, author: &quot;이도윤&quot;, views: 2410, date: &quot;2024-11-02&quot; },
+];
+// 조회수를 아직 못 센 기사가 하나 있다
+const newsWithNull = [...news, { id: 9, title: &quot;속보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: null, date: &quot;2024-11-06&quot; }];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function averageViews(list) {
+  const counted = list.filter((a) =&gt; a.views !== null);
+  if (counted.length === 0) return 0;
+  const sum = counted.reduce((s, a) =&gt; s + a.views, 0);
+  return Math.round(sum / counted.length);
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p>🔴 <code>null</code> 은 더하기에서 <code>0</code> 처럼 굴어 <strong>합계는 그대로</strong>입니다. 틀리는 것은 평균의 분모 — 9건으로 나누면 1730 이 됩니다. 「없는 값」을 먼저 걸러 내고 셉니다.
+0 으로 나누면 <code>NaN</code> 이므로 셀 것이 없을 때를 먼저 처리합니다.</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>news → 1946</li>
+<li>null 이 섞여도 → 1946 (null 기사는 빼고 8건으로 나눈다)</li>
+<li>[] → 0 · 전부 null → 0</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「null 이 섞여도 → 1946 (null 기사는 빼고 8건으로 나눈다)」에서 걸립니다</p>
+<p>합계는 같게 나옵니다(<code>null</code> 은 더하기에서 0 처럼 굽니다). 틀리는 것은 «나누는 수» — 못 센 기사까지 세어 평균이 낮아집니다(4일차).</p>
+<pre><code class="language-js">function averageViews(list) {
+  if (list.length === 0) return 0;
+  const sum = list.reduce((s, a) =&gt; s + a.views, 0);
+  return Math.round(sum / list.length);
+}
+</code></pre>
+<hr>
+<h3 id="문제-42-flatmap--겹친-배열-펴기">문제 42. flatMap — 겹친 배열 펴기</h3>
+<p><strong>문제</strong></p>
+<p>기사마다 태그 배열(<code>tags</code>)이 있습니다. 모든 기사의 태그를 <strong>한 줄로 펴서, 중복 없이</strong>(처음 나온 순서) 돌려주는 <code>allTags(list)</code> 를 만드시오.</p>
+<ul>
+<li><code>allTags(tagged)</code> → <code>[&quot;경제&quot;, &quot;금리&quot;, &quot;날씨&quot;, &quot;수출&quot;]</code></li>
+</ul>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const tagged = [
+  { title: &quot;금리 동결&quot;, tags: [&quot;경제&quot;, &quot;금리&quot;] },
+  { title: &quot;폭설 주의보&quot;, tags: [&quot;날씨&quot;] },
+  { title: &quot;반도체 수출&quot;, tags: [&quot;경제&quot;, &quot;수출&quot;] },
+];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function allTags(list) {
+  return [...new Set(list.flatMap((a) =&gt; a.tags))];
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>flatMap</code> 은 <code>map</code> 한 뒤 <strong>한 겹 펴기</strong>(<code>flat()</code>)까지 합니다 — <code>[[&quot;경제&quot;, &quot;금리&quot;], [&quot;날씨&quot;]]</code> 가 <code>[&quot;경제&quot;, &quot;금리&quot;, &quot;날씨&quot;]</code> 가 됩니다.
+펴진 뒤에야 <code>Set</code> 이 같은 글자를 하나로 묶습니다(40번).</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>tagged → [&quot;경제&quot;, &quot;금리&quot;, &quot;날씨&quot;, &quot;수출&quot;]</li>
+<li>태그가 빈 기사 · 빈 배열</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「tagged → [&quot;경제&quot;, &quot;금리&quot;, &quot;날씨&quot;, &quot;수출&quot;]」에서 걸립니다</p>
+<p><code>map</code> 으로 꺼내면 «배열의 배열»이 됩니다. 배열끼리는 내용이 같아도 다른 값이라 Set 이 하나도 못 지웁니다.</p>
+<pre><code class="language-js">function allTags(list) {
+  return [...new Set(list.map((a) =&gt; a.tags))];
+}
+</code></pre>
+<hr>
+<h3 id="문제-43-클로저--세는-함수-만들기">문제 43. 클로저 — 세는 함수 만들기</h3>
+<p><strong>문제</strong></p>
+<p>부를 때마다 1, 2, 3 … 을 돌려주는 <strong>함수를 만들어 돌려주는</strong> <code>makeCounter()</code> 를 만드시오. 만든 계수기끼리는 <strong>따로</strong> 셉니다.</p>
+<pre><code class="language-js">const a = makeCounter();
+a(); // 1
+a(); // 2
+const b = makeCounter();
+b(); // 1
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function makeCounter() {
+  let count = 0;
+  return () =&gt; {
+    count++;
+    return count;
+  };
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p>안쪽 함수는 자기가 <strong>만들어진 자리의 변수</strong>(<code>count</code>)를 기억합니다 — 이것을 <strong>클로저</strong>라고 합니다. <code>makeCounter()</code> 를 부를 때마다 새 <code>count</code> 가 생기므로 계수기끼리 섞이지 않습니다.
+React 의 이벤트 함수 · <code>useState</code> 가 이 원리 위에 서 있습니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>a() 세 번 → 1, 2, 3</li>
+<li>계수기끼리 따로 센다</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「계수기끼리 따로 센다」에서 걸립니다</p>
+<p>계수기 하나만 시험하면 잘 셉니다. <code>count</code> 를 함수 «바깥»에 두면 모든 계수기가 한 숫자를 나눠 씁니다.</p>
+<pre><code class="language-js">let count = 0;
+function makeCounter() {
+  return () =&gt; {
+    count++;
+    return count;
+  };
+}
+</code></pre>
+<hr>
+<h3 id="문제-44-재귀--겹친-배열의-합">문제 44. 재귀 — 겹친 배열의 합</h3>
+<p><strong>문제</strong></p>
+<p>배열 안에 배열이 <strong>몇 겹이든</strong> 들어 있을 때, 모든 숫자의 합을 돌려주는 <code>sumNested(arr)</code> 를 만드시오.</p>
+<ul>
+<li><code>sumNested([1, [2, [3, [4]]], 5])</code> → <code>15</code></li>
+</ul>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function sumNested(arr) {
+  let total = 0;
+  for (const x of arr) {
+    total += Array.isArray(x) ? sumNested(x) : x;
+  }
+  return total;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><strong>재귀</strong>는 함수가 자기 자신을 부르는 것입니다. 「칸이 배열이면 그 배열의 합(= 같은 문제)을 구해 더한다」 — 겹이 몇 개든 같은 규칙으로 풀립니다.
+끝나는 조건(숫자면 그대로 더함)이 꼭 있어야 합니다. (<code>arr.flat(Infinity)</code> 로 끝까지 펴는 방법도 있습니다.)</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>[1, [2, [3, [4]]], 5] → 15</li>
+<li>[1, 2, 3] → 6 · [] → 0 · [[[]]] → 0</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「[1, [2, [3, [4]]], 5] → 15」에서 걸립니다</p>
+<p><code>flat()</code> 은 «한 겹만» 폅니다. 두 겹 이상이면 배열이 남아 더하기가 글자 이어 붙이기가 됩니다.</p>
+<pre><code class="language-js">function sumNested(arr) {
+  return arr.flat().reduce((s, x) =&gt; s + x, 0);
+}
+</code></pre>
+<hr>
+<h3 id="문제-45-dom--글자-바꾸기">문제 45. DOM — 글자 바꾸기</h3>
+<p><strong>문제</strong></p>
+<p>JS 로 화면의 글자를 바꾸시오.</p>
+<ul>
+<li>제목(<code>#title</code>) → <code>오늘의 뉴스</code></li>
+<li>설명(<code>.desc</code>) → <code>8건의 기사</code></li>
+</ul>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;h1 id=&quot;title&quot;&gt;제목&lt;/h1&gt;
+&lt;p class=&quot;desc&quot;&gt;설명&lt;/p&gt;
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">document.querySelector(&quot;#title&quot;).textContent = &quot;오늘의 뉴스&quot;;
+document.querySelector(&quot;.desc&quot;).textContent = &quot;8건의 기사&quot;;
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>document.querySelector(선택자)</code> 는 CSS 선택자 그대로 <strong>첫 번째 요소</strong>를 잡습니다 — id 는 <code>#</code>, class 는 <code>.</code>. 못 찾으면 <code>null</code> 입니다.
+<code>textContent</code> 에 담으면 그 요소의 글자가 바뀝니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>제목이 「오늘의 뉴스」</li>
+<li>설명이 「8건의 기사」</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「제목이 「오늘의 뉴스」」에서 걸립니다</p>
+<p>선택자의 <code>#</code> · <code>.</code> 를 빠뜨리면 그 이름의 «태그»를 찾습니다. 못 찾으면 <code>null</code> 이고, 거기에 글자를 넣다 멈춥니다(5일차 「가장 많이 볼 오류」).</p>
+<pre><code class="language-js">document.querySelector(&quot;title&quot;).textContent = &quot;오늘의 뉴스&quot;;
+document.querySelector(&quot;desc&quot;).textContent = &quot;8건의 기사&quot;;
+</code></pre>
+<hr>
+<h3 id="문제-46-dom--조건에-맞는-것에-class">문제 46. DOM — 조건에 맞는 것에 class</h3>
+<p><strong>문제</strong></p>
+<p>목록의 각 <code>.item</code> 에는 조회수가 <code>data-views</code> 로 적혀 있습니다. 조회수가 <strong>2000 이상</strong>인 항목에만 class <code>hot</code> 을 붙이시오.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;ul id=&quot;list&quot;&gt;
+  &lt;li class=&quot;item&quot; data-views=&quot;1845&quot;&gt;금리 동결&lt;/li&gt;
+  &lt;li class=&quot;item&quot; data-views=&quot;920&quot;&gt;신작 개봉&lt;/li&gt;
+  &lt;li class=&quot;item&quot; data-views=&quot;3120&quot;&gt;폭설 주의보&lt;/li&gt;
+  &lt;li class=&quot;item&quot; data-views=&quot;2102&quot;&gt;국회 본회의&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">document.querySelectorAll(&quot;.item&quot;).forEach((li) =&gt; {
+  if (Number(li.dataset.views) &gt;= 2000) li.classList.add(&quot;hot&quot;);
+});
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>querySelectorAll</code> 은 맞는 요소를 <strong>모두</strong> 잡고 <code>forEach</code> 로 돌 수 있습니다(5일차: 배열처럼 생겼지만 배열은 아님).
+<code>data-views</code> 는 <code>dataset.views</code> 로 읽고, 늘 <strong>문자열</strong>이라 <code>Number</code> 로 바꿔 비교합니다. <code>classList.add</code> · <code>remove</code> · <code>toggle</code> 로 class 를 다룹니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>폭설 주의보(3120) · 국회 본회의(2102)에 hot</li>
+<li>신작 개봉(920) · 금리 동결(1845)에는 없다</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「신작 개봉(920) · 금리 동결(1845)에는 없다」에서 걸립니다</p>
+<p><code>data-</code> 값은 언제나 «글자»입니다. 글자끼리 비교하면 사전 순서라 <code>&quot;920&quot; &gt;= &quot;2000&quot;</code> 이 참이 됩니다(첫 글자 9 &gt; 2).</p>
+<pre><code class="language-js">document.querySelectorAll(&quot;.item&quot;).forEach((li) =&gt; {
+  if (li.dataset.views &gt;= &quot;2000&quot;) li.classList.add(&quot;hot&quot;);
+});
+</code></pre>
+<hr>
+<h3 id="문제-47-배열을-화면으로--그리기-함수">문제 47. 배열을 화면으로 — 그리기 함수</h3>
+<p><strong>문제</strong></p>
+<p>기사 배열을 받아 <code>#list</code> 에 기사마다 <code>&lt;li&gt;</code> 하나(글자는 제목)를 그리는 함수 <code>render(list)</code> 를 만들고, 맨 아래에서 <code>render(news)</code> 를 부르시오.
+🔴 <code>render</code> 를 <strong>여러 번</strong> 불러도 목록이 겹치면 안 됩니다 — 그릴 때마다 새로 그립니다.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;ul id=&quot;list&quot;&gt;&lt;/ul&gt;
+</code></pre>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const news = [
+  { id: 1, title: &quot;금리 동결&quot;, section: &quot;경제&quot;, author: &quot;김하나&quot;, views: 1845, date: &quot;2024-11-05&quot; },
+  { id: 2, title: &quot;신작 개봉&quot;, section: &quot;문화&quot;, author: &quot;이도윤&quot;, views: 920, date: &quot;2024-11-05&quot; },
+  { id: 3, title: &quot;폭설 주의보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 3120, date: &quot;2024-11-04&quot; },
+  { id: 4, title: &quot;야구 개막&quot;, section: &quot;스포츠&quot;, author: &quot;최지우&quot;, views: 2733, date: &quot;2024-11-04&quot; },
+  { id: 5, title: &quot;국회 본회의&quot;, section: &quot;정치&quot;, author: &quot;김하나&quot;, views: 2102, date: &quot;2024-11-03&quot; },
+  { id: 6, title: &quot;반도체 수출&quot;, section: &quot;경제&quot;, author: &quot;정민호&quot;, views: 1560, date: &quot;2024-11-03&quot; },
+  { id: 7, title: &quot;지하철 지연&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 880, date: &quot;2024-11-02&quot; },
+  { id: 8, title: &quot;AI 규제안&quot;, section: &quot;IT&quot;, author: &quot;이도윤&quot;, views: 2410, date: &quot;2024-11-02&quot; },
+];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function render(list) {
+  const ul = document.querySelector(&quot;#list&quot;);
+  ul.innerHTML = &quot;&quot;;
+  for (const a of list) {
+    const li = document.createElement(&quot;li&quot;);
+    li.textContent = a.title;
+    ul.append(li);
+  }
+}
+
+render(news);
+</code></pre>
+<p><strong>해설</strong></p>
+<p>「그리기 = <strong>비우고 · 그린다</strong>」(5일차). 그리는 함수는 늘 지금 데이터로 <strong>처음부터</strong> 그려야, 몇 번 불러도 화면이 데이터와 같습니다.
+<code>createElement</code> 로 만들고 → <code>textContent</code> 로 채우고 → <code>append</code> 로 붙이는 세 줄이 한 벌입니다.</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>기사 8건이 제목으로, 순서대로 그려진다</li>
+<li>다시 render(news) 를 불러도 8건</li>
+<li>render(news.slice(0, 2)) → 2건 · render([]) → 0건</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「다시 render(news) 를 불러도 8건」에서 걸립니다</p>
+<p>한 번 그릴 때는 완벽합니다. 검색 · 정렬로 다시 부르는 순간 목록이 두 배가 됩니다(5일차 「두 번 부르면」).</p>
+<pre><code class="language-js">function render(list) {
+  const ul = document.querySelector(&quot;#list&quot;);
+  for (const a of list) {
+    const li = document.createElement(&quot;li&quot;);
+    li.textContent = a.title;
+    ul.append(li);
+  }
+}
+
+render(news);
+</code></pre>
+<hr>
+<h3 id="문제-48-textcontent-와-innerhtml">문제 48. textContent 와 innerHTML</h3>
+<p><strong>문제</strong></p>
+<p>주어진 <code>title</code> 을 <code>#headline</code> 에 <strong>글자 그대로</strong> 넣으시오. 화면에 <code>&lt;b&gt;속보&lt;/b&gt; 폭설 주의보</code> 가 꺾쇠까지 그대로 보여야 하고, 굵은 글씨(<code>&lt;b&gt;</code> 요소)가 생기면 안 됩니다.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;h2 id=&quot;headline&quot;&gt;&lt;/h2&gt;
+</code></pre>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const title = &quot;&lt;b&gt;속보&lt;/b&gt; 폭설 주의보&quot;;
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">document.querySelector(&quot;#headline&quot;).textContent = title;
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>textContent</code> 는 <strong>글자로</strong> 넣고, <code>innerHTML</code> 은 <strong>HTML 로 읽어</strong> 요소를 만듭니다.
+🔴 사용자 · 서버에서 온 글을 <code>innerHTML</code> 로 넣으면 그 안의 <code>&lt;script&gt;</code> · <code>&lt;img onerror=…&gt;</code> 가 실행될 수 있습니다(XSS). 데이터는 <code>textContent</code> — 5일차 「제목에 태그가 들어 있으면」.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>글자가 그대로 들어갔다</li>
+<li><b> 요소가 생기지 않았다</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「<b> 요소가 생기지 않았다」에서 걸립니다</p>
+<p><code>innerHTML</code> 도 글자를 넣는 것처럼 보입니다. 하지만 꺾쇠를 «태그»로 읽어 실제 요소를 만듭니다 — 남이 쓴 글이면 위험합니다.</p>
+<pre><code class="language-js">document.querySelector(&quot;#headline&quot;).innerHTML = title;
+</code></pre>
+<hr>
+<h3 id="문제-49-클릭-이벤트--좋아요">문제 49. 클릭 이벤트 — 좋아요</h3>
+<p><strong>문제</strong></p>
+<p>버튼(<code>#like</code>)을 누를 때마다 숫자가 1씩 올라가게 하시오 — <code>좋아요 1</code>, <code>좋아요 2</code> …</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;button id=&quot;like&quot;&gt;좋아요 0&lt;/button&gt;
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">let likes = 0;
+const button = document.querySelector(&quot;#like&quot;);
+button.addEventListener(&quot;click&quot;, () =&gt; {
+  likes++;
+  button.textContent = `좋아요 ${likes}`;
+});
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>addEventListener(&quot;click&quot;, 함수)</code> — 누를 때마다 그 함수가 불립니다. 누른 횟수처럼 <strong>계속 남아야 하는 값</strong>은 함수 <strong>바깥</strong>에 둡니다(43번의 클로저).
+안에 두면 불릴 때마다 새로 만들어져 0 에서 시작합니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>한 번 누르면 「좋아요 1」</li>
+<li>세 번 누르면 「좋아요 3」</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「세 번 누르면 「좋아요 3」」에서 걸립니다</p>
+<p>한 번 눌러 보면 <code>좋아요 1</code> 로 잘 됩니다. 숫자 변수를 이벤트 함수 «안»에 두면 누를 때마다 0 에서 다시 시작합니다.</p>
+<pre><code class="language-js">const button = document.querySelector(&quot;#like&quot;);
+button.addEventListener(&quot;click&quot;, () =&gt; {
+  let likes = 0;
+  likes++;
+  button.textContent = `좋아요 ${likes}`;
+});
+</code></pre>
+<hr>
+<h3 id="문제-50-input-이벤트--글자-수-세기">문제 50. input 이벤트 — 글자 수 세기</h3>
+<p><strong>문제</strong></p>
+<p>입력칸(<code>#q</code>)에 <strong>글자를 칠 때마다</strong> 아래(<code>#count</code>)에 지금 글자 수를 <code>N자</code> 로 보여 주시오.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;input id=&quot;q&quot; placeholder=&quot;검색어&quot;&gt;
+&lt;p id=&quot;count&quot;&gt;0자&lt;/p&gt;
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">const input = document.querySelector(&quot;#q&quot;);
+const count = document.querySelector(&quot;#count&quot;);
+input.addEventListener(&quot;input&quot;, () =&gt; {
+  count.textContent = `${input.value.length}자`;
+});
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>input</code> 이벤트는 <strong>값이 바뀔 때마다</strong>(한 글자마다) 일어납니다. <code>change</code> 는 다 친 뒤 칸을 떠날 때 한 번입니다(6일차 「언제 읽을 것인가」).
+입력칸의 값은 <code>input.value</code> — 언제나 <strong>문자열</strong>입니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>「폭설」을 치면 「2자」</li>
+<li>다 지우면 「0자」</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「「폭설」을 치면 「2자」」에서 걸립니다</p>
+<p><code>change</code> 도 값이 바뀔 때 같지만, 칠 때마다가 아니라 «칸을 떠날 때(또는 Enter)» 한 번 일어납니다.</p>
+<pre><code class="language-js">const input = document.querySelector(&quot;#q&quot;);
+const count = document.querySelector(&quot;#count&quot;);
+input.addEventListener(&quot;change&quot;, () =&gt; {
+  count.textContent = `${input.value.length}자`;
+});
+</code></pre>
+<hr>
+<h2 id="고급">고급</h2>
+<h3 id="문제-51-이벤트-위임">문제 51. 이벤트 위임</h3>
+<p><strong>문제</strong></p>
+<p>목록의 항목을 누르면 <code>#picked</code> 에 <code>고른 기사: 번호</code> 를 보여 주시오(번호는 <code>data-id</code>).
+🔴 이벤트는 <strong>목록(<code>#list</code>)에 한 번만</strong> 거십시오. 나중에 JS 로 <strong>새로 붙인</strong> 항목을 눌러도 동작해야 합니다.</p>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;ul id=&quot;list&quot;&gt;
+  &lt;li data-id=&quot;1&quot;&gt;금리 동결&lt;/li&gt;
+  &lt;li data-id=&quot;2&quot;&gt;신작 개봉&lt;/li&gt;
+  &lt;li data-id=&quot;3&quot;&gt;폭설 주의보&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p id=&quot;picked&quot;&gt;고른 기사: 없음&lt;/p&gt;
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">const list = document.querySelector(&quot;#list&quot;);
+const picked = document.querySelector(&quot;#picked&quot;);
+list.addEventListener(&quot;click&quot;, (e) =&gt; {
+  const li = e.target.closest(&quot;li&quot;);
+  if (!li) return;
+  picked.textContent = `고른 기사: ${li.dataset.id}`;
+});
+</code></pre>
+<p><strong>해설</strong></p>
+<p>클릭은 누른 요소에서 <strong>위로 번져</strong> 올라갑니다(버블링). 그래서 부모(<code>#list</code>)에 한 번만 걸어도 어느 항목이 눌렸는지 <code>e.target</code> 으로 알 수 있습니다 — <strong>이벤트 위임</strong>(6일차).
+<code>e.target.closest(&quot;li&quot;)</code> 는 누른 곳에서 위로 올라가며 가장 가까운 <code>li</code> 를 찾습니다(항목 안에 <code>&lt;b&gt;</code> 같은 것이 있어도 안전). 목록을 다시 그려도 이벤트를 다시 걸 필요가 없습니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>3번 항목을 누르면 「고른 기사: 3」</li>
+<li>새로 붙인 항목(4번)을 눌러도 「고른 기사: 4」</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「새로 붙인 항목(4번)을 눌러도 「고른 기사: 4」」에서 걸립니다</p>
+<p>지금 있는 항목에는 다 걸려서 잘 됩니다. 나중에 그려 넣은 항목에는 아무도 이벤트를 걸어 주지 않았습니다.</p>
+<pre><code class="language-js">const picked = document.querySelector(&quot;#picked&quot;);
+document.querySelectorAll(&quot;#list li&quot;).forEach((li) =&gt; {
+  li.addEventListener(&quot;click&quot;, () =&gt; {
+    picked.textContent = `고른 기사: ${li.dataset.id}`;
+  });
+});
+</code></pre>
+<hr>
+<h3 id="문제-52-폼-제출--preventdefault">문제 52. 폼 제출 — preventDefault</h3>
+<p><strong>문제</strong></p>
+<p>검색 폼을 제출하면(버튼 · Enter) <strong>페이지가 새로 고쳐지지 않게</strong> 막고, <code>#result</code> 에 보여 주시오.</p>
+<ul>
+<li>검색어(앞뒤 공백 제거)가 있으면 <code>「금리」 검색</code></li>
+<li>비어 있으면 <code>검색어를 입력하세요</code></li>
+</ul>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;form id=&quot;search&quot;&gt;
+  &lt;input name=&quot;q&quot; id=&quot;q&quot;&gt;
+  &lt;button&gt;검색&lt;/button&gt;
+&lt;/form&gt;
+&lt;p id=&quot;result&quot;&gt;&lt;/p&gt;
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">const form = document.querySelector(&quot;#search&quot;);
+const result = document.querySelector(&quot;#result&quot;);
+form.addEventListener(&quot;submit&quot;, (e) =&gt; {
+  e.preventDefault();
+  const q = document.querySelector(&quot;#q&quot;).value.trim();
+  result.textContent = q ? `「${q}」 검색` : &quot;검색어를 입력하세요&quot;;
+});
+</code></pre>
+<p><strong>해설</strong></p>
+<p>폼은 제출되면 <strong>페이지를 새로 엽니다</strong>(기본 동작). JS 로 처리할 때는 <code>submit</code> 이벤트에서 <code>e.preventDefault()</code> 로 막습니다.
+버튼의 <code>click</code> 이 아니라 폼의 <code>submit</code> 에 거는 이유 — Enter 로 제출해도 똑같이 잡힙니다.</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>제출을 막았다 (preventDefault)</li>
+<li>「  금리 」 → 「금리」 검색</li>
+<li>빈칸(공백만) → 「검색어를 입력하세요」</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「제출을 막았다 (preventDefault)」에서 걸립니다</p>
+<p>글자는 잘 바뀝니다 — 단, 한순간만. 진짜 브라우저에서는 바로 새로 고쳐져 다 사라집니다(6일차 🔴).</p>
+<pre><code class="language-js">const form = document.querySelector(&quot;#search&quot;);
+const result = document.querySelector(&quot;#result&quot;);
+form.addEventListener(&quot;submit&quot;, (e) =&gt; {
+  const q = document.querySelector(&quot;#q&quot;).value.trim();
+  result.textContent = q ? `「${q}」 검색` : &quot;검색어를 입력하세요&quot;;
+});
+</code></pre>
+<hr>
+<h3 id="문제-53-실행-순서">문제 53. 실행 순서</h3>
+<p><strong>문제</strong></p>
+<p>다음 코드는 어떤 순서로 찍습니까?</p>
+<pre><code class="language-js">console.log(1);
+setTimeout(() =&gt; console.log(2), 0);
+Promise.resolve().then(() =&gt; console.log(3));
+console.log(4);
+</code></pre>
+<p>① <code>1 2 3 4</code><br>② <code>1 4 2 3</code><br>③ <code>1 4 3 2</code><br>④ <code>1 3 4 2</code></p>
+<p><strong>정답</strong> — ③ <code>1 4 3 2</code></p>
+<p><strong>실제로 돌려 보면</strong></p>
+<pre><code class="language-text">1
+4
+3
+2
+</code></pre>
+<p><strong>해설</strong></p>
+<p>일꾼은 <strong>하나</strong>입니다(7일차). 지금 줄을 다 돈 뒤에야 기다리던 일을 봅니다 — 그래서 <code>1</code>, <code>4</code> 가 먼저.
+기다리던 일 중에서는 <strong>Promise 의 then 이 setTimeout 보다 먼저</strong>입니다(마이크로태스크가 먼저). 그래서 <code>3</code>, 그다음 <code>2</code>.</p>
+<p><strong>흔한 오답</strong> — ②</p>
+<p><code>setTimeout</code> 이 0ms 라 바로 될 것 같고, 위에 적혀 있으니 먼저일 것 같습니다.</p>
+<hr>
+<h3 id="문제-54-기다리는-함수-만들기--promise">문제 54. 기다리는 함수 만들기 — Promise</h3>
+<p><strong>문제</strong></p>
+<p><code>ms</code> 밀리초 뒤에 끝나는 <strong>Promise</strong> 를 돌려주는 <code>sleep(ms)</code> 를 만드시오. <code>await sleep(1000)</code> 처럼 쓸 수 있어야 합니다.</p>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">function sleep(ms) {
+  return new Promise((resolve) =&gt; setTimeout(resolve, ms));
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>new Promise((resolve) =&gt; …)</code> — 「나중에 줄게」 쪽지를 만들고, 일이 끝나면 <code>resolve()</code> 를 불러 «끝났다»고 알립니다. <code>setTimeout(resolve, ms)</code> 는 <code>ms</code> 뒤에 그 알림을 보냅니다.
+<code>await</code> 는 Promise 만 기다립니다. Promise 가 아닌 것(<code>undefined</code>)은 기다릴 것이 없어 바로 지나갑니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>Promise 를 돌려준다</li>
+<li>await sleep(150) 이 150ms 쯤 기다린다</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「Promise 를 돌려준다」에서 걸립니다</p>
+<p><code>setTimeout</code> 을 부르면 «기다리는» 것 같지만, 아무도 그 끝을 알려 주지 않습니다 — 함수는 바로 끝나고 <code>undefined</code> 를 돌려줍니다.</p>
+<pre><code class="language-js">function sleep(ms) {
+  setTimeout(() =&gt; {}, ms);
+}
+</code></pre>
+<hr>
+<h3 id="문제-55-async--await">문제 55. async / await</h3>
+<p><strong>문제</strong></p>
+<p>주어진 <code>getNumber(n)</code> 은 30ms 뒤에 <code>n × 10</code> 을 주는 Promise 를 돌려줍니다. 두 수의 결과를 받아 <strong>더한 값</strong>을 돌려주는 <code>async</code> 함수 <code>sumTwo(a, b)</code> 를 만드시오.</p>
+<ul>
+<li><code>await sumTwo(1, 2)</code> → <code>30</code></li>
+</ul>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">// 30ms 뒤에 n × 10 을 주는 함수 (서버에서 받아오는 흉내)
+function getNumber(n) {
+  return new Promise((resolve) =&gt; setTimeout(() =&gt; resolve(n * 10), 30));
+}
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">async function sumTwo(a, b) {
+  const x = await getNumber(a);
+  const y = await getNumber(b);
+  return x + y;
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>await</code> 는 Promise 가 끝날 때까지 <strong>그 함수 안에서만</strong> 기다리고, 끝난 값을 꺼내 줍니다. <code>await</code> 는 <code>async</code> 함수 안에서만 쓸 수 있습니다.
+<code>async</code> 함수는 늘 Promise 를 돌려주므로, 부르는 쪽도 <code>await sumTwo(1, 2)</code> 로 받습니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>await sumTwo(1, 2) → 30</li>
+<li>await sumTwo(5, 0) → 50</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「await sumTwo(1, 2) → 30」에서 걸립니다</p>
+<p><code>await</code> 를 빠뜨리면 숫자가 아니라 «쪽지»(Promise) 두 장을 더합니다 — 글자 <code>&quot;[object Promise][object Promise]&quot;</code> 가 됩니다(7일차).</p>
+<pre><code class="language-js">async function sumTwo(a, b) {
+  const x = getNumber(a);
+  const y = getNumber(b);
+  return x + y;
+}
+</code></pre>
+<hr>
+<h3 id="문제-56-fetch--await-가-두-번">문제 56. fetch — await 가 두 번</h3>
+<p><strong>문제</strong></p>
+<p><code>news.json</code> 을 받아(<code>fetch</code>) <strong>제목 배열</strong>을 돌려주는 <code>async</code> 함수 <code>loadTitles()</code> 를 만드시오.
+(이 연습장의 <code>fetch</code> 는 인터넷 대신 위 「가짜 서버」 표대로 답합니다)</p>
+<p><strong>가짜 서버</strong> — <code>fetch</code> 는 인터넷 대신 이 표대로 답합니다. 그 밖의 주소는 404</p>
+<table>
+<thead>
+<tr>
+<th>주소</th>
+<th>답</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>news.json</code></td>
+<td>200 · JSON 배열 8건</td>
+</tr>
+</tbody></table>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">async function loadTitles() {
+  const res = await fetch(&quot;news.json&quot;);
+  const data = await res.json();
+  return data.map((a) =&gt; a.title);
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>fetch</code> 는 <strong>두 번</strong> 기다립니다(8일차) — ① 응답(머리)이 오기를 <code>await fetch(…)</code>, ② 몸통을 JSON 으로 읽기를 <code>await res.json()</code>.
+괄호로 묶어 <code>(await fetch(url)).json()</code> 이라고도 쓸 수 있지만, 두 줄이 읽기 쉽고 오류를 찾기도 쉽습니다.</p>
+<p><strong>검사 항목</strong> (2개)</p>
+<ol>
+<li>제목 8개를 돌려준다</li>
+<li>news.json 을 받았다</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「제목 8개를 돌려준다」에서 걸립니다</p>
+<p>한 줄로 줄이고 싶어집니다. 하지만 <code>fetch(…)</code> 가 돌려주는 것은 Promise 라 <code>.json()</code> 이 없습니다 — 먼저 기다려 응답을 받아야 합니다.</p>
+<pre><code class="language-js">async function loadTitles() {
+  const data = await fetch(&quot;news.json&quot;).json();
+  return data.map((a) =&gt; a.title);
+}
+</code></pre>
+<hr>
+<h3 id="문제-57-fetch-오류-처리--resok-와-trycatch">문제 57. fetch 오류 처리 — res.ok 와 try/catch</h3>
+<p><strong>문제</strong></p>
+<p>주소를 받아 결과를 <strong>객체로</strong> 돌려주는 <code>async</code> 함수 <code>loadSafe(url)</code> 을 만드시오. 함수는 <strong>오류를 던지지 않습니다</strong>.</p>
+<ul>
+<li>성공 → <code>{ ok: true, data: 받은 JSON }</code></li>
+<li>응답이 200번대가 아니면(404 · 500 …) → <code>{ ok: false, error: &quot;HTTP 404&quot; }</code> 처럼 상태 번호</li>
+<li>네트워크 오류로 <code>fetch</code> 자체가 실패하면 → <code>{ ok: false, error: &quot;네트워크 오류&quot; }</code></li>
+</ul>
+<p><strong>가짜 서버</strong> — <code>fetch</code> 는 인터넷 대신 이 표대로 답합니다. 그 밖의 주소는 404</p>
+<table>
+<thead>
+<tr>
+<th>주소</th>
+<th>답</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>news.json</code></td>
+<td>200 · JSON 배열 2건</td>
+</tr>
+<tr>
+<td><code>broken.json</code></td>
+<td>500 · 글자 &quot;서버 오류&quot;</td>
+</tr>
+<tr>
+<td><code>down.json</code></td>
+<td>네트워크 오류 (fetch 가 실패)</td>
+</tr>
+</tbody></table>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">async function loadSafe(url) {
+  let res;
+  try {
+    res = await fetch(url);
+  } catch (e) {
+    return { ok: false, error: &quot;네트워크 오류&quot; };
+  }
+  if (!res.ok) return { ok: false, error: `HTTP ${res.status}` };
+  return { ok: true, data: await res.json() };
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p>갈림길이 <strong>둘</strong>입니다(8일차). ① 서버에 아예 못 닿으면 <code>fetch</code> 가 <strong>실패</strong>(<code>catch</code> 로 잡힘). ② 닿았지만 404 · 500 이면 <code>fetch</code> 는 <strong>성공</strong>하고 <code>res.ok</code> 가 <code>false</code> — 직접 봐야 합니다.
+화면에서는 이 두 실패를 사용자에게 다르게 알려야 합니다(「잠시 뒤 다시」 vs 「없는 기사」).</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>news.json → { ok: true, data: [기사 2건] }</li>
+<li>없는 주소 → { ok: false, error: &quot;HTTP 404&quot; } · broken.json → &quot;HTTP 500&quot;</li>
+<li>down.json(네트워크 오류) → { ok: false, error: &quot;네트워크 오류&quot; }</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「없는 주소 → { ok: false, error: &quot;HTTP 404&quot; } · broken.json → &quot;HTTP 500&quot;」에서 걸립니다</p>
+<p><code>try/catch</code> 로 감싸면 다 잡힐 것 같습니다. 하지만 🔴 <code>fetch</code> 는 404 · 500 에도 «성공»합니다 — 몸통을 JSON 으로 읽다 실패해 엉뚱한 «네트워크 오류»가 됩니다.</p>
+<pre><code class="language-js">async function loadSafe(url) {
+  try {
+    const res = await fetch(url);
+    return { ok: true, data: await res.json() };
+  } catch (e) {
+    return { ok: false, error: &quot;네트워크 오류&quot; };
+  }
+}
+</code></pre>
+<hr>
+<h3 id="문제-58-promiseall--한꺼번에">문제 58. Promise.all — 한꺼번에</h3>
+<p><strong>문제</strong></p>
+<p>주소 배열을 받아 <strong>모두 한꺼번에</strong> 받아온 JSON 을 <strong>같은 순서의 배열</strong>로 돌려주는 <code>async</code> 함수 <code>loadAll(urls)</code> 를 만드시오.
+가짜 서버는 주소마다 150ms 씩 걸립니다 — 셋을 <strong>하나씩</strong> 받으면 450ms, <strong>한꺼번에</strong> 받으면 150ms 쯤입니다. 한꺼번에 받으십시오.</p>
+<p><strong>가짜 서버</strong> — <code>fetch</code> 는 인터넷 대신 이 표대로 답합니다. 그 밖의 주소는 404</p>
+<table>
+<thead>
+<tr>
+<th>주소</th>
+<th>답</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>a.json</code></td>
+<td>200 · JSON 1 · 150ms 뒤</td>
+</tr>
+<tr>
+<td><code>b.json</code></td>
+<td>200 · JSON 2 · 150ms 뒤</td>
+</tr>
+<tr>
+<td><code>c.json</code></td>
+<td>200 · JSON 3 · 150ms 뒤</td>
+</tr>
+</tbody></table>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">async function loadAll(urls) {
+  return Promise.all(urls.map(async (url) =&gt; {
+    const res = await fetch(url);
+    return res.json();
+  }));
+}
+</code></pre>
+<p><strong>해설</strong></p>
+<p><code>Promise.all([쪽지들])</code> 은 쪽지를 <strong>한꺼번에</strong> 기다렸다가, 모두 끝나면 결과를 <strong>넣은 순서대로</strong> 배열로 줍니다(먼저 끝난 순서가 아님).
+<code>urls.map(async …)</code> 이 쪽지 배열을 만들고 — 이때 이미 셋 다 출발합니다 — <code>Promise.all</code> 이 모아서 기다립니다. 🔴 <code>forEach</code> 안의 <code>await</code> 는 아무도 기다려 주지 않습니다(7일차).</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>[a, b, c] → [1, 2, 3] (순서대로)</li>
+<li>한꺼번에 받는다 — 셋에 300ms 안</li>
+<li>빈 배열 → []</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「한꺼번에 받는다 — 셋에 300ms 안」에서 걸립니다</p>
+<p>결과는 같습니다. 하지만 하나가 끝나야 다음을 시작해서 주소가 늘수록 기다리는 시간이 쌓입니다(7일차 「하나씩 vs 한꺼번에」).</p>
+<pre><code class="language-js">async function loadAll(urls) {
+  const out = [];
+  for (const url of urls) {
+    const res = await fetch(url);
+    out.push(await res.json());
+  }
+  return out;
+}
+</code></pre>
+<hr>
+<h3 id="문제-59-종합--받아서-그리기-로딩--성공--실패">문제 59. 종합 — 받아서 그리기 (로딩 · 성공 · 실패)</h3>
+<p><strong>문제</strong></p>
+<p>페이지가 열리면 <code>news.json</code> 을 받아 그리시오. 화면의 상태는 <strong>셋</strong>입니다(8일차).</p>
+<ul>
+<li>받는 동안 <code>#status</code>: <code>불러오는 중…</code></li>
+<li>성공: <code>#list</code> 에 기사마다 <code>&lt;li&gt;</code>(글자는 제목) — <strong>조회수가 많은 순</strong> · <code>#status</code>: <code>8건</code>(받은 건수)</li>
+<li>실패(응답이 200번대가 아님): <code>#status</code>: <code>불러오지 못했습니다 (HTTP 500)</code> 처럼 상태 번호</li>
+</ul>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;p id=&quot;status&quot;&gt;&lt;/p&gt;
+&lt;ul id=&quot;list&quot;&gt;&lt;/ul&gt;
+</code></pre>
+<p><strong>가짜 서버</strong> — <code>fetch</code> 는 인터넷 대신 이 표대로 답합니다. 그 밖의 주소는 404</p>
+<table>
+<thead>
+<tr>
+<th>주소</th>
+<th>답</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>news.json</code></td>
+<td>200 · JSON 배열 8건 · 120ms 뒤</td>
+</tr>
+</tbody></table>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">async function start() {
+  const status = document.querySelector(&quot;#status&quot;);
+  const list = document.querySelector(&quot;#list&quot;);
+  status.textContent = &quot;불러오는 중…&quot;;
+  const res = await fetch(&quot;news.json&quot;);
+  if (!res.ok) {
+    status.textContent = `불러오지 못했습니다 (HTTP ${res.status})`;
+    return;
+  }
+  const data = await res.json();
+  const sorted = [...data].sort((a, b) =&gt; b.views - a.views);
+  list.innerHTML = &quot;&quot;;
+  for (const a of sorted) {
+    const li = document.createElement(&quot;li&quot;);
+    li.textContent = a.title;
+    list.append(li);
+  }
+  status.textContent = `${data.length}건`;
+}
+
+start();
+</code></pre>
+<p><strong>해설</strong></p>
+<p>9일차의 한 바퀴입니다 — <strong>받고(fetch) → 확인하고(res.ok) → 바꾸고(sort) → 그린다(비우고 · 그린다)</strong>. 그리고 화면에는 상태가 셋입니다: 로딩 · 성공 · 실패.
+🔴 실패를 <strong>화면에</strong> 알리지 않으면 사용자는 「불러오는 중…」만 보며 기다립니다. 콘솔의 빨간 줄은 사용자에게 안 보입니다.</p>
+<p><strong>검사 항목</strong> (3개)</p>
+<ol>
+<li>받는 동안 「불러오는 중…」</li>
+<li>성공 — 조회수 많은 순 8건 · 「8건」</li>
+<li>실패(500) — 「불러오지 못했습니다 (HTTP 500)」</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「실패(500) — 「불러오지 못했습니다 (HTTP 500)」」에서 걸립니다</p>
+<p>성공만 시험하면 완벽합니다. 서버가 500 을 주면 몸통(「서버 오류」)을 JSON 으로 읽다 멈추고, 화면은 「불러오는 중…」에 영원히 머뭅니다.</p>
+<pre><code class="language-js">async function start() {
+  const status = document.querySelector(&quot;#status&quot;);
+  const list = document.querySelector(&quot;#list&quot;);
+  status.textContent = &quot;불러오는 중…&quot;;
+  const res = await fetch(&quot;news.json&quot;);
+  const data = await res.json();
+  const sorted = [...data].sort((a, b) =&gt; b.views - a.views);
+  list.innerHTML = &quot;&quot;;
+  for (const a of sorted) {
+    const li = document.createElement(&quot;li&quot;);
+    li.textContent = a.title;
+    list.append(li);
+  }
+  status.textContent = `${data.length}건`;
+}
+
+start();
+</code></pre>
+<hr>
+<h3 id="문제-60-종합--실시간-검색">문제 60. 종합 — 실시간 검색</h3>
+<p><strong>문제</strong></p>
+<p>제목 검색 화면을 만드시오.</p>
+<ul>
+<li>처음에는 <code>news</code> 전부를 <code>#list</code> 에 그리고(<code>&lt;li&gt;</code> 글자는 제목, 원래 순서) <code>#count</code> 에 <code>8건</code></li>
+<li>입력칸(<code>#q</code>)에 <strong>칠 때마다</strong> 검색어(앞뒤 공백 제거)가 제목에 <strong>들어 있는</strong> 기사만 다시 그리고 건수를 바꿉니다. 검색어가 비면 전부</li>
+<li>폼을 제출(Enter)해도 페이지가 새로 고쳐지지 않게 막습니다</li>
+</ul>
+<p><strong>HTML (고정)</strong></p>
+<pre><code class="language-html">&lt;form id=&quot;search&quot;&gt;
+  &lt;input id=&quot;q&quot; placeholder=&quot;제목 검색&quot;&gt;
+&lt;/form&gt;
+&lt;p id=&quot;count&quot;&gt;&lt;/p&gt;
+&lt;ul id=&quot;list&quot;&gt;&lt;/ul&gt;
+</code></pre>
+<p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
+<pre><code class="language-js">const news = [
+  { id: 1, title: &quot;금리 동결&quot;, section: &quot;경제&quot;, author: &quot;김하나&quot;, views: 1845, date: &quot;2024-11-05&quot; },
+  { id: 2, title: &quot;신작 개봉&quot;, section: &quot;문화&quot;, author: &quot;이도윤&quot;, views: 920, date: &quot;2024-11-05&quot; },
+  { id: 3, title: &quot;폭설 주의보&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 3120, date: &quot;2024-11-04&quot; },
+  { id: 4, title: &quot;야구 개막&quot;, section: &quot;스포츠&quot;, author: &quot;최지우&quot;, views: 2733, date: &quot;2024-11-04&quot; },
+  { id: 5, title: &quot;국회 본회의&quot;, section: &quot;정치&quot;, author: &quot;김하나&quot;, views: 2102, date: &quot;2024-11-03&quot; },
+  { id: 6, title: &quot;반도체 수출&quot;, section: &quot;경제&quot;, author: &quot;정민호&quot;, views: 1560, date: &quot;2024-11-03&quot; },
+  { id: 7, title: &quot;지하철 지연&quot;, section: &quot;사회&quot;, author: &quot;박서준&quot;, views: 880, date: &quot;2024-11-02&quot; },
+  { id: 8, title: &quot;AI 규제안&quot;, section: &quot;IT&quot;, author: &quot;이도윤&quot;, views: 2410, date: &quot;2024-11-02&quot; },
+];
+</code></pre>
+<p><strong>정답</strong></p>
+<pre><code class="language-js">const list = document.querySelector(&quot;#list&quot;);
+const count = document.querySelector(&quot;#count&quot;);
+
+function render(items) {
+  list.innerHTML = &quot;&quot;;
+  for (const a of items) {
+    const li = document.createElement(&quot;li&quot;);
+    li.textContent = a.title;
+    list.append(li);
+  }
+  count.textContent = `${items.length}건`;
+}
+
+document.querySelector(&quot;#q&quot;).addEventListener(&quot;input&quot;, (e) =&gt; {
+  const q = e.target.value.trim();
+  render(news.filter((a) =&gt; a.title.includes(q)));
+});
+
+document.querySelector(&quot;#search&quot;).addEventListener(&quot;submit&quot;, (e) =&gt; e.preventDefault());
+
+render(news);
+</code></pre>
+<p><strong>해설</strong></p>
+<p><strong>데이터는 그대로 두고, 화면만 매번 다시 그립니다.</strong> 검색어가 바뀌면 원본 <code>news</code> 에서 거른 결과로 <code>render</code> 를 부를 뿐입니다 — 걸러 낸 결과로 <code>news</code> 를 덮어쓰면 지운 검색어를 되돌릴 수 없습니다.
+<code>includes(&quot;&quot;)</code> 는 언제나 <code>true</code> 라서 빈 검색어는 저절로 「전부」가 됩니다. 이 모양(상태 → 거르기 → 그리기)이 React 에서 그대로 이어집니다.</p>
+<p><strong>검사 항목</strong> (5개)</p>
+<ol>
+<li>처음 — 8건 · 「8건」</li>
+<li>「주의」 → 폭설 주의보 1건 · 「1건」</li>
+<li>「  금리 」(앞뒤 공백) → 금리 동결 1건</li>
+<li>없는 말 → 0건 · 다 지우면 다시 8건</li>
+<li>제출(Enter)을 막았다</li>
+</ol>
+<p><strong>흔한 오답</strong> — 「「  금리 」(앞뒤 공백) → 금리 동결 1건」에서 걸립니다</p>
+<p>손으로 칠 때는 공백을 잘 안 넣어서 잘 됩니다. 앞뒤에 공백이 붙은 검색어(복사 · 붙여넣기)는 한 건도 안 맞습니다.</p>
+<pre><code class="language-js">const list = document.querySelector(&quot;#list&quot;);
+const count = document.querySelector(&quot;#count&quot;);
+
+function render(items) {
+  list.innerHTML = &quot;&quot;;
+  for (const a of items) {
+    const li = document.createElement(&quot;li&quot;);
+    li.textContent = a.title;
+    list.append(li);
+  }
+  count.textContent = `${items.length}건`;
+}
+
+document.querySelector(&quot;#q&quot;).addEventListener(&quot;input&quot;, (e) =&gt; {
+  render(news.filter((a) =&gt; a.title.includes(e.target.value)));
+});
+
+document.querySelector(&quot;#search&quot;).addEventListener(&quot;submit&quot;, (e) =&gt; e.preventDefault());
+
+render(news);
+</code></pre>
+<hr>
+</article>
+</main></body>
+</html>
