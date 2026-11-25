@@ -71,6 +71,7 @@
       insertSpaces: true,
       detectIndentation: false,
       fontFamily: '"JetBrains Mono", Consolas, "D2Coding", monospace',
+      fontLigatures: false,   /* 합자 끔 — >= · === 가 한 글자로 합쳐 보이면 보고 칠 수 없다(Monaco 기본도 false 지만 못박아 둔다) */
       scrollBeyondLastLine: false,
       wordWrap: "on",
       lineNumbersMinChars: 3,

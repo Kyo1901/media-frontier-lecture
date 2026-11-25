@@ -219,6 +219,12 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
   &lt;img src=&quot;photo.jpg&quot;&gt;
 &lt;/a&gt;
 </code></pre>
+<p><strong>이렇게 써도 정답</strong></p>
+<p><code>./</code> 는 「이 파일이 있는 폴더」라는 뜻이라 <code>./detail.html</code> 과 <code>detail.html</code> 은 같은 파일입니다.</p>
+<pre><code class="language-html">&lt;a href=&quot;./detail.html&quot;&gt;
+  &lt;img src=&quot;./photo.jpg&quot; alt=&quot;폭설로 멈춘 버스&quot;&gt;
+&lt;/a&gt;
+</code></pre>
 <hr>
 <h3 id="문제-7-두-단계-위로--경로">문제 7. 두 단계 위로 — 경로</h3>
 <p><em>개념 확인 · 답 적기</em></p>
@@ -1514,6 +1520,24 @@ td {
 }
 .title {
   color: #0d6b75 !important;
+  font-size: 22px;
+}
+</code></pre>
+<p><strong>이렇게 써도 정답</strong></p>
+<p>주석에 <code>!important</code> 라는 글자가 있어도 상관없습니다 — 검사는 글자가 아니라 브라우저가 읽어 들인 규칙을 봅니다.</p>
+<pre><code class="language-css">/* !important 는 쓰지 않는다 — 점수로 이긴다 */
+#top-news h2 {
+  color: #59677a;
+}
+#top-news .title {
+  color: #0d6b75;
+  font-size: 22px;
+}
+</code></pre>
+<p><strong>이렇게 써도 정답</strong></p>
+<p>이기던 규칙(<code>#top-news h2</code>)이 필요 없다면 <strong>지우는 것</strong>도 답입니다.</p>
+<pre><code class="language-css">.title {
+  color: #0d6b75;
   font-size: 22px;
 }
 </code></pre>

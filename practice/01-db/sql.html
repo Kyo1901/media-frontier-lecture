@@ -48,6 +48,8 @@ html, body { margin: 0; }
 body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.6; }
 button { font: inherit; color: inherit; cursor: pointer; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* 코드 글꼴(JetBrains Mono)의 합자를 끈다 — 켜 두면 >= · <= · <> · != · == · => 가 한 글자로 합쳐 그려져, 훈련생이 보고 그대로 칠 수 없다(JS 연습장에서 === 가 ≡ 로 보여 잡음, 2026-11-25) */
+code, pre, .chip, .rel, .mf-ta, th, .bk-grid textarea { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
 code { font-family: var(--font-mono); font-size: 0.92em; background: var(--code-bg); padding: 1px 6px; border-radius: 4px; }
 
 /* 상단 요약 */

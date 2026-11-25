@@ -261,6 +261,16 @@
 </a>
 ```
 
+**이렇게 써도 정답**
+
+`./` 는 「이 파일이 있는 폴더」라는 뜻이라 `./detail.html` 과 `detail.html` 은 같은 파일입니다.
+
+```html
+<a href="./detail.html">
+  <img src="./photo.jpg" alt="폭설로 멈춘 버스">
+</a>
+```
+
 ---
 
 ### 문제 7. 두 단계 위로 — 경로
@@ -2130,6 +2140,32 @@ F12 → Styles 를 보면 `.title` 의 color 에 **줄이 그어져** 있고, �
 }
 .title {
   color: #0d6b75 !important;
+  font-size: 22px;
+}
+```
+
+**이렇게 써도 정답**
+
+주석에 `!important` 라는 글자가 있어도 상관없습니다 — 검사는 글자가 아니라 브라우저가 읽어 들인 규칙을 봅니다.
+
+```css
+/* !important 는 쓰지 않는다 — 점수로 이긴다 */
+#top-news h2 {
+  color: #59677a;
+}
+#top-news .title {
+  color: #0d6b75;
+  font-size: 22px;
+}
+```
+
+**이렇게 써도 정답**
+
+이기던 규칙(`#top-news h2`)이 필요 없다면 **지우는 것**도 답입니다.
+
+```css
+.title {
+  color: #0d6b75;
   font-size: 22px;
 }
 ```

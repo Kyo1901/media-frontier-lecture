@@ -43,7 +43,7 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 <article class="guide"><h1 id="js-연습-답안지-해설-포함">JS 연습 답안지 (해설 포함)</h1>
 <blockquote>
 <p>총 <strong>60문제</strong> — 초급 22 · 중급 26 · 고급 12 · 번호가 커질수록 어려워집니다
-유형: 개념 확인 1 · 결과 예측 7 · 빈칸 채우기 1 · 오류 고치기 6 · 코드 작성 43 · 종합 구현 2</p>
+유형: 개념 확인 2 · 결과 예측 7 · 빈칸 채우기 7 · 오류 고치기 11 · 코드 작성 31 · 종합 구현 2</p>
 <p>같은 결과를 내는 다른 코드도 정답입니다. 채점은 쓴 방법이 아니라 <strong>돌려 본 결과</strong>를 봅니다.
 아래 정답은 모두 실제 Chrome 에서 검사를 전부 통과하고, 「흔한 오답」은 적힌 검사에서 실제로 걸리는 것을 확인한 것입니다. 고르기 문제의 코드도 실제로 돌려 본 결과입니다.</p>
 </blockquote>
@@ -216,17 +216,25 @@ false
 </code></pre>
 <hr>
 <h3 id="문제-7-switch">문제 7. switch</h3>
-<p><em>코드 작성 · 함수 작성</em></p>
+<p><em>빈칸 채우기 · 함수 작성</em></p>
 <p><strong>문제</strong></p>
-<p>요일 번호(0 = 일요일 … 6 = 토요일)를 받아 한 글자 요일을 돌려주는 <code>dayName(n)</code> 을 <strong>switch</strong> 로 만드시오.</p>
+<p>요일 번호(0 = 일요일 … 6 = 토요일)를 받아 한 글자 요일을 돌려주는 <code>dayName(n)</code> 을 <strong>switch</strong> 로 만들려 합니다.</p>
 <ul>
 <li><code>0</code> → <code>&quot;일&quot;</code>, <code>1</code> → <code>&quot;월&quot;</code>, … <code>6</code> → <code>&quot;토&quot;</code></li>
 <li>그 밖의 값 → <code>&quot;없음&quot;</code></li>
 </ul>
+<p>아래 코드의 빈칸(<code>___</code>) 두 곳을 채우시오. 두 번째 빈칸은 「어느 case 에도 맞지 않을 때」입니다.</p>
 <p><strong>시작 코드</strong></p>
 <pre><code class="language-js">function dayName(n) {
-  switch (n) {
-    
+  switch (___) {
+    case 0: return &quot;일&quot;;
+    case 1: return &quot;월&quot;;
+    case 2: return &quot;화&quot;;
+    case 3: return &quot;수&quot;;
+    case 4: return &quot;목&quot;;
+    case 5: return &quot;금&quot;;
+    case 6: return &quot;토&quot;;
+    ___: return &quot;없음&quot;;
   }
 }
 </code></pre>
@@ -268,12 +276,17 @@ false
 </code></pre>
 <hr>
 <h3 id="문제-8-for-반복">문제 8. for 반복</h3>
-<p><em>코드 작성 · 함수 작성</em></p>
+<p><em>빈칸 채우기 · 함수 작성</em></p>
 <p><strong>문제</strong></p>
-<p>1부터 <code>n</code> 까지의 합을 돌려주는 <code>sumTo(n)</code> 을 <strong>for</strong> 로 만드시오. <code>n</code> 이 0 이면 <code>0</code> 입니다.</p>
+<p>1부터 <code>n</code> 까지의 합을 돌려주는 <code>sumTo(n)</code> 을 <strong>for</strong> 로 만들려 합니다. <code>n</code> 이 0 이면 <code>0</code> 입니다.</p>
+<p>아래 코드의 빈칸(<code>___</code>) 두 곳을 채우시오.</p>
 <p><strong>시작 코드</strong></p>
 <pre><code class="language-js">function sumTo(n) {
-  
+  let total = 0;
+  for (let i = ___; i ___ n; i++) {
+    total += i;
+  }
+  return total;
 }
 </code></pre>
 <p><strong>정답</strong></p>
@@ -305,16 +318,19 @@ false
 </code></pre>
 <hr>
 <h3 id="문제-9-while-반복">문제 9. while 반복</h3>
-<p><em>코드 작성 · 함수 작성</em></p>
+<p><em>오류 고치기 · 함수 작성</em></p>
 <p><strong>문제</strong></p>
-<p><code>n</code> 부터 1까지 거꾸로 센 배열을 돌려주는 <code>countdown(n)</code> 을 <strong>while</strong> 로 만드시오.</p>
+<p><code>n</code> 부터 1까지 거꾸로 센 배열을 돌려주는 <code>countdown(n)</code> 입니다. 그런데 <code>countdown(3)</code> 이 <code>[3, 2, 1]</code> 이 아니라 <code>[3, 2, 1, 0]</code> 을 돌려줍니다. 고치시오.</p>
 <ul>
 <li><code>countdown(3)</code> → <code>[3, 2, 1]</code> · <code>countdown(0)</code> → <code>[]</code></li>
 </ul>
 <p><strong>시작 코드</strong></p>
 <pre><code class="language-js">function countdown(n) {
   const result = [];
-  
+  while (n &gt;= 0) {
+    result.push(n);
+    n--;
+  }
   return result;
 }
 </code></pre>
@@ -337,7 +353,7 @@ false
 <li>countdown(1) → [1] · countdown(0) → []</li>
 </ol>
 <p><strong>흔한 오답</strong> — 「countdown(3) → [3, 2, 1]」에서 걸립니다</p>
-<p>「0 이 될 때까지」를 <code>n &gt;= 0</code> 으로 쓰면 0 까지 들어갑니다.</p>
+<p>시작 코드 그대로입니다. <code>while</code> 의 조건은 «언제까지 도는가»입니다 — <code>n &gt;= 0</code> 이면 0 일 때도 한 번 더 돕니다.</p>
 <pre><code class="language-js">function countdown(n) {
   const result = [];
   while (n &gt;= 0) {
@@ -384,12 +400,16 @@ for (const track of tracks) {
 </code></pre>
 <hr>
 <h3 id="문제-11-break">문제 11. break</h3>
-<p><em>코드 작성 · 함수 작성</em></p>
+<p><em>오류 고치기 · 함수 작성</em></p>
 <p><strong>문제</strong></p>
-<p>숫자 배열에서 <strong>처음으로</strong> 나오는 음수의 위치(인덱스)를 돌려주는 <code>firstNegative(nums)</code> 를 만드시오. 음수가 없으면 <code>-1</code> 입니다. 반복과 <code>break</code>(또는 <code>return</code>)를 쓰십시오.</p>
+<p>숫자 배열에서 <strong>처음으로</strong> 나오는 음수의 위치(인덱스)를 돌려주는 <code>firstNegative(nums)</code> 입니다(음수가 없으면 <code>-1</code>). 그런데 <code>firstNegative([3, -1, -5])</code> 가 <code>1</code> 이 아니라 <code>2</code> 를 돌려줍니다. 처음 것을 찾으면 <strong>거기서 멈추도록</strong> 고치시오.</p>
 <p><strong>시작 코드</strong></p>
 <pre><code class="language-js">function firstNegative(nums) {
-  
+  let found = -1;
+  for (let i = 0; i &lt; nums.length; i++) {
+    if (nums[i] &lt; 0) found = i;
+  }
+  return found;
 }
 </code></pre>
 <p><strong>정답</strong></p>
@@ -409,7 +429,7 @@ for (const track of tracks) {
 <li>[-2] → 0 · [1, 2] → -1 · [] → -1</li>
 </ol>
 <p><strong>흔한 오답</strong> — 「[3, -1, -5] → 1 (처음 것)」에서 걸립니다</p>
-<p>찾아도 멈추지 않으면 끝까지 돌며 덮어써서 «마지막» 음수의 위치가 남습니다.</p>
+<p>시작 코드 그대로입니다. 찾을 때마다 <code>found</code> 를 덮어써서 «마지막» 음수가 남습니다. 찾은 순간 <code>return</code>(또는 <code>break</code>)으로 반복을 끝내야 합니다.</p>
 <pre><code class="language-js">function firstNegative(nums) {
   let found = -1;
   for (let i = 0; i &lt; nums.length; i++) {
@@ -483,15 +503,17 @@ for (const track of tracks) {
 </code></pre>
 <hr>
 <h3 id="문제-14-문자열-자르기--length--slice">문제 14. 문자열 자르기 — length · slice</h3>
-<p><em>코드 작성 · 함수 작성</em></p>
+<p><em>오류 고치기 · 함수 작성</em></p>
 <p><strong>문제</strong></p>
-<p>제목이 <code>max</code> 글자보다 <strong>길면</strong> 앞의 <code>max</code> 글자만 남기고 <code>…</code> 를 붙이고, 아니면 그대로 돌려주는 <code>shorten(title, max)</code> 를 만드시오.</p>
+<p>제목이 <code>max</code> 글자보다 <strong>길면</strong> 앞의 <code>max</code> 글자만 남기고 <code>…</code> 를 붙이고, 아니면 그대로 돌려주는 <code>shorten(title, max)</code> 입니다.
+그런데 <code>shorten(&quot;금리 동결&quot;, 5)</code> 처럼 <strong>딱 <code>max</code> 글자인 제목</strong>에도 <code>…</code> 가 붙습니다(<code>&quot;금리 동결…&quot;</code>). 고치시오.</p>
 <ul>
 <li><code>shorten(&quot;폭설 주의보 발령&quot;, 5)</code> → <code>&quot;폭설 주의…&quot;</code> · <code>shorten(&quot;금리 동결&quot;, 5)</code> → <code>&quot;금리 동결&quot;</code></li>
 </ul>
 <p><strong>시작 코드</strong></p>
 <pre><code class="language-js">function shorten(title, max) {
-  
+  if (title.length &gt;= max) return title.slice(0, max) + &quot;…&quot;;
+  return title;
 }
 </code></pre>
 <p><strong>정답</strong></p>
@@ -510,7 +532,7 @@ for (const track of tracks) {
 <li>짧은 제목 — (&quot;금리 동결&quot;, 10) → 그대로</li>
 </ol>
 <p><strong>흔한 오답</strong> — 「딱 맞는 길이 — (&quot;금리 동결&quot;, 5) → 그대로」에서 걸립니다</p>
-<p>「길면」을 <code>&gt;=</code> 로 쓰면 딱 맞는 길이에도 <code>…</code> 가 붙습니다.</p>
+<p>시작 코드 그대로입니다. 「길면」은 <code>&gt;</code> 입니다. <code>&gt;=</code> 는 «같아도» 자릅니다 — 경계값 하나 차이입니다.</p>
 <pre><code class="language-js">function shorten(title, max) {
   if (title.length &gt;= max) return title.slice(0, max) + &quot;…&quot;;
   return title;
@@ -619,15 +641,17 @@ for (const track of tracks) {
 </code></pre>
 <hr>
 <h3 id="문제-18-반올림--mathround">문제 18. 반올림 — Math.round</h3>
-<p><em>코드 작성 · 함수 작성</em></p>
+<p><em>빈칸 채우기 · 함수 작성</em></p>
 <p><strong>문제</strong></p>
-<p>수를 소수점 아래 <code>digits</code> 자리로 <strong>반올림한 숫자</strong>를 돌려주는 <code>roundTo(x, digits)</code> 를 만드시오.</p>
+<p>수를 소수점 아래 <code>digits</code> 자리로 <strong>반올림한 숫자</strong>를 돌려주는 <code>roundTo(x, digits)</code> 를 만들려 합니다.</p>
 <ul>
 <li><code>roundTo(3.14159, 2)</code> → <code>3.14</code> · <code>roundTo(2.5, 0)</code> → <code>3</code></li>
 </ul>
+<p>아래 코드의 빈칸(<code>___</code>) 두 곳을 채우시오. (힌트: 소수 둘째 자리로 반올림하려면 100 을 곱해 반올림한 뒤 다시 100 으로 나눕니다)</p>
 <p><strong>시작 코드</strong></p>
 <pre><code class="language-js">function roundTo(x, digits) {
-  
+  const k = 10 ** ___;
+  return Math.___(x * k) / k;
 }
 </code></pre>
 <p><strong>정답</strong></p>
@@ -810,40 +834,29 @@ undefined
 }
 </code></pre>
 <hr>
-<h3 id="문제-24-원본을-지키며-추가하기">문제 24. 원본을 지키며 추가하기</h3>
-<p><em>코드 작성 · 함수 작성</em></p>
+<h3 id="문제-24-원본을-바꾸는-메서드">문제 24. 원본을 바꾸는 메서드</h3>
+<p><em>개념 확인 · 모두 고르기</em></p>
 <p><strong>문제</strong></p>
-<p>태그 배열 <code>tags</code> 에 <code>tag</code> 를 더한 <strong>새 배열</strong>을 돌려주는 <code>addTag(tags, tag)</code> 를 만드시오.</p>
-<ul>
-<li>이미 들어 있는 태그면 더하지 않습니다</li>
-<li>🔴 넘겨받은 <code>tags</code> 배열은 <strong>바꾸지 않습니다</strong></li>
-</ul>
-<p><strong>시작 코드</strong></p>
-<pre><code class="language-js">function addTag(tags, tag) {
-  
-}
-</code></pre>
-<p><strong>정답</strong></p>
-<pre><code class="language-js">function addTag(tags, tag) {
-  if (tags.includes(tag)) return [...tags];
-  return [...tags, tag];
-}
+<p><code>const a = [3, 1, 2];</code> 에 다음을 <strong>하나씩</strong>(매번 새로 만든 <code>a</code> 에) 했을 때, <strong><code>a</code> 자체가 바뀌는 것</strong>을 모두 고르시오.</p>
+<p>① <code>a.push(4)</code><br>② <code>a.map((x) =&gt; x * 2)</code><br>③ <code>a.sort()</code><br>④ <code>a.filter((x) =&gt; x &gt; 1)</code><br>⑤ <code>a.slice(0, 1)</code><br>⑥ <code>a.reverse()</code></p>
+<p><strong>정답</strong> — ① ③ ⑥</p>
+<p><strong>실제로 돌려 보면</strong></p>
+<pre><code class="language-text">true
+false
+true
+false
+false
+true
 </code></pre>
 <p><strong>해설</strong></p>
-<p><code>push</code> 는 <strong>원본을 고칩니다</strong>. 새 배열이 필요하면 전개로 복사해 만듭니다 — <code>[...tags, tag]</code>.
-3일차 🔴 「<code>=</code> 는 복사가 아닙니다」의 연장입니다. 함수가 넘겨받은 배열을 고치면, 부른 쪽의 배열도 같이 바뀝니다(같은 배열이니까). React 의 state 는 이 «새로 만들기»를 반드시 요구합니다.</p>
-<p><strong>검사 항목</strong> (2개)</p>
-<ol>
-<li>[&quot;경제&quot;] 에 &quot;금리&quot; → [&quot;경제&quot;, &quot;금리&quot;] · 이미 있으면 그대로</li>
-<li>넘겨준 배열은 그대로다</li>
-</ol>
-<p><strong>흔한 오답</strong> — 「넘겨준 배열은 그대로다」에서 걸립니다</p>
-<p><code>push</code> 로 넣고 돌려주면 결과는 맞습니다. 하지만 넘겨받은 배열까지 바뀌어 다른 곳에서 쓰던 목록이 몰래 변합니다.</p>
-<pre><code class="language-js">function addTag(tags, tag) {
-  if (!tags.includes(tag)) tags.push(tag);
-  return tags;
-}
-</code></pre>
+<p>배열 메서드는 두 무리입니다.</p>
+<ul>
+<li><strong>원본을 바꾸는 것</strong> — <code>push</code> · <code>pop</code> · <code>sort</code> · <code>reverse</code> · <code>splice</code>. 돌려준 값과 상관없이 <code>a</code> 자체가 바뀝니다</li>
+<li><strong>새 배열을 돌려주는 것</strong> — <code>map</code> · <code>filter</code> · <code>slice</code> · <code>concat</code>. <code>a</code> 는 그대로입니다</li>
+</ul>
+<p>원본을 지켜야 할 때(화면의 원래 순서 · 넘겨받은 배열)는 바꾸는 메서드 앞에 <code>[...a]</code> 로 사본을 만듭니다 — 36번(<code>sort</code> 가 원본을 바꾼다)이 그 사고입니다.</p>
+<p><strong>흔한 오답</strong> — ① ③</p>
+<p><code>push</code> · <code>sort</code> 는 기억하기 쉽지만 <code>reverse</code> 를 빠뜨리기 쉽습니다. <code>reverse</code> 도 <code>sort</code> 처럼 <strong>그 자리에서</strong> 뒤집고 그 배열을 돌려줍니다.</p>
 <hr>
 <h3 id="문제-25-구조-분해와-기본값">문제 25. 구조 분해와 기본값</h3>
 <p><em>코드 작성 · 함수 작성</em></p>
@@ -970,15 +983,18 @@ console.log(a.title, a.tags.length);
 </code></pre>
 <hr>
 <h3 id="문제-29-objectentries">문제 29. Object.entries</h3>
-<p><em>코드 작성 · 함수 작성</em></p>
+<p><em>빈칸 채우기 · 함수 작성</em></p>
 <p><strong>문제</strong></p>
-<p>객체를 받아 <code>키=값</code> 을 <code>&amp;</code> 로 이은 글자(주소 뒤에 붙는 질의 문자열)를 만드는 <code>toQuery(params)</code> 를 만드시오. 글자를 바꾸는(인코딩) 일은 하지 않습니다.</p>
+<p>객체를 받아 <code>키=값</code> 을 <code>&amp;</code> 로 이은 글자(주소 뒤에 붙는 질의 문자열)를 만드는 <code>toQuery(params)</code> 를 만들려 합니다. 글자를 바꾸는(인코딩) 일은 하지 않습니다.</p>
 <ul>
 <li><code>toQuery({ page: 2, size: 10 })</code> → <code>&quot;page=2&amp;size=10&quot;</code> · <code>toQuery({})</code> → <code>&quot;&quot;</code></li>
 </ul>
+<p>아래 코드의 빈칸(<code>___</code>) 두 곳을 채우시오. (<code>Object.___(params)</code> 는 <code>[[&quot;page&quot;, 2], [&quot;size&quot;, 10]]</code> 처럼 [키, 값] 짝의 배열을 줍니다)</p>
 <p><strong>시작 코드</strong></p>
 <pre><code class="language-js">function toQuery(params) {
-  
+  return Object.___(params)
+    .map(([k, v]) =&gt; `${k}=${v}`)
+    .join(___);
 }
 </code></pre>
 <p><strong>정답</strong></p>
@@ -1312,12 +1328,13 @@ true
 </code></pre>
 <hr>
 <h3 id="문제-38-set--중복-없애기">문제 38. Set — 중복 없애기</h3>
-<p><em>코드 작성 · 함수 작성</em></p>
+<p><em>빈칸 채우기 · 함수 작성</em></p>
 <p><strong>문제</strong></p>
-<p>회차 배열에서 <strong>진행자 이름을 중복 없이</strong>, 처음 나온 순서대로 담은 배열을 돌려주는 <code>uniqueHosts(list)</code> 를 만드시오.</p>
+<p>회차 배열에서 <strong>진행자 이름을 중복 없이</strong>, 처음 나온 순서대로 담은 배열을 돌려주는 <code>uniqueHosts(list)</code> 를 만들려 합니다.</p>
 <ul>
 <li><code>uniqueHosts(episodes)</code> → <code>[&quot;한도윤&quot;, &quot;서유진&quot;, &quot;이서아&quot;, &quot;정하린&quot;]</code></li>
 </ul>
+<p>아래 코드의 빈칸(<code>___</code>) 두 곳을 채우시오.</p>
 <p><strong>주어진 JS</strong> — 이미 들어 있습니다(같은 이름을 다시 선언하지 마십시오)</p>
 <pre><code class="language-js">const episodes = [
   { id: 1, title: &quot;새벽 시장 이야기&quot;, category: &quot;시사&quot;, host: &quot;한도윤&quot;, plays: 4210, minutes: 32, date: &quot;2024-11-05&quot; },
@@ -1332,7 +1349,7 @@ true
 </code></pre>
 <p><strong>시작 코드</strong></p>
 <pre><code class="language-js">function uniqueHosts(list) {
-  
+  return [...new ___(list.map((ep) =&gt; ep.___))];
 }
 </code></pre>
 <p><strong>정답</strong></p>
@@ -1550,18 +1567,22 @@ true
 </code></pre>
 <hr>
 <h3 id="문제-43-클로저--세는-함수-만들기">문제 43. 클로저 — 세는 함수 만들기</h3>
-<p><em>코드 작성 · 함수 작성</em></p>
+<p><em>오류 고치기 · 함수 작성</em></p>
 <p><strong>문제</strong></p>
-<p>부를 때마다 1, 2, 3 … 을 돌려주는 <strong>함수를 만들어 돌려주는</strong> <code>makeCounter()</code> 를 만드시오. 만든 계수기끼리는 <strong>따로</strong> 셉니다.</p>
+<p>부를 때마다 1, 2, 3 … 을 돌려주는 <strong>함수를 만들어 돌려주는</strong> <code>makeCounter()</code> 입니다. 만든 계수기끼리는 <strong>따로</strong> 세야 하는데, 아래처럼 두 번째 계수기 <code>b</code> 가 <code>1</code> 이 아니라 <code>3</code> 부터 셉니다. 고치시오.</p>
 <pre><code class="language-js">const a = makeCounter();
 a(); // 1
 a(); // 2
 const b = makeCounter();
-b(); // 1
+b(); // 3  ← 1 이어야 한다
 </code></pre>
 <p><strong>시작 코드</strong></p>
-<pre><code class="language-js">function makeCounter() {
-  
+<pre><code class="language-js">let count = 0;
+function makeCounter() {
+  return () =&gt; {
+    count++;
+    return count;
+  };
 }
 </code></pre>
 <p><strong>정답</strong></p>
@@ -1582,7 +1603,7 @@ React 의 이벤트 함수 · <code>useState</code> 가 이 원리 위에 서 �
 <li>계수기끼리 따로 센다</li>
 </ol>
 <p><strong>흔한 오답</strong> — 「계수기끼리 따로 센다」에서 걸립니다</p>
-<p>계수기 하나만 시험하면 잘 셉니다. <code>count</code> 를 함수 «바깥»에 두면 모든 계수기가 한 숫자를 나눠 씁니다.</p>
+<p>시작 코드 그대로입니다. <code>count</code> 가 함수 «밖»에 하나뿐이라 모든 계수기가 그 하나를 함께 씁니다. <code>makeCounter</code> 를 부를 때마다 새 <code>count</code> 가 생기려면 함수 «안»에 두어야 합니다.</p>
 <pre><code class="language-js">let count = 0;
 function makeCounter() {
   return () =&gt; {
@@ -1899,13 +1920,12 @@ msg.addEventListener(&quot;input&quot;, () =&gt; {
 </code></pre>
 <hr>
 <h3 id="문제-51-이벤트-위임--삭제-단추">문제 51. 이벤트 위임 — 삭제 단추</h3>
-<p><em>코드 작성 · DOM · 이벤트</em></p>
+<p><em>오류 고치기 · DOM · 이벤트</em></p>
 <p><strong>문제</strong></p>
-<p>재생 목록에서 <strong>삭제 단추를 누르면 그 곡(<code>li</code>)을 지우시오</strong>.</p>
+<p>재생 목록에서 <strong>삭제 단추를 누르면 그 곡(<code>li</code>)을 지우는</strong> 코드입니다. 처음부터 있던 곡은 잘 지워지는데, <strong>나중에 JS 로 새로 붙인 곡</strong>의 삭제 단추는 눌러도 아무 일도 없습니다.
+이벤트를 <strong>목록(<code>#list</code>)에 한 번만</strong> 거는 방식(위임)으로 고치시오.</p>
 <ul>
-<li>🔴 이벤트는 <strong>목록(<code>#list</code>)에 한 번만</strong> 겁니다</li>
-<li>곡 이름(<code>span</code>)을 누르면 아무 일도 일어나지 않습니다</li>
-<li>나중에 JS 로 <strong>새로 붙인</strong> 곡의 삭제 단추도 동작해야 합니다</li>
+<li>곡 이름(<code>span</code>)을 누르면 아무 일도 일어나지 않아야 합니다</li>
 </ul>
 <p><strong>HTML (고정)</strong></p>
 <pre><code class="language-html">&lt;ul id=&quot;list&quot;&gt;
@@ -1913,6 +1933,13 @@ msg.addEventListener(&quot;input&quot;, () =&gt; {
   &lt;li&gt;&lt;span&gt;퇴근길&lt;/span&gt; &lt;button class=&quot;del&quot; type=&quot;button&quot;&gt;삭제&lt;/button&gt;&lt;/li&gt;
   &lt;li&gt;&lt;span&gt;주말 산책&lt;/span&gt; &lt;button class=&quot;del&quot; type=&quot;button&quot;&gt;삭제&lt;/button&gt;&lt;/li&gt;
 &lt;/ul&gt;
+</code></pre>
+<p><strong>시작 코드</strong></p>
+<pre><code class="language-js">document.querySelectorAll(&quot;.del&quot;).forEach((btn) =&gt; {
+  btn.addEventListener(&quot;click&quot;, () =&gt; {
+    btn.closest(&quot;li&quot;).remove();
+  });
+});
 </code></pre>
 <p><strong>정답</strong></p>
 <pre><code class="language-js">const list = document.querySelector(&quot;#list&quot;);
@@ -1932,7 +1959,7 @@ list.addEventListener(&quot;click&quot;, (e) =&gt; {
 <li>새로 붙인 곡의 삭제도 동작한다</li>
 </ol>
 <p><strong>흔한 오답</strong> — 「새로 붙인 곡의 삭제도 동작한다」에서 걸립니다</p>
-<p>단추마다 리스너를 다는 것은 «지금 있는» 단추에만 걸립니다. 나중에 붙인 곡의 단추에는 아무것도 걸려 있지 않습니다.</p>
+<p>시작 코드 그대로입니다. 단추마다 리스너를 다는 것은 «지금 있는» 단추에만 걸립니다. 나중에 붙인 곡의 단추에는 아무것도 걸려 있지 않습니다.</p>
 <pre><code class="language-js">document.querySelectorAll(&quot;.del&quot;).forEach((btn) =&gt; {
   btn.addEventListener(&quot;click&quot;, () =&gt; {
     btn.closest(&quot;li&quot;).remove();
@@ -2030,12 +2057,13 @@ console.log(4);
 <p><code>await null</code> 은 기다릴 것이 없으니 바로 지나갈 것 같습니다. 하지만 <code>await</code> 를 만나면 그 함수는 <strong>무조건 한 번 멈추고</strong> 바깥 코드에 차례를 넘깁니다.</p>
 <hr>
 <h3 id="문제-54-기다리는-함수-만들기--promise">문제 54. 기다리는 함수 만들기 — Promise</h3>
-<p><em>코드 작성 · 비동기 함수</em></p>
+<p><em>빈칸 채우기 · 비동기 함수</em></p>
 <p><strong>문제</strong></p>
-<p><code>ms</code> 밀리초 뒤에 끝나는 <strong>Promise</strong> 를 돌려주는 <code>sleep(ms)</code> 를 만드시오. <code>await sleep(1000)</code> 처럼 쓸 수 있어야 합니다.</p>
+<p><code>ms</code> 밀리초 뒤에 끝나는 <strong>Promise</strong> 를 돌려주는 <code>sleep(ms)</code> 를 만들려 합니다. <code>await sleep(1000)</code> 처럼 쓸 수 있어야 합니다.</p>
+<p>아래 코드의 빈칸(<code>___</code>) 두 곳을 채우시오. 두 번째 빈칸에는 «시간이 되면 부를 함수»가 들어갑니다.</p>
 <p><strong>시작 코드</strong></p>
 <pre><code class="language-js">function sleep(ms) {
-  
+  return new ___((resolve) =&gt; setTimeout(___, ms));
 }
 </code></pre>
 <p><strong>정답</strong></p>
